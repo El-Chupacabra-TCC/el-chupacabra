@@ -6,11 +6,11 @@ classDiagram
 
     Project *-- "*" Task
     Project --> ExecutionProfile
+    Project --> IPersister
     Task --> "*" Metric
-    Task --> IPersister
 
     class Project {
-
+        +executeTasks()
     }
 
     class ExecutionProfile {
