@@ -1,4 +1,7 @@
-class Project {
+import { IPersister } from "./Persister/IPersister";
+import { Task } from "./Tasks/Task";
+
+export class Project {
   protected IPersister: IPersister;
   protected Task: Task;
   constructor(persister: IPersister, task: Task)

@@ -1,5 +1,6 @@
-// Composite task that can contain subtasks
-class CompositeTask extends Task {
+import { Task } from "./Task";
+
+export class CompositeTask extends Task {
     private tasks: Task[];
   
     constructor() {
@@ -11,12 +12,13 @@ class CompositeTask extends Task {
       this.tasks.push(task);
     }
 
-    async execute(): Promise<string> {
+    async execute(): Promise<any> {
       console.log("Executing composite task...");
+      let tasks = {};
       for (const task of this.tasks) {
-        task.execute();
+        tasks[task.name] = await task.execute();
       }
-      return "Composite task executed";
+      return tasks;
     }
   }
   

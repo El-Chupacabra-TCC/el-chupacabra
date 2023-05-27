@@ -1,4 +1,5 @@
-abstract class Task {
+export abstract class Task {
+  public name: string;
 
   run(): void {
     this.preTaskJob();

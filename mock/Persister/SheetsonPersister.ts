@@ -1,4 +1,6 @@
-class SheetsonPersister implements IPersister {
+import { IPersister } from "./IPersister";
+
+export class SheetsonPersister implements IPersister {
   save(data: string): void{
     console.log('SheetsonPersister.save()');
     console.log(data);
