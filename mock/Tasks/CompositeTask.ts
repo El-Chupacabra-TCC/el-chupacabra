@@ -6,6 +6,7 @@ export class CompositeTask extends Task {
     constructor() {
       super();
       this.tasks = [];
+      this.name = "Composite Task";
     }
   
     addTask(task: Task): void {
