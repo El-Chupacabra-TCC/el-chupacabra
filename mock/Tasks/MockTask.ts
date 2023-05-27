@@ -1,6 +1,7 @@
 import { Helpers } from '../Helpers/Helpers';
 import { Memory } from '../Helpers/MockMemory';
 import { AbstractMetric } from '../Metrics/AbstractMetric';
+import { GetDeltaTime } from '../Metrics/GetDeltaTime';
 import { GetMemoryUsage } from '../Metrics/GetMemoryUsage';
 import { SimpleTask } from './SimpleTask';
 
@@ -14,7 +15,7 @@ export class MockTask extends SimpleTask {
   }
 
   async execute(): Promise<any> {
-    this.metrics.push(new GetMemoryUsage());
+    this.metrics = [new GetMemoryUsage(), new GetDeltaTime()];
     Memory.malloc(100);
     console.log(`Executing simple task: ${this.name}`);
     await Helpers.sleep(50, 100);
