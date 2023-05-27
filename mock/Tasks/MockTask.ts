@@ -1,6 +1,6 @@
-class MockTask extends Task {
+class MockTask extends SimpleTask {
   private name: string;
-  private metrics: AbstractMetric [];
+  private metrics: AbstractMetric<any> [];
 
   constructor(name: string) {
     super();
@@ -8,11 +8,11 @@ class MockTask extends Task {
     this.metrics = [];
   }
 
-  execute(): Promise<string> {
-    this.metrics.push(new MockedMertric());
+  async execute(): Promise<string> {
+    this.metrics.push(new GetMemoryUsage());
+    Memory.malloc(100);
     console.log(`Executing simple task: ${this.name}`);
-    return Helpers
-      .sleep(50, 100)
-      .then(() => `Simple task executed: ${this.name}`);
+    await Helpers.sleep(50, 100);
+    return `Simple task executed: ${this.name}`;
   }
 }
