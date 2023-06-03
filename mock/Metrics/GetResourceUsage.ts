@@ -1,16 +1,14 @@
 import { Resource } from "../Helpers/MockResource";
 import { AbstractMetric } from "./AbstractMetric";
 
-export class GetDeltaTime extends AbstractMetric<number> {
-  private date: number;
+export class GetResourceUsage extends AbstractMetric<number> {
   constructor() {
     super();
-    this.date = Date.now();
   }
   get metric(): number {
-    return (Date.now() - this.date);
+    return Resource.total;
   }
   get name(): string {
-    return "DeltaTime";
+    return "Resource Usage";
   }
 }

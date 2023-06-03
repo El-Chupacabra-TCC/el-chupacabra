@@ -1,29 +1,23 @@
 import { Helpers } from '../Helpers/Helpers';
-import { Memory } from '../Helpers/MockMemory';
+import { Resource } from '../Helpers/MockResource';
 import { AbstractMetric } from '../Metrics/AbstractMetric';
 import { GetDeltaTime } from '../Metrics/GetDeltaTime';
-import { GetMemoryUsage } from '../Metrics/GetMemoryUsage';
+import { GetResourceUsage } from '../Metrics/GetResourceUsage';
 import { SimpleTask } from './SimpleTask';
 
 export class MockTask extends SimpleTask {
-  private metrics: AbstractMetric<any> [];
 
   constructor(name: string) {
-    super();
-    this.name = name;
-    this.metrics = [];
+    super(name, [new GetResourceUsage(), new GetDeltaTime()]);
   }
 
   async execute(): Promise<any> {
-    this.metrics = [new GetMemoryUsage(), new GetDeltaTime()];
-    Memory.malloc(100);
+    Resource.alloc(100);
     console.log(`Executing simple task: ${this.name}`);
     await Helpers.sleep(50, 100);
-    let metrics = {};
-    this.metrics.forEach(element => {
-      metrics[element.name] = element.metric;
-    });
-    Memory.free({size: 100});
-    return metrics;
+  }
+
+  postTaskJob(): void {
+    Resource.free({size: 100});
   }
 }

@@ -10,7 +10,7 @@ export class Project {
     this.Task = task;
   }
   async executeTask(): Promise<void> {
-    const data = await this.Task.execute();
-    await this.IPersister.save(data);
+    const result = await this.Task.run();
+    await this.IPersister.save(result);
   }
 }

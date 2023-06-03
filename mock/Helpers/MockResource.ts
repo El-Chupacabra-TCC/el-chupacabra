@@ -1,6 +1,6 @@
-export class Memory {
+export class Resource {
     private static _total: number = 500;
-    static malloc(size: number): any {
+    static alloc(size: number): any {
         this._total -= size;
         return {size};
     }
