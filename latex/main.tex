@@ -62,23 +62,34 @@ Dessa forma, a ferramenta também entrega ao desenvolvedor os dados dessas execu
 \chapter{Introdução}
 \label{sec:introducao}
 
-Assim como o resumo de um trabalho pode ser entendido como uma vitrine, a introdução pode ser comparada a sala de estar do trabalho. A partir dela que o leitor deve decidir se o seu \acr{TCC} é interessante e se ele vai ler o resto do seu trabalho. Desta forma, a escrita da introdução é fundamental, devendo se apresentar de modo bem encadeado. 
+Desde o começo da era da informação e principalmente com a popularização dos smartphones a quantidade de informações geradas por nós atingiu uma taxa de crescimento exponencial \citep{Gandomi2015Beyond}.
+Este cenário com disponibilidade de grandes volumes de dados (do inglês, \emph{big data}), criou diversas oportunidades para modelos de negócios voltados para o uso desses dados.
+Empresas como Google e Meta (antigo Facebook), se tornaram gigantes do mercado explorando estes modelos de negócios baseados em dados.
 
-Em textos científicos, as frases devem ser curtas, para não gerar ambiguidade. Pode-se dizer que um parágrafo é constituído por pelo menos três frases. Adicionalmente, pode-se dizer que cada parágrafo tem uma única ideia central, \emph{i.e.}, uma sentença  que sumariza o parágrafo. 
+Entretanto, o manuseio de grandes volumes de dados necessita de cuidados especiais.
+Pois, o volume dos dados podem superar os tamanhos de qualquer memória principal ou secundária as quais são encontradas no mercado.
+Alguns exemplos desses tratamentos especiais para o manuseio de grandes volumes de dados são o modelo de programação MapReduce \citep{Dean2008MapReduce} e o sistema de armazenamento de objetos Haystack \citep{Beaver2010Finding}.
+Portanto, os sistemas os quais manuseiam grandes volumes de dados precisam ser planejados para sua carga de trabalho.
 
-O texto de um trabalho como um todo precisa estar encadeado \citep{zobel_writing_2015}. O encadeamento dos parágrafos é feito a partir do encadeamento de suas ideias centrais. Desta forma, a ideia central de cada parágrafo leva a ideia central do próximo e assim por diante. 
+Por outro lado, aplicações Web com arquitetura cliente-servidor sofrem com o problema da variedade de possíveis configurações tanto de hardware quanto de software no lado cliente.
+Os desenvolvedores dessas aplicações muitas vezes não possuem uma ampla gama de ambientes para realizarem testes, o que pode levar a problemas em determinados tipos de ambientes.
+Além disso, mesmo no caso onde existe acesso a diferentes tipos de ambiente, é improvável que a equipe de desenvolvimento tenha acesso direto, sendo necessário a colaboração de alguém externo ao desenvolvimento.
 
-Em linhas gerais, qualquer parágrafo do trabalho que não apresente citação é considerado como sendo criação dos autores. A utilização de textos transcritos de alguma fonte sem a devida referência a esta fonte e seus autores pode configurar a hipótese de plágio. Assim, todas as obras citadas devem ter as referências aos seus autores e devem figurar na lista de referências do trabalho.
+Por esses problemas, estamos propondo um framework o qual um desenvolvedor de qualquer aplicação Web seja capaz de facilmente obter métricas e estatísticas sobre provas de conceito as quais precisam ser executadas em diversas configurações de clientes por terceiros.
+Por exemplo, considere uma aplicação Web a qual precisa trafegar um volume grande o suficiente de dados entre o cliente e o servidor, de modo que seja impossível de manter todos dados no cliente.
+Para realizar o tráfego de dados, a equipe de desenvolvimento possui duas opções de formato de arquivo, utilizando arquivos CSV ou JSON.
+Para tomar essa decisão, a equipe decide por criar provas de conceito e executá-las em diferentes tipos de cliente.
+Porém, para que seja possível a execução por terceiros, além da prova de conceito a equipe ainda precisaria desenvolver como expor, como executar e como coletar as métricas.
 
-Estruturalmente a introdução é constituída pela motivação, definição do problema, objetivos, principais resultados alcançados e estrutura do trabalho, mas estes elementos não precisam aparecer de modo explícito no texto, \emph{i.e.}, a introdução não deve ter subseções. O leitor observa a presença destes elementos durante a leitura a partir do encadeamento do texto. Não existe uma regra para o número de parágrafos para cada um destes elementos. A motivação, por exemplo, pode ter vários parágrafos. A regra básica é que cada parágrafo tenha apenas uma ideia central e estas ideias levem a formulação da motivação. 
+Este é o tipo de cenário para qual o framework está sendo proposto, por disponibilizar uma aplicação Web casca para provas de conceito escritas nas linguagens JavaScript.
+Além de sem a necessidade de adaptações no código, já seja capaz de coletar as métricas de execução da prova de conceito e informações do ambiente executando.
+Deste modo, o desenvolvedor pode focar nas provas de conceito e na obtenção de ambientes e voluntários para seus testes, ao invés do desenvolvimento de um ambiente de testes.
 
-A motivação deve apresentar a importância e justificar a escolha do tema do seu trabalho. Pode ser entendida como o motivo da escolha do tema do \acr{TCC}. A explicação deve conter a importância do conteúdo do trabalho, ou a oportunidade de criação de uma utilidade do trabalho, ou a viabilidade de desenvolvimento do trabalho de tema do trabalho, deixando claro que existem lacunas que podem ser mais bem exploradas. 
+Além disso, o trabalho está dividido em quatro capítulos.
+O capítulo 2 e 3 correspondem aos aspectos metodológicos e trabalhos relacionados encontrados no campo de estudo.
+O capítulo 4 apresenta a proposta de desenvolvimento da ferramenta.
+Por fim, o capítulo 5 apresenta o estado atual do framework e o cronograma para a próxima etapa.
 
-A definição do problema pode ser entendida como a definição precisa do problema a ser tratado pelo \acr{TCC}, visando atender algum problema levantado na motivação. A definição não precisa se aprofundar em detalhes, mas deve ser feita de forma clara e objetiva, visando a expor a natureza do trabalho realizado. A definição do problema demonstra a intenção do trabalho, apresentando o assunto do trabalho de forma geral, mas motivadora para o leitor. Ela deve ser feita logo no início do trabalho caracterizando o mesmo. Porém, seu conteúdo deve ser revisto ao término do trabalho, para deixá-lo compatível com o método desenvolvido e os resultados alcançados.
-
-Os objetivos são as metas a serem atingidas pelo \acr{TCC}. Comumente faz parte dos objetivos estabelecer uma solução para a definição do problema. Ela pode caracterizar em uma visão de alto nível, a abordagem adotada para abordar o problema definido. Embora não obrigatório, o objetivo pode ser desmembrado em objetivo geral e objetivos específicos. No objetivo geral temos a meta principal do trabalho, respondendo o porquê do tema do trabalho. Nos objetos específicos temos a definição das metas individuais e sequenciais para atingir o objetivo geral. Neste momento, as contribuições devem ser elencadas e explicitadas.
-
-A estrutura geral do \acr{TCC} comumente é apresentada no último parágrafo da introdução. Cabe salientar que um trabalho não é um romance, isto é, não devem aparecer elementos surpresas ao longo do texto. O texto é elaborado e apresentado de modo bem organizado e planejado. 
 
 \chapter{Fundamentação teórica}
 \label{sec:background}
@@ -349,9 +360,12 @@ Nesse contexto, encontramos uma solução que se demonstrou interessante para o 
 
 O Sheetson é uma ferramenta gratuita, a qual torna possível a inserção e interação com uma planilha do Google Docs via API. Então a solução baseada nessa ferramenta seria:
 
-\textbf{Biblioteca Javascript}: Esse componente diz respeito a biblioteca que o pesquisador inserirá no código da sua aplicação, inserindo nela as métricas desejadas para medição.
+\begin{description}
+	\item[Biblioteca Javascript:] Esse componente diz respeito a biblioteca que o pesquisador inserirá no código da sua aplicação, inserindo nela as métricas desejadas para medição.
+	
+	\item[Sheetson:] O Sheetson receberia os dados enviados do cliente, e inseriria em uma tabela CSV, para download futuro.
 
-\textbf{Sheetson}: O Sheetson receberia os dados enviados do cliente, e inseriria em uma tabela CSV, para download futuro.
+\end{description}
 
 Essa abordagem possui diversas vantagens, como poder isolar no desenvolvimento da biblioteca a classe que controlará a persistência dos dados, e implementar inicialmente utilizando o sheetson. Se quisermos posteriormente implementar a primeira abordagem e substituir por chamadas a um backend real, com qualquer base de dados que seja, seria necessário somente substituir essa implementação, porém hoje ganharíamos um tempo grande no desenvolvimento do projeto.
 
