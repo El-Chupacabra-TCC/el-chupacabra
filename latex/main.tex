@@ -20,6 +20,7 @@
 % Definição de acronimos
 \newacro{TCC}{Trabalho de Conclusão de Curso}
 \newacro{GPT}{Transformador Pré-treinado Generativo}
+\newacro{API}{do inglês, \emph{Application Programming Interface}}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -90,7 +91,7 @@ Deste modo, o desenvolvedor pode focar nas provas de conceito e na obtenção de
 Além disso, o trabalho está dividido em quatro capítulos.
 O capítulo \ref{sec:fund_teorica} e \ref{sec:trab_relacionados} correspondem aos aspectos metodológicos e trabalhos relacionados encontrados no campo de estudo.
 O capítulo \ref{sec:metodologia} apresenta a proposta de desenvolvimento da ferramenta.
-Por fim, o capítulo \ref{sec:resul_preliminares} apresenta o estado atual do framework e o cronograma para a próxima etapa.
+Por fim, o capítulo \ref{sec:curr_state} apresenta o estado atual do framework e o cronograma para a próxima etapa.
 
 
 \chapter{Fundamentação teórica}
@@ -369,17 +370,55 @@ Essa abordagem possui diversas vantagens, como poder isolar no desenvolvimento d
 Além disso, o pesquisador poderia utilizar sua própria conta do Google para realizar suas pesquisas, eliminando a necessidade de contratar provedores de cloud ou de fazer deploy de alguma aplicação. Isso gera uma redução grande na complexidade do uso do projeto.
 
 
-\chapter{Resultados Preliminares}
-\label{sec:resul_preliminares}
+\chapter{Estado Atual do Trabalho}
+\label{sec:curr_state}
 
-A avaliação experimental compreende uma avaliação quantitativa ou qualitativa do trabalho a partir de critérios estabelecidos para comparação. Como em qualquer experimento, a capacidade de reprodução é fundamental para sua validade. Sendo assim, é importante descrever o processo de experimentação adotados, apresentar os resultados propriamente dito, com uma síntese explicativa dos principais resultados. Finalmente, devem ser apresentadas as ameaças ao estudo, \emph{i.e.}, qualquer coisa que possa tirar ou limitar a validade do experimento conduzido. 
+Com a definição do framework e seu escopo em mãos, começamos a pesquisa a qual dá origem ao capítulo \ref{sec:fund_teorica} com o objetivo de confirmar se havia espaço dentro do ecosistema das ferramentas de análise de desempenho e recursos computacionais para a proposta.
+Logo, como dentre os trabalhos encontradas durante a pesquisa há uma ausência de ferramentas com foco em permitir que um desenvolvedor seja capaz de avaliar provas de conceito de modo customizável em diversos tipos de configurações do lado do cliente.
+Concluímos que existe o espaço para a nossa proposta de framework onde o um desenvolvedor Web de aplicações cliente-servidor possa realizar avaliações de provas de conceito em diversas configurações de clientes com pouco esforço.
 
-\chapter{Conclusão}
-	\label{sec:conclusao}
+O primeiro passo, após a confirmação da oportunidade, foi o desenvolvimento do conceito do framework.
+Para tanto, foi definido o diagrama de conceitual do framework o qual tem sua importancia em definir o como os objetivos devem ser atingidos e esboçar as principais características da arquitetura do projeto.
+Nele há a definição do principal padrão de projeto utilizado no framework, o Composite, o qual tem o objetivo de permitir que uma prova de conceito seja dividida em partes as quais possuem métricas individuais.
+Deste modo, fica a critério do usuário do framework se sua abordagem trata as provas de conceito como um bloco único ou as subdivide tornando capaz a comparação de etapas e uma compreenção melhor de possíveis gargalos.
 
-	A conclusão é a finalização do trabalho e indica as conclusões obtidas com o desenvolvimento do trabalho, sejam elas positivas ou negativas. Nas conclusões, analisa-se o que era desejado (definido na introdução com os objetivos), comparando com o que foi alcançado pelo trabalho, descrevendo como os objetivos foram alcançados e o porquê de algum objetivo não ter sido alcançado. Destacam-se também as contribuições do trabalho, incluindo os benefícios e inovações trazidas pelo trabalho.
+Após definir os principais conceito para o desenvolvimento, nos voltamos para a arquitetura do projeto.
+Nela, criamos o diagrama de classes do projeto onde os aspectos práticos do projeto foram debatidos, dentre eles o principal ponto foi como realizar a captura dos dados das execuções.
+Pois, a abordagem tradicional ao problema seria o desenvolvimento de uma \acr{API} para receber e permitir a consulta dos dados.
+Entretanto, por disponibilizar os dados dos usuários do framework na Internet haveria a necessidade de criar uma camada de autorização na \acr{API}, ambas tarefas que expandem consideravelmente o escopo de desenvolvimento.
+A solução encontrada para esse problema é a utilização do programa de planilhas online Google Sheets, onde ao invés da execução do framework enviar as métricas para uma \acr{API} nossa, ela envia para uma planilha do desenvolvedor.
+Deste modo, qualquer desenvolvimento do lado servidor para o framework se torna desnecessário, pois as planilhas do Google Sheets atuariam tanto como lado servidor quanto como armazenamento dos dados.
 
-Apresentam-se os pontos do trabalho que merecem um maior aprofundamento de estudos. Isso possibilita a criação de novos trabalhos com estudos nesses pontos apresentados, na forma de uma continuidade das pesquisas efetuadas pelo trabalho. Os trabalhos futuros indicam, ainda, uma maturidade de pesquisa do autor do trabalho e esses pontos podem ser trabalhados, posteriormente.
+A última etapa realizada até o momento, é o desenvolvimento de uma prova de conceito do próprio framework.
+Para tanto, optamos por desenvolver utilizando a linguagem de programação TypeScript, a fim de exercitar as classes e relações planejadas durante a criação do diagrama conceitual e de classes.
+Nesta prova de conceito usamos objetos mock para simular os comportamentos do ambiente como consumo de memória e tempo gasto na execução de tarefas.
+Além de também simular como o usuário do framework aplicaria as suas provas de conceito na estrutura de árvore de tarefas.
+Durante essa etapa também encontramos algumas limitações do conceitos como inaplicabilidade do conceito de análise como uma avaliação independente de tarefa.
+
+O desenvolvimento do framework e produção textual estão sendo realizados em paralelo.
+A fundamentação teórica, capítulo \ref{sec:fund_teorica}, se encontra em fase de desenvolvimento e tem conclusão prevista para outubro de 2023.
+A descrição do framework, capítulo \ref{sec:metodologia}, será descrita de forma mais precisa e detalhada até janeiro de 2024, junto com um exemplo de sua utilização.
+A defesa da dissertação está prevista para janeiro de 2024. O cronograma indicado na tabela \ref{tab:cronograma} prevê as etapas abordadas neste trabalho.
+A tabela indica os meses de previsão de conclusão de cada uma das etapas.
+
+\begin{table}[!ht]
+	\centering
+	\caption{Cronograma de desenvolvimento da dissertação}
+	\begin{tabular}{l  c  c  c  c  c  c L{1.5cm} R{1.5cm}}
+		\toprule
+		\textbf{Atividade} & \textbf{fev-mar} & \textbf{abr-mai} & \textbf{jun-jul} & \textbf{ago-set} & \textbf{out-nov} & \textbf{dez-jan} \\
+		\midrule
+		Planejamento e Escopo  &  X  &    &    &    &    &    \\
+		Fundamentação Teórica  &  X  &  X  &    &    &    &    \\
+		Arquitetura  &    &  X  &  X  &    &    &    \\
+		Prova de Conceito  &    &    &  X  &  X  &    &    \\
+		Desenvolvimento  &    &    &    &  X  &  X  &    \\
+		Estudo de Caso  &    &    &    &    &  X  &  X  \\
+		Defesa  &    &    &    &    &    &  X  \\
+		\bottomrule
+	\end{tabular}
+	\label{tab:cronograma}
+\end{table}
 
 \label{bibpage}
 \renewcommand\bibname{Referências}
