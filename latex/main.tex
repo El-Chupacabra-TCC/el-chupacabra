@@ -77,7 +77,7 @@ Além disso, mesmo quando existe acesso a diferentes tipos de ambiente, é impro
 
 A fim de atenuar estes problemas, estamos propondo um framework o qual um desenvolvedor de uma aplicação Web cliente-servidor seja capaz de facilmente obter métricas e estatísticas sobre provas de conceito as quais precisam ser executadas em diversas configurações de clientes por terceiros.
 Por exemplo, considere uma aplicação Web a qual precisa trafegar um volume suficientemente grande de dados entre o cliente e o servidor, de modo que seja impossível de manter todos dados em cache no lado do cliente.
-Para realizar o tráfego de dados, a equipe de desenvolvimento precisa escolher entre duas opções: realizar o tráfego dos dados utilizando o formato de arquivos CSV ou o formato JSON.
+Para realizar o tráfego de dados, a equipe de desenvolvimento considera as seguintes opções de formato de arquivo: CSV, JSON, Arrow e Parquet.
 Para tomar essa decisão, a equipe decide realizar uma análise de desempenho e consumo de recursos em cada uma das abordagens variando os tipos de clientes.
 E, para incluir nas avaliações a maior variedade possível de clientes, eles também decidem automatizá-la, de modo que seja possível contar com o auxílio de voluntários.
 Porém, para que seja possível a execução por voluntários, além da prova de conceito a equipe ainda precisaria desenvolver como expor, executar e coletar as métricas durante a avaliação.
@@ -88,9 +88,9 @@ Ademais, o framework por padrão possui as métricas básicas implementadas, com
 Deste modo, o desenvolvedor pode focar nas provas de conceito e na obtenção de ambientes e voluntários, ao invés do desenvolvimento de infraestrutura para realização das avaliações.
 
 Além disso, o trabalho está dividido em quatro capítulos.
-O capítulo 2 e 3 correspondem aos aspectos metodológicos e trabalhos relacionados encontrados no campo de estudo.
-O capítulo 4 apresenta a proposta de desenvolvimento da ferramenta.
-Por fim, o capítulo 5 apresenta o estado atual do framework e o cronograma para a próxima etapa.
+O capítulo \ref{sec:fund_teorica} e \ref{sec:trab_relacionados} correspondem aos aspectos metodológicos e trabalhos relacionados encontrados no campo de estudo.
+O capítulo \ref{sec:metodologia} apresenta a proposta de desenvolvimento da ferramenta.
+Por fim, o capítulo \ref{sec:resul_preliminares} apresenta o estado atual do framework e o cronograma para a próxima etapa.
 
 
 \chapter{Fundamentação teórica}
@@ -369,8 +369,8 @@ Essa abordagem possui diversas vantagens, como poder isolar no desenvolvimento d
 Além disso, o pesquisador poderia utilizar sua própria conta do Google para realizar suas pesquisas, eliminando a necessidade de contratar provedores de cloud ou de fazer deploy de alguma aplicação. Isso gera uma redução grande na complexidade do uso do projeto.
 
 
-\chapter{Resultados}
-\label{sec:aval_exp}
+\chapter{Resultados Preliminares}
+\label{sec:resul_preliminares}
 
 A avaliação experimental compreende uma avaliação quantitativa ou qualitativa do trabalho a partir de critérios estabelecidos para comparação. Como em qualquer experimento, a capacidade de reprodução é fundamental para sua validade. Sendo assim, é importante descrever o processo de experimentação adotados, apresentar os resultados propriamente dito, com uma síntese explicativa dos principais resultados. Finalmente, devem ser apresentadas as ameaças ao estudo, \emph{i.e.}, qualquer coisa que possa tirar ou limitar a validade do experimento conduzido. 
 
