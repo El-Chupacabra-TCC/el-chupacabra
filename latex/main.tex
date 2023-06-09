@@ -1,5 +1,4 @@
-\documentclass[12pt]{tcc} 
-
+\documentclass[12pt]{tcc}
 \usepackage[brazil]{babel} 
 \usepackage[T1]{fontenc}
 %\usepackage[brazilian,hyperpageref]{backref}
@@ -7,6 +6,28 @@
 \usepackage[pt-BR]{datetime2}
 \DTMlangsetup{showdayofmonth=false}
 \usepackage[portuguese,ruled,linesnumbered,algochapter,titlenumbered]{algorithm2e}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Define TypeScript language style
+\lstdefinelanguage{TypeScript}{
+    keywords=[1]{import, from, export, class, extends, private, void, constructor, super, this, async, await, for, of, let, in, return, any, console, log},
+    keywordstyle=[1]\color{blue},
+    keywords=[2]{Task, CompositeTask},
+    keywordstyle=[2]\color{purple},
+    keywords=[3]{forEach},
+    keywordstyle=[3]\color{orange},
+    ndkeywords={true, false, catch, function, null, undefined},
+    ndkeywordstyle=\color{darkgray},
+    identifierstyle=\color{black},
+    sensitive=false,
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    commentstyle=\color{green}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    morestring=[b]',
+    morestring=[b]"
+}
 
 
 % As figuras ficam armazenadas na pasta figuras
@@ -421,6 +442,26 @@ A tabela indica os meses de previsão de conclusão de cada uma das etapas.
 	\end{tabular}
 	\label{tab:cronograma}
 \end{table}
+
+\section{Codigo da prova de conceito}
+
+\subsection{File 1 - Project.ts}
+\lstinputlisting[language=TypeScript]{./mock/Project.ts}
+
+\subsection{File 2 - Index.ts}
+\lstinputlisting[language=TypeScript]{./mock/Index.ts}
+
+\subsection{File 3 - Task.ts}
+\lstinputlisting[language=TypeScript]{./mock/Tasks/Task.ts}
+
+\subsection{File 4 - MockTask.ts}
+\lstinputlisting[language=TypeScript]{./mock/Tasks/MockTask.ts}
+
+\subsection{File 5 - CompositeTask.ts}
+\lstinputlisting[language=TypeScript]{./mock/Tasks/CompositeTask.ts}
+
+\subsection{File 6 - SimpleTask.ts}
+\lstinputlisting[language=TypeScript]{./mock/Tasks/SimpleTask.ts}
 
 \label{bibpage}
 \renewcommand\bibname{Referências}
