@@ -373,27 +373,28 @@ Além disso, o pesquisador poderia utilizar sua própria conta do Google para re
 \chapter{Estado Atual do Trabalho}
 \label{sec:curr_state}
 
-Com a definição do framework e seu escopo em mãos, começamos a pesquisa a qual dá origem ao capítulo \ref{sec:fund_teorica} com o objetivo de confirmar se havia espaço dentro do ecosistema das ferramentas de análise de desempenho e recursos computacionais para a proposta.
-Logo, como dentre os trabalhos encontradas durante a pesquisa há uma ausência de ferramentas com foco em permitir que um desenvolvedor seja capaz de avaliar provas de conceito de modo customizável em diversos tipos de configurações do lado do cliente.
-Concluímos que existe o espaço para a nossa proposta de framework onde o um desenvolvedor Web de aplicações cliente-servidor possa realizar avaliações de provas de conceito em diversas configurações de clientes com pouco esforço.
+Com a definição do framework e seu escopo em mãos, realizamos a pesquisa a qual origina o capítulo \ref{sec:fund_teorica}.
+Tendo como objetivo, confirmar se há espaço dentro do ecossistema das ferramentas de análise de desempenho e recursos computacionais para o que estamos propondo.
+Como dentre as ferramentas encontradas não havia uma voltada para que um desenvolvedor seja capaz de avaliar provas de conceito de modo customizável em diversos tipos de configurações do lado do cliente, concluímos que há espaço para a proposta do nosso framework.
 
-O primeiro passo, após a confirmação da oportunidade, foi o desenvolvimento do conceito do framework.
-Para tanto, foi definido o diagrama de conceitual do framework o qual tem sua importancia em definir o como os objetivos devem ser atingidos e esboçar as principais características da arquitetura do projeto.
-Nele há a definição do principal padrão de projeto utilizado no framework, o Composite, o qual tem o objetivo de permitir que uma prova de conceito seja dividida em partes as quais possuem métricas individuais.
-Deste modo, fica a critério do usuário do framework se sua abordagem trata as provas de conceito como um bloco único ou as subdivide tornando capaz a comparação de etapas e uma compreenção melhor de possíveis gargalos.
+Após isso, o próximo passo foi a definição dos conceitos do framework.
+Para tanto, elaboramos o diagrama conceitual o qual tem o papel de definir como os objetivos do framework devem ser alcançados e planejar as principais características da arquitetura do projeto.
+Por exemplo, nessa etapa foi onde definimos que o padrão de projeto Composite seria utilizado, com o objetivo de permitir que uma prova de conceito seja dividida em etapas as quais possuem suas próprias métricas.
+Deste modo, fica a critério do usuário se sua abordagem trata as provas de conceito como um bloco único ou como um conjunto de etapas, o que pode permitir diagnósticos de desempenho mais precisos.
 
-Após definir os principais conceito para o desenvolvimento, nos voltamos para a arquitetura do projeto.
-Nela, criamos o diagrama de classes do projeto onde os aspectos práticos do projeto foram debatidos, dentre eles o principal ponto foi como realizar a captura dos dados das execuções.
-Pois, a abordagem tradicional ao problema seria o desenvolvimento de uma \acr{API} para receber e permitir a consulta dos dados.
-Entretanto, por disponibilizar os dados dos usuários do framework na Internet haveria a necessidade de criar uma camada de autorização na \acr{API}, ambas tarefas que expandem consideravelmente o escopo de desenvolvimento.
-A solução encontrada para esse problema é a utilização do programa de planilhas online Google Sheets, onde ao invés da execução do framework enviar as métricas para uma \acr{API} nossa, ela envia para uma planilha do desenvolvedor.
-Deste modo, qualquer desenvolvimento do lado servidor para o framework se torna desnecessário, pois as planilhas do Google Sheets atuariam tanto como lado servidor quanto como armazenamento dos dados.
+O terceiro passo foi voltado para a arquitetura do projeto.
+Onde elaboramos o diagrama de classes e avaliamos os principais aspectos práticos de seu desenvolvimento.
+Dentre eles, o ponto de maior destaque foi como realizar a captura das métricas de execuções realizadas por voluntários.
+Pois, uma abordagem tradicional ao problema envolveria o desenvolvimento de uma \acr{API} para nos permitir receber e disponibilizar a consulta dos dados.
+Entretanto, disponibilizar os dados dos usuários do framework na Internet tornaria necessário também criar uma camada de autorização, expandindo ainda mais o escopo de desenvolvimento.
+A solução encontrada para o problema foi a utilização do programa de planilhas online Google Sheets, onde ao invés da execução do framework enviar as métricas para uma \acr{API} nossa, ela envia para uma planilha do próprio usuário.
+Deste modo, não há a necessidade do desenvolvimento de \acr{API}, pois, utilizariamos uma do Google Sheets e o controle de acesso aos dados também fica sob responsabilidade deles.
 
-A última etapa realizada até o momento, é o desenvolvimento de uma prova de conceito do próprio framework.
-Para tanto, optamos por desenvolver utilizando a linguagem de programação TypeScript, a fim de exercitar as classes e relações planejadas durante a criação do diagrama conceitual e de classes.
-Nesta prova de conceito usamos objetos mock para simular os comportamentos do ambiente como consumo de memória e tempo gasto na execução de tarefas.
-Além de também simular como o usuário do framework aplicaria as suas provas de conceito na estrutura de árvore de tarefas.
-Durante essa etapa também encontramos algumas limitações do conceitos como inaplicabilidade do conceito de análise como uma avaliação independente de tarefa.
+A última etapa atual está sendo o desenvolvimento de uma prova de conceito do próprio framework.
+Para tanto, optamos por desenvolver utilizando a linguagem de programação TypeScript, a fim de exercitar as classes e relações planejadas durante a criação dos diagramas.
+Nela estamos utilizando objetos mock, a fim de simular comportamentos do ambiente como consumo de memória e tempo gasto na execução de tarefas.
+Além de simular como um usuário do framework aplicaria a estrutura de árvore de tarefas em suas provas de conceito.
+Durante essa etapa também encontramos algumas limitações do conceitos como a inaplicabilidade do conceito de análise como uma avaliação independente de tarefas, pois, seria necessário restringir a liberdade na obtenção de métricas.
 
 O desenvolvimento do framework e produção textual estão sendo realizados em paralelo.
 A fundamentação teórica, capítulo \ref{sec:fund_teorica}, se encontra em fase de desenvolvimento e tem conclusão prevista para outubro de 2023.
@@ -413,7 +414,7 @@ A tabela indica os meses de previsão de conclusão de cada uma das etapas.
 		Arquitetura  &    &  X  &  X  &    &    &    \\
 		Prova de Conceito  &    &    &  X  &  X  &    &    \\
 		Desenvolvimento  &    &    &    &  X  &  X  &    \\
-		Estudo de Caso  &    &    &    &    &  X  &  X  \\
+		Exemplo de Uso  &    &    &    &    &  X  &  X  \\
 		Defesa  &    &    &    &    &    &  X  \\
 		\bottomrule
 	\end{tabular}
