@@ -8,6 +8,8 @@
 \usepackage[portuguese,ruled,linesnumbered,algochapter,titlenumbered]{algorithm2e}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage[toc,page]{appendix}
+\usepackage[portuguese]{babel}
 
 % Define TypeScript language style
 \lstdefinelanguage{TypeScript}{
@@ -29,6 +31,13 @@
     morestring=[b]"
 }
 
+\lstset{
+    backgroundcolor=\color{lightgray},
+    numbers=left,
+    stepnumber=1,
+    numberstyle=\small\ttfamily\color{gray},
+    numbersep=5pt
+}
 
 % As figuras ficam armazenadas na pasta figuras
 \graphicspath{{./figures/}}
@@ -485,6 +494,7 @@ A tabela indica os meses de previsão de conclusão de cada uma das etapas.
 
 \label{lastpage}
 
+\begin{appendices}
 \section{Codigo da prova de conceito}
 
 \subsection{Project.ts}
@@ -525,5 +535,6 @@ A tabela indica os meses de previsão de conclusão de cada uma das etapas.
 
 \subsection{Metrics/GetResourceUsage.ts}
 \lstinputlisting[language=TypeScript]{./mock/Metrics/GetResourceUsage.ts}
+\end{appendices}
 
 \end{document}
