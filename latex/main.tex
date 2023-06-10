@@ -40,7 +40,8 @@
 
 % Definição de acronimos
 \newacro{TCC}{Trabalho de Conclusão de Curso}
-\newacro{GPT}{Transformador Pré-treinado Generativo}
+\newacro{QoS}{qualidade de serviço}
+\newacro{GPT}{transformador pré-Treinado generativo}
 \newacro{API}{\emph{Application Programming Interface}}
 
 \begin{document}
@@ -120,12 +121,11 @@ Por fim, o capítulo \ref{cap:estado_atual} apresenta o estado atual do framewor
 \chapter{Fundamentação teórica}
 \label{cap:fund_teorica}
 
-Para o levantamento da bibliografia foram utilizados: 
-a ferramenta Elicit, um assistente de pesquisa baseado em um modelo \acr{GPT} de aprendizado de máquina.
-E, a ferramenta Connected Papers, a qual para uma dada pesquisa gera um grafo de pesquisas similares baseado em cocitações e acoplamento bibliográfico.
+Para o levantamento da bibliografia foram utilizadas duas ferramentas principais: a Elicit, um assistente de pesquisa baseado em um modelo \acr{GPT} de aprendizado de máquina, e a ferramenta Connected Papers, a qual para um dado artigo gera um grafo de artigos similares baseado em cocitações e acoplamento bibliográfico.
 
-A ferramenta Elicit funciona recebendo um string de busca, a qual pode ser uma pergunta em linguagem natural, para retornar uma página com as 7 pesquisas e um resumo das informações chave em um formato de tabela.
-Portanto, no Elicit utilizei ao todo 15 strings de busca e consultei até a segunda página de resultados, totalizando 210 pesquisas encontradas, considerando duplicações.
+A ferramenta Elicit funciona recebendo uma string de busca, a qual pode ser uma pergunta em linguagem natural, e retorna uma página com 7 pesquisas relacionadas e um resumo das informações chave de cada uma em um formato de tabela.
+Dessa forma, no Elicit utilizamos ao todo 15 strings de busca, e consultamos até a segunda página dos resultados de cada uma, totalizando 210 pesquisas encontradas, considerando as duplicações.
+
 
 \begin{table}[!ht]
 	\centering
@@ -159,9 +159,9 @@ Portanto, no Elicit utilizei ao todo 15 strings de busca e consultei até a segu
 	\label{tab:string-busca-elicit}
 \end{table}
 
-Além disso, duas das pesquisas encontradas por meio do Elicit também foram utilizadas como strings de busca na ferramenta Connected Papers.
-O Connected Papers retorna para uma dada pesquisa, um grafo com as 40 pesquisas mais similares encontradas por ele.
-As quais podem também ser visualizadas em um formato de tabela e ordenadas pela similaridade.
+Além disso, três das pesquisas encontradas por meio do Elicit também foram utilizadas como strings de busca na ferramenta Connected Papers.
+O Connected Papers retorna para uma dada pesquisa, um grafo com as 40 pesquisas mais similares encontradas por ele, as quais podem também ser visualizadas em um formato de tabela e ordenadas por similaridade.
+
 
 \begin{table}[!ht]
 	\centering
@@ -178,9 +178,9 @@ As quais podem também ser visualizadas em um formato de tabela e ordenadas pela
 	\label{tab:string-busca-connected-papers}
 \end{table}
 
-Para selecionar as pesquisas dentre as encontradas por meio tanto do Elicit quanto do Connected Papers foi utilizado um critério inspirado em árvores de decisão.
-Onde após a leitura do resumo da pesquisa, são respondidas até três perguntas sobre a pesquisa e caso as três respostas sejam sim, ele será selecionado para uma leitura completa.
+Para selecionar as pesquisas dentre as encontradas por meio tanto do Elicit quanto do Connected Papers, utilizamos um critério inspirado em árvores de decisão, onde após a leitura do resumo da pesquisa são respondidas até três perguntas sobre o conteúdo, e caso as três respostas sejam sim, o artigo é selecionado para uma leitura completa.
 Porém, caso a resposta da primeira ou segunda pergunta seja não, a pesquisa é descartada.
+
 
 \begin{figure}[!ht]
 	\centering
@@ -191,7 +191,7 @@ Porém, caso a resposta da primeira ou segunda pergunta seja não, a pesquisa é
 
 \begin{table}[!ht]
 	\centering
-	\caption{Trabalho Encontrados por Ferramenta}
+	\caption{Trabalhos Encontrados pelas Ferramentas}
 	\begin{tabular}{c  c L{1.5cm} R{1.5cm}}
 		\toprule
 		\textbf{Ferramenta Utilizada} & \textbf{Quantidade} \\
@@ -199,7 +199,7 @@ Porém, caso a resposta da primeira ou segunda pergunta seja não, a pesquisa é
 		Elicit  &  280  \\
 		Connected Papers  &  120  \\
 		Total  &  400  \\
-		Total Selecionados  &  15  \\
+		Total Selecionados  &  4  \\
 		\bottomrule
 	\end{tabular}
 	\label{tab:trabalhos-encontrados}
@@ -209,73 +209,101 @@ Porém, caso a resposta da primeira ou segunda pergunta seja não, a pesquisa é
 \label{sec:trabalhos_relacionados}
 	\label{sec:trab_relacionados}
 
-\begin{description}
 	% \item \textbf{Paper 1}: Summary of the first paper goes here. This paragraph provides a concise overview of the paper's objectives, methodology, and key findings.
+	\section{Ferramentas Para Medição no Lado do Cliente}
+	Utilizando os métodos descritos na seção anterior do trabalho, conseguimos levantar um panorama geral dos frameworks e soluções existentes e propostos à academia, assim como classifica-los utilizando alguns parâmetros, afim de entender se a nossa proposta se demonstra complementar ao estado da arte. 
+	Os critérios da classificação são: 
 
-	\item[Jensen, 2015, MemInsight: Platform-Independent Memory Debugging for JavaScript:]
-	Uma ferramenta criada por engenheiros da Samsung para gerar o perfil do consumo de memória de aplicações JavaScript.
-	A ferramenta se diferencia por não se basear em snapshots, portanto, é capaz de obter o comportamento contínuo, por ser independente de plataforma e não precisa de uma engine de JavaScript modificada.
+
+	\begin{table}[!ht]
+		\centering
+		\caption{Strings de busca utilizadas na ferramenta Connected Papers}
+		\begin{tabular}{c c L{1.5cm} R{1.5cm}}
+			\toprule
+			\textbf{Critério} & \textbf{Descrição}\\
+			\midrule
+			Arquitetura Simples & Se a arquitetura da ferramenta é de fácil entendimento\\
+			Flexibilidade&Se a ferramenta se adapta em diversos contextos de medição\\
+			Curva de Apredizado&Se a ferramenta possui uma curva de aprendizado rápida\\
+			Multiplataforma&Se a ferramenta suporta o uso em diversas plataformas\\
+			Persistência&Se a ferramente persiste dados para análise futura\\
+			\bottomrule
+		\end{tabular}
+		\label{tab:string-busca-connected-papers}
+	\end{table}
+
+
+	\par Dessa forma, a classificação dos trabalhos selecionados se encontra na tabela abaixo:
+
+		\begin{table}[ht]
+			\scriptsize
+			\caption{Classificação das Ferramentas Encontradas} % title of Table
+			\centering % used for centering table
+			\begin{tabular}{c c c c c c} % centered columns (4 columns)
+			\hline\hline %inserts double horizontal lines
+			\textbf{Plataforma} & \textbf{Arquitetura Simples} & \textbf{Flexibilidade} & \textbf{Curva de Aprendizado} & \textbf{Multiplataforma} & \textbf{Persistência} \\[0.5ex]
+
+			%heading
+			\hline % inserts single horizontal line
+			MemInsight & sim & não & sim & sim & não \\
+			WePR & não & não & não & sim & sim \\
+			Gember & sim & não & sim & não & sim \\
+			Mobilyzer & sim & não & não & não & sim \\
+			\hline %inserts single line
+			\end{tabular}
+			\label{table:nonlin} % is used to refer this table in the text
+		\end{table}
 	
-	\item[Arese, 2019, Measuring Web Latency and Rendering Performance: Method, Tools, and Longitudinal Dataset:]
-	Apresenta a ferramenta Webget, uma ferramenta capaz de medir métricas de Web QoS como tempo de DNS, tempo até o primeiro byte e tempo de download. Além disso, ela também é capaz de capturar métricas de complexidade como quantidade e tamanho dos objetos do website.
-	Cita a evolução da Web e o aumento da complexidade da tarefa de navegar pela Web. Algo que pode afetar consideravelmente a experiência do usuário (QoE), levando a consequências negativas para negócios. Além disso, este trabalho inclui um pouco de como a Web evoluiu e contém uma parte experimental robusta.
 
-	\item[Bocchi, 2016, Measuring the Quality of Experience of Web users:]
-	Aborda as métricas usadas para medir a qualidade de experiência dos usuários na Web. Dispondo o estado da arte, de 2016, das métricas e ferramentas, além de aplicá-las na Alexa top-100 páginas da Web e argumenta o impacto da QoE na receita das empresas, citando Big Techs.
+		\subsection{MemInsight}
+		\par No contexto de medição de memória, temos a MemInsight \citep{Jensen2015MemInsight}. Essa ferramenta roda de forma independente sobre uma engine Javascript, não precisando de um browser para executar, e faz a análise do consumo de memória através de um conjunto de traces, dados estruturados que tornam possível remontar o ciclo de vida dos objetos em memória, e que permitem a análise de desperdício de recursos durante a execução do programa. 
+		\par Analisando a ferramenta, foi observado que ela só trabalha com medição de métricas de memória, não permitindo generalizar consultas de outros tipos, por isso classificamos como não flexível com relação as métricas. Além disso, por ser uma ferramenta orientada ao “debug” de aplicações, não realiza nativamente a persistência e organização desses dados.
+		
 
-	\item[Saverimoutou, 2020, Web View: A Measurement Platform for Depicting Web Browsing Performance and Delivery:]
-	Propõem a plataforma automática Web View capaz de realizar medições em Website populares usando um ambiente de usuário representativo. Sua arquitetura é dividida em três partes: detectores, banco de dados e site de visualização. Sendo o objetivo da ferramenta realizar um monitoramento da QoE de um conjunto de sites.
+		\subsection{WePR}
+		\par \citep{Asrese2019MeasuringWL} também propôs uma feramenta para medição client-side, porém agora com o enfoque em medir métricas de \acr{QoS}, nomeada WePR. No trabalho, ele apresenta um panorama da evolução da web, especialmente de como a latência se desenvolveu nos websites, e sustenta a necessidade desse tipo de medição como forma de melhorar a experiência do usuário, que indicam ser um fator determinante no abandono ou sucesso de um website. A ferramenta foi testada utilizando grandes websites como Google, Youtube e Facebook. 
+		\par A arquitetura da ferramenta é distribuida, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador (loadbalancer), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor os URL’s dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o loadbalancer, e por fim algum dos servidores de renderização envia os dados para persistência.
+		\par O enfoque da ferramenta é a medição de performance de websites, dessa forma sua arquitetura e usabilidade não foram construídas de forma simples de extender, tornando dificil a utilização da ferramenta em outros contextos. Além disso, não temos a possibilidade de customizar as métricas, o que torna pouco flexível quando se trata de outras medições, como métricas de performance por exemplo.
+		
+		\subsection{Gember}
+		\par \citep{Gember2012Obtaining} também traz um estudo sobre medição client-side, porém dessa vez em clientes móveis, utilizando dados de um provedor de internet e também de experimentos controlados. Esse tipo de medição é muito útil para provedores de internet e desenvolvedores, que precisam entender como suas aplicações performam interagindo com a rede móvel de internet.
+		\par Foi desenvolvido no trabalho um protótipo para Android de um medidor de performance para analisar somente quando o dispositivo está ativo, e que é integrado ao app como uma biblioteca. A arquitetura consiste basicamente de um controlador central (servidor), e múltiplos clientes (aparelhos) com o código rodando em seus celulares. Dessa forma, o pesquisador faz uma requisição para esse controlador, e ele coordena a coleta do que foi solicitado nos aparelhos, salvando os resultados no servidor.
+		\par O serviço inicialmente coleta latência, throughput, streaming e o tempo de carregamento de páginas web, mas é extensível para outras métricas de rede. A limitação aqui é a utilização no cliente, somente no ambiente mobile Android, tornando pouco flexível a utilização dessa ferramenta entre diferentes plataformas, e também a coleta somente de informações de rede.
 
-	\item[Rajiullah, 2019, Web Experience in Mobile Networks: Lessons from Two Million Page Visits:]
-	Tem como objetivo responder as perguntas:
-	Quais são os principais fatores que afetam a navegação web em redes móveis?
-	Quais os benefícios em usar novos protocolos como HTTP 2 e QUIC?
-	Como os navegadores web impactam na QoE?
-	Usa a plataforma aberta MONROE para realizar experimentos em redes móveis.
+		\subsection{Mobilyzer}
+		\par Ainda no contexto de medição de rede, se encontra o Mobilyzer \citep{Nikravesh2015Mobilyzer}, uma plataforma aberta para medição de rede em dispositívos móveis. Essa plataforma foi criada com o objetivo de prover uma solução escalável, eficiente e controlável, que fosse possível de ser incorporada tanto a apps em desenvolvimento, quanto em apps que já estão desenvolvidos, para suportar pesquisas e testes em medição de rede. 
+		\par Ela funciona utilizando alguns componentes básicos, sendo eles: 
+		\begin{enumerate}
+			\item Uma biblioteca Android, que é integrada aos aplicativos para coletar as informações e enviar ao servidor. Ela é incorporada direto no código fonte.
+			\item Um componente chamado gerenciador de memória, no qual o pesquisador pode inserir medições de forma customizada e mais eficiente. Ele também realiza o scheduling das medições, e também cordena e monitora os dispositivos para que não tenha sobrecarga em nenhum aparelho ou rede medida. 
+			\item Um servidor na núvem, que fica responsável por coletar, analisar aplicando regras e publicar os dados coletados dos dispositivos. Essa arquitetura centralizada simplifica o compartilhamento de dados entre essas etapas, podendo integrar outras ferramentas de analise de dados com a base das coletas.
 
-	\item[Qazi, 2020, Mobile Web Browsing Under Memory Pressure:]
-	Uma investigação sobre o uso de memória dentro do contexto de navegação web. O artigo fala do aumenta da complexidade da navegação web, dando como evidências o aumento do tamanho médio de uma paǵina web em 6 vezes e como isso afeta o tempo de carregamento no ambiente mobile. Portanto, o artigo foca no aspecto do uso de memória e como isso impacta a navegação.
+		\end{enumerate}
+		\par Uma dificuldade no uso do Mobilyzer em pesquisas é que essa plataforma também se restringe ao ambiente mobile, e apenas na plataforma Android. Isso diminui bastante possibilidades de medição em pesquisas multiplataforma. Além disso, não temos muita flexibilidade com relação as métricas, sendo em sua maior parte métricas de rede.
 
-	\item[Naseer, 2021, WebMedic: Disentangling the Memory-Functionality Tension for the Next Billion Mobile Web Users:]
-	Aborda os problemas de performance mais comuns na navegação web de usuários de países em desenvolvimento por usarem dispositivos low-end (baixo custo).
+		\subsection{FadeCow}
+		\par Após o descrito, podemos posicionar o FadeCow com relação aos critérios que estabelecemos no começo dessa secção. Temos um modelo de arquitetura simples, a possibilidade de expandir e construir métricas diversas, uma curva de aprendizado suave, a compatibilidade com múltiplas plataformas, pois a coleta das métricas ocorre no browser, e também a persistência desses dados para futura análise.
+		\par Assim, a tabela teria a seguinte configuração após a adição do FadeCow:
 
-	\item[Gember, 2008, Obtaining in-context measurements of cellular network performancecript:]
-	Provedores de internet, e também desenvolvedores, as vezes precisam entender como a internet móvel performa nos clientes. Essa medição é chamada in context, que significa a performance da internet somente quando o usuário está interagindo com a aplicação/aparelho. É dificil obter essa medição, devido a diversos fatores, como o contexto físico do aparelho, por exemplo.
-	Esse paper fez um estudo sobre essa medição, utilizando dados de um provedor de internet e também de experimentos controlados, e desenvolveram um protótipo para Android de um medidor de performance para analisar a performance quando o dispositivo está ativo.
-	O sistema consiste de um controller centralizado e aparelhos mobile rodando um serviço local para a medição. Administradores enviam requests para o controlador que contém as métricas de interesse, qual será o tempo da medição, ou outro requisito. Ex: medir latência nos Androids no Rio na hora do rush (18h). O controlador envia a requisição para os clientes que atendem os requisitos informados. Após a medição, os resultados são juntados e enviados para o admin pelo controlador.
-	Esse medidor, pré instalado no dispositivo do cliente, recebe a requisição do controlador, e mandam inicialmente informações brutas para o controlador, como o consumo de internet , estado do dispositivo (se está com a tela ligada ou não) e outras informações do aparelho pra identificar quando é o momento de fazer a medição, e após isso começa propriamente a medição quando as condições são atendidas (o aparelho está ligado, está na hora informada, internet conectada). O serviço inicialmente coleta latência, throughput, streaming e o tempo de carregamento de páginas web, mas os autores dizem que é extensível. Não achei o nome da ferramenta, nem implementação.
+		\begin{table}[ht]
+			\scriptsize
+			\caption{Classificação das Ferramentas Encontradas Após Adição do FadeCow} % title of Table
+			\centering % used for centering table
+			\begin{tabular}{c c c c c c} % centered columns (4 columns)
+			\hline\hline %inserts double horizontal lines
+			\textbf{Plataforma} & \textbf{Arquitetura Simples} & \textbf{Flexibilidade} & \textbf{Curva de Aprendizado} & \textbf{Multiplataforma} & \textbf{Persistência} \\[0.5ex]
 
-	\item[Zhang, 2009, WPBench: a benchmark for evaluating the client-side performance of web 2.0 applications
-	:]
-	Propõe uma ferramenta chamada WPBench de benchmark para avaliar responsividade dos browsers/aplicações modernas. São removidas as variações de servidores e de redes para deixar mais parecido com o que o usuário interage. Ele grava as interações típicas do usuário com uma aplicação web, e depois reproduz em diversos browsers para fazer o benchmark. Eles conseguem manter as mesmas características de servidor, rede e as mesmas interações do usuário, gerando uma comparação mais justa.
-
-	\item[Nikravesh, 2015, Mobilyzer: An Open Platform for Controllable Mobile Network Measurements:]
-	No contexto de medição de rede, surgiu o Mobilyzer (Nikravesh, 2015), uma plataforma aberta para medição de rede em dispositívos móveis. Essa plataforma foi criada com o objetivo de prover uma solução escalável, eficiente e controlável, que fosse possível de ser incorporada tanto a apps em desenvolvimento, quanto em apps que já estão desenvolvidos, para suportar pesquisas e testes em medição de rede. 
-	Ela funciona utilizando alguns componentes básicos, sendo eles:
-	Uma biblioteca Android, que é integrada aos aplicativos para coletar as informações e enviar ao servidor. Ela é incorporada direto no código fonte.
-	Um componente chamado Measurement Manager, no qual o pesquisador pode inserir medições de forma customizada e mais eficiente. Ele também realiza o scheduling das medições, e também cordena e monitora os dispositivos para que não tenha sobrecarga em nenhum aparelho ou rede medida.
-	Um servidor em cloud, que fica responsável por coletar, analisar aplicando regras e publicar os dados coletados dos dispositivos. Essa arquitetura centralizada simplifica o compartilhamento de dados entre essas etapas, podendo integrar outras ferramentas de analise de dados com a base das coletas.
-	Uma dificuldade no uso do Mobilyzer em pesquisas é que essa plataforma se restringe ao ambiente mobile, e apenas na plataforma Android. Isso restringe bastante possibilidades de medição em pesquisas multiplataforma. Nesse contexto, seria interessante trazer uma solução que contemplasse multiplas plataformas para essas medições.
-
-	\item[Client-side performance profiling of JavaScript for web applications:]
-	Essa tese descreve como foi criado um profiler genérico para JavaScript em aplicações web. Primeiramente, o desempenho do lado do cliente nas aplicações web é explicado e os fatores que contribuem para esse desempenho são discutidos. Para garantir que diferentes métodos possam ser comparados quantitativamente, foi desenvolvido um método de avaliação. Vários métodos foram propostos e avaliados antes da implementação do método de perfilamento. Para permitir uma fácil integração com qualquer aplicação web, foi criada uma ferramenta de integração. Embora o profiler tenha algum impacto no desempenho da aplicação, ele foi considerado preciso, fácil de usar e portátil.
-
-	\item[Using a Proxy to Measure Client-Side Web Performance::]
-	Apresentam o design e a implementação de um método para medir várias variáveis relacionadas à navegação do lado do cliente de páginas da web. Por exemplo com este método, é possivel medir a contribuição das consultas DNS para a latência total ao carregar uma página da web, conforme experimentada pelo usuário.
-
-	\item[BenchLab: An Open Testbed for Realistic Benchmarking::]
-	Apresenta uma ferramenta para fazer bachmark em aplicações web. Essa ferramenta testa as uma aplicação simulando um usuario usando a aplicação, usando aplicações geralmente usadas para testes como o Selenium.
-
-	\item[Architectural Characterization of Client-side JavaScript Workloads \& Analysis of Software Optimizations:]
-	O paper apresenta uma caracterização arquitetural detalhada de uma nova suíte de testes de referência para JavaScript, bem como uma análise de perfil do mecanismo de tempo de execução v8 JavaScript, popularmente utilizado pela Google. A análise ilustra o impacto arquitetônico de otimizações específicas do tempo de execução, bem como insights adicionais sobre a interação entre o mecanismo de tempo de execução e diferentes aplicações JavaScript. As avaliações são realizadas com versões de estoque de novas cargas de trabalho de JavaScript do lado do cliente do JetStream, bem como em versões modificadas que fecham a lacuna de representação em nível de programa com sites do mundo real.
-utiliza várias ferramentas de benchmark focadas no javascript: SunSpider, Octane e JetStream.
-
-	\item[JSMeter: Comparing the Behavior of JavaScript Benchmarks with Real Web Applications:]
-	Neste artigo, é avaliado o comportamento do JavaScript em aplicações web comerciais e comparado com benchmarks, como SunSpider e V8. O estudo mediu dois aspectos específicos do tempo de execução do JavaScript: funções e códigos e eventos e manipuladores. Os resultados mostram que os benchmarks não são representativos de muitos sites reais e que as conclusões tiradas a partir deles podem ser enganosas. Alguns comportamentos comuns de sites reais, como a execução orientada a eventos, a predominância de códigos inativos e a prevalência de funções curtas, são subestimados nos benchmarks.
-
-	
-	\end{description}
-
+			%heading
+			\hline % inserts single horizontal line
+			MemInsight & sim & não & sim & sim & não \\
+			WePR & não & não & não & sim & sim \\
+			Gember & sim & não & sim & não & sim \\
+			Mobilyzer & sim & não & não & não & sim \\
+			FadeCow & sim & sim & sim & sim & sim \\
+			\hline %inserts single line
+			\end{tabular}
+			\label{table:nonlin} % is used to refer this table in the text
+		\end{table}
 
 \chapter{Método} 
 \label{cap:metodologia}
