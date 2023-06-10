@@ -426,6 +426,37 @@ Essa abordagem possui diversas vantagens, como poder isolar no desenvolvimento d
 Além disso, o pesquisador poderia utilizar sua própria conta do Google para realizar suas pesquisas, eliminando a necessidade de contratar provedores de cloud ou de fazer deploy de alguma aplicação. Isso gera uma redução grande na complexidade do uso do projeto.
 
 
+
+\chapter{Prova de conceito}
+\label{cap:prova_de_conceito}
+\section{Como funciona}
+A fim de pôr a prova a modelagem, foi desenvolvida uma prova de conceito com dados mockados, que simulam os recursos de uma máquina. Essa abordagem nos permitiu avaliar a eficácia da modelagem sem depender de recursos físicos reais, visando manter o foco na estrutura geral da aplicação. A prova de conceito foi implementada usando Typescript, uma linguagem de programação que será convertida na linguagem Javascript, que é uma linguagem geralmente usada em sites web. A escolha do Typescript facilita expressar as classes e heranças definidas na modelagem do diagrama, ter uma especificação mais clara dos tipos usados e também permite a execução no navegador, onde o framework será executado.
+
+O código da prova de conceito se encontra no apêndice. Nele temos a classe Projeto chamada Project no código, que é a classe que executará as tarefas chamada Tasks, e cada tarefa terá suas métricas chamada Metrics a serem avaliadas, que serão posteriormente salvas pela classe de persistência de dados. Para executar as análises precisamos de um ponto de partida, no código especificado é a classe index, para criar a árvore de tarefas e executar o Projeto para obter os resultados.
+
+No desenvolvimento da prova de conceito foram criados recursos fictícios de memória e de cpu. Para a métrica de memória, foram criados uma classe estática que inicializa com o valor inicial da memória e as operações de alocação e desalocação, o que simula o comportamento da memória do computador em uma aplicação com dados reais. Para a CPU foi criada um uma função que espera um tempo aleatório, para simular que alguma tarefa esteja sendo executada e consumindo esse tempo de processamento.
+
+A partir da utilização dos recursos de memória e de CPU, foi possível criar métricas viáveis e avaliar os seus resultados. Na métrica de memória, é verificado o quanto da memória mockada foi utilizada pela tarefa, enquanto na métrica de CPU é calculada a diferença entre a data de início e de fim da tarefa para obtermos o tempo da execução. 
+
+Foram implementadas dois tipos de tarefas: as tarefas simples e as compostas. A primeira delas são as implementações que serão avaliadas pelo framework e que têm métricas que serão avaliadas na sua execução. Já as tarefas compostas são uma agregação de tarefas simples ou compostas que também tem suas métricas, permitindo a criação de árvores inteiras de tarefas para serem avaliadas, dando liberdade ao usuário.
+
+Para executar as tarefas foi criado o projeto. O projeto é uma classe que recebe uma tarefa, que pode ser uma tarefa simples ou composta, permitindo que seja executada uma árvore específica montada pelo usuário. Nesta classe as tarefas são efetivamente executadas e é gerado o resultado da análise, que posteriormente serão encaminhados para a classe de persistência dos dados.
+
+A persistência de dados da aplicação foi implementada de forma simplificada para a prova de conceito, fazendo com que simplesmente seja gerado um arquivo. O Projeto retorna um dicionário encadeado com cada tarefa e suas métricas e caso a tarefa seja uma tarefa composta, será retornado também suas subtarefas. Esse dicionário é persistido em um arquivo json. 
+
+Para utilizar essa prova de conceito, basta criar um arquivo, criar suas tarefas, organizá-las usando as tarefas compostas e criar um Projeto passando a tarefa principal, que vai ser a raiz da árvore, e por fim executar a aplicação. Após isso será criado um arquivo json com o resultado da análise das tarefas.
+
+\section{Exemplo de uso}
+Um exemplo prático de uso do nosso framework consiste em comparar o desempenho de consultas em dicionários e listas, a fim de determinar qual estrutura de dados oferece melhor desempenho em termos de velocidade e uso de memória. Vamos explorar esse exemplo para ilustrar a funcionalidade da prova de conceito.
+
+Primeiramente, é necessário verificar se todas as métricas necessárias para a avaliação estão implementadas. Caso alguma métrica esteja ausente, é possível criá-la estendendo a classe AbstractMetric e implementar a lógica específica para gerar essa métrica. Nesse exemplo, vamos analisar o uso de memória e o tempo de execução. Como essas métricas já estão implementadas, não é necessário criar novas métricas para essa comparação.
+
+Após garantir a disponibilidade das métricas, podemos implementar as tarefas que serão avaliadas: uma que trabalha com listas e outra que utiliza dicionários. Nesse caso, como estamos realizando uma prova de conceito, faremos uso de um mock de memória, que simula a alocação e desalocação da memória, e da função que espera um tempo aleatório, que simula o tempo de execução de uma tarefa.
+
+Uma vez implementadas as tarefas, podemos criar um arquivo chamado "index.ts". Nele, criaremos uma CompositeTask que incluirá as duas tarefas previamente implementadas: a tarefa com dicionários e a tarefa com listas. Em seguida, criaremos um novo projeto, passando a CompositeTask como parâmetro para a sua execução. Esse projeto será responsável por salvar os resultados em um arquivo específico.
+
+Por fim, poderemos analisar os resultados salvos no arquivo para determinar qual implementação se mostra mais adequada para a nossa aplicação, considerando o desempenho apresentado pelas estruturas de dados em termos de velocidade e uso de memória. Ao realizar esse exemplo, aproveitamos as capacidades da prova de conceito para comparar o desempenho de diferentes estruturas de dados, auxiliando na tomada de decisões informadas e na seleção da melhor abordagem para otimizar a nossa aplicação.
+
 \chapter{Estado Atual do Trabalho}
 \label{cap:estado_atual}
 
