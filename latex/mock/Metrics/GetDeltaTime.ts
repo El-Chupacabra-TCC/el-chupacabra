@@ -1,7 +1,7 @@
 import { Resource } from "../Helpers/MockResource";
-import { AbstractMetric } from "./AbstractMetric";
+import { Metric } from "./Metric";
 
-export class GetDeltaTime extends AbstractMetric<number> {
+export class GetDeltaTime extends Metric<number> {
   private date: number;
   constructor() {
     super();

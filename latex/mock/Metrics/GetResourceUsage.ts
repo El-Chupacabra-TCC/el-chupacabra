@@ -1,7 +1,7 @@
 import { Resource } from "../Helpers/MockResource";
-import { AbstractMetric } from "./AbstractMetric";
+import { Metric } from "./Metric";
 
-export class GetResourceUsage extends AbstractMetric<number> {
+export class GetResourceUsage extends Metric<number> {
   constructor() {
     super();
   }

@@ -449,7 +449,7 @@ Para utilizar essa prova de conceito, basta criar um arquivo, criar suas tarefas
 \section{Exemplo de uso}
 Um exemplo prático de uso do nosso framework consiste em comparar o desempenho de consultas em dicionários e listas, a fim de determinar qual estrutura de dados oferece melhor desempenho em termos de velocidade e uso de memória. Vamos explorar esse exemplo para ilustrar a funcionalidade da prova de conceito.
 
-Primeiramente, é necessário verificar se todas as métricas necessárias para a avaliação estão implementadas. Caso alguma métrica esteja ausente, é possível criá-la estendendo a classe AbstractMetric e implementar a lógica específica para gerar essa métrica. Nesse exemplo, vamos analisar o uso de memória e o tempo de execução. Como essas métricas já estão implementadas, não é necessário criar novas métricas para essa comparação.
+Primeiramente, é necessário verificar se todas as métricas necessárias para a avaliação estão implementadas. Caso alguma métrica esteja ausente, é possível criá-la estendendo a classe Metric e implementar a lógica específica para gerar essa métrica. Nesse exemplo, vamos analisar o uso de memória e o tempo de execução. Como essas métricas já estão implementadas, não é necessário criar novas métricas para essa comparação.
 
 Após garantir a disponibilidade das métricas, podemos implementar as tarefas que serão avaliadas: uma que trabalha com listas e outra que utiliza dicionários. Nesse caso, como estamos realizando uma prova de conceito, faremos uso de um mock de memória, que simula a alocação e desalocação da memória, e da função que espera um tempo aleatório, que simula o tempo de execução de uma tarefa.
 
@@ -551,8 +551,8 @@ A tabela indica os meses de previsão de conclusão de cada uma das etapas.
 \subsection{Helpers/MockResource.ts}
 \lstinputlisting[language=TypeScript]{./mock/Helpers/MockResource.ts}
 
-\subsection{Metrics/AbstractMetric.ts}
-\lstinputlisting[language=TypeScript]{./mock/Metrics/AbstractMetric.ts}
+\subsection{Metrics/Metric.ts}
+\lstinputlisting[language=TypeScript]{./mock/Metrics/Metric.ts}
 
 \subsection{Metrics/GetDeltaTime.ts}
 \lstinputlisting[language=TypeScript]{./mock/Metrics/GetDeltaTime.ts}

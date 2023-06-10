@@ -1,6 +1,6 @@
 import { Helpers } from '../Helpers/Helpers';
 import { Resource } from '../Helpers/MockResource';
-import { AbstractMetric } from '../Metrics/AbstractMetric';
+import { Metric } from '../Metrics/Metric';
 import { GetDeltaTime } from '../Metrics/GetDeltaTime';
 import { GetResourceUsage } from '../Metrics/GetResourceUsage';
 import { SimpleTask } from './SimpleTask';
