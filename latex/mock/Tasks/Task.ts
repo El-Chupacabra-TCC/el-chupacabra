@@ -1,10 +1,10 @@
-import { AbstractMetric } from "../Metrics/AbstractMetric";
+import { Metric } from "../Metrics/Metric";
 
 export abstract class Task {
   public name: string;
-  public metrics: Set<AbstractMetric<any>>;
+  public metrics: Set<Metric<any>>;
 
-  constructor(name: string, metrics: AbstractMetric<any>[])
+  constructor(name: string, metrics: Metric<any>[])
   {
     this.metrics = new Set(metrics);
     this.name = name;
