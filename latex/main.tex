@@ -471,6 +471,16 @@ A tabela indica os meses de previsão de conclusão de cada uma das etapas.
 	\label{tab:cronograma}
 \end{table}
 
+\label{bibpage}
+\renewcommand\bibname{Referências}
+\addcontentsline{toc}{section}{Referências}
+\bibliography{references}
+%\bibliographystyle{plainnat}
+\bibliographystyle{apalike}
+\label{bibfinalpage}
+
+\label{lastpage}
+
 \section{Codigo da prova de conceito}
 
 \subsection{Project.ts}
@@ -512,13 +522,4 @@ A tabela indica os meses de previsão de conclusão de cada uma das etapas.
 \subsection{Metrics/GetResourceUsage.ts}
 \lstinputlisting[language=TypeScript]{./mock/Metrics/GetResourceUsage.ts}
 
-\label{bibpage}
-\renewcommand\bibname{Referências}
-\addcontentsline{toc}{section}{Referências}
-\bibliography{references}
-%\bibliographystyle{plainnat}
-\bibliographystyle{apalike}
-\label{bibfinalpage}
-
-\label{lastpage}
 \end{document}
