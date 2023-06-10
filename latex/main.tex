@@ -41,7 +41,6 @@
 % Definição de acronimos
 \newacro{TCC}{Trabalho de Conclusão de Curso}
 \newacro{QoS}{qualidade de serviço}
-\newacro{GPT}{transformador pré-Treinado generativo}
 \newacro{API}{\emph{Application Programming Interface}}
 
 \begin{document}
@@ -116,75 +115,69 @@ Por disponibilizar uma aplicação Web pronta e capaz de envolver provas de conc
 Ademais, o framework por padrão possui as métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada, identificação do ambiente de execução e os dados são armazenados em uma planilha do Google para fácil obtenção e análise.
 Deste modo, o desenvolvedor pode focar nas provas de conceito e na obtenção de ambientes e voluntários, ao invés do desenvolvimento de infraestrutura para realização das avaliações.
 
-Além disso, o trabalho está dividido em quatro capítulos.
+Além disso, o trabalho está dividido em cinco capítulos.
 O capítulo \ref{cap:fund_teorica} e \ref{sec:trab_relacionados} correspondem aos aspectos metodológicos e trabalhos relacionados encontrados no campo de estudo.
 O capítulo \ref{cap:metodologia} apresenta a proposta de desenvolvimento da ferramenta.
 Por fim, o capítulo \ref{cap:estado_atual} apresenta o estado atual do framework e o cronograma para a próxima etapa.
 
 
-\chapter{Fundamentação teórica}
+\chapter{Fundamentação Teórica}
 \label{cap:fund_teorica}
 
-Para o levantamento da bibliografia foram utilizadas duas ferramentas principais: a Elicit, um assistente de pesquisa baseado em um modelo \acr{GPT} de aprendizado de máquina, e a ferramenta Connected Papers, a qual para um dado artigo gera um grafo de artigos similares baseado em cocitações e acoplamento bibliográfico.
+Para a revisão bibliográfica as duas principais ferramentas utilizadas foram: Elicit, um assistente de pesquisa baseado em modelos de transformador pré-treinado generativo (do inglês, \emph{generative pre-trained transformer}) de aprendizado de máquina, e a ferramenta Connected Papers, a qual  gera um grafo de artigos relacionados baseado em cocitações e acoplamento bibliográfico.
+A ferramenta Elicit funciona recebendo uma pergunta em linguagem natural e retornando os trabalhos que considera mais relevantes, junto a um resumo, em uma tabela paginada.
+Deste modo, na figura \ref{fig:elicit} elencamos todas strings de busca utilizadas no Elicit, e para cada uma delas consultamos até a segunda página da tabela, totalizando 14 trabalhos retornados por string de busca.
 
-A ferramenta Elicit funciona recebendo uma string de busca, a qual pode ser uma pergunta em linguagem natural, e retorna uma página com 7 pesquisas relacionadas e um resumo das informações chave de cada uma em um formato de tabela.
-Dessa forma, no Elicit utilizamos ao todo 15 strings de busca, e consultamos até a segunda página dos resultados de cada uma, totalizando 210 pesquisas encontradas, considerando as duplicações.
-
-
-\begin{table}[!ht]
+\begin{figure}
 	\centering
-	\caption{Strings de busca utilizadas na ferramenta Elicit}
-	\begin{tabular}{c L{1.5cm} R{1.5cm}}
-		\toprule
-		\textbf{String} \\
-		\midrule
-		``browsing memory'' \\
-		``client side memory performance'' \\
-		``client side memory profiling'' \\
-		``memory network management web client'' \\
-		``memory network performance web client'' \\
-		``memory network profiling web client'' \\
-		``memory network waste web client'' \\
-		``measuring performance in client side'' \\
-		``measuring in client side'' \\
-		``performance measurement'' \\
-		``tools to measure performance in client side'' \\
-		``evaluating latency on client side'' \\
-		``optimizing web browsing'' \\
-		``performance tool web client side'' \\
-		``waste resources client side'' \\
-		``waste resources web client'' \\
-		``web client side memory performance'' \\
-		``What are the impacts of memory management in mobile Web Browsing?'' \\
-		``What is the state-of-the-art for measuring performance of client side?'' \\
-		``What is the state-of-the-art for measuring QoE and memory of Web Browsing?'' \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:string-busca-elicit}
-\end{table}
+	\caption{Lista de strings de busca utilizadas na ferramenta Elicit.}
+	\begin{minipage}{0.6\textwidth}
+	    \begin{itemize}
+			\item ``browsing memory''
+			\item ``client side memory performance''
+			\item ``client side memory profiling''
+			\item ``memory network management web client''
+			\item ``memory network performance web client''
+			\item ``memory network profiling web client''
+			\item ``memory network waste web client''
+			\item ``measuring performance in client side''
+			\item ``measuring in client side''
+			\item ``performance measurement''
+			\item ``tools to measure performance in client side''
+			\item ``evaluating latency on client side''
+			\item ``optimizing web browsing''
+			\item ``performance tool web client side''
+			\item ``waste resources client side''
+			\item ``waste resources web client''
+			\item ``web client side memory performance''
+			\item ``What are the impacts of memory management in mobile Web Browsing?''
+			\item ``What is the state-of-the-art for measuring performance of client side?''
+			\item ``What is the state-of-the-art for measuring QoE and memory of Web Browsing?''
+	    \end{itemize}
+	\end{minipage}
+	\label{fig:elicit}
+\end{figure}
 
-Além disso, três das pesquisas encontradas por meio do Elicit também foram utilizadas como strings de busca na ferramenta Connected Papers.
-O Connected Papers retorna para uma dada pesquisa, um grafo com as 40 pesquisas mais similares encontradas por ele, as quais podem também ser visualizadas em um formato de tabela e ordenadas por similaridade.
+Além disso, três trabalhos encontrados por meio do Elicit foram utilizados como entrada para a ferramenta Connected Papers.
+O Connected Papers é um outro assistente de pesquisa, o qual recebe como entrada o título ou o DOI de um trabalho para gerar um grafo de trabalhos relacionados destacando suas principais conexões e trabalhos influentes.
+As strings de busca utilizadas no Connected Papers estão listadas na figura \ref{tab:connected-papers}, de modo que para cada uma, a ferramenta gerou um grafo com 40 trabalhos relacionados, os quais também podem ser visualizados em uma tabela.
 
-
-\begin{table}[!ht]
+\begin{figure}
 	\centering
-	\caption{Strings de busca utilizadas na ferramenta Connected Papers}
-	\begin{tabular}{c L{1.5cm} R{1.5cm}}
-		\toprule
-		\textbf{String} \\
-		\midrule
-		``Measuring Web Latency and Rendering Performance: Method, Tools, and Longitudinal Dataset''  \\
-		``MemInsight: platform-independent memory debugging for JavaScript''  \\
-		``Obtaining in-context measurements of cellular network performance''  \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:string-busca-connected-papers}
-\end{table}
+	\caption{Lista de strings de busca utilizadas na ferramenta Connected Papers.}
+	\begin{minipage}{0.6\textwidth}
+	    \begin{itemize}
+			\item ``Measuring Web Latency and Rendering Performance: Method, Tools, and Longitudinal Dataset''
+			\item ``MemInsight: platform-independent memory debugging for JavaScript''
+			\item ``Obtaining in-context measurements of cellular network performance''
+	    \end{itemize}
+	\end{minipage}
+	\label{tab:connected-papers}
+\end{figure}
 
-Para selecionar as pesquisas dentre as encontradas por meio tanto do Elicit quanto do Connected Papers, utilizamos um critério inspirado em árvores de decisão, onde após a leitura do resumo da pesquisa são respondidas até três perguntas sobre o conteúdo, e caso as três respostas sejam sim, o artigo é selecionado para uma leitura completa.
-Porém, caso a resposta da primeira ou segunda pergunta seja não, a pesquisa é descartada.
-
+Os critérios usados para filtrar os trabalhos encontrados por meio de ambas as ferramentas estão descritos na figura \ref{fig:fluxo-leitura}.
+Em suma, após a leitura do resumo de cada trabalho, três critérios são avaliados, sendo cada um deles um filtro.
+O qual indica se o trabalho não tem relação suficiente com o tema, se é necessário ler a introdução para a tomada da decisão ou se é um trabalho o qual a leitura completa deve ser realizada.
 
 \begin{figure}[!ht]
 	\centering
@@ -195,15 +188,15 @@ Porém, caso a resposta da primeira ou segunda pergunta seja não, a pesquisa é
 
 \begin{table}[!ht]
 	\centering
-	\caption{Trabalhos Encontrados pelas Ferramentas}
-	\begin{tabular}{c  c L{1.5cm} R{1.5cm}}
+	\caption{Total de trabalhos encontrados.}
+	\begin{tabular}{l  c L{1.5cm} R{1.5cm}}
 		\toprule
-		\textbf{Ferramenta Utilizada} & \textbf{Quantidade} \\
+		\textbf{Ferramenta} & \textbf{Trabalhos Encontrados} \\
 		\midrule
 		Elicit  &  280  \\
 		Connected Papers  &  120  \\
+		\midrule
 		Total  &  400  \\
-		Total Selecionados  &  4  \\
 		\bottomrule
 	\end{tabular}
 	\label{tab:trabalhos-encontrados}
@@ -221,7 +214,7 @@ Porém, caso a resposta da primeira ou segunda pergunta seja não, a pesquisa é
 
 	\begin{table}[!ht]
 		\centering
-		\caption{Strings de busca utilizadas na ferramenta Connected Papers}
+		\caption{Strings de busca utilizadas na ferramenta Connected Papers.}
 		\begin{tabular}{c c L{1.5cm} R{1.5cm}}
 			\toprule
 			\textbf{Critério} & \textbf{Descrição}\\
@@ -338,7 +331,7 @@ Na elaboração de qualquer projeto de software, a construção de um bom esquem
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/diagrama-conceitual.png}
-	\caption{Diagrama conceitual}
+	\caption{Diagrama conceitual.}
 	\label{fig:diag-conceitual}
 \end{figure}
 
@@ -386,7 +379,7 @@ ProcessMemoryMetric e DeltaTimeMetric. O exemplo DeltaTimeMetric possui uma nece
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.6\textwidth]{figures/diagrama-classes.png}
-	\caption{Diagrama classes}
+	\caption{Diagrama classes.}
 	\label{fig:diag-classes}
 \end{figure}
 
