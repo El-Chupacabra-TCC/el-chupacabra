@@ -32,6 +32,7 @@ keywords = {Big data analytics, Big data definition, Unstructured data analytics
 abstract = {Size is the first, and at times, the only dimension that leaps out at the mention of big data. This paper attempts to offer a broader definition of big data that captures its other unique and defining characteristics. The rapid evolution and adoption of big data by industry has leapfrogged the discourse to popular outlets, forcing the academic press to catch up. Academic journals in numerous disciplines, which will benefit from a relevant discussion of big data, have yet to cover the topic. This paper presents a consolidated description of big data by integrating definitions from practitioners and academics. The paper's primary focus is on the analytic methods used for big data. A particular distinguishing feature of this paper is its focus on analytics related to unstructured data, which constitute 95% of big data. This paper highlights the need to develop appropriate and efficient analytical methods to leverage massive volumes of heterogeneous data in unstructured text, audio, and video formats. This paper also reinforces the need to devise new tools for predictive analytics for structured big data. The statistical methods in practice were devised to infer from sample data. The heterogeneity, noise, and the massive size of structured big data calls for developing computationally efficient algorithms that may avoid big data pitfalls, such as spurious correlation.}
 }
 
+
 @inproceedings{Beaver2010Finding,
   title={Finding a Needle in Haystack: Facebook's Photo Storage.},
   author={Beaver, Doug and Kumar, Sanjeev and Li, Harry C and Sobel, Jason and Vajgel, Peter and others},
@@ -40,4 +41,67 @@ abstract = {Size is the first, and at times, the only dimension that leaps out a
   number={2010},
   pages={1--8},
   year={2010}
+}
+
+@inproceedings{Jensen2015MemInsight,
+author = {Jensen, Simon Holm and Sridharan, Manu and Sen, Koushik and Chandra, Satish},
+title = {MemInsight: Platform-Independent Memory Debugging for JavaScript},
+year = {2015},
+isbn = {9781450336758},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2786805.2786860},
+doi = {10.1145/2786805.2786860},
+abstract = {JavaScript programs often suffer from memory issues that can either hurt performance or eventually cause memory exhaustion. While existing snapshot-based profiling tools can be helpful, the information provided is limited to the coarse granularity at which snapshots can be taken. We present MemInsight, a tool that provides detailed, time-varying analysis of the memory behavior of JavaScript applications, including web applications. MemInsight is platform independent and runs on unmodified JavaScript engines. It employs tuned source-code instrumentation to generate a trace of memory allocations and accesses, and it leverages modern browser features to track precise information for DOM (document object model) objects. It also computes exact object lifetimes without any garbage collector assistance, and exposes this information in an easily-consumable manner for further analysis. We describe several client analyses built into MemInsight, including detection of possible memory leaks and opportunities for stack allocation and object inlining. An experimental evaluation showed that with no modifications to the runtime, MemInsight was able to expose memory issues in several real-world applications.},
+booktitle = {Proceedings of the 2015 10th Joint Meeting on Foundations of Software Engineering},
+pages = {345–356},
+numpages = {12},
+keywords = {Memory profiling, leak detection},
+location = {Bergamo, Italy},
+series = {ESEC/FSE 2015}
+}
+
+@article{Asrese2019MeasuringWL,
+  title={Measuring Web Latency and Rendering Performance: Method, Tools, and Longitudinal Dataset},
+  author={Alemnew Sheferaw Asrese and Steffie Jacob Eravuchira and Vaibhav Bajpai and Pasi Sarolahti and J{\"o}rg Ott},
+  journal={IEEE Transactions on Network and Service Management},
+  year={2019},
+  volume={16},
+  pages={535-549}
+}
+
+@inproceedings{Gember2012Obtaining,
+author = {Gember, Aaron and Akella, Aditya and Pang, Jeffrey and Varshavsky, Alexander and Caceres, Ramon},
+title = {Obtaining In-Context Measurements of Cellular Network Performance},
+year = {2012},
+isbn = {9781450317054},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2398776.2398807},
+doi = {10.1145/2398776.2398807},
+abstract = {Network service providers, and other parties, require an accurate understanding of the performance cellular networks deliver to users. In particular, they often seek a measure of the network performance users experience solely when they are interacting with their device---a measure we call in-context. Acquiring such measures is challenging due to the many factors, including time and physical context, that influence cellular network performance. This paper makes two contributions. First, we conduct a large scale measurement study, based on data collected from a large cellular provider and from hundreds of controlled experiments, to shed light on the issues underlying in-context measurements. Our novel observations show that measurements must be conducted on devices which (i) recently used the network as a result of user interaction with the device, (ii) remain in the same macro-environment (e.g., indoors and stationary), and in some cases the same micro-environment (e.g., in the user's hand), during the period between normal usage and a subsequent measurement, and (iii) are currently sending/ receiving little or no user-generated traffic. Second, we design and deploy a prototype active measurement service for Android phones based on these key insights. Our analysis of 1650 measurements gathered from 12 volunteer devices shows that the system is able to obtain average throughput measurements that accurately quantify the performance experienced during times of active device and network usage.},
+booktitle = {Proceedings of the 2012 Internet Measurement Conference},
+pages = {287–300},
+numpages = {14},
+keywords = {device context, cellular network performance, active measurement},
+location = {Boston, Massachusetts, USA},
+series = {IMC '12}
+}
+
+@inproceedings{Nikravesh2015Mobilyzer,
+author = {Nikravesh, Ashkan and Yao, Hongyi and Xu, Shichang and Choffnes, David and Mao, Z. Morley},
+title = {Mobilyzer: An Open Platform for Controllable Mobile Network Measurements},
+year = {2015},
+isbn = {9781450334945},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2742647.2742670},
+doi = {10.1145/2742647.2742670},
+abstract = {Mobile Internet availability, performance and reliability have remained stubbornly opaque since the rise of cellular data access. Conducting network measurements can give us insight into user-perceived network conditions, but doing so requires careful consideration of device state and efficient use of scarce resources. Existing approaches address these concerns in ad-hoc ways.In this work we propose Mobilyzer, a platform for conducting mobile network measurement experiments in a principled manner. Our system is designed around three key principles: network measurements from mobile devices require tightly controlled access to the network interface to provide isolation; these measurements can be performed efficiently using a global view of available device resources and experiments; and distributing the platform as a library to existing apps provides the incentives and low barrier to adoption necessary for large-scale deployments. We describe our current design and implementation, and illustrate how it provides measurement isolation for applications, efficiently manages measurement experiments and enables a new class of experiments for the mobile environment.},
+booktitle = {Proceedings of the 13th Annual International Conference on Mobile Systems, Applications, and Services},
+pages = {389–404},
+numpages = {16},
+keywords = {mobile web, measurement tool, cellular networks, video, network performance},
+location = {Florence, Italy},
+series = {MobiSys '15}
 }
