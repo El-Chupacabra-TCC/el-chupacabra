@@ -9,7 +9,6 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage[toc,page]{appendix}
-\usepackage[portuguese]{babel}
 
 % Define TypeScript language style
 \lstdefinelanguage{TypeScript}{
@@ -32,7 +31,7 @@
 }
 
 \lstset{
-    backgroundcolor=\color{lightgray},
+    backgroundcolor=\color[gray]{0.9},
     numbers=left,
     stepnumber=1,
     numberstyle=\small\ttfamily\color{gray},
@@ -79,7 +78,7 @@ Além disso, seus desenvolvedores encontram desafios ao avaliar o consumo dos re
 Por outro lado, também existe uma carência por ferramentas as quais permitam esse tipo de avaliação, ou que apenas facilitem o trabalho de cobrir a variabilidade do lado do cliente.
 Por exemplo, funcionalidades para auxiliar a coleta de métricas de execuções da aplicação realizadas por voluntários.
 A fim de solucionar estes problemas, propomos um framework para o ecossistema JavaScript capaz de executar provas de conceito, enquanto realiza a coleta de métricas de desempenho e consumo de recursos computacionais, a qual também seja facilmente extensível para necessidades específicas do projeto e que auxilie o processo de avaliações realizadas por voluntários.
-}{big data; Web; visualização de dados; avaliação de desempenho; consumo de recursos; framework}	
+}{big data; Web; visualização de dados; avaliação de desempenho; consumo de recursos; framework}
 
 \dabstract{
 Since the popularization of smartphones, the amount of data generated has grown unprecedentedly, so that it even makes it difficult to define how big big data is, due to its rapid obsolescence.
@@ -257,7 +256,7 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 			Mobilyzer & sim & não & não & não & sim \\
 			\hline %inserts single line
 			\end{tabular}
-			\label{table:nonlin} % is used to refer this table in the text
+			\label{table:cls} % is used to refer this table in the text
 		\end{table}
 	
 
@@ -518,47 +517,46 @@ A tabela indica os meses de previsão de conclusão de cada uma das etapas.
 
 \label{lastpage}
 
-\begin{appendices}
-\section{Codigo da prova de conceito}
+\appendix
+\chapter{Código-fonte da Prova de Conceito}
 
-\subsection{Projeto}
+\section{Projeto}
 \lstinputlisting[language=TypeScript]{./mock/Project.ts}
 
-\subsection{Index}
+\section{Index}
 \lstinputlisting[language=TypeScript]{./mock/Index.ts}
 
-\subsection{Tarefa Abstrata}
+\section{Tarefa Abstrata}
 \lstinputlisting[language=TypeScript]{./mock/Tasks/Task.ts}
 
-\subsection{Tarefa Composta}
+\section{Tarefa Composta}
 \lstinputlisting[language=TypeScript]{./mock/Tasks/CompositeTask.ts}
 
-\subsection{Tarefa Simples}
+\section{Tarefa Simples}
 \lstinputlisting[language=TypeScript]{./mock/Tasks/SimpleTask.ts}
 
-\subsection{Exemplo de implementação de tarefa}
+\section{Exemplo de implementação de tarefa}
 \lstinputlisting[language=TypeScript]{./mock/Tasks/MockTask.ts}
 
-\subsection{Interface de persistencia}
+\section{Interface de persistencia}
 \lstinputlisting[language=TypeScript]{./mock/Persister/IPersister.ts}
 
-\subsection{Exemplo de persistencia}
+\section{Exemplo de persistencia}
 \lstinputlisting[language=TypeScript]{./mock/Persister/BasicPersister.ts}
 
-\subsection{Mock de tempo}
+\section{Mock de tempo}
 \lstinputlisting[language=TypeScript]{./mock/Helpers/MockTime.ts}
 
-\subsection{Mock de Memoria}
+\section{Mock de Memoria}
 \lstinputlisting[language=TypeScript]{./mock/Helpers/MockResource.ts}
 
-\subsection{Metrica abstrata}
+\section{Metrica abstrata}
 \lstinputlisting[language=TypeScript]{./mock/Metrics/Metric.ts}
 
-\subsection{Metrica de tempo}
+\section{Metrica de tempo}
 \lstinputlisting[language=TypeScript]{./mock/Metrics/GetDeltaTime.ts}
 
-\subsection{Metrica de memoria}
+\section{Metrica de memoria}
 \lstinputlisting[language=TypeScript]{./mock/Metrics/GetResourceUsage.ts}
-\end{appendices}
 
 \end{document}
