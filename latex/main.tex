@@ -368,31 +368,32 @@ Abaixo, está uma descrição de cada elemento do diagrama conceitual.
 \end{description}
 
 
-\section{Diagrama de Classes}
-
-Após a elaboração do diagrama conceitual, foi elaborado o Diagrama de Classes à seguir que dará base a implementação do sistema: 
-
-O diagrama começa com a entidade Project, que representa um projeto, e que possui um método que executa todas as tarefas associadas a ele.
-Além disso, um detalhe importante nessa entidade é o relacionamento com ExecutionProfile, que seria qual cliente está executando aquele projeto. Temos também que o Project pode possuir um ou mais IPersister, que é o método abstrato que representa os repositórios que realizarão as interações com as bases de dados. Em IPersister, podemos ter diversas instâncias.
-No diagrama foi criada somente a SheetsonPersister, que será a nossa escolha inicial para base de dados.
-
-Em seguida, vemos a classe abstrata Task, que representa as tarefas abstratas.
-Ela possui o método público run(), que será como essa tarefa será executada, e os métodos privados execute(), preTaskJob() e postTaskJob(), que serão implementados pelas classes concretas.
-Eles representam, respectivamente, a execução detalhada da tarefa, um conjunto de operações a serem realizadas antes da execução, e um conjunto de atividades a serem realizadas depois da execução da tarefa.
-
-Após isso, temos a classe abstrata Metric, ou Métrica.
-Nela temos os métodos públicos collect() e get(), que serão as interações externas com as métricas.
-Temos também o método privado preProcessing(), que serve para realizar, se necessário, algum pré-processamento antes da coleta da métrica.
-Temos dois exemplos de implementações concretas dessa classe no diagrama, são eles:
-ProcessMemoryMetric e DeltaTimeMetric. O exemplo DeltaTimeMetric possui uma necessidade de pré-processamento, já que a variação de tempo é calculada com base em dois parâmetros diferentes, o que justifica a implementação desse método.
-
+\subsection{Diagrama de Classes}
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.6\textwidth]{figures/diagrama-classes.png}
-	\caption{Diagrama classes.}
+	\includegraphics[width=0.9\textwidth]{figures/diagrama-classes.pdf}
+	\caption{Diagrama classes do framework.}
 	\label{fig:diag-classes}
 \end{figure}
+
+O diagrama de classes define a arquitetura e estrutura dos módulos do framework.
+Nele há a definição dos principais aspectos práticos para a implementação, por exemplo, são definidas as árvores de herança e principais métodos que precisam ser implementados por usuários.
+Além disso, ele também define a camada de persistência para resolver o problema da coleta de métricas de execuções realizadas por voluntários de forma remota.
+Abaixo, está uma descrição de cada elemento do diagrama.
+
+\begin{description}
+	\item[Project:] Responsável por coordenar a execução das análises e encaminhar suas métricas para a camada de persistência.
+	\item[ExecutionProfile:] Responsável pela coleta de dados sobre o ambiente de execução.
+	\item[Task:] Responsável por definir a rotina de execução das tarefas e seus métodos públicos.
+	\item[SimpleTask:] Classe base para implementação de uma tarefa.
+	\item[CompositeTask:] Classe base para implementação de tarefas compostas.
+	\item[Metric:] Responsável por definir a rotina para coleta de uma métrica e seus métodos públicos.
+	\item[ProcessMemoryMetric:] Implementação de uma métrica para medir o consumo de memória.
+	\item[DeltaTimeMetric:] Implementação de uma métrica para medir tempo gasto em uma tarefa.
+	\item[IPersister:] Responsável por definir a interface pública da camada de persistência.
+	\item[SheetsonPersister:] Implementação da camada de persistência a qual utiliza o Google Sheets\footnote{https://www.google.com/sheets/about}.
+\end{description}
 
 
 \section{Arquitetura}
