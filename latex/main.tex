@@ -1,5 +1,5 @@
 \documentclass[12pt]{tcc}
-\usepackage[brazil]{babel} 
+\usepackage[brazil]{babel}
 \usepackage[T1]{fontenc}
 %\usepackage[brazilian,hyperpageref]{backref}
 \usepackage[hidelinks]{hyperref}
@@ -125,7 +125,7 @@ Deste modo, o desenvolvedor pode focar nas provas de conceito e na obtenção de
 
 Além disso, o trabalho está dividido em cinco capítulos.
 O capítulo \ref{cap:fund_teorica} e \ref{sec:trab_relacionados} correspondem aos aspectos metodológicos e trabalhos relacionados encontrados no campo de estudo.
-O capítulo \ref{cap:metodologia} apresenta a proposta de desenvolvimento da ferramenta.
+O capítulo \ref{cap:proposta} apresenta a proposta de desenvolvimento da ferramenta.
 Por fim, o capítulo \ref{cap:estado_atual} apresenta o estado atual do framework e o cronograma para a próxima etapa.
 
 
@@ -310,57 +310,60 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 			\label{table:nonlin} % is used to refer this table in the text
 		\end{table}
 
-\chapter{Método} 
-\label{cap:metodologia}
+\chapter{Proposta}
+\label{cap:proposta}
 
-\section{Exemplo conceitual: Comparando o desempenho entre os formatos de arquivo JSON e CSV}
+O objetivo do framework é oferecer uma forma fácil e eficaz de realizar análises de desempenho e consumo de recursos computacionais em provas de conceito para aplicações Web no lado do cliente.
+De modo que, o usuário do framework seja capaz de realizar suas análises com a colaboração de voluntários, sendo o framework responsável pela coleta e agregação das métricas.
+A fim alcançar estes objetivos, o trabalho se divide em três fases: pesquisa, implementação e experimentação.
 
-Imagine que você seja um pesquisador ou um desenvolvedor que decidiu utilizar a nossa ferramenta para sanar uma dúvida que encontrou ao desenvolver sua pesquisa:
-O que possui melhor desempenho em um grande conjunto de dados? Transferir usando um arquivo CSV ou um arquivo JSON? A nossa ferramenta poderia ajudar.
-
-Modelando o problema, o Projeto seria a sua aplicação, que seria composto por Tarefas, ou seja, a Tarefa é o que você realiza na sua aplicação e deseja realizar medições. Porém, podemos ter Tarefas simples, como no caso de uma medição única do tempo de download do arquivo, ou Tarefas Compostas, que poderia ser um pipeline completo de download e consulta utilizando um dos formatos de arquivo (realizar o download do arquivo, abrir no registro x dentro do arquivo, imprimir a informação). Ou seja, existe uma grande flexibilidade na elaboração de Tarefas.
-
-A análise seria um conjunto de métricas. No nosso exemplo, algumas métricas possíveis são:
-
-\begin{itemize}
-	\item Tempo gasto.
-	\item Largura de banda.
-	\item Tamanho do arquivo.
-	\item Informações do ambiente de execução.
-	\item Gasto de memória.
-\end{itemize}
-
-Essas métricas, quando agrupadas, dão forma a uma análise, que representa uma medição utilizando um dos métodos a serem testados. No nosso exemplo, teríamos ao final do experimento duas análises: uma referente as medições acima utilizando o método CSV e outra utilizando o método JSON.
-
-\section{Diagrama conceitual}
-
-Na elaboração de qualquer projeto de software, a construção de um bom esquema conceitual é extremamente importante e fundamental para o sucesso do desenvolvimento. Na nossa ferramenta, possuímos algumas entidades principais. São elas:
+Durante a fase de pesquisa, há o levantamento da bibliografia, desenvolvimento da fundamentação teórica e busca por trabalhos semelhantes.
+A fase de implementação, por sua vez, se divide em três etapas principais: (i) planejamento e documentação, (ii) ensaio dos conceitos e (iii) implementação do artefato.
+Posteriormente, a solução implementada é aplicada a um experimento de seu uso, para avaliação de usabilidade e documentação de uso.
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.6\textwidth]{figures/diagrama-conceitual.png}
-	\caption{Diagrama conceitual.}
+	\includegraphics[width=0.6\textwidth]{figures/diagrama-informal.pdf}
+	\caption{Principal fluxo de uso, onde um desenvolver avalia um conjunto de provas de conceitos com o auxílio de voluntários externos ao desenvolvimento.}
+	\label{fig:diagrama-informal}
+\end{figure}
+
+\section{Planejamento e Documentação}
+\label{sec:planejamento-doc}
+
+Esta etapa tem como objetivo definir como os objetivos do framework são alcançados.
+Para tanto, nela são gerados dois artefatos: o diagrama conceitual (figura \ref{fig:diag-conceitual}) e o diagrama de classes (figura  \ref{fig:diag-classes}).
+Primeiro, o diagrama conceitual é desenvolvido com o objetivo de elaborar as principais ideias as quais definem o funcionamento do framework.
+Enquanto, o diagrama de classes tem como objetivo evidenciar os aspectos práticos de seu desenvolvimento e planejar os módulos de sua arquitetura.
+
+\subsection{Diagrama Conceitual}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/diagrama-conceitual.pdf}
+	\caption{Diagrama conceitual do framework.}
 	\label{fig:diag-conceitual}
 \end{figure}
 
+O diagrama conceitual define como o framework é estruturado, nele há a fundação do framework em ser um aplicativo modelo, o qual o usuário gera a versão final ao adicionar tarefas concretas.
+Estas tarefas representam as provas de conceito, de modo que, um artefato gerado pelo framework seja capaz de conter mais de uma prova de conceito para avaliação.
+Além disso, outra definição importante do diagrama conceitual é a utilização do padrão de projeto Composite \citep{Gamma1995Design} para permitir a avaliação de etapas das provas de conceito.
+Abaixo, está uma descrição de cada elemento do diagrama conceitual.
+
 \begin{description}
-	\item[Projeto:] Aplicação na qual o pesquisador está avaliando suas provas de conceito. É composto de uma lista de tarefas associadas, que constituem as ações que são executadas na aplicação e que desejam ser medidas pelo pesquisador/desenvolvedor. A cardinalidade da relação entre o Projeto e as Tarefas é de 1 para muitos, pois o Projeto deve ter pelo menos uma ou muitas Tarefas associadas a ele. 
-	Ex: Projeto de construção de um transferidor de dados. Tarefas: fazer o download do arquivo, realizar a execução de um pipeline de consulta.
+	\label{descrip:diagrama-conceitual}
+
+	\item[Projeto:] Representa a aplicação a qual pertence as provas de conceito. Além disso, também é o principal objeto do framework, por conter a referência para a raíz das árvores de \textit{Tarefas} e coordenar a execução das avaliações.
 	
-	\item[Tarefa Abstrata:] 
-	Alguma ação executada no projeto com início, meio e fim. É representada por uma entidade abstrata, pois representa conceitualmente o que precisa ser executado no projeto. Pode ser descrita também como um roteiro de um processo ou procedimento sob avaliação. Essas ações podem ser fornecidas pelo pesquisador, ou pode ser parametrizada inicialmente pela ferramenta.
+	\item[Tarefa Abstrata:] Representa um procedimento para ser executado pelo framework. Ou seja, representa uma etapa ou prova de conceito integral que está sob avaliação.
 
-	\item[Tarefa Composta:] 
-	Representa um conjunto de tarefas. Ex: Realização de um pipeline de consulta no arquivo (Tarefas agregadas: Realizar o download do arquivo, abrir o arquivo na linha X, realizar leitura).
-	Utilizamos nessa entidade o padrão de software Composite, que nos permite representar facilmente um agrupamento de uma entidade. Nesse caso, a entidade folha seria uma Tarefa Simples, e o agrupamento a Tarefa Composta. Realizamos essa escolha pois simplifica a execução de múltiplas tarefas ao mesmo tempo, no caso de ser executado um pipeline grande de tarefas.
+	\item[Tarefa Simples:] Representa os containers que recebem o código das provas de conceito.
 
-	\item[Análise:] 
-	Um conjunto de métricas coletadas da execução de uma tarefa utilizando um método. Essas métricas correspondem aos dados desejados pelo pesquisador, e uma análise deve possuir uma ou mais métricas.
-	Dessa forma, a saída das execuções das tarefas é uma análise, composta pelas métricas desejadas pelo pesquisador, e que se relaciona a Tarefa Abstrata. Uma Tarefa Abstrata pode estar relacionada a uma ou mais análises, e as análises podem estar relacionadas a uma ou mais tarefas, visto que é um agrupamento de métricas. Diferentes métodos gerarão diferentes análises, cada uma com as suas métricas.
-	Ex: Uma Análise dos métodos de transferência de dados seria composta por: um cojunto de métricas, qual tarefa ela representa, e qual método ela está representando. Nesse caso teríamos duas análises, uma com o método JSON e uma com o método CSV.
+	\item[Tarefa Composta:] Representa um grupo de provas de conceito ou uma prova de conceito decomposta em etapas.
 
-	\item[Métrica:] 
-	Uma medida quantitativa de algum recurso computacional do cliente. Ou seja, a unidade mais granular do sistema. Pode ser fornecida pela ferramenta ou inserida pelo pesquisador. Ex: O conjunto de métricas da Análise dos métodos de transferência de dados seria composto por: velocidade de transferência, tamanho do arquivo, tempo total de transferência, taxa de compressão do arquivo, entre outras.
+	\item[Análise:] Representa um conjunto de métricas de avaliação de um procedimento abstrato. Ou seja, todas as tarefas as quais são implementações diferentes de um mesmo procedimento podem compartilhar a mesma análise.
+
+	\item[Métrica:] Representa uma medida quantitativa de algum recurso despendido durante a execução de uma \textit{Tarefa}.
 
 \end{description}
 
@@ -426,6 +429,28 @@ Além disso, o pesquisador poderia utilizar sua própria conta do Google para re
 
 
 
+\section{Exemplo conceitual: Comparando o desempenho entre os formatos de arquivo JSON e CSV}
+
+Imagine que você seja um pesquisador ou um desenvolvedor que decidiu utilizar a nossa ferramenta para sanar uma dúvida que encontrou ao desenvolver sua pesquisa:
+O que possui melhor desempenho em um grande conjunto de dados? Transferir usando um arquivo CSV ou um arquivo JSON? A nossa ferramenta poderia ajudar.
+
+Modelando o problema, o Projeto seria a sua aplicação, que seria composto por Tarefas, ou seja, a Tarefa é o que você realiza na sua aplicação e deseja realizar medições. Porém, podemos ter Tarefas simples, como no caso de uma medição única do tempo de download do arquivo, ou Tarefas Compostas, que poderia ser um pipeline completo de download e consulta utilizando um dos formatos de arquivo (realizar o download do arquivo, abrir no registro x dentro do arquivo, imprimir a informação). Ou seja, existe uma grande flexibilidade na elaboração de Tarefas.
+
+A análise seria um conjunto de métricas. No nosso exemplo, algumas métricas possíveis são:
+
+\begin{itemize}
+	\item Tempo gasto.
+	\item Largura de banda.
+	\item Tamanho do arquivo.
+	\item Informações do ambiente de execução.
+	\item Gasto de memória.
+\end{itemize}
+
+Essas métricas, quando agrupadas, dão forma a uma análise, que representa uma medição utilizando um dos métodos a serem testados. No nosso exemplo, teríamos ao final do experimento duas análises: uma referente as medições acima utilizando o método CSV e outra utilizando o método JSON.
+
+
+
+
 \chapter{Prova de conceito}
 \label{cap:prova_de_conceito}
 \section{Como funciona}
@@ -484,7 +509,7 @@ Durante essa etapa também encontramos algumas limitações do conceitos como a 
 
 O desenvolvimento do framework e produção textual estão sendo realizados em paralelo.
 A fundamentação teórica, capítulo \ref{cap:fund_teorica}, se encontra em fase de desenvolvimento e tem conclusão prevista para outubro de 2023.
-A descrição do framework, capítulo \ref{cap:metodologia}, será descrita de forma mais precisa e detalhada até janeiro de 2024, junto com um exemplo de sua utilização.
+A descrição do framework, capítulo \ref{cap:proposta}, será descrita de forma mais precisa e detalhada até janeiro de 2024, junto com um exemplo de sua utilização.
 A defesa da dissertação está prevista para janeiro de 2024. O cronograma indicado na tabela \ref{tab:cronograma} prevê as etapas abordadas neste trabalho.
 A tabela indica os meses de previsão de conclusão de cada uma das etapas.
 
