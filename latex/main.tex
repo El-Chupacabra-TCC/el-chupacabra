@@ -395,61 +395,15 @@ Abaixo, está uma descrição de cada elemento do diagrama.
 	\item[SheetsonPersister:] Implementação da camada de persistência a qual utiliza o Google Sheets\footnote{https://www.google.com/sheets/about}.
 \end{description}
 
+Como foi anunciado anteriormente, realizar a coleta de métricas em execuções realizadas por voluntários, os quais podem atuar de modo remoto é um problema destacado pelo diagrama de classes.
+Pois, em uma abordagem convencional construiríamos uma \acr{API} com arquitetura REST (do inglês, \emph{representational state transfer}) para receber as métricas e disponibilizá-las para consulta.
+Ademais, também haveria a necessidade de implementar uma camada de autorização na \acr{API} para prover segurança aos dados dos usuários.
+Entretanto, esta abordagem possui sérias desvantagens, sendo as duas principais: um aumento considerável no escopo de implementação e custos com infraestrutura para a \acr{API}.
 
-\section{Arquitetura}
-
-Na utilização da aplicação, o pesquisador deve ser capaz de inserir suas métricas, suas análises, e chamar no código dele os métodos de coleta. Dessa forma, precisamos construir um ambiente no qual ele consiga realizar essas tarefas. Isso pode ser feito de diferentes formas, uma delas chamamos de abordagem tradicional, e a outra que propomos é utilizando a ferramenta Sheetson.
-
-\subsection{Abordagem tradicional}
-
-Nessa abordagem seria realizada a implementação de dois componentes principais: 
-
-\begin{description}
-	\item[Biblioteca Javascript:] Esse componente diz respeito a biblioteca que o pesquisador inserirá no código da sua aplicação, inserindo nela as métricas desejadas para medição.
-
-	\item[Backend na núvem:] Esse componente receberia as requisições enviadas pela aplicação e condensaria em um banco de dados qualquer essas medições. Após isso, seria necessário o desenvolvimento de um front-end, para o pesquisador conseguir baixar esses arquivos.
-\end{description}
-
-Essa abordagem seria a mais comum, dado que possui similaridades com grande parte das aplicações que vemos hoje. Porém, essa implementação deixaria a aplicação com uma alta complexidade de uso, e além disso, não seria escalável, pois o backend precisa de adaptações para lidar com, por exemplo, múltiplos bancos de dados.
-Nesse contexto, encontramos uma solução que se demonstrou interessante para o nosso problema.
-
-\subsection{Sheetson}
-
-O Sheetson é uma ferramenta gratuita, a qual torna possível a inserção e interação com uma planilha do Google Docs via API. Então a solução baseada nessa ferramenta seria:
-
-\begin{description}
-	\item[Biblioteca Javascript:] Esse componente diz respeito a biblioteca que o pesquisador inserirá no código da sua aplicação, inserindo nela as métricas desejadas para medição.
-	
-	\item[Sheetson:] O Sheetson receberia os dados enviados do cliente, e inseriria em uma tabela CSV, para download futuro.
-
-\end{description}
-
-Essa abordagem possui diversas vantagens, como poder isolar no desenvolvimento da biblioteca a classe que controlará a persistência dos dados, e implementar inicialmente utilizando o sheetson. Se quisermos posteriormente implementar a primeira abordagem e substituir por chamadas a um backend real, com qualquer base de dados que seja, seria necessário somente substituir essa implementação, porém hoje ganharíamos um tempo grande no desenvolvimento do projeto.
-
-Além disso, o pesquisador poderia utilizar sua própria conta do Google para realizar suas pesquisas, eliminando a necessidade de contratar provedores de cloud ou de fazer deploy de alguma aplicação. Isso gera uma redução grande na complexidade do uso do projeto.
-
-
-
-\section{Exemplo conceitual: Comparando o desempenho entre os formatos de arquivo JSON e CSV}
-
-Imagine que você seja um pesquisador ou um desenvolvedor que decidiu utilizar a nossa ferramenta para sanar uma dúvida que encontrou ao desenvolver sua pesquisa:
-O que possui melhor desempenho em um grande conjunto de dados? Transferir usando um arquivo CSV ou um arquivo JSON? A nossa ferramenta poderia ajudar.
-
-Modelando o problema, o Projeto seria a sua aplicação, que seria composto por Tarefas, ou seja, a Tarefa é o que você realiza na sua aplicação e deseja realizar medições. Porém, podemos ter Tarefas simples, como no caso de uma medição única do tempo de download do arquivo, ou Tarefas Compostas, que poderia ser um pipeline completo de download e consulta utilizando um dos formatos de arquivo (realizar o download do arquivo, abrir no registro x dentro do arquivo, imprimir a informação). Ou seja, existe uma grande flexibilidade na elaboração de Tarefas.
-
-A análise seria um conjunto de métricas. No nosso exemplo, algumas métricas possíveis são:
-
-\begin{itemize}
-	\item Tempo gasto.
-	\item Largura de banda.
-	\item Tamanho do arquivo.
-	\item Informações do ambiente de execução.
-	\item Gasto de memória.
-\end{itemize}
-
-Essas métricas, quando agrupadas, dão forma a uma análise, que representa uma medição utilizando um dos métodos a serem testados. No nosso exemplo, teríamos ao final do experimento duas análises: uma referente as medições acima utilizando o método CSV e outra utilizando o método JSON.
-
-
+Portanto, optamos por uma outra abordagem para persistência das métricas.
+Nela o framework utiliza o Google Sheets como forma de armazenamento e visualização das métricas das execuções.
+Para tanto, ao invés de desenvolver uma \acr{API}, usamos a própria \acr{API} do Google Sheets, ao custo de requerer que o usuário do framework possua uma conta Google.
+Porém, a \acr{API} do Google Sheets não atende diretamente as necessidades do framework, devido ao fato de exigir um cadastro da aplicação, mas com uso da ferramenta Sheetson\footnote{https://sheetson.com} não há essa limitação.
 
 
 \chapter{Prova de conceito}
