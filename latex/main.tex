@@ -62,8 +62,8 @@
 \dlibrary{ficha.pdf}
 		
 \ddedicatory{
-	\raggedleft \normalsize Dedico esse trabalho aos futuros pesquisadores, cuja as descobertas e avanços sejam impulsionados por esse trabalho. Que esse framework sirva de apoio para que possam avaliar o desempenho de suas próximas pesquisas, e que isso gere impactos positivos na sociedade.
-	Dedicamos também aos nossos professores, cuja orientação nos trouxeram os conhecimentos necessários para realização desse projeto. Seus ensinamentos foram fundamentais para nos capacitar a desenvolver esse trabalho.
+	\raggedleft \normalsize Dedico este trabalho aos futuros pesquisadores, cuja as descobertas e avanços sejam impulsionados por esse trabalho. Que esse framework sirva de apoio para que possam avaliar o desempenho de suas próximas pesquisas, e que isso gere impactos positivos na sociedade.
+	Dedicamos também aos nossos professores, cuja orientação nos trouxe os conhecimentos necessários para realização desse projeto. Seus ensinamentos foram fundamentais para nos capacitar a desenvolver esse trabalho.
 }
 
 \dacknowledgment{
@@ -79,7 +79,7 @@ Desde a popularização dos smartphones a quantidade de dados gerados cresce sem
 Dentro deste contexto, aplicações Web cliente-servidor as quais ofertam visualização de dados para grandes volumes sofrem muitas vezes com limitações de recursos computacionais no lado do cliente.
 Além disso, seus desenvolvedores encontram desafios ao avaliar o consumo dos recursos, pois, há grandes dificuldades em cobrir a ampla gama de configurações que existem no lado do cliente.
 Por outro lado, também existe uma carência por ferramentas as quais permitam esse tipo de avaliação, e que possuam funcionalidades para auxiliar a coleta de métricas de execuções da aplicação realizadas por voluntários.
-A fim de solucionar estes problemas, propomos um framework para o ecossistema JavaScript capaz de executar provas de conceito, enquanto realiza a coleta de métricas de desempenho e consumo de recursos computacionais, as quais sejam também facilmente extensíveis para necessidades específicas do projeto e que auxiliem no processo de avaliações realizado pelos pesquisadores.
+A fim de solucionar estes problemas, propomos um framework para o ecossistema JavaScript capaz de executar provas de conceito, enquanto realiza a coleta de métricas de desempenho e consumo de recursos computacionais, o qual também seja facilmente extensível para necessidades específicas do projeto e que auxilie no processo de avaliação realizado por voluntários.
 }{big data; Web; visualização de dados; avaliação de desempenho; consumo de recursos; framework}
 
 \dabstract{
@@ -233,7 +233,7 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 			Flexibilidade&Se a ferramenta se adapta em diversos contextos de medição.\\
 			Curva de Apredizado&Se a ferramenta possui uma curva de aprendizado rápida.\\
 			Multiplataforma&Se a ferramenta suporta o uso em diversas plataformas.\\
-			Persistência&Se a ferramente persiste dados para análise futura.\\
+			Persistência&Se a ferramenta persiste dados para análise futura.\\
 			\bottomrule
 		\end{tabular}
 		\label{tab:string-busca-connected-papers}
@@ -264,32 +264,32 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 
 		\subsection{MemInsight}
 		\par No contexto de medição de memória, temos a MemInsight \citep{Jensen2015MemInsight}. Essa ferramenta roda de forma independente sobre uma engine Javascript, não sendo necessário um browser para executar, e faz a análise do consumo de memória por meio de um conjunto de medições que visam remontar o ciclo de vida dos objetos em memória, e que permitem a análise de desperdício de recursos durante a execução do programa. 
-		\par Analisando a ferramenta, foi observado que ela só trabalha com medição de métricas de memória, não permitindo generalizar consultas de outros tipos, por isso classificamos como não flexível com relação as métricas. Além disso, por ser uma ferramenta com foco em depurar aplicações, não realiza nativamente a persistência e organização desses dados.
+		\par Analisando a ferramenta, foi observado que ela só trabalha com medição de métricas de memória, não permitindo generalizar consultas de outros tipos, por isso classificamos como não flexível com relação às métricas. Além disso, por ser uma ferramenta com foco em depurar aplicações, não realiza nativamente a persistência e organização desses dados.
 		
 
 		\subsection{WePR}
-		\par \citep{Asrese2019MeasuringWL} também propôs uma feramenta para medição no lado do cliente, porém agora com o enfoque em medir métricas de \acr{QoS}, nomeada WePR. No trabalho, ele apresenta um panorama da evolução da web, especialmente de como a latência se desenvolveu nos websites, e sustenta a necessidade desse tipo de medição como forma de melhorar a experiência do usuário, que indicam ser um fator determinante no abandono ou sucesso de um website. A ferramenta foi testada utilizando grandes websites como Google, Youtube e Facebook. 
-		\par A arquitetura da ferramenta é distribuida, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador de carga (do inglês, \emph{load balancer}), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor as URLs dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o balanceador de carga, e por fim algum dos servidores de renderização envia os dados para persistência.
-		\par O enfoque da ferramenta é a análise de desempenho de websites, dessa forma sua arquitetura e usabilidade não foram construídas de forma simples de estender, tornando dificil a utilização da ferramenta em outros contextos. Além disso, não temos a possibilidade de incluir métricas customizadas, o que torna sua análise pouco flexível.
+		\par \citep{Asrese2019MeasuringWL} também propôs uma ferramenta para medição no lado do cliente, porém agora com o enfoque em medir métricas de \acr{QoS}, nomeada WePR. No trabalho, ele apresenta um panorama da evolução da web, especialmente de como a latência se desenvolveu nos sites, e sustenta a necessidade desse tipo de medição como forma de melhorar a experiência do usuário, que indicam ser um fator determinante no abandono ou sucesso de um website. A ferramenta foi testada utilizando grandes sites como Google, Youtube e Facebook. 
+		\par A arquitetura da ferramenta é distribuída, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador de carga (do inglês, \emph{load balancer}), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor as URLs dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o balanceador de carga, e por fim algum dos servidores de renderização envia os dados para persistência.
+		\par O enfoque da ferramenta é a análise de desempenho de sites, dessa forma sua arquitetura e usabilidade não foram construídas de forma simples de estender, tornando difícil a utilização da ferramenta em outros contextos. Além disso, não temos a possibilidade de incluir métricas customizadas, o que torna sua análise pouco flexível.
 		
 		\subsection{Gember}
 		\par \citep{Gember2012Obtaining} também traz um estudo sobre medição no lado do cliente, porém dessa vez em clientes móveis, utilizando dados de um provedor de internet e também de experimentos controlados. Esse tipo de medição é muito útil para provedores de internet e desenvolvedores, que precisam entender como suas aplicações se saem interagindo com redes móveis de internet.
 		\par Foi desenvolvido no trabalho um protótipo para Android de um medidor de performance para analisar somente quando o dispositivo está ativo, e que é integrado ao app como uma biblioteca. A arquitetura consiste basicamente de um controlador central (servidor), e múltiplos clientes (aparelhos) com o código rodando em seus celulares. Dessa forma, o pesquisador faz uma requisição para esse controlador, e ele coordena a coleta do que foi solicitado nos aparelhos, salvando os resultados no servidor.
-		\par O serviço inicialmente coleta latência, taxa de transferência (do inglês, {throughput}) e o tempo de carregamento de páginas Web, é extensível para outras métricas de rede, porém limitado a elas. Outra limitação aqui é a utilização no cliente, que se encontram somente no sistema operacional Android, tornando pouco flexível a utilização dessa ferramenta nos contextos de pesquisas multiplataforma.
+		\par O serviço inicialmente coleta latência, taxa de transferência (do inglês, {throughput}) e o tempo de carregamento de páginas Web, é extensível para outras métricas de rede, porém limitado a elas. Outra limitação aqui é a utilização no cliente, que se encontra somente no sistema operacional Android, tornando pouco flexível a utilização dessa ferramenta nos contextos de pesquisas multiplataforma.
 
 		\subsection{Mobilyzer}
-		\par Ainda no contexto de medição de rede, se encontra o Mobilyzer \citep{Nikravesh2015Mobilyzer}, uma plataforma aberta para medição de rede em dispositívos móveis. Essa plataforma foi criada com o objetivo de prover uma solução escalável, eficiente e controlável, que fosse possível de ser incorporada tanto a apps em desenvolvimento, quanto em apps que já estão desenvolvidos, para suportar pesquisas e testes em medição de rede. 
+		\par Ainda no contexto de medição de rede, se encontra o Mobilyzer \citep{Nikravesh2015Mobilyzer}, uma plataforma aberta para medição de rede em dispositivos móveis. Essa plataforma foi criada com o objetivo de prover uma solução escalável, eficiente e controlável, que fosse possível de ser incorporada tanto a apps em desenvolvimento, quanto em apps que já estão desenvolvidos, para suportar pesquisas e testes em medição de rede. 
 		\par Ela funciona utilizando alguns componentes básicos, sendo eles: 
 		\begin{enumerate}
 			\item Uma biblioteca Android, que é integrada aos aplicativos para coletar as informações e enviar ao servidor. Ela é incorporada direto no código fonte.
-			\item Um componente chamado gerenciador de memória, no qual o pesquisador pode inserir medições de forma customizada e mais eficiente. Ele também realiza o agendamento das medições, e também cordena e monitora os dispositivos para que não tenha sobrecarga em nenhum aparelho ou rede medida. 
-			\item Um servidor na núvem, que fica responsável por coletar, analisar aplicando regras e publicar os dados coletados dos dispositivos. Essa arquitetura centralizada simplifica o compartilhamento de dados entre essas etapas, podendo integrar outras ferramentas de analise de dados com a base das coletas.
+			\item Um componente chamado gerenciador de memória, no qual o pesquisador pode inserir medições de forma customizada e mais eficiente. Ele também realiza o agendamento das medições, e também coordena e monitora os dispositivos para que não tenha sobrecarga em nenhum aparelho ou rede medida. 
+			\item Um servidor na nuvem, que fica responsável por coletar, analisar aplicando regras e publicar os dados coletados dos dispositivos. Essa arquitetura centralizada simplifica o compartilhamento de dados entre essas etapas, podendo integrar outras ferramentas de análise de dados com a base das coletas.
 
 		\end{enumerate}
-		\par Uma dificuldade no uso do Mobilyzer em pesquisas é que essa plataforma também se restringe a plataforma Android. Diminuindo bastante as possibilidades de medição em pesquisas multiplataforma. Além disso, não possui muita flexibilidade com relação as métricas, sendo em sua maior parte métricas de rede.
+		\par Uma dificuldade no uso do Mobilyzer em pesquisas é que essa plataforma também se restringe a plataforma Android. Diminuindo bastante as possibilidades de medição em pesquisas multiplataforma. Além disso, não possui muita flexibilidade com relação às métricas, sendo em sua maior parte métricas de rede.
 
 		\subsection{Nossa Ferramenta}
-		\par Após o descrito, podemos posicionar a nossa ferramenta com relação aos critérios que estabelecemos no começo dessa secção. Temos um modelo de arquitetura simples que será explicado nas seções futuras desse trabalho, a possibilidade de expandir e construir métricas diversas, uma curva de aprendizado suave, a compatibilidade com múltiplas plataformas pois a coleta das métricas ocorre no navegador, e também a persistência desses dados para futura análise.
+		\par Após o descrito, podemos posicionar a nossa ferramenta com relação aos critérios que estabelecemos no começo desta seção. Temos um modelo de arquitetura simples que será explicado nas seções futuras deste trabalho, a possibilidade de expandir e construir métricas diversas, uma curva de aprendizado suave, a compatibilidade com múltiplas plataformas pois a coleta das métricas ocorre no navegador, e também a persistência desses dados para futura análise.
 		\par Assim, a tabela teria a seguinte configuração após a adição da nossa ferramenta:
 
 		\begin{table}[ht]
@@ -415,7 +415,7 @@ A fim de pôr a prova a modelagem, desenvolvemos uma prova de conceito com objet
 
 O código da prova de conceito se encontra no apêndice. Nele temos a classe Projeto chamada Project no código, a qual é a classe responsável por executar as tarefas chamada Tasks, e cada tarefa terá suas métricas chamada Metrics a serem avaliadas, que serão posteriormente salvas pela classe de persistência de dados. Para executar as análises precisamos de um ponto de partida, no código especificado é a classe index, para criar a árvore de tarefas e executar o Projeto para obter os resultados.
 
-No desenvolvimento da prova de conceito foram criados recursos fictícios de memória e de tempo de processamento. Para a métrica de memória, foram criados uma classe estática que inicializa com o valor inicial da memória e as operações de alocação e desalocação, o que simula o comportamento da memória do computador em uma aplicação com dados reais. Para tempo de processamento, foi criada um uma função que espera um tempo aleatório, para simular que alguma tarefa em execução.
+No desenvolvimento da prova de conceito foram criados recursos fictícios de memória e de tempo de processamento. Para a métrica de memória, foram criados uma classe estática que inicializa com o valor inicial da memória e as operações de alocação e desalocação, o que simula o comportamento da memória do computador em uma aplicação com dados reais. Para tempo de processamento, foi criada um uma função que espera um tempo aleatório, para simular que alguma tarefa está em execução.
 
 A partir da simulação do uso de recursos de memória e processamento, foi possível gerar métricas viáveis e avaliar os seus resultados. Na métrica de memória, é verificado o quanto da memória simulada foi alocada, enquanto na métrica de tempo de processamento é calculada a diferença entre a data de início e de fim da tarefa para obtermos o intervalo. 
 
@@ -456,7 +456,7 @@ Dentre eles, o ponto de maior destaque foi como realizar a captura das métricas
 Pois, uma abordagem tradicional ao problema envolveria o desenvolvimento de uma \acr{API} para nos permitir receber e disponibilizar a consulta dos dados.
 Entretanto, disponibilizar os dados dos usuários do framework na Internet tornaria necessário também criar uma camada de autorização, expandindo ainda mais o escopo de desenvolvimento.
 A solução encontrada para o problema foi a utilização do programa de planilhas online Google Sheets, onde ao invés da execução do framework enviar as métricas para uma \acr{API} nossa, ela envia para uma planilha do próprio usuário.
-Deste modo, não há a necessidade do desenvolvimento de \acr{API}, pois, utilizariamos uma do Google Sheets e o controle de acesso aos dados também fica sob responsabilidade deles.
+Deste modo, não há a necessidade do desenvolvimento de \acr{API}, pois, utilizamos uma do Google Sheets e o controle de acesso aos dados também fica sob responsabilidade deles.
 
 A última etapa atual está sendo o desenvolvimento de uma prova de conceito do próprio framework.
 Para tanto, optamos por desenvolver utilizando a linguagem de programação TypeScript, a fim de exercitar as classes e relações planejadas durante a criação dos diagramas.
