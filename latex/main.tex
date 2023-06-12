@@ -109,25 +109,26 @@ Alguns exemplos desses tratamentos especiais para o manuseio de grandes volumes 
 Portanto, os sistemas que manuseiam grandes volumes de dados precisam ser planejados para sua carga de trabalho.
 
 Por outro lado, aplicações Web com arquitetura cliente-servidor sofrem com o problema da ampla variedade de configurações tanto de hardware quanto de software no lado do cliente.
-E, os desenvolvedores, por sua vez, não possuem diversos tipos de ambientes para executar suas aplicações, o que pode levar a problemas com alguns tipos de configurações.
-Além disso, mesmo quando existe acesso a diferentes tipos de ambiente, é improvável que a equipe de desenvolvimento tenha acesso direto, sendo necessário a colaboração de alguém externo ao desenvolvimento.
+E, os desenvolvedores, por sua vez, não possuem diversos tipos de ambientes para exercitar suas aplicações, o que pode levar a problemas com alguns tipos de configurações.
+Além disso, mesmo quando existe acesso a diferentes tipos de ambiente, é improvável que a equipe de desenvolvimento tenha acesso direto, sendo necessário a colaboração de alguém externo.
 
-A fim de atenuar estes problemas, estamos propondo um framework o qual um desenvolvedor de uma aplicação Web cliente-servidor seja capaz de facilmente obter métricas e estatísticas sobre provas de conceito as quais precisam ser executadas em diversas configurações de clientes por terceiros.
-Por exemplo, considere uma aplicação Web a qual precisa trafegar um volume suficientemente grande de dados entre o cliente e o servidor, de modo que seja impossível de manter todos dados em cache no lado do cliente.
+A fim de atenuar estes problemas, estamos propondo um framework o qual um desenvolvedor de uma aplicação Web cliente-servidor seja capaz de facilmente obter métricas e estatísticas sobre provas de conceito, as quais, precisam ser executadas em diversas configurações de clientes por voluntários.
+Por exemplo, considere uma aplicação Web a qual precisa trafegar um volume suficientemente grande de dados entre o cliente e o servidor, de modo que, seja impossível de manter todos dados em cache no lado do cliente.
+
 Para realizar o tráfego de dados, a equipe de desenvolvimento considera as seguintes opções de formato de arquivo: CSV, JSON, Arrow e Parquet.
-Para tomar essa decisão, a equipe decide realizar uma análise de desempenho e consumo de recursos em cada uma das abordagens variando os tipos de clientes.
+Com o objetivo de tomar essa decisão, a equipe decide realizar uma análise de desempenho e consumo de recursos em cada uma das abordagens variando os tipos de clientes.
 E, para incluir nas avaliações a maior variedade possível de clientes, eles também decidem automatizá-la, de modo que seja possível contar com o auxílio de voluntários.
-Porém, para que seja possível a execução por voluntários, além da prova de conceito a equipe ainda precisaria desenvolver como expor, executar e coletar as métricas durante a avaliação.
+Porém, com o intuito de tornar isso possível, além da prova de conceito, a equipe ainda precisaria desenvolver como expor, executar e coletar as métricas durante a avaliação.
 
 Este é o tipo de cenário para qual o framework está sendo proposto.
 Por disponibilizar uma aplicação Web pronta e capaz de envolver provas de conceito, automatizar sua execução, coletar métricas e ser de fácil extensão.
-Ademais, o framework por padrão possui as métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada, identificação do ambiente de execução e os dados são armazenados em uma planilha do Google para fácil obtenção e análise.
+Ademais, o framework por padrão possui as métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada, identificação do ambiente de execução e os dados são armazenados em uma planilha online para fácil obtenção e análise.
 Deste modo, o desenvolvedor pode focar nas provas de conceito e na obtenção de ambientes e voluntários, ao invés do desenvolvimento de infraestrutura para realização das avaliações.
 
 Além disso, o trabalho está dividido em cinco capítulos.
-O capítulo \ref{cap:fund_teorica} e \ref{sec:trab_relacionados} correspondem aos aspectos metodológicos e trabalhos relacionados encontrados no campo de estudo.
+O capítulo \ref{cap:fund_teorica} e \ref{sec:trab_relacionados} correspondem a fundamentação teórica e trabalhos relacionados encontrados no campo de estudo.
 O capítulo \ref{cap:proposta} apresenta a proposta de desenvolvimento da ferramenta.
-Por fim, o capítulo \ref{cap:estado_atual} apresenta o estado atual do framework e o cronograma para a próxima etapa.
+Por fim, os capítulos \ref{cap:prova_de_conceito} e \ref{cap:estado_atual} apresenta o estado atual do framework e o cronograma para a próxima etapa.
 
 
 \chapter{Fundamentação Teórica}
@@ -169,7 +170,7 @@ Deste modo, na figura \ref{fig:elicit} elencamos todas strings de busca utilizad
 
 Além disso, três trabalhos encontrados por meio do Elicit foram utilizados como entrada para a ferramenta Connected Papers.
 O Connected Papers é um outro assistente de pesquisa, o qual recebe como entrada o título ou o DOI de um trabalho para gerar um grafo de trabalhos relacionados destacando suas principais conexões e trabalhos influentes.
-As strings de busca utilizadas no Connected Papers estão listadas na figura \ref{tab:connected-papers}, de modo que para cada uma, a ferramenta gerou um grafo com 40 trabalhos relacionados, os quais também podem ser visualizados em uma tabela.
+As strings de busca utilizadas no Connected Papers estão listadas na figura \ref{tab:connected-papers}, de modo que, para cada uma, a ferramenta gerou um grafo com 40 trabalhos relacionados, os quais também podem ser visualizados em uma tabela.
 
 \begin{figure}
 	\centering
@@ -197,7 +198,7 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 
 \begin{table}[!ht]
 	\centering
-	\caption{Total de trabalhos encontrados.}
+	\caption{Total de trabalhos encontrados}
 	\begin{tabular}{l  c L{1.5cm} R{1.5cm}}
 		\toprule
 		\textbf{Ferramenta} & \textbf{Trabalhos Encontrados} \\
@@ -217,22 +218,22 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 
 	% \item \textbf{Paper 1}: Summary of the first paper goes here. This paragraph provides a concise overview of the paper's objectives, methodology, and key findings.
 	\section{Ferramentas Para Medição no Lado do Cliente}
-	Utilizando os métodos descritos na seção anterior do trabalho, conseguimos levantar um panorama geral dos frameworks e soluções existentes e propostos à academia, assim como classifica-los utilizando alguns parâmetros, afim de entender se a nossa proposta se demonstra complementar ao estado da arte. 
+	Utilizando os métodos descritos na seção anterior do trabalho, conseguimos levantar um panorama geral dos frameworks e soluções existentes e propostos à academia, assim como classificá-los utilizando alguns parâmetros, afim de entender se a nossa proposta se demonstra complementar ao estado da arte. 
 	Os critérios da classificação são: 
 
 
 	\begin{table}[!ht]
 		\centering
-		\caption{Strings de busca utilizadas na ferramenta Connected Papers.}
-		\begin{tabular}{c c L{1.5cm} R{1.5cm}}
+		\caption{Critérios de classificação das ferramentas}
+		\begin{tabular}{l c L{1.5cm} R{1.5cm}}
 			\toprule
 			\textbf{Critério} & \textbf{Descrição}\\
-			\midrule
-			Arquitetura Simples & Se a arquitetura da ferramenta é de fácil entendimento\\
-			Flexibilidade&Se a ferramenta se adapta em diversos contextos de medição\\
-			Curva de Apredizado&Se a ferramenta possui uma curva de aprendizado rápida\\
-			Multiplataforma&Se a ferramenta suporta o uso em diversas plataformas\\
-			Persistência&Se a ferramente persiste dados para análise futura\\
+			\midrule 
+			Arquitetura Simples & Se a arquitetura da ferramenta é de fácil entendimento.\\
+			Flexibilidade&Se a ferramenta se adapta em diversos contextos de medição.\\
+			Curva de Apredizado&Se a ferramenta possui uma curva de aprendizado rápida.\\
+			Multiplataforma&Se a ferramenta suporta o uso em diversas plataformas.\\
+			Persistência&Se a ferramente persiste dados para análise futura.\\
 			\bottomrule
 		\end{tabular}
 		\label{tab:string-busca-connected-papers}
@@ -243,14 +244,14 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 
 		\begin{table}[ht]
 			\scriptsize
-			\caption{Classificação das Ferramentas Encontradas} % title of Table
+			\caption{Classificação das ferramentas encontradas} % title of Table
 			\centering % used for centering table
-			\begin{tabular}{c c c c c c} % centered columns (4 columns)
-			\hline\hline %inserts double horizontal lines
+			\begin{tabular}{l c c c c c} % centered columns (4 columns)
+			\toprule
 			\textbf{Plataforma} & \textbf{Arquitetura Simples} & \textbf{Flexibilidade} & \textbf{Curva de Aprendizado} & \textbf{Multiplataforma} & \textbf{Persistência} \\[0.5ex]
 
 			%heading
-			\hline % inserts single horizontal line
+			\midrule % inserts single horizontal line
 			MemInsight & sim & não & sim & sim & não \\
 			WePR & não & não & não & sim & sim \\
 			Gember & sim & não & sim & não & sim \\
@@ -262,19 +263,19 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 	
 
 		\subsection{MemInsight}
-		\par No contexto de medição de memória, temos a MemInsight \citep{Jensen2015MemInsight}. Essa ferramenta roda de forma independente sobre uma engine Javascript, não precisando de um browser para executar, e faz a análise do consumo de memória através de um conjunto de traces, dados estruturados que tornam possível remontar o ciclo de vida dos objetos em memória, e que permitem a análise de desperdício de recursos durante a execução do programa. 
-		\par Analisando a ferramenta, foi observado que ela só trabalha com medição de métricas de memória, não permitindo generalizar consultas de outros tipos, por isso classificamos como não flexível com relação as métricas. Além disso, por ser uma ferramenta orientada ao “debug” de aplicações, não realiza nativamente a persistência e organização desses dados.
+		\par No contexto de medição de memória, temos a MemInsight \citep{Jensen2015MemInsight}. Essa ferramenta roda de forma independente sobre uma engine Javascript, não sendo necessário um browser para executar, e faz a análise do consumo de memória por meio de um conjunto de medições que visam remontar o ciclo de vida dos objetos em memória, e que permitem a análise de desperdício de recursos durante a execução do programa. 
+		\par Analisando a ferramenta, foi observado que ela só trabalha com medição de métricas de memória, não permitindo generalizar consultas de outros tipos, por isso classificamos como não flexível com relação as métricas. Além disso, por ser uma ferramenta com foco em depurar aplicações, não realiza nativamente a persistência e organização desses dados.
 		
 
 		\subsection{WePR}
 		\par \citep{Asrese2019MeasuringWL} também propôs uma feramenta para medição no lado do cliente, porém agora com o enfoque em medir métricas de \acr{QoS}, nomeada WePR. No trabalho, ele apresenta um panorama da evolução da web, especialmente de como a latência se desenvolveu nos websites, e sustenta a necessidade desse tipo de medição como forma de melhorar a experiência do usuário, que indicam ser um fator determinante no abandono ou sucesso de um website. A ferramenta foi testada utilizando grandes websites como Google, Youtube e Facebook. 
-		\par A arquitetura da ferramenta é distribuida, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador (loadbalancer), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor os URL’s dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o loadbalancer, e por fim algum dos servidores de renderização envia os dados para persistência.
-		\par O enfoque da ferramenta é a medição de performance de websites, dessa forma sua arquitetura e usabilidade não foram construídas de forma simples de extender, tornando dificil a utilização da ferramenta em outros contextos. Além disso, não temos a possibilidade de customizar as métricas, o que torna pouco flexível quando se trata de outras medições.
+		\par A arquitetura da ferramenta é distribuida, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador de carga (do inglês, \emph{load balancer}), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor as URLs dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o balanceador de carga, e por fim algum dos servidores de renderização envia os dados para persistência.
+		\par O enfoque da ferramenta é a análise de desempenho de websites, dessa forma sua arquitetura e usabilidade não foram construídas de forma simples de estender, tornando dificil a utilização da ferramenta em outros contextos. Além disso, não temos a possibilidade de incluir métricas customizadas, o que torna sua análise pouco flexível.
 		
 		\subsection{Gember}
-		\par \citep{Gember2012Obtaining} também traz um estudo sobre medição no lado do cliente, porém dessa vez em clientes móveis, utilizando dados de um provedor de internet e também de experimentos controlados. Esse tipo de medição é muito útil para provedores de internet e desenvolvedores, que precisam entender como suas aplicações performam interagindo com a rede móvel de internet.
+		\par \citep{Gember2012Obtaining} também traz um estudo sobre medição no lado do cliente, porém dessa vez em clientes móveis, utilizando dados de um provedor de internet e também de experimentos controlados. Esse tipo de medição é muito útil para provedores de internet e desenvolvedores, que precisam entender como suas aplicações se saem interagindo com redes móveis de internet.
 		\par Foi desenvolvido no trabalho um protótipo para Android de um medidor de performance para analisar somente quando o dispositivo está ativo, e que é integrado ao app como uma biblioteca. A arquitetura consiste basicamente de um controlador central (servidor), e múltiplos clientes (aparelhos) com o código rodando em seus celulares. Dessa forma, o pesquisador faz uma requisição para esse controlador, e ele coordena a coleta do que foi solicitado nos aparelhos, salvando os resultados no servidor.
-		\par O serviço inicialmente coleta latência, throughput, streaming e o tempo de carregamento de páginas web, é extensível para outras métricas de rede, porém limitado a elas. Outra limitação aqui é a utilização no cliente, que se encontram somente no ambiente mobile Android, tornando pouco flexível a utilização dessa ferramenta nos contextos de pesquisas multiplataforma.
+		\par O serviço inicialmente coleta latência, taxa de transferência (do inglês, {throughput}) e o tempo de carregamento de páginas Web, é extensível para outras métricas de rede, porém limitado a elas. Outra limitação aqui é a utilização no cliente, que se encontram somente no sistema operacional Android, tornando pouco flexível a utilização dessa ferramenta nos contextos de pesquisas multiplataforma.
 
 		\subsection{Mobilyzer}
 		\par Ainda no contexto de medição de rede, se encontra o Mobilyzer \citep{Nikravesh2015Mobilyzer}, uma plataforma aberta para medição de rede em dispositívos móveis. Essa plataforma foi criada com o objetivo de prover uma solução escalável, eficiente e controlável, que fosse possível de ser incorporada tanto a apps em desenvolvimento, quanto em apps que já estão desenvolvidos, para suportar pesquisas e testes em medição de rede. 
@@ -285,7 +286,7 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 			\item Um servidor na núvem, que fica responsável por coletar, analisar aplicando regras e publicar os dados coletados dos dispositivos. Essa arquitetura centralizada simplifica o compartilhamento de dados entre essas etapas, podendo integrar outras ferramentas de analise de dados com a base das coletas.
 
 		\end{enumerate}
-		\par Uma dificuldade no uso do Mobilyzer em pesquisas é que essa plataforma também se restringe ao ambiente mobile, e apenas na plataforma Android. Isso diminui bastante possibilidades de medição em pesquisas multiplataforma. Além disso, não temos muita flexibilidade com relação as métricas, sendo em sua maior parte métricas de rede.
+		\par Uma dificuldade no uso do Mobilyzer em pesquisas é que essa plataforma também se restringe a plataforma Android. Diminuindo bastante as possibilidades de medição em pesquisas multiplataforma. Além disso, não possui muita flexibilidade com relação as métricas, sendo em sua maior parte métricas de rede.
 
 		\subsection{Nossa Ferramenta}
 		\par Após o descrito, podemos posicionar a nossa ferramenta com relação aos critérios que estabelecemos no começo dessa secção. Temos um modelo de arquitetura simples que será explicado nas seções futuras desse trabalho, a possibilidade de expandir e construir métricas diversas, uma curva de aprendizado suave, a compatibilidade com múltiplas plataformas pois a coleta das métricas ocorre no navegador, e também a persistência desses dados para futura análise.
@@ -293,20 +294,20 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 
 		\begin{table}[ht]
 			\scriptsize
-			\caption{Classificação das Ferramentas Encontradas Após Adição do FadeCow} % title of Table
+			\caption{Classificação das ferramentas encontradas com a nossa ferramenta} % title of Table
 			\centering % used for centering table
 			\begin{tabular}{c c c c c c} % centered columns (4 columns)
-			\hline\hline %inserts double horizontal lines
+			\toprule %inserts double horizontal lines
 			\textbf{Plataforma} & \textbf{Arquitetura Simples} & \textbf{Flexibilidade} & \textbf{Curva de Aprendizado} & \textbf{Multiplataforma} & \textbf{Persistência} \\[0.5ex]
 
 			%heading
-			\hline % inserts single horizontal line
+			\midrule % inserts single horizontal line
 			MemInsight & sim & não & sim & sim & não \\
 			WePR & não & não & não & sim & sim \\
 			Gember & sim & não & sim & não & sim \\
 			Mobilyzer & sim & não & não & não & sim \\
 			Nossa Ferramenta & sim & sim & sim & sim & sim \\
-			\hline %inserts single line
+			\bottomrule %inserts single line
 			\end{tabular}
 			\label{table:nonlin} % is used to refer this table in the text
 		\end{table}
@@ -410,30 +411,30 @@ Porém, a \acr{API} do Google Sheets não atende diretamente as necessidades do 
 \chapter{Prova de conceito}
 \label{cap:prova_de_conceito}
 \section{Como funciona}
-A fim de pôr a prova a modelagem, foi desenvolvida uma prova de conceito com dados mockados, que simulam os recursos de uma máquina. Essa abordagem nos permitiu avaliar a eficácia da modelagem sem depender de recursos físicos reais, visando manter o foco na estrutura geral da aplicação. A prova de conceito foi implementada usando Typescript, uma linguagem de programação que será convertida na linguagem Javascript, que é uma linguagem geralmente usada em sites web. A escolha do Typescript facilita expressar as classes e heranças definidas na modelagem do diagrama, ter uma especificação mais clara dos tipos usados e também permite a execução no navegador, onde o framework será executado.
+A fim de pôr a prova a modelagem, desenvolvemos uma prova de conceito com objetos mock, que simulam os recursos de uma máquina. Essa abordagem nos permitiu avaliar a eficácia da modelagem sem depender de recursos físicos reais, visando manter o foco na estrutura geral da aplicação. A prova de conceito foi implementada usando a linguagem de programação Typescript, sua escolha visa expressar com clareza todas as classes e relações definidas na modelagem do framework, além de também permitir a execução em navegadores.
 
-O código da prova de conceito se encontra no apêndice. Nele temos a classe Projeto chamada Project no código, que é a classe que executará as tarefas chamada Tasks, e cada tarefa terá suas métricas chamada Metrics a serem avaliadas, que serão posteriormente salvas pela classe de persistência de dados. Para executar as análises precisamos de um ponto de partida, no código especificado é a classe index, para criar a árvore de tarefas e executar o Projeto para obter os resultados.
+O código da prova de conceito se encontra no apêndice. Nele temos a classe Projeto chamada Project no código, a qual é a classe responsável por executar as tarefas chamada Tasks, e cada tarefa terá suas métricas chamada Metrics a serem avaliadas, que serão posteriormente salvas pela classe de persistência de dados. Para executar as análises precisamos de um ponto de partida, no código especificado é a classe index, para criar a árvore de tarefas e executar o Projeto para obter os resultados.
 
-No desenvolvimento da prova de conceito foram criados recursos fictícios de memória e de cpu. Para a métrica de memória, foram criados uma classe estática que inicializa com o valor inicial da memória e as operações de alocação e desalocação, o que simula o comportamento da memória do computador em uma aplicação com dados reais. Para a CPU foi criada um uma função que espera um tempo aleatório, para simular que alguma tarefa esteja sendo executada e consumindo esse tempo de processamento.
+No desenvolvimento da prova de conceito foram criados recursos fictícios de memória e de tempo de processamento. Para a métrica de memória, foram criados uma classe estática que inicializa com o valor inicial da memória e as operações de alocação e desalocação, o que simula o comportamento da memória do computador em uma aplicação com dados reais. Para tempo de processamento, foi criada um uma função que espera um tempo aleatório, para simular que alguma tarefa em execução.
 
-A partir da utilização dos recursos de memória e de CPU, foi possível criar métricas viáveis e avaliar os seus resultados. Na métrica de memória, é verificado o quanto da memória mockada foi utilizada pela tarefa, enquanto na métrica de CPU é calculada a diferença entre a data de início e de fim da tarefa para obtermos o tempo da execução. 
+A partir da simulação do uso de recursos de memória e processamento, foi possível gerar métricas viáveis e avaliar os seus resultados. Na métrica de memória, é verificado o quanto da memória simulada foi alocada, enquanto na métrica de tempo de processamento é calculada a diferença entre a data de início e de fim da tarefa para obtermos o intervalo. 
 
-Foram implementadas dois tipos de tarefas: as tarefas simples e as compostas. A primeira delas são as implementações que serão avaliadas pelo framework e que têm métricas que serão avaliadas na sua execução. Já as tarefas compostas são uma agregação de tarefas simples ou compostas que também tem suas métricas, permitindo a criação de árvores inteiras de tarefas para serem avaliadas, dando liberdade ao usuário.
+Foram implementadas dois tipos de tarefas: as tarefas simples e as compostas. A primeira delas são as implementações que serão avaliadas pelo framework e que têm métricas que serão avaliadas na sua execução. Já as tarefas compostas são uma agregação de tarefas simples ou compostas que também tem suas métricas, permitindo a criação de árvores de tarefas para serem avaliadas, dando liberdade ao usuário.
 
 Para executar as tarefas foi criado o projeto. O projeto é uma classe que recebe uma tarefa, que pode ser uma tarefa simples ou composta, permitindo que seja executada uma árvore específica montada pelo usuário. Nesta classe as tarefas são efetivamente executadas e é gerado o resultado da análise, que posteriormente serão encaminhados para a classe de persistência dos dados.
 
-A persistência de dados da aplicação foi implementada de forma simplificada para a prova de conceito, fazendo com que simplesmente seja gerado um arquivo. O Projeto retorna um dicionário encadeado com cada tarefa e suas métricas e caso a tarefa seja uma tarefa composta, será retornado também suas subtarefas. Esse dicionário é persistido em um arquivo json. 
+A persistência de dados da aplicação foi implementada de forma simplificada para a prova de conceito, fazendo com que simplesmente seja gerado um arquivo. O Projeto retorna um dicionário encadeado com cada tarefa e suas métricas e caso a tarefa seja uma tarefa composta, será retornado também suas subtarefas. Esse dicionário é persistido em um arquivo JSON. 
 
-Para utilizar essa prova de conceito, basta criar um arquivo, criar suas tarefas, organizá-las usando as tarefas compostas e criar um Projeto passando a tarefa principal, que vai ser a raiz da árvore, e por fim executar a aplicação. Após isso será criado um arquivo json com o resultado da análise das tarefas.
+Para utilizar essa prova de conceito, basta criar um arquivo, criar suas tarefas, organizá-las usando as tarefas compostas e criar um Projeto passando a tarefa principal, que vai ser a raiz da árvore, e por fim executar a aplicação. Após isso será criado um arquivo JSON com o resultado da análise das tarefas.
 
 \section{Exemplo de uso}
-Um exemplo prático de uso do nosso framework consiste em comparar o desempenho de consultas em dicionários e listas, a fim de determinar qual estrutura de dados oferece melhor desempenho em termos de velocidade e uso de memória. Vamos explorar esse exemplo para ilustrar a funcionalidade da prova de conceito.
+Um exemplo ilustrativo de uso do framework consiste em comparar o desempenho de consultas em dicionários e listas, a fim de determinar qual estrutura de dados oferece melhor desempenho em termos de velocidade e uso de memória. Vamos explorar esse exemplo para ilustrar a funcionalidade da prova de conceito.
 
-Primeiramente, é necessário verificar se todas as métricas necessárias para a avaliação estão implementadas. Caso alguma métrica esteja ausente, é possível criá-la estendendo a classe de metrica abstrata e implementar a lógica específica para gerar essa métrica. Nesse exemplo, vamos analisar o uso de memória e o tempo de execução. Como essas métricas já estão implementadas, não é necessário criar novas métricas para essa comparação.
+Primeiramente, é necessário verificar se todas as métricas necessárias para a avaliação estão implementadas. Caso alguma métrica esteja ausente, é possível criá-la estendendo a classe de métrica abstrata e implementar a lógica específica para gerar essa métrica. Nesse exemplo, vamos analisar o uso de memória e o tempo de execução. Como essas métricas já estão implementadas, não é necessário criar novas métricas para essa comparação.
 
-Após garantir a disponibilidade das métricas, podemos implementar as tarefas que serão avaliadas: uma que trabalha com listas e outra que utiliza dicionários. Nesse caso, como estamos realizando uma prova de conceito, faremos uso de um mock de memória, que simula a alocação e desalocação da memória, e da função que espera um tempo aleatório, que simula o tempo de execução de uma tarefa.
+Após garantir a disponibilidade das métricas, podemos implementar as tarefas que serão avaliadas: uma que trabalha com listas e outra que utiliza dicionários. Nesse caso, como estamos realizando uma prova de conceito, faremos uso de um objeto mock para a memória, que simula a alocação e desalocação de memória, e da função que espera um tempo aleatório, que simula o tempo de execução de uma tarefa.
 
-Uma vez implementadas as tarefas, podemos criar um arquivo chamado "index.ts". Nele, criaremos uma CompositeTask que incluirá as duas tarefas previamente implementadas: a tarefa com dicionários e a tarefa com listas. Em seguida, criaremos um novo projeto, passando a CompositeTask como parâmetro para a sua execução. Esse projeto será responsável por salvar os resultados em um arquivo específico.
+Uma vez implementadas as tarefas, podemos criar um arquivo chamado ``index.ts''. Nele, criaremos uma CompositeTask que incluirá as duas tarefas previamente implementadas: a tarefa com dicionários e a tarefa com listas. Em seguida, criaremos um novo projeto, passando a CompositeTask como parâmetro para a sua execução. Esse projeto será responsável por salvar os resultados em um arquivo específico.
 
 Por fim, poderemos analisar os resultados salvos no arquivo para determinar qual implementação se mostra mais adequada para a nossa aplicação, considerando o desempenho apresentado pelas estruturas de dados em termos de velocidade e uso de memória. Ao realizar esse exemplo, aproveitamos as capacidades da prova de conceito para comparar o desempenho de diferentes estruturas de dados, auxiliando na tomada de decisões informadas e na seleção da melhor abordagem para otimizar a nossa aplicação.
 
