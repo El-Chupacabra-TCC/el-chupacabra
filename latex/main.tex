@@ -62,8 +62,8 @@
 \dlibrary{ficha.pdf}
 		
 \ddedicatory{
-	\raggedleft \normalsize Dedico esse trabalho aos futuros pesquisadores, cuja as descobertas e avanços sejam impulsionados por esse trabalho. Que esse framework que nós desenvolvemos possa servir de apoio para que possam avaliar o desempenho de suas próximas pesquisas.
-	Também dedico esse trabalho aos meus professores, cuja orientação nos proporcionaram conhecimentos para realização desse projeto. Seus ensinamentos foram fundamentais para nos capacitar a desenvolver esse trabalho.
+	\raggedleft \normalsize Dedico esse trabalho aos futuros pesquisadores, cuja as descobertas e avanços sejam impulsionados por esse trabalho. Que esse framework sirva de apoio para que possam avaliar o desempenho de suas próximas pesquisas, e que isso gere impactos positivos na sociedade.
+	Dedicamos também aos nossos professores, cuja orientação nos trouxeram os conhecimentos necessários para realização desse projeto. Seus ensinamentos foram fundamentais para nos capacitar a desenvolver esse trabalho.
 }
 
 \dacknowledgment{
@@ -71,24 +71,22 @@
 	\\
 	Agradece-se também à plataforma Scopus e à CAPES pelas valiosas fontes de pesquisa que foram extremamente importantes para a fundação teórica deste trabalho. 
 	Também desejo expressar minha gratidão aos meus colegas de grupo, cuja colaboração e esforço conjunto foram fundamentais em todas as etapas do projeto. A colaboração de cada um de vocês foi de extrema importância.
-	Por fim, não posso deixar de agradecer aos meus familiares, cujo apoio, encorajamento e compreensão me motivaram a superar desafios.
+	Por fim, não podemos deixar de agradecer aos nossos familiares, cujo apoio, encorajamento e compreensão nos motivaram a superar os desafios propostos.
 }
 
 \dresumo{
 Desde a popularização dos smartphones a quantidade de dados gerados cresce sem precedentes, de modo que até torna a definição de grande volume de dados difícil, devido a sua rápida obsolescência.
 Dentro deste contexto, aplicações Web cliente-servidor as quais ofertam visualização de dados para grandes volumes sofrem muitas vezes com limitações de recursos computacionais no lado do cliente.
-Além disso, seus desenvolvedores encontram desafios ao avaliar o consumo dos recursos, pois, há grandes dificuldades em cobrir uma ampla gama de configurações no lado do cliente.
-Por outro lado, também existe uma carência por ferramentas as quais permitam esse tipo de avaliação, ou que apenas facilitem o trabalho de cobrir a variabilidade do lado do cliente.
-Por exemplo, funcionalidades para auxiliar a coleta de métricas de execuções da aplicação realizadas por voluntários.
-A fim de solucionar estes problemas, propomos um framework para o ecossistema JavaScript capaz de executar provas de conceito, enquanto realiza a coleta de métricas de desempenho e consumo de recursos computacionais, a qual também seja facilmente extensível para necessidades específicas do projeto e que auxilie o processo de avaliações realizadas por voluntários.
+Além disso, seus desenvolvedores encontram desafios ao avaliar o consumo dos recursos, pois, há grandes dificuldades em cobrir a ampla gama de configurações que existem no lado do cliente.
+Por outro lado, também existe uma carência por ferramentas as quais permitam esse tipo de avaliação, e que possuam funcionalidades para auxiliar a coleta de métricas de execuções da aplicação realizadas por voluntários.
+A fim de solucionar estes problemas, propomos um framework para o ecossistema JavaScript capaz de executar provas de conceito, enquanto realiza a coleta de métricas de desempenho e consumo de recursos computacionais, as quais sejam também facilmente extensíveis para necessidades específicas do projeto e que auxiliem no processo de avaliações realizado pelos pesquisadores.
 }{big data; Web; visualização de dados; avaliação de desempenho; consumo de recursos; framework}
 
 \dabstract{
 Since the popularization of smartphones, the amount of data generated has grown unprecedentedly, so that it even makes it difficult to define how big big data is, due to its rapid obsolescence.
 In this context, client-server Web applications which offer data visualization for big data often suffer from limitations of computational resources on the client side.
 In addition, its developers find challenges when evaluating resource consumption, as there are great difficulties in covering a wide range of configurations on the client side.
-On the other hand, there is also a lack of tools that guarantee this type of evaluation, or that just facilitate the work of covering variability on the client side.
-For example, features to help collect application execution metrics performed by volunteers.
+On the other hand, there is also a lack of tools that guarantee this type of evaluation, and contain features to help collect application execution metrics performed by volunteers.
 In order to solve these problems, we propose a framework for the JavaScript ecosystem capable of executing proofs of concept, while collecting performance indicators and consumption of computational resources, which is also easily extensible for specific needs of the project and that helps the estimation process carried out by volunteers.
 }{big data; Web; data visualization; performance evaluation; resource consumption; framework}
 
@@ -269,29 +267,29 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 		
 
 		\subsection{WePR}
-		\par \citep{Asrese2019MeasuringWL} também propôs uma feramenta para medição client-side, porém agora com o enfoque em medir métricas de \acr{QoS}, nomeada WePR. No trabalho, ele apresenta um panorama da evolução da web, especialmente de como a latência se desenvolveu nos websites, e sustenta a necessidade desse tipo de medição como forma de melhorar a experiência do usuário, que indicam ser um fator determinante no abandono ou sucesso de um website. A ferramenta foi testada utilizando grandes websites como Google, Youtube e Facebook. 
+		\par \citep{Asrese2019MeasuringWL} também propôs uma feramenta para medição no lado do cliente, porém agora com o enfoque em medir métricas de \acr{QoS}, nomeada WePR. No trabalho, ele apresenta um panorama da evolução da web, especialmente de como a latência se desenvolveu nos websites, e sustenta a necessidade desse tipo de medição como forma de melhorar a experiência do usuário, que indicam ser um fator determinante no abandono ou sucesso de um website. A ferramenta foi testada utilizando grandes websites como Google, Youtube e Facebook. 
 		\par A arquitetura da ferramenta é distribuida, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador (loadbalancer), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor os URL’s dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o loadbalancer, e por fim algum dos servidores de renderização envia os dados para persistência.
-		\par O enfoque da ferramenta é a medição de performance de websites, dessa forma sua arquitetura e usabilidade não foram construídas de forma simples de extender, tornando dificil a utilização da ferramenta em outros contextos. Além disso, não temos a possibilidade de customizar as métricas, o que torna pouco flexível quando se trata de outras medições, como métricas de performance por exemplo.
+		\par O enfoque da ferramenta é a medição de performance de websites, dessa forma sua arquitetura e usabilidade não foram construídas de forma simples de extender, tornando dificil a utilização da ferramenta em outros contextos. Além disso, não temos a possibilidade de customizar as métricas, o que torna pouco flexível quando se trata de outras medições.
 		
 		\subsection{Gember}
-		\par \citep{Gember2012Obtaining} também traz um estudo sobre medição client-side, porém dessa vez em clientes móveis, utilizando dados de um provedor de internet e também de experimentos controlados. Esse tipo de medição é muito útil para provedores de internet e desenvolvedores, que precisam entender como suas aplicações performam interagindo com a rede móvel de internet.
+		\par \citep{Gember2012Obtaining} também traz um estudo sobre medição no lado do cliente, porém dessa vez em clientes móveis, utilizando dados de um provedor de internet e também de experimentos controlados. Esse tipo de medição é muito útil para provedores de internet e desenvolvedores, que precisam entender como suas aplicações performam interagindo com a rede móvel de internet.
 		\par Foi desenvolvido no trabalho um protótipo para Android de um medidor de performance para analisar somente quando o dispositivo está ativo, e que é integrado ao app como uma biblioteca. A arquitetura consiste basicamente de um controlador central (servidor), e múltiplos clientes (aparelhos) com o código rodando em seus celulares. Dessa forma, o pesquisador faz uma requisição para esse controlador, e ele coordena a coleta do que foi solicitado nos aparelhos, salvando os resultados no servidor.
-		\par O serviço inicialmente coleta latência, throughput, streaming e o tempo de carregamento de páginas web, mas é extensível para outras métricas de rede. A limitação aqui é a utilização no cliente, somente no ambiente mobile Android, tornando pouco flexível a utilização dessa ferramenta entre diferentes plataformas, e também a coleta somente de informações de rede.
+		\par O serviço inicialmente coleta latência, throughput, streaming e o tempo de carregamento de páginas web, é extensível para outras métricas de rede, porém limitado a elas. Outra limitação aqui é a utilização no cliente, que se encontram somente no ambiente mobile Android, tornando pouco flexível a utilização dessa ferramenta nos contextos de pesquisas multiplataforma.
 
 		\subsection{Mobilyzer}
 		\par Ainda no contexto de medição de rede, se encontra o Mobilyzer \citep{Nikravesh2015Mobilyzer}, uma plataforma aberta para medição de rede em dispositívos móveis. Essa plataforma foi criada com o objetivo de prover uma solução escalável, eficiente e controlável, que fosse possível de ser incorporada tanto a apps em desenvolvimento, quanto em apps que já estão desenvolvidos, para suportar pesquisas e testes em medição de rede. 
 		\par Ela funciona utilizando alguns componentes básicos, sendo eles: 
 		\begin{enumerate}
 			\item Uma biblioteca Android, que é integrada aos aplicativos para coletar as informações e enviar ao servidor. Ela é incorporada direto no código fonte.
-			\item Um componente chamado gerenciador de memória, no qual o pesquisador pode inserir medições de forma customizada e mais eficiente. Ele também realiza o scheduling das medições, e também cordena e monitora os dispositivos para que não tenha sobrecarga em nenhum aparelho ou rede medida. 
+			\item Um componente chamado gerenciador de memória, no qual o pesquisador pode inserir medições de forma customizada e mais eficiente. Ele também realiza o agendamento das medições, e também cordena e monitora os dispositivos para que não tenha sobrecarga em nenhum aparelho ou rede medida. 
 			\item Um servidor na núvem, que fica responsável por coletar, analisar aplicando regras e publicar os dados coletados dos dispositivos. Essa arquitetura centralizada simplifica o compartilhamento de dados entre essas etapas, podendo integrar outras ferramentas de analise de dados com a base das coletas.
 
 		\end{enumerate}
 		\par Uma dificuldade no uso do Mobilyzer em pesquisas é que essa plataforma também se restringe ao ambiente mobile, e apenas na plataforma Android. Isso diminui bastante possibilidades de medição em pesquisas multiplataforma. Além disso, não temos muita flexibilidade com relação as métricas, sendo em sua maior parte métricas de rede.
 
-		\subsection{FadeCow}
-		\par Após o descrito, podemos posicionar o FadeCow com relação aos critérios que estabelecemos no começo dessa secção. Temos um modelo de arquitetura simples, a possibilidade de expandir e construir métricas diversas, uma curva de aprendizado suave, a compatibilidade com múltiplas plataformas, pois a coleta das métricas ocorre no browser, e também a persistência desses dados para futura análise.
-		\par Assim, a tabela teria a seguinte configuração após a adição do FadeCow:
+		\subsection{Nossa Ferramenta}
+		\par Após o descrito, podemos posicionar a nossa ferramenta com relação aos critérios que estabelecemos no começo dessa secção. Temos um modelo de arquitetura simples que será explicado nas seções futuras desse trabalho, a possibilidade de expandir e construir métricas diversas, uma curva de aprendizado suave, a compatibilidade com múltiplas plataformas pois a coleta das métricas ocorre no navegador, e também a persistência desses dados para futura análise.
+		\par Assim, a tabela teria a seguinte configuração após a adição da nossa ferramenta:
 
 		\begin{table}[ht]
 			\scriptsize
@@ -307,7 +305,7 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 			WePR & não & não & não & sim & sim \\
 			Gember & sim & não & sim & não & sim \\
 			Mobilyzer & sim & não & não & não & sim \\
-			FadeCow & sim & sim & sim & sim & sim \\
+			Nossa Ferramenta & sim & sim & sim & sim & sim \\
 			\hline %inserts single line
 			\end{tabular}
 			\label{table:nonlin} % is used to refer this table in the text
@@ -317,7 +315,7 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 \label{cap:proposta}
 
 O objetivo do framework é oferecer uma forma fácil e eficaz de realizar análises de desempenho e consumo de recursos computacionais em provas de conceito para aplicações Web no lado do cliente.
-De modo que, o usuário do framework seja capaz de realizar suas análises com a colaboração de voluntários, sendo o framework responsável pela coleta e agregação das métricas.
+De modo que, o usuário do framework seja capaz de realizar suas análises com a colaboração de voluntários, sendo o framework responsável pela coleta e agregação das métricas em uma base de dados.
 A fim alcançar estes objetivos, o trabalho se divide em três fases: pesquisa, implementação e experimentação.
 
 Durante a fase de pesquisa, há o levantamento da bibliografia, desenvolvimento da fundamentação teórica e busca por trabalhos semelhantes.
