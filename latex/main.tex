@@ -9,13 +9,14 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage[toc,page]{appendix}
+\definecolor{mygreen}{RGB}{64,100,64}
 
 % Define TypeScript language style
 \lstdefinelanguage{TypeScript}{
-    keywords=[1]{import, from, export, static, public, implements, extends, class, extends, private, void, constructor, super, this, async, await, for, of, let, in, return, console, log},
+    keywords=[1]{import, from, export, static, public, implements, extends, class, extends, private, void, constructor, super, this, async, await, for, of, let, in, return, console, log, abstract},
     keywordstyle=[1]\color{blue},
-    keywords=[3]{MockTime, Promise, IPersister, Task, CompositeTask, BasicPersister, Resource, Project, MockTask, Metric, DeltaTimeMetric, ProcessMemoryMetric, Set, JSON, Math, any},
-    keywordstyle=[3]\color{green},
+    keywords=[3]{MockTime, Promise, IPersister, Task, CompositeTask, BasicPersister, Resource, Project, MockTask, Metric, DeltaTimeMetric, ProcessMemoryMetric, Set, JSON, Math, any, string},
+    keywordstyle=[3]\color{mygreen},
     ndkeywords={true, false, catch, function, null, undefined},
     ndkeywordstyle=\color{darkgray},
     identifierstyle=\color{black},
@@ -25,7 +26,8 @@
     commentstyle=\color{green}\ttfamily,
     stringstyle=\color{red}\ttfamily,
     morestring=[b]',
-    morestring=[b]"
+    morestring=[b]",
+	lineskip=-1pt
 }
 
 \lstset{
@@ -33,7 +35,9 @@
     numbers=left,
     stepnumber=1,
     numberstyle=\small\ttfamily\color{gray},
-    numbersep=5pt
+    numbersep=5pt,
+    aboveskip=10pt,
+    belowskip=10pt
 }
 
 % As figuras ficam armazenadas na pasta figuras
@@ -408,146 +412,103 @@ Porém, a \acr{API} do Google Sheets não atende diretamente as necessidades do 
 
 \chapter{Prova de conceito}
 \label{cap:prova_de_conceito}
-\section{Como funciona}
-A fim de pôr a prova a modelagem, desenvolvemos uma prova de conceito com objetos mock, que simulam os recursos de uma máquina. Essa abordagem nos permitiu avaliar a eficácia da modelagem sem depender de recursos físicos reais, visando manter o foco na estrutura geral da aplicação. A prova de conceito foi implementada usando a linguagem de programação Typescript, sua escolha visa expressar com clareza todas as classes e relações definidas na modelagem do framework, além de também permitir a execução em navegadores.
+A fim de testar a modelagem proposta, desenvolvemos uma prova de conceito com objetos mock, os quais simulam recursos computacionais.
+De modo que fosse possível avaliar a eficácia da modelagem sem depender de recursos físicos reais, visando manter o foco na estrutura do framework.
+A prova de conceito foi implementada usando a linguagem de programação Typescript, sua escolha almeja expressar com clareza todas as classes e relações definidas durante a modelagem, e seu código-fonte pode ser encontrado no apêndice \ref{apx:mock_source}.
 
-O código da prova de conceito se encontra no apêndice. Nele temos a classe Projeto chamada Project no código, a qual é a classe responsável por executar as tarefas chamada Tasks, e cada tarefa terá suas métricas chamada Metrics a serem avaliadas, que serão posteriormente salvas pela classe de persistência de dados. Para executar as análises precisamos de um ponto de partida, no código especificado é a classe index, para criar a árvore de tarefas e executar o Projeto para obter os resultados.
 
-\subsection{Mock de recursos}
-No desenvolvimento da prova de conceito foram criados recursos fictícios de memória e de tempo de processamento.
-Para a métrica de memória, foi criado um objeto chamado Resource, que simula a memória total, e os métodos alloc e free para simular a alocação e desalocação de memória, e um método total para retornar o valor atual da memória.
-Segue o exemplo de implementação:
+\section{Simulação de Recursos Computacionais}
+Como mencionado anteriormente, a prova de conceito possui classes para simular recursos computacionais.
+As quais possuem a finalidade de isolar a prova de conceito de complexidades inerentes a realização de medições reais.
+Logo, o desenvolvimento da prova de conceito pode ser concentrado em explorar o ponto central da modelagem, a árvore de \emph{Tarefas}.
+O bloco de código \ref{lst:mock_memoria} contém a classe criada para simular o consumo de memória.
 
-\begin{lstlisting}[language=TypeScript]
+\begin{lstlisting}[label={lst:mock_memoria}, caption={Implementação da classe responsável por simular recursos de memória para a prova de conceito do framework.}, language=TypeScript]
 class Resource {
-	private static _total: number = 500;
-	static alloc(size: number): any {
-		this._total -= size;
-		return {size};
-	}
-	static free(block: any): void {
-		this._total += block.size;
-	}
-	static get total(): number {
-		return this._total;
-	}
+    private static _total: number = 500;
+
+    static alloc(size: number): any {
+        this._total -= size;
+        return {size};
+    }
+
+    static free(block: any): void {
+        this._total += block.size;
+    }
+
+    static get total(): number {
+        return this._total;
+    }
 }
 \end{lstlisting}
-Foi utilizado métodos estáticos para não ser preciso instanciar e passar como parâmetro essa classe.
 
-Para tempo de processamento foi criado um método chamado sleep, que simula o tempo de processamento de uma tarefa.
-\begin{lstlisting}[language=TypeScript]
-class MockTime {
-	public static sleep(
-		min: number,
-		max: number) : Promise<void> {
-		const delayTime = Math.floor(
-			Math.random() * (max - min) + min);
-		return new Promise<void>((resolve) => 
-			setTimeout(resolve, delayTime));
-	}
-}
-\end{lstlisting}
-Para usar este metodo basta clamar ele passando uma janela de tempo mínima e máxima, e o tempo esperado será algo entre esses valores.
 
-\subsection{Metricas}
-A partir da simulação do uso de recursos de memória e processamento, foi possível gerar métricas viáveis e avaliar os seus resultados. Foram implementadas 2 tipos de métricas, a métrica de memória e a de tempo.
-Na métrica de memória, é verificado o quanto da memória simulada foi alocada.
-Segue o exemplo de implementação:
-\begin{lstlisting}[language=TypeScript]
-class GetDeltaTime extends Metric<number> {
-  private date: number;
-  constructor() {
-    super();
-    this.date = Date.now();
-  }
-  get metric(): number {
-    return (Date.now() - this.date);
-  }
-  get name(): string {
-    return "DeltaTime";
-  }
-}
-\end{lstlisting}
-Já na métrica de tempo de processamento, é verificado o tempo que a tarefa ficou em execução. Segue o exemplo:
-\begin{lstlisting}[language=TypeScript]
-export class GetResourceUsage extends Metric<number> {
-  constructor() {
-    super();
-  }
-  get metric(): number {
-    return Resource.total;
-  }
-  get name(): string {
-    return "Resource Usage";
-  }
-}
-\end{lstlisting}
-Para implementar novas métricas basta criar uma classe que herde da classe Metric e implementar os métodos abstratos.
+\section{Árvore de Tarefas}
 
-\subsection{Tarefas}
-Foram implementadas dois tipos de tarefas: as tarefas simples e as compostas.
-A primeira delas são as implementações que serão avaliadas pelo framework e que têm métricas que serão avaliadas na sua execução.
-Já as tarefas compostas são uma agregação de tarefas simples ou compostas que também tem suas métricas, ela tem um método chamado addTask, que é responsável por adicionar uma tarefa à lista de tarefas da tarefa composta. Isso permite a criação de árvores de tarefas para serem avaliadas, dando liberdade ao usuário.
+A árvore de tarefas é definida basicamente por três classes:
+a classe abstrata \emph{Task}, responsável por definir o que uma tarefa faz, ou seja, a sua interface pública.
+A classe \emph{CompositeTask}, a qual possui a função de agregar outras tarefas.
+E, a classe \emph{SimpleTask}, responsável por encapsular e executar o código do usuário do framework.
+Entretanto, tanto \emph{CompositeTask} quanto \emph{SimpleTask} servem apenas para fins de herança e polimorfismo.
+Portanto, com o framework em sua completude, as derradeiras classes, as quais compõem a árvore de tarefas, serão subclasses.
 
-Para a execução ambos tipos de tarefas herdam da classe de tarefa abstrata, essa classe é responsável por executar a tarefa e retornar as métricas.
-Ela é composta por 3 etapas, a primeira é a preTaskJob, que é responsável por executar as tarefas que devem ser executadas antes da tarefa principal, a segunda é a execução da tarefa principal, e a terceira é a postTaskJob, que é responsável por executar as tarefas que devem ser executadas depois da tarefa principal.
-Essas etapas são executadas para todas as tarefas.
-O método chamado run, é responsável por executar estes outros métodos e retornar as métricas. Segue a implementação da classe abstrata de tarefa:
-\begin{lstlisting}[language=TypeScript]
+\begin{lstlisting}[label={lst:abstract_task}, caption={Classe abstrata responsável por definir o que todos os membros da árvore de tarefas precisam implementar.}, language=TypeScript]
 abstract class Task {
-	public name: string;
-	public metrics: Set<Metric<any>>;
-	
-	constructor(name: string, metrics: Metric<any>[])
-	{
-		this.metrics = new Set(metrics);
-		this.name = name;
-	}
-	
-	async run(): Promise<any> {
-		this.preTaskJob();
-		let data = await this.execute();
-		let metrics = {};
-		this.metrics.forEach(element => {
-		metrics[element.name] = element.metric;
-		});
-		this.postTaskJob();
-		return {metrics, data};
-	}
-	
-	preTaskJob(): void {};
-	abstract execute(): Promise<any>;
-	postTaskJob(): void {};
+    public name: string;
+    public metrics: Set<Metric<any>>;
+
+    constructor(name: string, metrics: Metric<any>[])
+    {
+        this.metrics = new Set(metrics);
+        this.name = name;
+    }
+
+    async run(): Promise<any> {
+        this.preTaskJob();
+        let data = await this.execute();
+        let metrics = {};
+        this.metrics.forEach(element => {
+        metrics[element.name] = element.metric;
+        });
+        this.postTaskJob();
+        return {metrics, data};
+    }
+
+    preTaskJob(): void {};
+    abstract execute(): Promise<any>;
+    postTaskJob(): void {};
 }
 \end{lstlisting}
 
-Na tarefa composta o método execute é responsável por executar todas as tarefas da lista de tarefas da tarefa composta e retornar as métricas. Segue a implementação:
-\begin{lstlisting}[language=TypeScript]
-async execute(): Promise<any> {
-	let tasks = {};
-	for (const task of this.tasks) {
-		tasks[task.name] = await task.run();
-	}
-	return tasks;
+\begin{lstlisting}[label={lst:composite_task}, caption={Tarefa composta, define o comportamento de todos os nós não folha da árvore de tarefas.}, language=TypeScript]
+export class CompositeTask extends Task {
+    private tasks: Task[];
+
+    constructor() {
+        super("Composite Task", []);
+        this.tasks = [];
+    }
+
+    addTask(task: Task): void {
+        this.tasks.push(task);
+        task.metrics.forEach(element => {
+            this.metrics.add(element);
+        });
+    }
+
+    async execute(): Promise<any> {
+        console.log("Executing composite task...");
+        let tasks = {};
+        for (const task of this.tasks) {
+            tasks[task.name] = await task.run();
+        }
+        return tasks;
+    }
 }
 \end{lstlisting}
 
-\subsection{Projeto}
-Para executar as tarefas foi criado o projeto. O projeto é responsável por executar todas as tarefas e retornar as métricas de todas as tarefas. Essas tarefas podem ser uma tarefas simples ou compostas, permitindo que seja executada uma árvore específica montada pelo usuário. Nesta classe as tarefas são efetivamente executadas e é gerado o resultado da análise, que posteriormente serão encaminhados para a classe de persistência dos dados.
 
-\subsection{Persistencia}
-A persistência de dados da aplicação foi implementada de forma simplificada para a prova de conceito, fazendo com que simplesmente seja gerado um arquivo. O Projeto retorna um dicionário encadeado com cada tarefa e suas métricas e caso a tarefa seja uma tarefa composta, será retornado também suas subtarefas. Esse dicionário é persistido em um arquivo JSON. Segue a implementação:
-\begin{lstlisting}[language=TypeScript]
-class BasicPersister implements IPersister {
-	save(data: any): void{
-		const jsonData = JSON.stringify(data, null, 2);
-		fs.writeFileSync("result.json", jsonData);
-	}
-}
-\end{lstlisting}
-	
-\subsection{Como executar}
+\section{Como executar}
 Para utilizar essa prova de conceito, basta criar um arquivo, criar suas tarefas, organizá-las usando as tarefas compostas e criar um Projeto passando a tarefa principal, que vai ser a raiz da árvore, e por fim executar a aplicação. Após isso será criado um arquivo JSON com o resultado da análise das tarefas.
 Segue o exemplo de uso:
 \begin{lstlisting}[language=TypeScript]
@@ -641,8 +602,10 @@ A tabela indica os meses de previsão de conclusão de cada uma das etapas.
 
 \label{lastpage}
 
+
 \appendix
 \chapter{Código-fonte da Prova de Conceito}
+\label{apx:mock_source}
 
 \section{Projeto}
 \lstinputlisting[language=TypeScript]{./mock/Project.ts}
