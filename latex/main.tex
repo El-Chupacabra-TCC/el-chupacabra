@@ -415,7 +415,7 @@ O código da prova de conceito se encontra no apêndice. Nele temos a classe Pro
 
 \subsection{Mock re recursos}
 No desenvolvimento da prova de conceito foram criados recursos fictícios de memória e de tempo de processamento.
-Para a métrica de memória, foi criado um objeto chamado Resource, que simula a memória total, e os metodos alloc e free para simular a alocação e desalocação de memória, e um metodo total para retornar o valor atual da memória.
+Para a métrica de memória, foi criado um objeto chamado Resource, que simula a memória total, e os métodos alloc e free para simular a alocação e desalocação de memória, e um metodo total para retornar o valor atual da memória.
 Segue o exemplo de implementação:
 
 \begin{lstlisting}[language=TypeScript]
@@ -433,7 +433,7 @@ class Resource {
 	}
 }
 \end{lstlisting}
-Foi utilizado metodos estáticos para não ser preciso instanciar e passar como parametro essa classe.
+Foi utilizado métodos estáticos para não ser preciso instanciar e passar como parametro essa classe.
 
 Para tempo de provessamento foi criado um metodo chamado sleep, que simula o tempo de processamento de uma tarefa.
 \begin{lstlisting}[language=TypeScript]
@@ -483,7 +483,7 @@ export class GetResourceUsage extends Metric<number> {
   }
 }
 \end{lstlisting}
-Para implementar novas metricas basta criar uma classe que herde da classe Metric e implementar os metodos abstratos.
+Para implementar novas metricas basta criar uma classe que herde da classe Metric e implementar os métodos abstratos.
 
 \subsection{Tarefas}
 Foram implementadas dois tipos de tarefas: as tarefas simples e as compostas.
@@ -493,7 +493,7 @@ Já as tarefas compostas são uma agregação de tarefas simples ou compostas qu
 Para a execução ambos tipos de tarefa herdam da classe de tarefa abstrata, essa classe é responsavel por executar a tarefa e retornar as metricas.
 Ela é composta por 3 etapas, a primeira é a preTaskJob, que é responsavel por executar as tarefas que devem ser executadas antes da tarefa principal, a segunda é a execução da tarefa principal, e a terceira é a postTaskJob, que é responsavel por executar as tarefas que devem ser executadas depois da tarefa principal.
 Essas etapas são executadas para todas as tarefas.
-O metodo chamado run, é responsavel por executar estes outros metodos e retornar as metricas. Segue a implementação da classe abstrata de tarefa:
+O metodo chamado run, é responsavel por executar estes outros métodos e retornar as metricas. Segue a implementação da classe abstrata de tarefa:
 \begin{lstlisting}[language=TypeScript]
 abstract class Task {
 	public name: string;
