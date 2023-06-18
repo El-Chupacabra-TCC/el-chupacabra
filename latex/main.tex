@@ -12,16 +12,14 @@
 
 % Define TypeScript language style
 \lstdefinelanguage{TypeScript}{
-    keywords=[1]{import, from, export, class, extends, private, void, constructor, super, this, async, await, for, of, let, in, return, any, console, log},
+    keywords=[1]{import, from, export, static, public, implements, extends, class, extends, private, void, constructor, super, this, async, await, for, of, let, in, return, console, log},
     keywordstyle=[1]\color{blue},
-    keywords=[2]{Task, CompositeTask},
-    keywordstyle=[2]\color{purple},
-    keywords=[3]{forEach},
-    keywordstyle=[3]\color{orange},
+    keywords=[3]{MockTime, Promise, IPersister, Task, CompositeTask, BasicPersister, Resource, Project, MockTask, Metric, DeltaTimeMetric, ProcessMemoryMetric, Set, JSON, Math, any},
+    keywordstyle=[3]\color{green},
     ndkeywords={true, false, catch, function, null, undefined},
     ndkeywordstyle=\color{darkgray},
     identifierstyle=\color{black},
-    sensitive=false,
+    sensitive=true,
     comment=[l]{//},
     morecomment=[s]{/*}{*/},
     commentstyle=\color{green}\ttfamily,
@@ -415,17 +413,161 @@ A fim de pôr a prova a modelagem, desenvolvemos uma prova de conceito com objet
 
 O código da prova de conceito se encontra no apêndice. Nele temos a classe Projeto chamada Project no código, a qual é a classe responsável por executar as tarefas chamada Tasks, e cada tarefa terá suas métricas chamada Metrics a serem avaliadas, que serão posteriormente salvas pela classe de persistência de dados. Para executar as análises precisamos de um ponto de partida, no código especificado é a classe index, para criar a árvore de tarefas e executar o Projeto para obter os resultados.
 
-No desenvolvimento da prova de conceito foram criados recursos fictícios de memória e de tempo de processamento. Para a métrica de memória, foram criados uma classe estática que inicializa com o valor inicial da memória e as operações de alocação e desalocação, o que simula o comportamento da memória do computador em uma aplicação com dados reais. Para tempo de processamento, foi criada um uma função que espera um tempo aleatório, para simular que alguma tarefa está em execução.
+\subsection{Mock re recursos}
+No desenvolvimento da prova de conceito foram criados recursos fictícios de memória e de tempo de processamento.
+Para a métrica de memória, foi criado um objeto chamado Resource, que simula a memória total, e os metodos alloc e free para simular a alocação e desalocação de memória, e um metodo total para retornar o valor atual da memória.
+Segue o exemplo de implementação:
 
-A partir da simulação do uso de recursos de memória e processamento, foi possível gerar métricas viáveis e avaliar os seus resultados. Na métrica de memória, é verificado o quanto da memória simulada foi alocada, enquanto na métrica de tempo de processamento é calculada a diferença entre a data de início e de fim da tarefa para obtermos o intervalo. 
+\begin{lstlisting}[language=TypeScript]
+class Resource {
+	private static _total: number = 500;
+	static alloc(size: number): any {
+		this._total -= size;
+		return {size};
+	}
+	static free(block: any): void {
+		this._total += block.size;
+	}
+	static get total(): number {
+		return this._total;
+	}
+}
+\end{lstlisting}
+Foi utilizado metodos estáticos para não ser preciso instanciar e passar como parametro essa classe.
 
-Foram implementadas dois tipos de tarefas: as tarefas simples e as compostas. A primeira delas são as implementações que serão avaliadas pelo framework e que têm métricas que serão avaliadas na sua execução. Já as tarefas compostas são uma agregação de tarefas simples ou compostas que também tem suas métricas, permitindo a criação de árvores de tarefas para serem avaliadas, dando liberdade ao usuário.
+Para tempo de provessamento foi criado um metodo chamado sleep, que simula o tempo de processamento de uma tarefa.
+\begin{lstlisting}[language=TypeScript]
+class MockTime {
+	public static sleep(
+		min: number,
+		max: number) : Promise<void> {
+		const delayTime = Math.floor(
+			Math.random() * (max - min) + min);
+		return new Promise<void>((resolve) => 
+			setTimeout(resolve, delayTime));
+	}
+}
+\end{lstlisting}
+Para usar este metodo basta clamar ele passando uma janela de tempo minima e maxima. e o tempo esperado será algo entre esses valores.
 
-Para executar as tarefas foi criado o projeto. O projeto é uma classe que recebe uma tarefa, que pode ser uma tarefa simples ou composta, permitindo que seja executada uma árvore específica montada pelo usuário. Nesta classe as tarefas são efetivamente executadas e é gerado o resultado da análise, que posteriormente serão encaminhados para a classe de persistência dos dados.
+\subsection{Metricas}
+A partir da simulação do uso de recursos de memória e processamento, foi possível gerar métricas viáveis e avaliar os seus resultados. Foram implementadas 2 tipose de metricas, a metrica de memoria e a de tempo.
+Na métrica de memória, é verificado o quanto da memória simulada foi alocada.
+Segue o exemplo de implementação:
+\begin{lstlisting}[language=TypeScript]
+class GetDeltaTime extends Metric<number> {
+  private date: number;
+  constructor() {
+    super();
+    this.date = Date.now();
+  }
+  get metric(): number {
+    return (Date.now() - this.date);
+  }
+  get name(): string {
+    return "DeltaTime";
+  }
+}
+\end{lstlisting}
+Já a métrica de tempo de processamento, é verificado o tempo que a tarefa ficou em execução. Segue o exemplo:
+\begin{lstlisting}[language=TypeScript]
+export class GetResourceUsage extends Metric<number> {
+  constructor() {
+    super();
+  }
+  get metric(): number {
+    return Resource.total;
+  }
+  get name(): string {
+    return "Resource Usage";
+  }
+}
+\end{lstlisting}
+Para implementar novas metricas basta criar uma classe que herde da classe Metric e implementar os metodos abstratos.
 
-A persistência de dados da aplicação foi implementada de forma simplificada para a prova de conceito, fazendo com que simplesmente seja gerado um arquivo. O Projeto retorna um dicionário encadeado com cada tarefa e suas métricas e caso a tarefa seja uma tarefa composta, será retornado também suas subtarefas. Esse dicionário é persistido em um arquivo JSON. 
+\subsection{Tarefas}
+Foram implementadas dois tipos de tarefas: as tarefas simples e as compostas.
+A primeira delas são as implementações que serão avaliadas pelo framework e que têm métricas que serão avaliadas na sua execução.
+Já as tarefas compostas são uma agregação de tarefas simples ou compostas que também tem suas métricas, ela tem um metodo chamado addTask, que é responsavel por adicionar uma tarefa a lista de tarefas da tarefa composta. Isso permite a criação de árvores de tarefas para serem avaliadas, dando liberdade ao usuário.
 
+Para a execução ambos tipos de tarefa herdam da classe de tarefa abstrata, essa classe é responsavel por executar a tarefa e retornar as metricas.
+Ela é composta por 3 etapas, a primeira é a preTaskJob, que é responsavel por executar as tarefas que devem ser executadas antes da tarefa principal, a segunda é a execução da tarefa principal, e a terceira é a postTaskJob, que é responsavel por executar as tarefas que devem ser executadas depois da tarefa principal.
+Essas etapas são executadas para todas as tarefas.
+O metodo chamado run, é responsavel por executar estes outros metodos e retornar as metricas. Segue a implementação da classe abstrata de tarefa:
+\begin{lstlisting}[language=TypeScript]
+abstract class Task {
+	public name: string;
+	public metrics: Set<Metric<any>>;
+	
+	constructor(name: string, metrics: Metric<any>[])
+	{
+		this.metrics = new Set(metrics);
+		this.name = name;
+	}
+	
+	async run(): Promise<any> {
+		this.preTaskJob();
+		let data = await this.execute();
+		let metrics = {};
+		this.metrics.forEach(element => {
+		metrics[element.name] = element.metric;
+		});
+		this.postTaskJob();
+		return {metrics, data};
+	}
+	
+	preTaskJob(): void {};
+	abstract execute(): Promise<any>;
+	postTaskJob(): void {};
+}
+\end{lstlisting}
+
+Na tarefa composta o metodo execute é responsavel por executar todas as tarefas da lista de tarefas da tarefa composta e retornar as metricas. Segue a implementação:
+\begin{lstlisting}[language=TypeScript]
+async execute(): Promise<any> {
+	let tasks = {};
+	for (const task of this.tasks) {
+		tasks[task.name] = await task.run();
+	}
+	return tasks;
+}
+\end{lstlisting}
+
+\subsection{Projeto}
+Para executar as tarefas foi criado o projeto. O projeto é responsavel por executar todas as tarefas e retornar as metricas de todas as tarefas. Essas tarefas podem ser uma tarefas simples ou compostas, permitindo que seja executada uma árvore específica montada pelo usuário. Nesta classe as tarefas são efetivamente executadas e é gerado o resultado da análise, que posteriormente serão encaminhados para a classe de persistência dos dados.
+
+\subsection{Persistencia}
+A persistência de dados da aplicação foi implementada de forma simplificada para a prova de conceito, fazendo com que simplesmente seja gerado um arquivo. O Projeto retorna um dicionário encadeado com cada tarefa e suas métricas e caso a tarefa seja uma tarefa composta, será retornado também suas subtarefas. Esse dicionário é persistido em um arquivo JSON. Segue a implementação:
+\begin{lstlisting}[language=TypeScript]
+class BasicPersister implements IPersister {
+	save(data: any): void{
+		const jsonData = JSON.stringify(data, null, 2);
+		fs.writeFileSync("result.json", jsonData);
+	}
+}
+\end{lstlisting}
+	
+\subsection{Como executar}
 Para utilizar essa prova de conceito, basta criar um arquivo, criar suas tarefas, organizá-las usando as tarefas compostas e criar um Projeto passando a tarefa principal, que vai ser a raiz da árvore, e por fim executar a aplicação. Após isso será criado um arquivo JSON com o resultado da análise das tarefas.
+Segue o exemplo de uso:
+\begin{lstlisting}[language=TypeScript]
+class Index {
+	public static async main() {
+		console.log("Hello world!");
+		const task = new CompositeTask();
+		const task2 = new CompositeTask();
+		task.addTask(new MockTask("Task 1"));
+		task.addTask(new MockTask("Task 2"));
+		task2.addTask(new MockTask("Task 3"));
+		task.addTask(task2);
+		const project = new Project(
+			new BasicPersister(),
+			task);
+		project.executeTask();
+	}
+}
+\end{lstlisting}
+Nesse caso foi criado uma tarefa composta chamada task, que tem duas tarefas simples e uma outra tarefa composta chamada task2, que tem uma tarefa simples. A task2 foi adicionada a task, e por fim a task foi adicionada ao projeto. Após isso foi executado o projeto, que vai executar todas as tarefas e gerar o arquivo JSON com o resultado da análise.
 
 \section{Exemplo de uso}
 Um exemplo ilustrativo de uso do framework consiste em comparar o desempenho de consultas em dicionários e listas, a fim de determinar qual estrutura de dados oferece melhor desempenho em termos de velocidade e uso de memória. Vamos explorar esse exemplo para ilustrar a funcionalidade da prova de conceito.

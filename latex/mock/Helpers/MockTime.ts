@@ -1,9 +1,10 @@
 export class MockTime {
-    public static sleep(t: number, t2: number) : Promise<void> {
-        return new Promise(
-            r => setTimeout(
-                r,~~ (Math.random()*(t2-t)+t)
-            )
-        );
+    public static sleep(
+        min: number,
+        max: number) : Promise<void> {
+        const delayTime = Math.floor(
+            Math.random() * (max - min) + min);
+        return new Promise<void>((resolve) => 
+            setTimeout(resolve, delayTime));
     }
 }
