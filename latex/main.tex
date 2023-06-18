@@ -138,54 +138,63 @@ Por fim, os capítulos \ref{cap:prova_de_conceito} e \ref{cap:estado_atual} apre
 
 Para a revisão bibliográfica as duas principais ferramentas utilizadas foram: Elicit, um assistente de pesquisa baseado em modelos de transformador pré-treinado generativo (do inglês, \emph{generative pre-trained transformer}) de aprendizado de máquina, e a ferramenta Connected Papers, a qual  gera um grafo de artigos relacionados baseado em cocitações e acoplamento bibliográfico.
 A ferramenta Elicit funciona recebendo uma pergunta em linguagem natural e retornando os trabalhos que considera mais relevantes, junto a um resumo, em uma tabela paginada.
-Deste modo, na figura \ref{fig:elicit} elencamos todas strings de busca utilizadas no Elicit, e para cada uma delas consultamos até a segunda página da tabela, totalizando 14 trabalhos retornados por string de busca.
+Deste modo, na tabela \ref{tab:strings-elicit} elencamos todas strings de busca utilizadas no Elicit, e para cada uma delas consultamos até a segunda página da tabela, totalizando 14 trabalhos retornados por string de busca.
 
-\begin{figure}
-	\centering
-	\caption{Lista de strings de busca utilizadas na ferramenta Elicit.}
-	\begin{minipage}{0.6\textwidth}
-	    \begin{itemize}
-			\item ``browsing memory''
-			\item ``client side memory performance''
-			\item ``client side memory profiling''
-			\item ``memory network management web client''
-			\item ``memory network performance web client''
-			\item ``memory network profiling web client''
-			\item ``memory network waste web client''
-			\item ``measuring performance in client side''
-			\item ``measuring in client side''
-			\item ``performance measurement''
-			\item ``tools to measure performance in client side''
-			\item ``evaluating latency on client side''
-			\item ``optimizing web browsing''
-			\item ``performance tool web client side''
-			\item ``waste resources client side''
-			\item ``waste resources web client''
-			\item ``web client side memory performance''
-			\item ``What are the impacts of memory management in mobile Web Browsing?''
-			\item ``What is the state-of-the-art for measuring performance of client side?''
-			\item ``What is the state-of-the-art for measuring QoE and memory of Web Browsing?''
-	    \end{itemize}
-	\end{minipage}
-	\label{fig:elicit}
-\end{figure}
+\begin{table}[h!]
+\centering
+\caption{Strings utilizadas na ferramenta Elicit.\label{long}}
+
+\begin{tabular}{||c||} 
+	
+\hline
+	Strings de Busca \\
+\hline\hline
+ ``browsing memory'' \\
+ ``client side memory performance'' \\
+ ``client side memory profiling'' \\
+ ``memory network management web client'' \\
+ ``memory network performance web client'' \\
+ ``memory network profiling web client'' \\
+ ``memory network waste web client'' \\
+ ``measuring performance in client side'' \\
+ ``measuring in client side'' \\
+ ``performance measurement'' \\
+ ``tools to measure performance in client side'' \\
+ ``evaluating latency on client side'' \\
+ ``optimizing web browsing'' \\
+ ``performance tool web client side'' \\
+ ``waste resources client side'' \\
+ ``waste resources web client'' \\
+ ``web client side memory performance'' \\
+ ``What are the impacts of memory management in mobile Web Browsing?'' \\
+ ``What is the state-of-the-art for measuring performance of client side?'' \\
+ ``What is the state-of-the-art for measuring QoE and memory of Web Browsing?'' \\
+
+ \hline
+\end{tabular}
+\label{tab:strings-elicit}
+\end{table}
 
 Além disso, três trabalhos encontrados por meio do Elicit foram utilizados como entrada para a ferramenta Connected Papers.
 O Connected Papers é um outro assistente de pesquisa, o qual recebe como entrada o título ou o DOI de um trabalho para gerar um grafo de trabalhos relacionados destacando suas principais conexões e trabalhos influentes.
-As strings de busca utilizadas no Connected Papers estão listadas na figura \ref{tab:connected-papers}, de modo que, para cada uma, a ferramenta gerou um grafo com 40 trabalhos relacionados, os quais também podem ser visualizados em uma tabela.
+As strings de busca utilizadas no Connected Papers estão listadas na tabela \ref{tab:strings-connected-papers}, de modo que, para cada uma, a ferramenta gerou um grafo com 40 trabalhos relacionados, os quais também podem ser visualizados em uma tabela. \\
 
-\begin{figure}
-	\centering
-	\caption{Lista de strings de busca utilizadas na ferramenta Connected Papers.}
-	\begin{minipage}{0.6\textwidth}
-	    \begin{itemize}
-			\item ``Measuring Web Latency and Rendering Performance: Method, Tools, and Longitudinal Dataset''
-			\item ``MemInsight: platform-independent memory debugging for JavaScript''
-			\item ``Obtaining in-context measurements of cellular network performance''
-	    \end{itemize}
-	\end{minipage}
-	\label{tab:connected-papers}
-\end{figure}
+\begin{table}[h!]
+\centering
+
+\caption{Strings utilizadas na ferramenta Connected Papers.}
+\begin{tabular}{||c||} 
+
+\hline
+	Strings de Busca \\
+\hline\hline
+``Measuring Web Latency and Rendering Performance: Method, Tools, and Longitudinal Dataset''\\
+``MemInsight: platform-independent memory debugging for JavaScript''\\
+``Obtaining in-context measurements of cellular network performance''\\
+\hline
+\end{tabular}
+\label{tab:strings-connected-papers}
+\end{table}
 
 Os critérios usados para filtrar os trabalhos encontrados por meio de ambas as ferramentas estão descritos na figura \ref{fig:fluxo-leitura}.
 Em suma, após a leitura do resumo de cada trabalho, três critérios são avaliados, sendo cada um deles um filtro.
@@ -197,6 +206,7 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 	\caption{Critérios utilizados para seleção de trabalhos para leitura.}
 	\label{fig:fluxo-leitura}
 \end{figure}
+
 
 \begin{table}[!ht]
 	\centering
@@ -260,7 +270,7 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 			Mobilyzer & sim & não & não & não & sim \\
 			\hline %inserts single line
 			\end{tabular}
-			\label{table:cls} % is used to refer this table in the text
+			\label{table:ferramentas-encontradas} % is used to refer this table in the text
 		\end{table}
 	
 
@@ -311,7 +321,7 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 			Nossa Ferramenta & sim & sim & sim & sim & sim \\
 			\bottomrule %inserts single line
 			\end{tabular}
-			\label{table:nonlin} % is used to refer this table in the text
+			\label{table:ferramentas-encontradas-com-nossa-ferramenta} % is used to refer this table in the text
 		\end{table}
 
 \chapter{Proposta}
@@ -571,7 +581,7 @@ O desenvolvimento do framework e produção textual estão sendo realizados em p
 A fundamentação teórica e critérios para comparação do framework com outras ferramentas tem conclusão prevista para outubro de 2023.
 A descrição do framework, capítulo \ref{cap:proposta}, será realizada de forma mais precisa e detalhada até janeiro de 2024, junto com um exemplo de sua utilização.
 A defesa da dissertação está prevista para janeiro de 2024. O cronograma indicado na tabela \ref{tab:cronograma} prevê as etapas abordadas neste trabalho.
-A tabela indica os meses de previsão de conclusão de cada uma das etapas.
+A tabela indica os meses de previsão de conclusão de cada uma das etapas, e os itens em verde significam as fases já realizadas.
 
 \begin{table}[!ht]
 	\centering
@@ -580,10 +590,10 @@ A tabela indica os meses de previsão de conclusão de cada uma das etapas.
 		\toprule
 		\textbf{Atividade} & \textbf{fev-mar} & \textbf{abr-mai} & \textbf{jun-jul} & \textbf{ago-set} & \textbf{out-nov} & \textbf{dez-jan} \\
 		\midrule
-		Planejamento e Escopo  &  X  &    &    &    &    &    \\
-		Fundamentação Teórica  &  X  &     &    &  X  &    &    \\
-		Arquitetura  &    &  X  &  X  &    &    &    \\
-		Prova de Conceito  &    &    &  X  &    &    &    \\
+		Planejamento e Escopo  &  \textcolor{green}X  &    &    &    &    &    \\
+		Fundamentação Teórica  &  \textcolor{green}X  &     &    &  X  &    &    \\
+		Arquitetura  &    &  \textcolor{green}X  &  \textcolor{green}X  &    &    &    \\
+		Prova de Conceito  &    &    &  \textcolor{green}X  &    &    &    \\
 		Desenvolvimento  &    &    &  X  &  X  &  X  &    \\
 		Exemplo de Uso  &    &    &    &    &  X  &  X  \\
 		Defesa  &    &    &    &    &    &  X  \\
