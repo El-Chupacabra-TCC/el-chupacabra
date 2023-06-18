@@ -12,16 +12,14 @@
 
 % Define TypeScript language style
 \lstdefinelanguage{TypeScript}{
-    keywords=[1]{import, from, export, class, extends, private, void, constructor, super, this, async, await, for, of, let, in, return, any, console, log},
+    keywords=[1]{import, from, export, static, public, implements, extends, class, extends, private, void, constructor, super, this, async, await, for, of, let, in, return, console, log},
     keywordstyle=[1]\color{blue},
-    keywords=[2]{Task, CompositeTask},
-    keywordstyle=[2]\color{purple},
-    keywords=[3]{forEach},
-    keywordstyle=[3]\color{orange},
+    keywords=[3]{MockTime, Promise, IPersister, Task, CompositeTask, BasicPersister, Resource, Project, MockTask, Metric, DeltaTimeMetric, ProcessMemoryMetric, Set, JSON, Math, any},
+    keywordstyle=[3]\color{green},
     ndkeywords={true, false, catch, function, null, undefined},
     ndkeywordstyle=\color{darkgray},
     identifierstyle=\color{black},
-    sensitive=false,
+    sensitive=true,
     comment=[l]{//},
     morecomment=[s]{/*}{*/},
     commentstyle=\color{green}\ttfamily,
@@ -126,7 +124,7 @@ Ademais, o framework por padrão possui as métricas básicas implementadas, com
 Deste modo, o desenvolvedor pode focar nas provas de conceito e na obtenção de ambientes e voluntários, ao invés do desenvolvimento de infraestrutura para realização das avaliações.
 
 Além disso, o trabalho está dividido em cinco capítulos.
-O capítulo \ref{cap:met_pesquisa} e \ref{sec:trab_relacionados} correspondem a fundamentação teórica e trabalhos relacionados encontrados no campo de estudo.
+O capítulo \ref{cap:met_pesquisa} e \ref{sec:trab_relacionados} correspondem a metodologia da pesquisa e trabalhos relacionados encontrados no campo de estudo.
 O capítulo \ref{cap:proposta} apresenta a proposta de desenvolvimento da ferramenta.
 Por fim, os capítulos \ref{cap:prova_de_conceito} e \ref{cap:estado_atual} apresenta o estado atual do framework e o cronograma para a próxima etapa.
 
@@ -329,7 +327,7 @@ O objetivo do framework é oferecer uma forma fácil e eficaz de realizar análi
 De modo que, o usuário do framework seja capaz de realizar suas análises com a colaboração de voluntários, sendo o framework responsável pela coleta e agregação das métricas em uma base de dados.
 A fim alcançar estes objetivos, o trabalho se divide em três fases: pesquisa, implementação e experimentação.
 
-Durante a fase de pesquisa, há o levantamento da bibliografia, desenvolvimento da fundamentação teórica e busca por trabalhos semelhantes.
+Durante a fase de pesquisa, há o levantamento da bibliografia, inicio do desenvolvimento da fundamentação teórica e busca por trabalhos semelhantes.
 A fase de implementação, por sua vez, se divide em três etapas principais: (i) planejamento e documentação, (ii) ensaio dos conceitos e (iii) implementação do artefato.
 Posteriormente, a solução implementada é aplicada a um experimento de seu uso, para avaliação de usabilidade e documentação de uso.
 
@@ -425,17 +423,161 @@ A fim de pôr a prova a modelagem, desenvolvemos uma prova de conceito com objet
 
 O código da prova de conceito se encontra no apêndice. Nele temos a classe Projeto chamada Project no código, a qual é a classe responsável por executar as tarefas chamada Tasks, e cada tarefa terá suas métricas chamada Metrics a serem avaliadas, que serão posteriormente salvas pela classe de persistência de dados. Para executar as análises precisamos de um ponto de partida, no código especificado é a classe index, para criar a árvore de tarefas e executar o Projeto para obter os resultados.
 
-No desenvolvimento da prova de conceito foram criados recursos fictícios de memória e de tempo de processamento. Para a métrica de memória, foram criados uma classe estática que inicializa com o valor inicial da memória e as operações de alocação e desalocação, o que simula o comportamento da memória do computador em uma aplicação com dados reais. Para tempo de processamento, foi criada um uma função que espera um tempo aleatório, para simular que alguma tarefa está em execução.
+\subsection{Mock de recursos}
+No desenvolvimento da prova de conceito foram criados recursos fictícios de memória e de tempo de processamento.
+Para a métrica de memória, foi criado um objeto chamado Resource, que simula a memória total, e os métodos alloc e free para simular a alocação e desalocação de memória, e um método total para retornar o valor atual da memória.
+Segue o exemplo de implementação:
 
-A partir da simulação do uso de recursos de memória e processamento, foi possível gerar métricas viáveis e avaliar os seus resultados. Na métrica de memória, é verificado o quanto da memória simulada foi alocada, enquanto na métrica de tempo de processamento é calculada a diferença entre a data de início e de fim da tarefa para obtermos o intervalo. 
+\begin{lstlisting}[language=TypeScript]
+class Resource {
+	private static _total: number = 500;
+	static alloc(size: number): any {
+		this._total -= size;
+		return {size};
+	}
+	static free(block: any): void {
+		this._total += block.size;
+	}
+	static get total(): number {
+		return this._total;
+	}
+}
+\end{lstlisting}
+Foi utilizado métodos estáticos para não ser preciso instanciar e passar como parâmetro essa classe.
 
-Foram implementadas dois tipos de tarefas: as tarefas simples e as compostas. A primeira delas são as implementações que serão avaliadas pelo framework e que têm métricas que serão avaliadas na sua execução. Já as tarefas compostas são uma agregação de tarefas simples ou compostas que também tem suas métricas, permitindo a criação de árvores de tarefas para serem avaliadas, dando liberdade ao usuário.
+Para tempo de processamento foi criado um método chamado sleep, que simula o tempo de processamento de uma tarefa.
+\begin{lstlisting}[language=TypeScript]
+class MockTime {
+	public static sleep(
+		min: number,
+		max: number) : Promise<void> {
+		const delayTime = Math.floor(
+			Math.random() * (max - min) + min);
+		return new Promise<void>((resolve) => 
+			setTimeout(resolve, delayTime));
+	}
+}
+\end{lstlisting}
+Para usar este metodo basta clamar ele passando uma janela de tempo mínima e máxima, e o tempo esperado será algo entre esses valores.
 
-Para executar as tarefas foi criado o projeto. O projeto é uma classe que recebe uma tarefa, que pode ser uma tarefa simples ou composta, permitindo que seja executada uma árvore específica montada pelo usuário. Nesta classe as tarefas são efetivamente executadas e é gerado o resultado da análise, que posteriormente serão encaminhados para a classe de persistência dos dados.
+\subsection{Metricas}
+A partir da simulação do uso de recursos de memória e processamento, foi possível gerar métricas viáveis e avaliar os seus resultados. Foram implementadas 2 tipos de métricas, a métrica de memória e a de tempo.
+Na métrica de memória, é verificado o quanto da memória simulada foi alocada.
+Segue o exemplo de implementação:
+\begin{lstlisting}[language=TypeScript]
+class GetDeltaTime extends Metric<number> {
+  private date: number;
+  constructor() {
+    super();
+    this.date = Date.now();
+  }
+  get metric(): number {
+    return (Date.now() - this.date);
+  }
+  get name(): string {
+    return "DeltaTime";
+  }
+}
+\end{lstlisting}
+Já na métrica de tempo de processamento, é verificado o tempo que a tarefa ficou em execução. Segue o exemplo:
+\begin{lstlisting}[language=TypeScript]
+export class GetResourceUsage extends Metric<number> {
+  constructor() {
+    super();
+  }
+  get metric(): number {
+    return Resource.total;
+  }
+  get name(): string {
+    return "Resource Usage";
+  }
+}
+\end{lstlisting}
+Para implementar novas métricas basta criar uma classe que herde da classe Metric e implementar os métodos abstratos.
 
-A persistência de dados da aplicação foi implementada de forma simplificada para a prova de conceito, fazendo com que simplesmente seja gerado um arquivo. O Projeto retorna um dicionário encadeado com cada tarefa e suas métricas e caso a tarefa seja uma tarefa composta, será retornado também suas subtarefas. Esse dicionário é persistido em um arquivo JSON. 
+\subsection{Tarefas}
+Foram implementadas dois tipos de tarefas: as tarefas simples e as compostas.
+A primeira delas são as implementações que serão avaliadas pelo framework e que têm métricas que serão avaliadas na sua execução.
+Já as tarefas compostas são uma agregação de tarefas simples ou compostas que também tem suas métricas, ela tem um método chamado addTask, que é responsável por adicionar uma tarefa à lista de tarefas da tarefa composta. Isso permite a criação de árvores de tarefas para serem avaliadas, dando liberdade ao usuário.
 
+Para a execução ambos tipos de tarefas herdam da classe de tarefa abstrata, essa classe é responsável por executar a tarefa e retornar as métricas.
+Ela é composta por 3 etapas, a primeira é a preTaskJob, que é responsável por executar as tarefas que devem ser executadas antes da tarefa principal, a segunda é a execução da tarefa principal, e a terceira é a postTaskJob, que é responsável por executar as tarefas que devem ser executadas depois da tarefa principal.
+Essas etapas são executadas para todas as tarefas.
+O método chamado run, é responsável por executar estes outros métodos e retornar as métricas. Segue a implementação da classe abstrata de tarefa:
+\begin{lstlisting}[language=TypeScript]
+abstract class Task {
+	public name: string;
+	public metrics: Set<Metric<any>>;
+	
+	constructor(name: string, metrics: Metric<any>[])
+	{
+		this.metrics = new Set(metrics);
+		this.name = name;
+	}
+	
+	async run(): Promise<any> {
+		this.preTaskJob();
+		let data = await this.execute();
+		let metrics = {};
+		this.metrics.forEach(element => {
+		metrics[element.name] = element.metric;
+		});
+		this.postTaskJob();
+		return {metrics, data};
+	}
+	
+	preTaskJob(): void {};
+	abstract execute(): Promise<any>;
+	postTaskJob(): void {};
+}
+\end{lstlisting}
+
+Na tarefa composta o método execute é responsável por executar todas as tarefas da lista de tarefas da tarefa composta e retornar as métricas. Segue a implementação:
+\begin{lstlisting}[language=TypeScript]
+async execute(): Promise<any> {
+	let tasks = {};
+	for (const task of this.tasks) {
+		tasks[task.name] = await task.run();
+	}
+	return tasks;
+}
+\end{lstlisting}
+
+\subsection{Projeto}
+Para executar as tarefas foi criado o projeto. O projeto é responsável por executar todas as tarefas e retornar as métricas de todas as tarefas. Essas tarefas podem ser uma tarefas simples ou compostas, permitindo que seja executada uma árvore específica montada pelo usuário. Nesta classe as tarefas são efetivamente executadas e é gerado o resultado da análise, que posteriormente serão encaminhados para a classe de persistência dos dados.
+
+\subsection{Persistencia}
+A persistência de dados da aplicação foi implementada de forma simplificada para a prova de conceito, fazendo com que simplesmente seja gerado um arquivo. O Projeto retorna um dicionário encadeado com cada tarefa e suas métricas e caso a tarefa seja uma tarefa composta, será retornado também suas subtarefas. Esse dicionário é persistido em um arquivo JSON. Segue a implementação:
+\begin{lstlisting}[language=TypeScript]
+class BasicPersister implements IPersister {
+	save(data: any): void{
+		const jsonData = JSON.stringify(data, null, 2);
+		fs.writeFileSync("result.json", jsonData);
+	}
+}
+\end{lstlisting}
+	
+\subsection{Como executar}
 Para utilizar essa prova de conceito, basta criar um arquivo, criar suas tarefas, organizá-las usando as tarefas compostas e criar um Projeto passando a tarefa principal, que vai ser a raiz da árvore, e por fim executar a aplicação. Após isso será criado um arquivo JSON com o resultado da análise das tarefas.
+Segue o exemplo de uso:
+\begin{lstlisting}[language=TypeScript]
+class Index {
+	public static async main() {
+		console.log("Hello world!");
+		const task = new CompositeTask();
+		const task2 = new CompositeTask();
+		task.addTask(new MockTask("Task 1"));
+		task.addTask(new MockTask("Task 2"));
+		task2.addTask(new MockTask("Task 3"));
+		task.addTask(task2);
+		const project = new Project(
+			new BasicPersister(),
+			task);
+		project.executeTask();
+	}
+}
+\end{lstlisting}
+Nesse caso foi criado uma tarefa composta chamada task, que tem duas tarefas simples e uma outra tarefa composta chamada task2, que tem uma tarefa simples. A task2 foi adicionada a task, e por fim a task foi adicionada ao projeto. Após isso foi executado o projeto, que vai executar todas as tarefas e gerar o arquivo JSON com o resultado da análise.
 
 \section{Exemplo de uso}
 Um exemplo ilustrativo de uso do framework consiste em comparar o desempenho de consultas em dicionários e listas, a fim de determinar qual estrutura de dados oferece melhor desempenho em termos de velocidade e uso de memória. Vamos explorar esse exemplo para ilustrar a funcionalidade da prova de conceito.
@@ -475,8 +617,8 @@ Além de simular como um usuário do framework aplicaria a estrutura de árvore 
 Durante essa etapa também encontramos algumas limitações do conceitos como a inaplicabilidade do conceito de análise como uma avaliação independente de tarefas, pois, seria necessário restringir a liberdade na obtenção de métricas.
 
 O desenvolvimento do framework e produção textual estão sendo realizados em paralelo.
-A fundamentação teórica, capítulo \ref{cap:met_pesquisa}, se encontra em fase de desenvolvimento e tem conclusão prevista para outubro de 2023.
-A descrição do framework, capítulo \ref{cap:proposta}, será descrita de forma mais precisa e detalhada até janeiro de 2024, junto com um exemplo de sua utilização.
+A fundamentação teórica e critérios para comparação do framework com outras ferramentas tem conclusão prevista para outubro de 2023.
+A descrição do framework, capítulo \ref{cap:proposta}, será realizada de forma mais precisa e detalhada até janeiro de 2024, junto com um exemplo de sua utilização.
 A defesa da dissertação está prevista para janeiro de 2024. O cronograma indicado na tabela \ref{tab:cronograma} prevê as etapas abordadas neste trabalho.
 A tabela indica os meses de previsão de conclusão de cada uma das etapas, e os itens em verde significam as fases já realizadas.
 
@@ -488,7 +630,7 @@ A tabela indica os meses de previsão de conclusão de cada uma das etapas, e os
 		\textbf{Atividade} & \textbf{fev-mar} & \textbf{abr-mai} & \textbf{jun-jul} & \textbf{ago-set} & \textbf{out-nov} & \textbf{dez-jan} \\
 		\midrule
 		Planejamento e Escopo  &  \textcolor{green}X  &    &    &    &    &    \\
-		Fundamentação Teórica  &  \textcolor{green}X  &  \textcolor{green}X  &    &    &    &    \\
+		Fundamentação Teórica  &  \textcolor{green}X  &     &    &  X  &    &    \\
 		Arquitetura  &    &  \textcolor{green}X  &  \textcolor{green}X  &    &    &    \\
 		Prova de Conceito  &    &    &  \textcolor{green}X  &    &    &    \\
 		Desenvolvimento  &    &    &  X  &  X  &  X  &    \\
