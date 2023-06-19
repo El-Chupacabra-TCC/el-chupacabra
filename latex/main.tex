@@ -460,7 +460,7 @@ a classe abstrata \emph{Task}, responsável por definir o que uma tarefa faz, ou
 A classe \emph{CompositeTask}, a qual possui a função de agregar outras tarefas.
 E, a classe \emph{SimpleTask}, responsável por encapsular e executar o código do usuário do framework.
 Entretanto, tanto \emph{CompositeTask} quanto \emph{SimpleTask} servem apenas para fins de herança e polimorfismo.
-Portanto, com o framework em sua completude, as derradeiras classes as quais compõem a árvore de tarefas, serão subclasses delas.
+Portanto, com o framework em sua completude, as derradeiras classes as quais compõem a árvore de tarefas, serão subclasses.
 
 \begin{lstlisting}[label={lst:abstract_task}, caption={Classe abstrata responsável por definir o que todos os membros da árvore de tarefas precisam implementar.}, language=TypeScript]
 abstract class Task {
@@ -521,9 +521,9 @@ export class CompositeTask extends Task {
 \section{Executando a Prova de Conceito}
 \label{sec:exe_poc}
 A fim de executar a prova de conceito, é necessário criar um arquivo o qual atua como roteiro principal, guiando a execução de outras partes do código.
-Além disso, neste mesmo arquivo, é onde construimos a árvore de tarefas.
-Ou seja, instanciamos tanto as tarefas compostas quanto as tarefas simples e estabelecemos a sua estrutura de árvore.
-Por fim, também é instanciado um objeto \emph{Project} o qual recebe como parâmetros a raiz da árvore de tarefas e uma implementação da interface de persistencia.
+Além disso, neste mesmo arquivo, é onde construímos a árvore de tarefas.
+Ou seja, instanciamos tanto as tarefas compostas quanto às tarefas simples e estabelecemos a sua estrutura de árvore.
+Por fim, também é instanciado um objeto \emph{Project} o qual recebe como parâmetros a raiz da árvore de tarefas e uma implementação da interface de persistência.
 
 \begin{lstlisting}[label={lst:index_ts}, caption={Exemplo de roteiro principal para executar a prova de conceito.}, language=TypeScript]
 class Index {
