@@ -423,7 +423,7 @@ Porém, a \acr{API} do Google Sheets não atende diretamente as necessidades do 
 \chapter{Prova de conceito}
 \label{cap:prova_de_conceito}
 A fim de testar a modelagem proposta, desenvolvemos uma prova de conceito com objetos mock, os quais simulam recursos computacionais.
-De modo que fosse possível avaliar a eficácia da modelagem sem depender de recursos físicos reais, visando manter o foco na estrutura do framework.
+De modo que fosse possível avaliar a eficácia da modelagem sem depender de recursos reais, visando manter o foco em avaliar a estrutura do framework.
 A prova de conceito foi implementada usando a linguagem de programação Typescript, sua escolha almeja expressar com clareza todas as classes e relações definidas durante a modelagem, e seu código-fonte pode ser encontrado no apêndice \ref{apx:mock_source}.
 
 
@@ -460,7 +460,7 @@ a classe abstrata \emph{Task}, responsável por definir o que uma tarefa faz, ou
 A classe \emph{CompositeTask}, a qual possui a função de agregar outras tarefas.
 E, a classe \emph{SimpleTask}, responsável por encapsular e executar o código do usuário do framework.
 Entretanto, tanto \emph{CompositeTask} quanto \emph{SimpleTask} servem apenas para fins de herança e polimorfismo.
-Portanto, com o framework em sua completude, as derradeiras classes, as quais compõem a árvore de tarefas, serão subclasses.
+Portanto, com o framework em sua completude, as derradeiras classes as quais compõem a árvore de tarefas, serão subclasses delas.
 
 \begin{lstlisting}[label={lst:abstract_task}, caption={Classe abstrata responsável por definir o que todos os membros da árvore de tarefas precisam implementar.}, language=TypeScript]
 abstract class Task {
@@ -518,10 +518,14 @@ export class CompositeTask extends Task {
 \end{lstlisting}
 
 
-\section{Como executar}
-Para utilizar essa prova de conceito, basta criar um arquivo, criar suas tarefas, organizá-las usando as tarefas compostas e criar um Projeto passando a tarefa principal, que vai ser a raiz da árvore, e por fim executar a aplicação. Após isso será criado um arquivo JSON com o resultado da análise das tarefas.
-Segue o exemplo de uso:
-\begin{lstlisting}[language=TypeScript]
+\section{Executando a Prova de Conceito}
+\label{sec:exe_poc}
+A fim de executar a prova de conceito, é necessário criar um arquivo o qual atua como roteiro principal, guiando a execução de outras partes do código.
+Além disso, neste mesmo arquivo, é onde construimos a árvore de tarefas.
+Ou seja, instanciamos tanto as tarefas compostas quanto as tarefas simples e estabelecemos a sua estrutura de árvore.
+Por fim, também é instanciado um objeto \emph{Project} o qual recebe como parâmetros a raiz da árvore de tarefas e uma implementação da interface de persistencia.
+
+\begin{lstlisting}[label={lst:index_ts}, caption={Exemplo de roteiro principal para executar a prova de conceito.}, language=TypeScript]
 class Index {
 	public static async main() {
 		console.log("Hello world!");
@@ -538,18 +542,18 @@ class Index {
 	}
 }
 \end{lstlisting}
-Nesse caso foi criado uma tarefa composta chamada task, que tem duas tarefas simples e uma outra tarefa composta chamada task2, que tem uma tarefa simples. A task2 foi adicionada a task, e por fim a task foi adicionada ao projeto. Após isso foi executado o projeto, que vai executar todas as tarefas e gerar o arquivo JSON com o resultado da análise.
 
 \section{Exemplo de uso}
-Um exemplo ilustrativo de uso do framework consiste em comparar o desempenho de consultas em dicionários e listas, a fim de determinar qual estrutura de dados oferece melhor desempenho em termos de velocidade e uso de memória. Vamos explorar esse exemplo para ilustrar a funcionalidade da prova de conceito.
+Um exemplo ilustrativo de uso do framework consiste em simular a comparação do desempenho de consultas em dicionários e listas.
+Com a finalidade de determinar qual estrutura de dados oferece melhor tempo de execução e menor consumo de memória.
+Para tanto, é necessário verificar se todas as métricas necessárias para a avaliação existem.
+Caso alguma métrica desejada esteja ausente, é necessário criá-la, o que pode facilmente ser realizado estendendo a classe abstrata de métricas.
 
-Primeiramente, é necessário verificar se todas as métricas necessárias para a avaliação estão implementadas. Caso alguma métrica esteja ausente, é possível criá-la estendendo a classe de métrica abstrata e implementar a lógica específica para gerar essa métrica. Nesse exemplo, vamos analisar o uso de memória e o tempo de execução. Como essas métricas já estão implementadas, não é necessário criar novas métricas para essa comparação.
-
-Após garantir a disponibilidade das métricas, podemos implementar as tarefas que serão avaliadas: uma que trabalha com listas e outra que utiliza dicionários. Nesse caso, como estamos realizando uma prova de conceito, faremos uso de um objeto mock para a memória, que simula a alocação e desalocação de memória, e da função que espera um tempo aleatório, que simula o tempo de execução de uma tarefa.
-
-Uma vez implementadas as tarefas, podemos criar um arquivo chamado ``index.ts''. Nele, criaremos uma CompositeTask que incluirá as duas tarefas previamente implementadas: a tarefa com dicionários e a tarefa com listas. Em seguida, criaremos um novo projeto, passando a CompositeTask como parâmetro para a sua execução. Esse projeto será responsável por salvar os resultados em um arquivo específico.
-
-Por fim, poderemos analisar os resultados salvos no arquivo para determinar qual implementação se mostra mais adequada para a nossa aplicação, considerando o desempenho apresentado pelas estruturas de dados em termos de velocidade e uso de memória. Ao realizar esse exemplo, aproveitamos as capacidades da prova de conceito para comparar o desempenho de diferentes estruturas de dados, auxiliando na tomada de decisões informadas e na seleção da melhor abordagem para otimizar a nossa aplicação.
+Após assegurar a disponibilidade das métricas, o próximo passo consistem em implementar as tarefas.
+Ou seja, estender tarefa simples em uma classe que realize consultas em listas e outra que utilize dicionários.
+A fim de assegurar a simplicidade do exemplo, usamos objetos mock para simula a alocação de memória e tempo de execução das operações.
+Além disso, também é necessário criar um roteiro principal para executar o código, do mesmo modo, como explicado na seção \ref{sec:exe_poc}.
+Por fim, após executar o roteiro, as métricas coletadas serão salvas pelo persister, o qual neste caso as salva em um arquivo JSON com a mesma estrutura da árvore de tarefas.
 
 \chapter{Estado Atual do Trabalho}
 \label{cap:estado_atual}
