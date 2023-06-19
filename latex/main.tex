@@ -378,16 +378,16 @@ Abaixo, está uma descrição de cada elemento do diagrama conceitual.
 \end{description}
 
 
-\subsection{Diagrama de Classes}
+\subsection{Diagrama Conceitual Detalhado}
 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figures/diagrama-classes.pdf}
-	\caption{Diagrama classes do framework.}
+	\caption{Diagrama conceitual detalhado do framework.}
 	\label{fig:diag-classes}
 \end{figure}
 
-O diagrama de classes define a arquitetura e estrutura dos módulos do framework.
+O diagrama conceitual detalhado define a arquitetura e estrutura dos módulos do framework.
 Nele há a definição dos principais aspectos práticos para a implementação, por exemplo, são definidas as árvores de herança e principais métodos que precisam ser implementados por usuários.
 Além disso, ele também define a camada de persistência para resolver o problema da coleta de métricas de execuções realizadas por voluntários de forma remota.
 Abaixo, está uma descrição de cada elemento do diagrama.
@@ -405,7 +405,7 @@ Abaixo, está uma descrição de cada elemento do diagrama.
 	\item[SheetsonPersister:] Implementação da camada de persistência a qual utiliza o Google Sheets\footnote{https://www.google.com/sheets/about}.
 \end{description}
 
-Como foi anunciado anteriormente, realizar a coleta de métricas em execuções realizadas por voluntários, os quais podem atuar de modo remoto é um problema destacado pelo diagrama de classes.
+Como foi anunciado anteriormente, realizar a coleta de métricas em execuções realizadas por voluntários, os quais podem atuar de modo remoto é um problema destacado pelo diagrama.
 Pois, em uma abordagem convencional construiríamos uma \acr{API} com arquitetura REST (do inglês, \emph{representational state transfer}) para receber as métricas e disponibilizá-las para consulta.
 Ademais, também haveria a necessidade de implementar uma camada de autorização na \acr{API} para prover segurança aos dados dos usuários.
 Entretanto, esta abordagem possui sérias desvantagens, sendo as duas principais: um aumento considerável no escopo de implementação e custos com infraestrutura para a \acr{API}.
