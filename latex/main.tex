@@ -543,18 +543,6 @@ class Index {
 }
 \end{lstlisting}
 
-\section{Exemplo de uso}
-Um exemplo ilustrativo de uso do framework consiste em simular a comparação do desempenho de consultas em dicionários e listas.
-Com a finalidade de determinar qual estrutura de dados oferece melhor tempo de execução e menor consumo de memória.
-Para tanto, é necessário verificar se todas as métricas necessárias para a avaliação existem.
-Caso alguma métrica desejada esteja ausente, é necessário criá-la, o que pode facilmente ser realizado estendendo a classe abstrata de métricas.
-
-Após assegurar a disponibilidade das métricas, o próximo passo consistem em implementar as tarefas.
-Ou seja, estender tarefa simples em uma classe que realize consultas em listas e outra que utilize dicionários.
-A fim de assegurar a simplicidade do exemplo, usamos objetos mock para simula a alocação de memória e tempo de execução das operações.
-Além disso, também é necessário criar um roteiro principal para executar o código, do mesmo modo, como explicado na seção \ref{sec:exe_poc}.
-Por fim, após executar o roteiro, as métricas coletadas serão salvas pelo persister, o qual neste caso as salva em um arquivo JSON com a mesma estrutura da árvore de tarefas.
-
 \chapter{Estado Atual do Trabalho}
 \label{cap:estado_atual}
 
