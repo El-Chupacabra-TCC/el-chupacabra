@@ -40,7 +40,7 @@
     belowskip=10pt
 }
 
-% As figuras ficam armazenadas na pasta figuras
+% As figuras ficam armazenadas na pasta figuras.
 \graphicspath{{./figures/}}
 
 % Informações do trabalho
@@ -527,19 +527,19 @@ Por fim, também é instanciado um objeto \emph{Project} o qual recebe como par�
 
 \begin{lstlisting}[label={lst:index_ts}, caption={Exemplo de roteiro principal para executar a prova de conceito.}, language=TypeScript]
 class Index {
-	public static async main() {
-		console.log("Hello world!");
-		const task = new CompositeTask();
-		const task2 = new CompositeTask();
-		task.addTask(new MockTask("Task 1"));
-		task.addTask(new MockTask("Task 2"));
-		task2.addTask(new MockTask("Task 3"));
-		task.addTask(task2);
-		const project = new Project(
-			new BasicPersister(),
-			task);
-		project.executeTask();
-	}
+    public static async main() {
+        console.log("Hello world!");
+        const task = new CompositeTask();
+        const task2 = new CompositeTask();
+        task.addTask(new MockTask("Task 1"));
+        task.addTask(new MockTask("Task 2"));
+        task2.addTask(new MockTask("Task 3"));
+        task.addTask(task2);
+        const project = new Project(
+            new BasicPersister(),
+            task);
+        project.executeTask();
+    }
 }
 \end{lstlisting}
 
