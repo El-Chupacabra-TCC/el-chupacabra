@@ -1,5 +1,7 @@
 *.pdf
 !**/latex/figures/*.pdf
+node_modules/
+dist/
 
 ## Core latex/pdflatex auxiliary files:
 *.aux

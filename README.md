@@ -26,3 +26,8 @@ docker pull tianon/latex
     "latex-workshop.synctex.afterBuild.enabled": true,
     "latex-workshop.docker.image.latex": "tianon/latex",
     ```
+
+## Compilando Projeto Mock
+```bash
+tsc -p ./tsconfig.json
+```
