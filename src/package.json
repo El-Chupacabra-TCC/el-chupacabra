@@ -1,0 +1,28 @@
+{
+  "name": "elc",
+  "version": "1.0.0",
+  "description": "A framework for executing proof of concepts while gathering performance metrics and consumption of computational resources.",
+  "main": "Index.js",
+  "scripts": {
+    "dev": "npx tsc && node dist/Index.js",
+    "compile": "npx tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "big",
+    "data;",
+    "Web;",
+    "data",
+    "visualization;",
+    "performance",
+    "evaluation;",
+    "resource",
+    "consumption"
+  ],
+  "author": "Filipe Shanon, Matheus Moura and Radhanama Messiano",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  },
+  "type": "module"
+}
