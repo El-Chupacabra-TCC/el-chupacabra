@@ -27,8 +27,7 @@ export default class BrowserExecutionProfile implements IExecutionProfile {
                 vendor: window.navigator.vendor,
                 vendorSub: window.navigator.vendorSub,
                 doNotTrack: window.navigator.doNotTrack,
-                isWebdriver: typeof window.navigator.webdriver !== 'undefined' ? window.navigator.webdriver.toString() : 'unknown',
-                totalJSHeapSize: (window.performance as any).memory?.totalJSHeapSize || 'unknown'
+                isWebdriver: typeof window.navigator.webdriver !== 'undefined' ? window.navigator.webdriver.toString() : 'unknown'
             },
             os: {
                 timeZoneOffset: date.getTimezoneOffset()
@@ -46,7 +45,8 @@ export default class BrowserExecutionProfile implements IExecutionProfile {
                 localeDatetime: {
                     date: date.toLocaleDateString(),
                     time: date.toLocaleTimeString()
-                }
+                },
+                totalJSHeapSize: (window.performance as any).memory?.totalJSHeapSize || -1
             }
         }
 
