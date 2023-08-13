@@ -22,6 +22,7 @@
   "author": "Filipe Shanon, Matheus Moura and Radhanama Messiano",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^20.4.10",
     "typescript": "^5.1.6"
   },
   "type": "module"
