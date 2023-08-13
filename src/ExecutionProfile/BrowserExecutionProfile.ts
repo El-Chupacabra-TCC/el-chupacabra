@@ -28,7 +28,7 @@ export default class BrowserExecutionProfile implements IExecutionProfile {
                 vendorSub: window.navigator.vendorSub,
                 doNotTrack: window.navigator.doNotTrack,
                 isWebdriver: typeof window.navigator.webdriver !== 'undefined' ? window.navigator.webdriver.toString() : 'unknown',
-                // totalJSHeapSize: window.performance ? window.performance.memory ? window.performance.memory!.totalJSHeapSize || 'unknown' : 'unknown' : 'unknown'
+                totalJSHeapSize: (window.performance as any).memory?.totalJSHeapSize || 'unknown'
             },
             screen: {
                 width: screen.width,
@@ -49,7 +49,8 @@ export default class BrowserExecutionProfile implements IExecutionProfile {
             }
         }
 
-        const fingerprintString = JSON.stringify(executionProfile)
+        const fingerprintString = JSON.stringify(
+            { browser: executionProfile.browser, screen: executionProfile.screen })
         executionProfile.user.visitorId = await this.getVisitorId(fingerprintString)
 
         return executionProfile
