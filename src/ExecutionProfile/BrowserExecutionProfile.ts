@@ -1,7 +1,7 @@
 import IExecutionProfile from "./IExecutionProfile"
 
 /**
- * Represents a class for collecting execution profile data from browsers.
+ * Represents a class for collecting execution data in a Browser environment.
  * @implements {IExecutionProfile}
  */
 export default class BrowserExecutionProfile implements IExecutionProfile {
@@ -12,13 +12,13 @@ export default class BrowserExecutionProfile implements IExecutionProfile {
     async collect(): Promise<Record<string, any>> {
         const date = new Date()
         const executionProfile: Record<string, any> = {
-            browser: {
+            software: {
+                type: "Browser",
                 userAgent: navigator.userAgent,
                 language: navigator.language,
                 windowInnerWidth: window.innerWidth,
                 windowInnerHeight: window.innerHeight,
                 devicePixelRatio: window.devicePixelRatio,
-                hardwareConcurrency: window.navigator.hardwareConcurrency,
                 appCodeName: window.navigator.appCodeName,
                 appName: window.navigator.appName,
                 appVersion: window.navigator.appVersion,
@@ -30,28 +30,33 @@ export default class BrowserExecutionProfile implements IExecutionProfile {
                 isWebdriver: typeof window.navigator.webdriver !== 'undefined' ? window.navigator.webdriver.toString() : 'unknown',
                 totalJSHeapSize: (window.performance as any).memory?.totalJSHeapSize || 'unknown'
             },
-            screen: {
-                width: screen.width,
-                height: screen.height,
-                colorDepth: screen.colorDepth,
-                pixelDepth: screen.pixelDepth,
-            },
             os: {
-
+                timeZoneOffset: date.getTimezoneOffset()
             },
             hardware: {
-
+                screen: {
+                    width: screen.width,
+                    height: screen.height,
+                    colorDepth: screen.colorDepth,
+                    pixelDepth: screen.pixelDepth,
+                },
+                hardwareConcurrency: window.navigator.hardwareConcurrency
             },
-            user: {
-                timeZoneOffset: date.getTimezoneOffset(),
-                localeTime: date.toLocaleTimeString(),
-                localeDate: date.toLocaleDateString()
+            volatile: {
+                localeDatetime: {
+                    date: date.toLocaleDateString(),
+                    time: date.toLocaleTimeString()
+                }
             }
         }
 
         const fingerprintString = JSON.stringify(
-            { browser: executionProfile.browser, screen: executionProfile.screen })
-        executionProfile.user.visitorId = await this.getVisitorId(fingerprintString)
+            {
+                software: executionProfile.software,
+                os: executionProfile.os,
+                hardware: executionProfile.hardware
+            })
+        executionProfile.visitorId = await this.getVisitorId(fingerprintString)
 
         return executionProfile
     }
