@@ -1,0 +1,25 @@
+import IMetric from "./IMetric";
+
+/**
+ * Measures the time span between constructor and collect calls.
+ * @implements {IMetric}
+ */
+export default class DeltaTimeMetric implements IMetric {
+  private startTime: number
+
+  constructor() {
+    this.startTime = Date.now()
+  }
+
+  /**
+   * @inheritdoc
+   */
+  async collect(): Promise<Record<string, any>> {
+    const currentTime = Date.now()
+    const deltaTime = currentTime - this.startTime
+
+    const timeMeasurement = { deltaTime }
+
+    return Promise.resolve(timeMeasurement)
+  }
+}

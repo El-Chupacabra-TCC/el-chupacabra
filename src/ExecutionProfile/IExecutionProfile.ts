@@ -5,8 +5,8 @@
 export default interface IExecutionProfile {
     /**
      * Collects execution profile data.
-     * @returns {Record<string, any>} An object containing every execution profile data the
+     * @returns {Promise<Record<string, any>>} An object containing every execution profile data the
      * implementation was able to collect.
      */
-    collect(): Record<string, any>;
+    collect(): Promise<Record<string, any>>;
 }
