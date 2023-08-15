@@ -5,21 +5,21 @@ import IMetric from "./IMetric";
  * @implements {IMetric}
  */
 export default class DeltaTimeMetric implements IMetric {
-  private startTime: number
+    private startTime: number
 
-  constructor() {
-    this.startTime = Date.now()
-  }
+    constructor() {
+        this.startTime = Date.now()
+    }
 
-  /**
-   * @inheritdoc
-   */
-  async collect(): Promise<Record<string, any>> {
-    const currentTime = Date.now()
-    const deltaTime = currentTime - this.startTime
+    /**
+     * @inheritdoc
+     */
+    async collect(): Promise<Record<string, any>> {
+        const currentTime = Date.now()
+        const deltaTime = currentTime - this.startTime
 
-    const timeMeasurement = { deltaTime }
+        const timeMeasurement = { deltaTime }
 
-    return Promise.resolve(timeMeasurement)
-  }
+        return Promise.resolve(timeMeasurement)
+    }
 }
