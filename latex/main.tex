@@ -133,102 +133,121 @@ O capítulo \ref{cap:proposta} apresenta a proposta de desenvolvimento da ferram
 Por fim, os capítulos \ref{cap:prova_de_conceito} e \ref{cap:estado_atual} apresenta o estado atual do framework e o cronograma para a próxima etapa.
 
 
-\chapter{Metodologia da Pesquisa}
-\label{cap:met_pesquisa}
+\chapter{Fundamentação teórica}
+\label{cap:fundamentacao_teorica}
+Aqui vai um texto introduzindo
 
-Para a revisão bibliográfica as duas principais ferramentas utilizadas foram: Elicit, um assistente de pesquisa baseado em modelos de transformador pré-treinado generativo (do inglês, \emph{generative pre-trained transformer}) de aprendizado de máquina, e a ferramenta Connected Papers, a qual  gera um grafo de artigos relacionados baseado em cocitações e acoplamento bibliográfico.
-A ferramenta Elicit funciona recebendo uma pergunta em linguagem natural e retornando os trabalhos que considera mais relevantes, junto a um resumo, em uma tabela paginada.
-Deste modo, na tabela \ref{tab:strings-elicit} elencamos todas strings de busca utilizadas no Elicit, e para cada uma delas consultamos até a segunda página da tabela, totalizando 14 trabalhos retornados por string de busca.
+	\section{Evolução da web e a necessidade de performance}
+	\label{cap:medicao-client-side}
+	Ahaushuahreia
 
-\begin{table}[h!]
-\centering
-\caption{Strings utilizadas na ferramenta Elicit.\label{long}}
+	\section{Medição client-side}
+	\label{cap:medicao-client-side}
+	Ahaushuahreia
 
-\begin{tabular}{||c||} 
-	
-\hline
-	Strings de Busca \\
-\hline\hline
- ``browsing memory'' \\
- ``client side memory performance'' \\
- ``client side memory profiling'' \\
- ``memory network management web client'' \\
- ``memory network performance web client'' \\
- ``memory network profiling web client'' \\
- ``memory network waste web client'' \\
- ``measuring performance in client side'' \\
- ``measuring in client side'' \\
- ``performance measurement'' \\
- ``tools to measure performance in client side'' \\
- ``evaluating latency on client side'' \\
- ``optimizing web browsing'' \\
- ``performance tool web client side'' \\
- ``waste resources client side'' \\
- ``waste resources web client'' \\
- ``web client side memory performance'' \\
- ``What are the impacts of memory management in mobile Web Browsing?'' \\
- ``What is the state-of-the-art for measuring performance of client side?'' \\
- ``What is the state-of-the-art for measuring QoE and memory of Web Browsing?'' \\
+	\section{Typescript e JS nos navegadores}
+	\label{cap:typescript}
+	AHushauhsuahsuashu
 
- \hline
-\end{tabular}
-\label{tab:strings-elicit}
-\end{table}
-
-Além disso, três trabalhos encontrados por meio do Elicit foram utilizados como entrada para a ferramenta Connected Papers.
-O Connected Papers é um outro assistente de pesquisa, o qual recebe como entrada o título ou o DOI de um trabalho para gerar um grafo de trabalhos relacionados destacando suas principais conexões e trabalhos influentes.
-As strings de busca utilizadas no Connected Papers estão listadas na tabela \ref{tab:strings-connected-papers}, de modo que, para cada uma, a ferramenta gerou um grafo com 40 trabalhos relacionados, os quais também podem ser visualizados em uma tabela. \\
-
-\begin{table}[h!]
-\centering
-
-\caption{Strings utilizadas na ferramenta Connected Papers.}
-\begin{tabular}{||c||} 
-
-\hline
-	Strings de Busca \\
-\hline\hline
-``Measuring Web Latency and Rendering Performance: Method, Tools, and Longitudinal Dataset''\\
-``MemInsight: platform-independent memory debugging for JavaScript''\\
-``Obtaining in-context measurements of cellular network performance''\\
-\hline
-\end{tabular}
-\label{tab:strings-connected-papers}
-\end{table}
-
-Os critérios usados para filtrar os trabalhos encontrados por meio de ambas as ferramentas estão descritos na figura \ref{fig:fluxo-leitura}.
-Em suma, após a leitura do resumo de cada trabalho, três critérios são avaliados, sendo cada um deles um filtro.
-O qual indica se o trabalho não tem relação suficiente com o tema, se é necessário ler a introdução para a tomada da decisão ou se é um trabalho o qual a leitura completa deve ser realizada.
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.6\textwidth]{figures/fluxo-decisao-leitura.pdf}
-	\caption{Critérios utilizados para seleção de trabalhos para leitura.}
-	\label{fig:fluxo-leitura}
-\end{figure}
-
-
-\begin{table}[!ht]
-	\centering
-	\caption{Total de trabalhos encontrados}
-	\begin{tabular}{l  c L{1.5cm} R{1.5cm}}
-		\toprule
-		\textbf{Ferramenta} & \textbf{Trabalhos Encontrados} \\
-		\midrule
-		Elicit  &  280  \\
-		Connected Papers  &  120  \\
-		\midrule
-		Total  &  400  \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:trabalhos-encontrados}
-\end{table}
 
 \chapter{Trabalhos Relacionados}
 \label{sec:trabalhos_relacionados}
 	\label{sec:trab_relacionados}
 
 	% \item \textbf{Paper 1}: Summary of the first paper goes here. This paragraph provides a concise overview of the paper's objectives, methodology, and key findings.
+
+	\section{Metodologia de Pesquisa}
+	\label{cap:met_pesquisa}
+
+	Para a revisão bibliográfica as duas principais ferramentas utilizadas foram: Elicit, um assistente de pesquisa baseado em modelos de transformador pré-treinado generativo (do inglês, \emph{generative pre-trained transformer}) de aprendizado de máquina, e a ferramenta Connected Papers, a qual  gera um grafo de artigos relacionados baseado em cocitações e acoplamento bibliográfico.
+	A ferramenta Elicit funciona recebendo uma pergunta em linguagem natural e retornando os trabalhos que considera mais relevantes, junto a um resumo, em uma tabela paginada.
+	Deste modo, na tabela \ref{tab:strings-elicit} elencamos todas strings de busca utilizadas no Elicit, e para cada uma delas consultamos até a segunda página da tabela, totalizando 14 trabalhos retornados por string de busca.
+
+	\begin{table}[h!]
+	\centering
+	\caption{Strings utilizadas na ferramenta Elicit.\label{long}}
+
+	\begin{tabular}{||c||} 
+		
+	\hline
+		Strings de Busca \\
+	\hline\hline
+	``browsing memory'' \\
+	``client side memory performance'' \\
+	``client side memory profiling'' \\
+	``memory network management web client'' \\
+	``memory network performance web client'' \\
+	``memory network profiling web client'' \\
+	``memory network waste web client'' \\
+	``measuring performance in client side'' \\
+	``measuring in client side'' \\
+	``performance measurement'' \\
+	``tools to measure performance in client side'' \\
+	``evaluating latency on client side'' \\
+	``optimizing web browsing'' \\
+	``performance tool web client side'' \\
+	``waste resources client side'' \\
+	``waste resources web client'' \\
+	``web client side memory performance'' \\
+	``What are the impacts of memory management in mobile Web Browsing?'' \\
+	``What is the state-of-the-art for measuring performance of client side?'' \\
+	``What is the state-of-the-art for measuring QoE and memory of Web Browsing?'' \\
+
+	\hline
+	\end{tabular}
+	\label{tab:strings-elicit}
+	\end{table}
+
+	Além disso, três trabalhos encontrados por meio do Elicit foram utilizados como entrada para a ferramenta Connected Papers.
+	O Connected Papers é um outro assistente de pesquisa, o qual recebe como entrada o título ou o DOI de um trabalho para gerar um grafo de trabalhos relacionados destacando suas principais conexões e trabalhos influentes.
+	As strings de busca utilizadas no Connected Papers estão listadas na tabela \ref{tab:strings-connected-papers}, de modo que, para cada uma, a ferramenta gerou um grafo com 40 trabalhos relacionados, os quais também podem ser visualizados em uma tabela. \\
+
+	\begin{table}[h!]
+	\centering
+
+	\caption{Strings utilizadas na ferramenta Connected Papers.}
+	\begin{tabular}{||c||} 
+
+	\hline
+		Strings de Busca \\
+	\hline\hline
+	``Measuring Web Latency and Rendering Performance: Method, Tools, and Longitudinal Dataset''\\
+	``MemInsight: platform-independent memory debugging for JavaScript''\\
+	``Obtaining in-context measurements of cellular network performance''\\
+	\hline
+	\end{tabular}
+	\label{tab:strings-connected-papers}
+	\end{table}
+
+	Os critérios usados para filtrar os trabalhos encontrados por meio de ambas as ferramentas estão descritos na figura \ref{fig:fluxo-leitura}.
+	Em suma, após a leitura do resumo de cada trabalho, três critérios são avaliados, sendo cada um deles um filtro.
+	O qual indica se o trabalho não tem relação suficiente com o tema, se é necessário ler a introdução para a tomada da decisão ou se é um trabalho o qual a leitura completa deve ser realizada.
+
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=0.6\textwidth]{figures/fluxo-decisao-leitura.pdf}
+		\caption{Critérios utilizados para seleção de trabalhos para leitura.}
+		\label{fig:fluxo-leitura}
+	\end{figure}
+
+
+	\begin{table}[!ht]
+		\centering
+		\caption{Total de trabalhos encontrados}
+		\begin{tabular}{l  c L{1.5cm} R{1.5cm}}
+			\toprule
+			\textbf{Ferramenta} & \textbf{Trabalhos Encontrados} \\
+			\midrule
+			Elicit  &  280  \\
+			Connected Papers  &  120  \\
+			\midrule
+			Total  &  400  \\
+			\bottomrule
+		\end{tabular}
+		\label{tab:trabalhos-encontrados}
+	\end{table}
+
+
 	\section{Ferramentas Para Medição no Lado do Cliente}
 	Utilizando os métodos descritos na seção anterior do trabalho, conseguimos levantar um panorama geral dos frameworks e soluções existentes e propostos à academia, assim como classificá-los utilizando alguns parâmetros, afim de entender se a nossa proposta se demonstra complementar ao estado da arte. 
 	Os critérios da classificação são: 
@@ -327,13 +346,13 @@ O qual indica se o trabalho não tem relação suficiente com o tema, se é nece
 \chapter{Proposta}
 \label{cap:proposta}
 
-O objetivo do framework é oferecer uma forma fácil e eficaz de realizar análises de desempenho e consumo de recursos computacionais em provas de conceito para aplicações Web no lado do cliente.
-De modo que, o usuário do framework seja capaz de realizar suas análises com a colaboração de voluntários, sendo o framework responsável pela coleta e agregação das métricas em uma base de dados.
-A fim alcançar estes objetivos, o trabalho se divide em três fases: pesquisa, implementação e experimentação.
+	O objetivo do framework é oferecer uma forma fácil e eficaz de realizar análises de desempenho e consumo de recursos computacionais em provas de conceito para aplicações Web no lado do cliente.
+	Dessa forma, o usuário do framework é capaz de realizar suas análises com a colaboração de voluntários, sendo o framework responsável pela coleta e agregação das métricas em uma base de dados. Nessa secção, explicaremos os principais pilares que sustentam a nossa solução, definindo os elementos que a compõem.
 
-Durante a fase de pesquisa, há o levantamento da bibliografia, inicio do desenvolvimento da fundamentação teórica e busca por trabalhos semelhantes.
-A fase de implementação, por sua vez, se divide em três etapas principais: (i) planejamento e documentação, (ii) ensaio dos conceitos e (iii) implementação do artefato.
-Posteriormente, a solução implementada é aplicada a um experimento de seu uso, para avaliação de usabilidade e documentação de uso.
+\section{Diagrama de Casos de Uso}
+\label{cap:diagrama_de_caso_de_uso}
+
+O diagrama de casos de uso é o diagrama responsável por prever como a ferramenta será utilizada, embasando futuramente o desenvolvimento e os testes da aplicação. No caso do ELC, temos os atores ...
 
 \begin{figure}[!ht]
 	\centering
@@ -342,47 +361,9 @@ Posteriormente, a solução implementada é aplicada a um experimento de seu uso
 	\label{fig:diagrama-informal}
 \end{figure}
 
-\section{Planejamento e Documentação}
-\label{sec:planejamento-doc}
-
-Esta etapa tem como objetivo definir como os objetivos do framework são alcançados.
-Para tanto, nela são gerados dois artefatos: o diagrama conceitual (figura \ref{fig:diag-conceitual}) e o diagrama de classes (figura  \ref{fig:diag-classes}).
-Primeiro, o diagrama conceitual é desenvolvido com o objetivo de elaborar as principais ideias as quais definem o funcionamento do framework.
-Enquanto, o diagrama de classes tem como objetivo evidenciar os aspectos práticos de seu desenvolvimento e planejar os módulos de sua arquitetura.
-
-\subsection{Diagrama Conceitual}
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.6\textwidth]{figures/diagrama-conceitual.pdf}
-	\caption{Diagrama conceitual do framework.}
-	\label{fig:diag-conceitual}
-\end{figure}
-
-O diagrama conceitual define como o framework é estruturado, nele há a fundação do framework em ser um aplicativo modelo, o qual o usuário gera a versão final ao adicionar tarefas concretas.
-Estas tarefas representam as provas de conceito, de modo que, um artefato gerado pelo framework seja capaz de conter mais de uma prova de conceito para avaliação.
-Além disso, outra definição importante do diagrama conceitual é a utilização do padrão de projeto Composite \citep{Gamma1995Design} para permitir a avaliação de etapas das provas de conceito.
-Abaixo, está uma descrição de cada elemento do diagrama conceitual.
-
-\begin{description}
-	\label{descrip:diagrama-conceitual}
-
-	\item[Projeto:] Representa a aplicação a qual pertence as provas de conceito. Além disso, também é o principal objeto do framework, por conter a referência para a raíz das árvores de \textit{Tarefas} e coordenar a execução das avaliações.
 	
-	\item[Tarefa Abstrata:] Representa um procedimento para ser executado pelo framework. Ou seja, representa uma etapa ou prova de conceito integral que está sob avaliação.
-
-	\item[Tarefa Simples:] Representa os containers que recebem o código das provas de conceito.
-
-	\item[Tarefa Composta:] Representa um grupo de provas de conceito ou uma prova de conceito decomposta em etapas.
-
-	\item[Análise:] Representa um conjunto de métricas de avaliação de um procedimento abstrato. Ou seja, todas as tarefas as quais são implementações diferentes de um mesmo procedimento podem compartilhar a mesma análise.
-
-	\item[Métrica:] Representa uma medida quantitativa de algum recurso despendido durante a execução de uma \textit{Tarefa}.
-
-\end{description}
-
-
-\subsection{Diagrama Conceitual Detalhado}
+\section{Diagrama de Classes}
+\label{cap:diagrama_de_classe}
 
 \begin{figure}[!ht]
 	\centering
@@ -409,6 +390,9 @@ Abaixo, está uma descrição de cada elemento do diagrama.
 	\item[SheetsonPersister:] Implementação da camada de persistência a qual utiliza o Google Sheets\footnote{https://www.google.com/sheets/about}.
 \end{description}
 
+\section{Diagrama de Arquitetura}
+\label{cap:diagrama_de_arq}
+
 Como foi anunciado anteriormente, realizar a coleta de métricas em execuções realizadas por voluntários, os quais podem atuar de modo remoto é um problema destacado pelo diagrama.
 Pois, em uma abordagem convencional construiríamos uma \acr{API} com arquitetura REST (do inglês, \emph{representational state transfer}) para receber as métricas e disponibilizá-las para consulta.
 Ademais, também haveria a necessidade de implementar uma camada de autorização na \acr{API} para prover segurança aos dados dos usuários.
@@ -419,15 +403,23 @@ Nela o framework utiliza o Google Sheets como forma de armazenamento e visualiza
 Para tanto, ao invés de desenvolver uma \acr{API}, usamos a própria \acr{API} do Google Sheets, ao custo de requerer que o usuário do framework possua uma conta Google.
 Porém, a \acr{API} do Google Sheets não atende diretamente as necessidades do framework, devido ao fato de exigir um cadastro da aplicação, mas com uso da ferramenta Sheetson\footnote{https://sheetson.com} não há essa limitação.
 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/diagrama-informal.pdf}
+	\caption{Principal fluxo de uso, onde um desenvolver avalia um conjunto de provas de conceitos com o auxílio de voluntários externos ao desenvolvimento.}
+	\label{fig:diagrama-informal}
+\end{figure}
 
-\chapter{Prova de conceito}
+\section{Prova de conceito}
 \label{cap:prova_de_conceito}
+SUBSTITUIR PELA IMPLEMENTAÇÃO
+
 A fim de testar a modelagem proposta, desenvolvemos uma prova de conceito com objetos mock, os quais simulam recursos computacionais.
 De modo que fosse possível avaliar a eficácia da modelagem sem depender de recursos reais, visando manter o foco em avaliar a estrutura do framework.
 A prova de conceito foi implementada usando a linguagem de programação Typescript, sua escolha almeja expressar com clareza todas as classes e relações definidas durante a modelagem, e seu código-fonte pode ser encontrado no apêndice \ref{apx:mock_source}.
 
 
-\section{Simulação de Recursos Computacionais}
+\subsection{Simulação de Recursos Computacionais}
 Como mencionado anteriormente, a prova de conceito possui classes para simular recursos computacionais.
 As quais possuem a finalidade de isolar a prova de conceito de complexidades inerentes a realização de medições reais.
 Logo, o desenvolvimento da prova de conceito pode ser concentrado em explorar o ponto central da modelagem, a árvore de \emph{Tarefas}.
@@ -435,25 +427,25 @@ O bloco de código \ref{lst:mock_memoria} contém a classe criada para simular o
 
 \begin{lstlisting}[label={lst:mock_memoria}, caption={Implementação da classe responsável por simular recursos de memória para a prova de conceito do framework.}, language=TypeScript]
 class Resource {
-    private static _total: number = 500;
+	private static _total: number = 500;
 
-    static alloc(size: number): any {
-        this._total -= size;
-        return {size};
-    }
+	static alloc(size: number): any {
+		this._total -= size;
+		return {size};
+	}
 
-    static free(block: any): void {
-        this._total += block.size;
-    }
+	static free(block: any): void {
+		this._total += block.size;
+	}
 
-    static get total(): number {
-        return this._total;
-    }
+	static get total(): number {
+		return this._total;
+	}
 }
 \end{lstlisting}
 
 
-\section{Árvore de Tarefas}
+\subsection{Árvore de Tarefas}
 
 A árvore de tarefas é definida basicamente por três classes:
 a classe abstrata \emph{Task}, responsável por definir o que uma tarefa faz, ou seja, a sua interface pública.
@@ -464,61 +456,61 @@ Portanto, com o framework em sua completude, as derradeiras classes as quais com
 
 \begin{lstlisting}[label={lst:abstract_task}, caption={Classe abstrata responsável por definir o que todos os membros da árvore de tarefas precisam implementar.}, language=TypeScript]
 abstract class Task {
-    public name: string;
-    public metrics: Set<Metric<any>>;
+	public name: string;
+	public metrics: Set<Metric<any>>;
 
-    constructor(name: string, metrics: Metric<any>[])
-    {
-        this.metrics = new Set(metrics);
-        this.name = name;
-    }
+	constructor(name: string, metrics: Metric<any>[])
+	{
+		this.metrics = new Set(metrics);
+		this.name = name;
+	}
 
-    async run(): Promise<any> {
-        this.preTaskJob();
-        let data = await this.execute();
-        let metrics = {};
-        this.metrics.forEach(element => {
-        metrics[element.name] = element.metric;
-        });
-        this.postTaskJob();
-        return {metrics, data};
-    }
+	async run(): Promise<any> {
+		this.preTaskJob();
+		let data = await this.execute();
+		let metrics = {};
+		this.metrics.forEach(element => {
+		metrics[element.name] = element.metric;
+		});
+		this.postTaskJob();
+		return {metrics, data};
+	}
 
-    preTaskJob(): void {};
-    abstract execute(): Promise<any>;
-    postTaskJob(): void {};
+	preTaskJob(): void {};
+	abstract execute(): Promise<any>;
+	postTaskJob(): void {};
 }
 \end{lstlisting}
 
 \begin{lstlisting}[label={lst:composite_task}, caption={Tarefa composta, define o comportamento de todos os nós não folha da árvore de tarefas.}, language=TypeScript]
 export class CompositeTask extends Task {
-    private tasks: Task[];
+	private tasks: Task[];
 
-    constructor() {
-        super("Composite Task", []);
-        this.tasks = [];
-    }
+	constructor() {
+		super("Composite Task", []);
+		this.tasks = [];
+	}
 
-    addTask(task: Task): void {
-        this.tasks.push(task);
-        task.metrics.forEach(element => {
-            this.metrics.add(element);
-        });
-    }
+	addTask(task: Task): void {
+		this.tasks.push(task);
+		task.metrics.forEach(element => {
+			this.metrics.add(element);
+		});
+	}
 
-    async execute(): Promise<any> {
-        console.log("Executing composite task...");
-        let tasks = {};
-        for (const task of this.tasks) {
-            tasks[task.name] = await task.run();
-        }
-        return tasks;
-    }
+	async execute(): Promise<any> {
+		console.log("Executing composite task...");
+		let tasks = {};
+		for (const task of this.tasks) {
+			tasks[task.name] = await task.run();
+		}
+		return tasks;
+	}
 }
 \end{lstlisting}
 
 
-\section{Executando a Prova de Conceito}
+\subsection{Executando a Prova de Conceito}
 \label{sec:exe_poc}
 A fim de executar a prova de conceito, é necessário criar um arquivo o qual atua como roteiro principal, guiando a execução de outras partes do código.
 Além disso, neste mesmo arquivo, é onde construímos a árvore de tarefas.
@@ -527,72 +519,37 @@ Por fim, também é instanciado um objeto \emph{Project} o qual recebe como par�
 
 \begin{lstlisting}[label={lst:index_ts}, caption={Exemplo de roteiro principal para executar a prova de conceito.}, language=TypeScript]
 class Index {
-    public static async main() {
-        console.log("Hello world!");
-        const task = new CompositeTask();
-        const task2 = new CompositeTask();
-        task.addTask(new MockTask("Task 1"));
-        task.addTask(new MockTask("Task 2"));
-        task2.addTask(new MockTask("Task 3"));
-        task.addTask(task2);
-        const project = new Project(
-            new BasicPersister(),
-            task);
-        project.executeTask();
-    }
+	public static async main() {
+		console.log("Hello world!");
+		const task = new CompositeTask();
+		const task2 = new CompositeTask();
+		task.addTask(new MockTask("Task 1"));
+		task.addTask(new MockTask("Task 2"));
+		task2.addTask(new MockTask("Task 3"));
+		task.addTask(task2);
+		const project = new Project(
+			new BasicPersister(),
+			task);
+		project.executeTask();
+	}
 }
 \end{lstlisting}
 
-\chapter{Estado Atual do Trabalho}
-\label{cap:estado_atual}
 
-Com a definição do framework e seu escopo em mãos, realizamos a pesquisa a qual origina o capítulo \ref{cap:met_pesquisa}.
-Tendo como objetivo, confirmar se há espaço dentro do ecossistema das ferramentas de análise de desempenho e recursos computacionais para o que estamos propondo.
-Como dentre as ferramentas encontradas não havia uma voltada para que um desenvolvedor seja capaz de avaliar provas de conceito de modo customizável em diversos tipos de configurações do lado do cliente, concluímos que há espaço para a proposta do nosso framework.
 
-Após isso, o próximo passo foi a definição dos conceitos do framework.
-Para tanto, elaboramos o diagrama conceitual o qual tem o papel de definir como os objetivos do framework devem ser alcançados e planejar as principais características da arquitetura do projeto.
-Por exemplo, nessa etapa foi onde definimos que o padrão de projeto Composite seria utilizado, com o objetivo de permitir que uma prova de conceito seja dividida em etapas as quais possuem suas próprias métricas.
-Deste modo, fica a critério do usuário se sua abordagem trata as provas de conceito como um bloco único ou como um conjunto de etapas, o que pode permitir diagnósticos de desempenho mais precisos.
+\chapter{Resultados}
+\label{cap:resultados}
 
-O terceiro passo foi voltado para a arquitetura do projeto.
-Onde elaboramos o diagrama de classes e avaliamos os principais aspectos práticos de seu desenvolvimento.
-Dentre eles, o ponto de maior destaque foi como realizar a captura das métricas de execuções realizadas por voluntários.
-Pois, uma abordagem tradicional ao problema envolveria o desenvolvimento de uma \acr{API} para nos permitir receber e disponibilizar a consulta dos dados.
-Entretanto, disponibilizar os dados dos usuários do framework na Internet tornaria necessário também criar uma camada de autorização, expandindo ainda mais o escopo de desenvolvimento.
-A solução encontrada para o problema foi a utilização do programa de planilhas online Google Sheets, onde ao invés da execução do framework enviar as métricas para uma \acr{API} nossa, ela envia para uma planilha do próprio usuário.
-Deste modo, não há a necessidade do desenvolvimento de \acr{API}, pois, utilizamos uma do Google Sheets e o controle de acesso aos dados também fica sob responsabilidade deles.
+Aqui deve ser feito um exemplo e explicado
 
-A última etapa atual está sendo o desenvolvimento de uma prova de conceito do próprio framework.
-Para tanto, optamos por desenvolver utilizando a linguagem de programação TypeScript, a fim de exercitar as classes e relações planejadas durante a criação dos diagramas.
-Nela estamos utilizando objetos mock, a fim de simular comportamentos do ambiente como consumo de memória e tempo gasto na execução de tarefas.
-Além de simular como um usuário do framework aplicaria a estrutura de árvore de tarefas em suas provas de conceito.
-Durante essa etapa também encontramos algumas limitações do conceitos como a inaplicabilidade do conceito de análise como uma avaliação independente de tarefas, pois, seria necessário restringir a liberdade na obtenção de métricas.
+\subsection{Ameaças}
+Aqui são as ameaças ao nosso framework
+	
 
-O desenvolvimento do framework e produção textual estão sendo realizados em paralelo.
-A fundamentação teórica e critérios para comparação do framework com outras ferramentas tem conclusão prevista para outubro de 2023.
-A descrição do framework, capítulo \ref{cap:proposta}, será realizada de forma mais precisa e detalhada até janeiro de 2024, junto com um exemplo de sua utilização.
-A defesa da dissertação está prevista para janeiro de 2024. O cronograma indicado na tabela \ref{tab:cronograma} prevê as etapas abordadas neste trabalho.
-A tabela indica os meses de previsão de conclusão de cada uma das etapas, e os itens em verde significam as fases já realizadas.
+\chapter{Conclusão}
+\label{cap:conclusão}
 
-\begin{table}[!ht]
-	\centering
-	\caption{Cronograma de desenvolvimento da dissertação}
-	\begin{tabular}{l  c  c  c  c  c  c L{1.5cm} R{1.5cm}}
-		\toprule
-		\textbf{Atividade} & \textbf{fev-mar} & \textbf{abr-mai} & \textbf{jun-jul} & \textbf{ago-set} & \textbf{out-nov} & \textbf{dez-jan} \\
-		\midrule
-		Planejamento e Escopo  &  \textcolor{green}X  &    &    &    &    &    \\
-		Fundamentação Teórica  &  \textcolor{green}X  &     &    &  X  &    &    \\
-		Arquitetura  &    &  \textcolor{green}X  &  \textcolor{green}X  &    &    &    \\
-		Prova de Conceito  &    &    &  \textcolor{green}X  &    &    &    \\
-		Desenvolvimento  &    &    &  X  &  X  &  X  &    \\
-		Exemplo de Uso  &    &    &    &    &  X  &  X  \\
-		Defesa  &    &    &    &    &    &  X  \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:cronograma}
-\end{table}
+
 
 \label{bibpage}
 \renewcommand\bibname{Referências}
