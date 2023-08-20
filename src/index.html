@@ -1,15 +1,213 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELC</title>
+    <title>Performance Metrics Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        #container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #loading {
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .task {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f8f8f8;
+        }
+
+        .metrics {
+            margin-top: 10px;
+            padding-left: 20px;
+            border-left: 1px solid #ccc;
+        }
+
+        .subtasks {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>El Chupacabra!</h1>
-    <script type="module" src="./dist/Index.js"></script>
+    <div id="container">
+        <h1>Performance Metrics Application</h1>
+        <button id="run-task">Run Tasks</button>
+        <div id="loading">Running task... Please wait.</div>
+        <div id="result"></div>
+    </div>
+    <script>
+        // Simulated result structure
+        const simulatedResult = {
+            "metrics": {
+                "Resource Usage": 500,
+                "DeltaTime": 233
+            },
+            "data": {
+                "Task 1": {
+                    "metrics": {
+                        "Resource Usage": 400,
+                        "DeltaTime": 77
+                    }
+                },
+                "Task 2": {
+                    "metrics": {
+                        "Resource Usage": 400,
+                        "DeltaTime": 168
+                    }
+                },
+                "Composite Task": {
+                    "metrics": {
+                        "Resource Usage": 500,
+                        "DeltaTime": 233
+                    },
+                    "data": {
+                        "Task 3": {
+                            "metrics": {
+                                "Resource Usage": 400,
+                                "DeltaTime": 233
+                            }
+                        }, "Composite Task": {
+                            "metrics": {
+                                "Resource Usage": 500,
+                                "DeltaTime": 233
+                            },
+                            "data": {
+                                "Task 4": {
+                                    "metrics": {
+                                        "Resource Usage": 400,
+                                        "DeltaTime": 233
+                                    }
+                                },
+                                "Composite Task": {
+                                    "metrics": {
+                                        "Resource Usage": 500,
+                                        "DeltaTime": 233
+                                    },
+                                    "data": {
+                                        "Task 5": {
+                                            "metrics": {
+                                                "Resource Usage": 400,
+                                                "DeltaTime": 233
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        function renderMetrics(metrics) {
+            const metricsContainer = document.createElement("div");
+            metricsContainer.classList.add("metrics");
+            metricsContainer.innerHTML = "<h3>Metrics:</h3>";
+            const metricsList = document.createElement("ul");
+
+            for (const metric in metrics) {
+                const metricItem = document.createElement("li");
+                metricItem.textContent = `${metric}: ${metrics[metric]}`;
+                metricsList.appendChild(metricItem);
+            }
+
+            metricsContainer.appendChild(metricsList);
+            return metricsContainer;
+        }
+
+        function renderTask(taskName, taskData, level) {
+            const taskContainer = document.createElement("div");
+            taskContainer.classList.add("task");
+            taskContainer.style.backgroundColor = `hsl(210, 100%, ${90 - level * 10}%)`;
+            const taskNameElement = document.createElement("h4");
+            taskNameElement.textContent = taskName;
+            taskContainer.appendChild(taskNameElement);
+
+            if (taskData.metrics) {
+                const metricsContainer = renderMetrics(taskData.metrics);
+                taskContainer.appendChild(metricsContainer);
+            }
+
+            if (taskData.data) {
+                const subtasksContainer = document.createElement("div");
+                subtasksContainer.classList.add("subtasks");
+                subtasksContainer.innerHTML = "<h4>Subtasks:</h4>";
+                const subtasksList = document.createElement("ul");
+
+                for (const subtaskName in taskData.data) {
+                    const subtaskItem = document.createElement("li");
+                    subtaskItem.appendChild(renderTask(subtaskName, taskData.data[subtaskName], level + 1));
+                    subtasksList.appendChild(subtaskItem);
+                }
+
+                subtasksContainer.appendChild(subtasksList);
+                taskContainer.appendChild(subtasksContainer);
+            }
+
+            return taskContainer;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const runButton = document.getElementById("run-task");
+            const loadingMessage = document.getElementById("loading");
+            const resultContainer = document.getElementById("result");
+
+            runButton.addEventListener("click", async function () {
+                runButton.disabled = true;
+                loadingMessage.style.display = "block";
+                resultContainer.innerHTML = ""; // Clear previous results
+
+                try {
+                    // Simulate fetching the task result
+                    const result = simulatedResult;
+
+                    const resultElement = renderTask("Root Task", result, 0);
+                    resultContainer.appendChild(resultElement);
+                } catch (error) {
+                    resultContainer.textContent = "An error occurred while rendering the result.";
+                } finally {
+                    runButton.disabled = false;
+                    loadingMessage.style.display = "none";
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

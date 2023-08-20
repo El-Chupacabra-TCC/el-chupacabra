@@ -22,3 +22,8 @@ metric.collect().then((data: any) => {
 }).catch((error: any) => {
     console.error('Error collecting metric:', error);
 });
+
+export function Execute()
+{
+    return {}
+}
