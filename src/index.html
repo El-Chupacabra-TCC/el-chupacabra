@@ -12,6 +12,16 @@
             background-color: #f0f0f0;
         }
 
+        ul {
+            list-style: outside decimal;
+            padding: 0;
+        }
+
+        li {
+            border: 1px solid rgb(16, 2, 97);
+            padding: 5px;
+        }
+
         #container {
             max-width: 800px;
             margin: 0 auto;
@@ -49,6 +59,7 @@
             padding: 10px;
             border-radius: 5px;
             background-color: #f8f8f8;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .metrics {
@@ -61,6 +72,11 @@
             margin-top: 10px;
             padding-left: 20px;
         }
+
+        .subtasks-title {
+            font-weight: bold;
+            margin-top: 5px;
+        }
     </style>
 </head>
 
@@ -71,8 +87,8 @@
         <div id="loading">Running task... Please wait.</div>
         <div id="result"></div>
     </div>
+
     <script>
-        // Simulated result structure
         const simulatedResult = {
             "metrics": {
                 "Resource Usage": 500,
@@ -134,53 +150,63 @@
                 }
             }
         };
-
         function renderMetrics(metrics) {
             const metricsContainer = document.createElement("div");
             metricsContainer.classList.add("metrics");
-            metricsContainer.innerHTML = "<h3>Metrics:</h3>";
-            const metricsList = document.createElement("ul");
+
+            const metricsTitle = document.createElement("h3");
+            metricsTitle.textContent = "Metrics:";
+            metricsContainer.appendChild(metricsTitle);
+
+            const metricsList = document.createElement("div"); // Use a <div> instead of <ul>
 
             for (const metric in metrics) {
-                const metricItem = document.createElement("li");
-                metricItem.textContent = `${metric}: ${metrics[metric]}`;
-                metricsList.appendChild(metricItem);
+                if (metrics.hasOwnProperty(metric)) {
+                    const metricItem = document.createElement("div"); // Use a <div> instead of <li>
+                    metricItem.textContent = `${metric}: ${metrics[metric]}`;
+                    metricItem.classList.add("metric-item"); // Add a class for styling if needed
+                    metricsList.appendChild(metricItem);
+                }
             }
 
             metricsContainer.appendChild(metricsList);
             return metricsContainer;
         }
 
-        function renderTask(taskName, taskData, level) {
-            const taskContainer = document.createElement("div");
-            taskContainer.classList.add("task");
-            taskContainer.style.backgroundColor = `hsl(210, 100%, ${90 - level * 10}%)`;
+
+        function renderTaskTree(taskName, taskData, level) {
+            const taskItem = document.createElement("li");
+            taskItem.classList.add("task");
+            taskItem.style.backgroundColor = `hsl(210, 100%, ${90 - level * 9}%)`;
+
             const taskNameElement = document.createElement("h4");
             taskNameElement.textContent = taskName;
-            taskContainer.appendChild(taskNameElement);
+            taskItem.appendChild(taskNameElement);
 
             if (taskData.metrics) {
                 const metricsContainer = renderMetrics(taskData.metrics);
-                taskContainer.appendChild(metricsContainer);
+                taskItem.appendChild(metricsContainer);
             }
 
             if (taskData.data) {
-                const subtasksContainer = document.createElement("div");
-                subtasksContainer.classList.add("subtasks");
-                subtasksContainer.innerHTML = "<h4>Subtasks:</h4>";
                 const subtasksList = document.createElement("ul");
+                subtasksList.classList.add("subtasks");
 
                 for (const subtaskName in taskData.data) {
-                    const subtaskItem = document.createElement("li");
-                    subtaskItem.appendChild(renderTask(subtaskName, taskData.data[subtaskName], level + 1));
-                    subtasksList.appendChild(subtaskItem);
+                    if (taskData.data.hasOwnProperty(subtaskName)) {
+                        const subtaskItem = renderTaskTree(subtaskName, taskData.data[subtaskName], level + 1);
+                        subtasksList.appendChild(subtaskItem);
+                    }
                 }
 
-                subtasksContainer.appendChild(subtasksList);
-                taskContainer.appendChild(subtasksContainer);
+                taskItem.appendChild(subtasksList);
+
+                const subtasksTitle = document.createElement("p");
+                subtasksTitle.textContent = "Subtasks:";
+                subtasksList.parentNode.insertBefore(subtasksTitle, subtasksList);
             }
 
-            return taskContainer;
+            return taskItem;
         }
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -197,8 +223,9 @@
                     // Simulate fetching the task result
                     const result = simulatedResult;
 
-                    const resultElement = renderTask("Root Task", result, 0);
-                    resultContainer.appendChild(resultElement);
+                    const resultTree = document.createElement("ul");
+                    resultTree.appendChild(renderTaskTree("Root Task", result, 1));
+                    resultContainer.appendChild(resultTree);
                 } catch (error) {
                     resultContainer.textContent = "An error occurred while rendering the result.";
                 } finally {
