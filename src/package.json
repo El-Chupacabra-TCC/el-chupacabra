@@ -9,15 +9,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "big",
-    "data;",
-    "Web;",
-    "data",
-    "visualization;",
+    "big data",
+    "Web",
+    "data visualization",
     "performance",
-    "evaluation;",
-    "resource",
-    "consumption"
+    "resource consumption"
   ],
   "author": "Filipe Shanon, Matheus Moura and Radhanama Messiano",
   "license": "MIT",
