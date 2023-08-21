@@ -9,24 +9,71 @@ export default class MemoryMetric implements IMetric {
      * @inheritdoc
      */
     async collect(): Promise<Record<string, any>> {
-        const memoryConsumption = { consumption: -1, measurementApi: "" }
+        const memoryConsumption = { usedApis: [] as string[], measurements: {} }
+        const measurements = [
+            await this.getNewBrowserApiMemoryData(),
+            this.getOldBrowserApiMemoryData(),
+            this.getNodeMemoryData()
+        ]
 
-        // Checks if measureUserAgentSpecificMemory is available.
-        if (window.crossOriginIsolated && !(performance as any).measureUserAgentSpecificMemory) {
-            memoryConsumption.measurementApi = "measureUserAgentSpecificMemory"
-            memoryConsumption.consumption = await (performance as any).measureUserAgentSpecificMemory()
-        }
+        for (let m of measurements) {
+            if (Object.keys(m).length === 0) {
+                continue
+            }
 
-        else if (performance && (performance as any).memory) {
-            memoryConsumption.measurementApi = "performance.memory"
-            memoryConsumption.consumption = (performance as any).memory
-        }
-
-        else if (process && (process as any).memoryUsage) {
-            memoryConsumption.measurementApi = "process.memoryUsage"
-            memoryConsumption.consumption = process.memoryUsage().rss
+            memoryConsumption.usedApis.push(Object.keys(m)[0])
+            memoryConsumption.measurements = { ...memoryConsumption.measurements, ...m }
         }
 
         return memoryConsumption
+    }
+
+    private async getNewBrowserApiMemoryData(): Promise<Record<string, any>> {
+        try {
+            if (!self.crossOriginIsolated) {
+                Promise.resolve({})
+            }
+
+            return {
+                ["measureUserAgentSpecificMemory"]: {
+                    memory: await (performance as any).measureUserAgentSpecificMemory()
+                }
+            }
+        }
+        catch {
+            return Promise.resolve({})
+        }
+    }
+
+    private getOldBrowserApiMemoryData(): Record<string, any> {
+        try {
+            const memoryInfo = (performance as any).memory;
+            return {
+                ["performance.memory"]: {
+                    usedJSHeapSize: memoryInfo.usedJSHeapSize,
+                    totalJSHeapSize: memoryInfo.totalJSHeapSize,
+                    jsHeapSizeLimit: memoryInfo.jsHeapSizeLimit
+                }
+            }
+        }
+        catch {
+            return {}
+        }
+    }
+
+    private getNodeMemoryData(): Record<string, any> {
+        try {
+            const memoryUsage = process.memoryUsage()
+            return {
+                ["process.memoryUsage"]: {
+                    rss: memoryUsage.rss,
+                    heapTotal: memoryUsage.heapTotal,
+                    heapUsed: memoryUsage.heapUsed
+                }
+            }
+        }
+        catch {
+            return {}
+        }
     }
 }
