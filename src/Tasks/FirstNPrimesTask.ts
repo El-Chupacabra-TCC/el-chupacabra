@@ -1,0 +1,62 @@
+import IMetric from "../Metrics/IMetric.js"
+import BaseTask from "./BaseTask.js"
+
+/**
+ * Calculates the first n prime numbers.
+ * @extends {BaseTask}
+ */
+export default class FirstNPrimesTask extends BaseTask {
+    private howManyToCalculate: number
+
+    /**
+     * Sets how many prime numbers must be calculated.
+     * @param {IMetric[]} metrics - Metrics to be collected from this task.
+     * @param {number} howMany - Amount of prime numbers to be calculates.
+     */
+    constructor(metrics: IMetric[], howMany: number) {
+        super(metrics)
+        this.howManyToCalculate = howMany > 0 ? Math.floor(howMany) : 0
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected async execute(metrics: IMetric[]): Promise<Record<string, any>> {
+        const results: Record<string, any> = { metrics: {}, amountOfPrimes: 0, primes: null }
+        const primes: number[] = []
+
+        for (let i = 0; primes.length < this.howManyToCalculate; i++) {
+            if (this.isPrime(i)) {
+                primes.push(i)
+            }
+        }
+
+        results.primes = primes
+        results.amountOfPrimes = primes.length
+        metrics.forEach(async x => {
+            results.metrics[x.constructor.name] = await x.collect()
+        })
+
+        return results
+    }
+
+    private isPrime(i: number): boolean {
+        i = Math.floor(i)
+
+        if (i <= 3 || i == 7) {
+            return i > 1
+        }
+
+        if (i % 2 == 0 || i % 3 == 0 || i % 7 == 0) {
+            return false
+        }
+
+        for (let j = 5; j < Math.floor((i ** 0.5) + 1); j += 6) {
+            if (i % j == 0 || i % (j + 2) == 0) {
+                return false
+            }
+        }
+
+        return true
+    }
+}
