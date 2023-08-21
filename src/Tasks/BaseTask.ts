@@ -6,23 +6,30 @@ import ITask from "./ITask"
  * @implements {ITask}
  */
 export default abstract class BaseTask implements ITask {
+    protected metrics: IMetric[]
+
+    /**
+     * Base constructor for all Tasks.
+     * @param {IMetric[]} metrics - Metrics to be collected from this task.
+     */
+    constructor(metrics: IMetric[]) {
+        this.metrics = metrics
+    }
 
     /**
      * @inheritdoc
      */
-    async run(metrics: IMetric[]): Promise<Record<string, any>> {
-        const className = this.constructor.name
+    async run(): Promise<Record<string, any>> {
         await this.preTaskJob()
-        const result = await this.execute(metrics)
+        const result = await this.execute(this.metrics)
         await this.postTaskJob()
 
-        return { className: result }
+        return { [this.constructor.name]: result }
     }
 
     /**
      * Executes the task with metric collection.
      * @abstract
-     * @param {IMetric[]} metrics - Metrics to be collected during execution.
      * @returns {Promise<Record<string, any>>} A promise that resolves with a report containing
      * metrics and data about the task execution.
      */
