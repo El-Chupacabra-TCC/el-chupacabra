@@ -30,7 +30,7 @@ export default class CompositeTask extends BaseTask {
         for (const task of this.tasks) {
             let taskResult = await task.run()
             let key = this.childTaskNamesMap[task.constructor.name].shift() || task.constructor.name
-            results[key] = taskResult
+            results[key] = taskResult[task.constructor.name]
         }
 
         results.metrics = {}
