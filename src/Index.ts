@@ -31,7 +31,7 @@ export function Execute()
     const metric = new MemoryMetric() as IMetric
 
 
-    const persister = new JsonFilePersister("./dist/")
+    const persister = new JsonFilePersister("./result.json")
 
     const tasks = new CompositeTask([metric], [new FirstNPrimesTask([metric], 4), new FirstNPrimesTask([metric], 10)]) as ITask
     //const results = tasks.run().then(x => console.log(JSON.stringify(x, null, 4))).catch(e => console.error("ERROR"))
