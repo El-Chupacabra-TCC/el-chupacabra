@@ -1,10 +1,10 @@
-import Ipersister from './IPersister'; // Assuming the path to the Ipersister interface
+import IPersister from './IPersister'; // Assuming the path to the Ipersister interface
 var flatten = require('flat')
 
 /**
  * A class to save data using the Sheetson API.
  */
-export default class SheetsonPersister implements Ipersister {
+export default class SheetsonPersister implements IPersister {
     private apiUrl: string;
     private apiKey: string;
     private spreadsheetId: string;

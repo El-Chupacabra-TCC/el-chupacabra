@@ -2,7 +2,7 @@
  * Represents a contract for persisting data.
  * @interface
  */
-export default interface Ipersister {
+export default interface IPersister {
     /**
      * Saves data to a persistent storage.
      * @param {Record<string, any>} data - The data to be saved.
