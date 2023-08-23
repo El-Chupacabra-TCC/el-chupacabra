@@ -33,7 +33,13 @@ export function Execute()
 
     const persister = new JsonFilePersister("./result.json")
 
-    const tasks = new CompositeTask([metric], [new FirstNPrimesTask([metric], 4), new FirstNPrimesTask([metric], 10)]) as ITask
+    const tasks = new CompositeTask(
+        [metric, new DeltaTimeMetric()],
+        [
+            new FirstNPrimesTask([new DeltaTimeMetric()], 4),
+            new FirstNPrimesTask([new DeltaTimeMetric()], 10)
+        ]
+    ) as ITask
     //const results = tasks.run().then(x => console.log(JSON.stringify(x, null, 4))).catch(e => console.error("ERROR"))
     var project = new Project(executionProfile, tasks, persister)
     return project.executeTask()
