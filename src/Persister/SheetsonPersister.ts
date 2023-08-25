@@ -1,6 +1,6 @@
 import IPersister from './IPersister'; // Assuming the path to the Ipersister interface
-var flatten = require('flat')
-
+import Flat from './Flat';
+  
 /**
  * A class to save data using the Sheetson API.
  */
@@ -26,7 +26,7 @@ export default class SheetsonPersister implements IPersister {
      */
     async save(data: Record<string, any>): Promise<void> {
         try {
-            const flattenData = flatten(data, { delimiter: '.' });
+            const flattenData = Flat.flatten(data, { delimiter: '.' });
             const response = await fetch(this.apiUrl, {
                 method: 'POST',
                 headers: {
