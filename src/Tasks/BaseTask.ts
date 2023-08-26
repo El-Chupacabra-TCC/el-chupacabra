@@ -21,7 +21,12 @@ export default abstract class BaseTask implements ITask {
      */
     async run(): Promise<Record<string, any>> {
         await this.preTaskJob()
-        const result = await this.execute(this.metrics)
+        const result = await this.execute()
+
+        result.metrics = {}
+        this.metrics.forEach(async x => {
+            result.metrics[x.constructor.name] = await x.collect()
+        })
         await this.postTaskJob()
 
         return { [this.constructor.name]: result }
@@ -33,7 +38,7 @@ export default abstract class BaseTask implements ITask {
      * @returns {Promise<Record<string, any>>} A promise that resolves with a report containing
      * metrics and data about the task execution.
      */
-    protected abstract execute(metrics: IMetric[]): Promise<Record<string, any>>
+    protected abstract execute(): Promise<Record<string, any>>
 
     /**
      * Override this method to performs pre-task jobs.

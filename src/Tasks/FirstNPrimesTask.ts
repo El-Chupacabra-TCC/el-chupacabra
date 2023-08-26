@@ -21,8 +21,8 @@ export default class FirstNPrimesTask extends BaseTask {
     /**
      * @inheritdoc
      */
-    protected async execute(metrics: IMetric[]): Promise<Record<string, any>> {
-        const results: Record<string, any> = { metrics: {}, amountOfPrimes: 0, primes: null }
+    protected async execute(): Promise<Record<string, any>> {
+        const results: Record<string, any> = { amountOfPrimes: 0, primes: [] }
         const primes: number[] = []
 
         for (let i = 0; primes.length < this.howManyToCalculate; i++) {
@@ -33,10 +33,6 @@ export default class FirstNPrimesTask extends BaseTask {
 
         results.primes = primes
         results.amountOfPrimes = primes.length
-        metrics.forEach(async x => {
-            results.metrics[x.constructor.name] = await x.collect()
-        })
-
         return results
     }
 

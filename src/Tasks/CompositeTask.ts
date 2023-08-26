@@ -24,7 +24,7 @@ export default class CompositeTask extends BaseTask {
     /**
      * @inheritdoc
      */
-    protected async execute(metrics: IMetric[]): Promise<Record<string, any>> {
+    protected async execute(): Promise<Record<string, any>> {
         const results: Record<string, any> = {}
 
         for (const task of this.tasks) {
@@ -33,10 +33,6 @@ export default class CompositeTask extends BaseTask {
             results[key] = taskResult[task.constructor.name]
         }
 
-        results.metrics = {}
-        metrics.forEach(async x => {
-            results.metrics[x.constructor.name] = await x.collect()
-        })
         return results
     }
 
