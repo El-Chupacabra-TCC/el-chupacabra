@@ -1,81 +1,52 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="UTF-8">
-    <title>Performance Metrics Application</title>
+    <title>Performance Testing Interface</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
         }
 
-        ul {
-            list-style: outside decimal;
-            padding: 0;
-        }
-
-        li {
-            border: 1px solid rgb(16, 2, 97);
-            padding: 5px;
-        }
-
-        #container {
-            max-width: 800px;
-            margin: 0 auto;
+        .container {
+            background-color: #ffffff;
             padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
         }
 
         h1 {
-            text-align: center;
+            color: #333333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #777777;
             margin-bottom: 20px;
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 16px;
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 5px;
+            padding: 10px 20px;
+            border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        #loading {
-            margin: 20px 0;
-            text-align: center;
-            display: none;
-        }
-
-        .task {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #f8f8f8;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .metrics {
-            margin-top: 10px;
-            padding-left: 20px;
-            border-left: 1px solid #ccc;
-        }
-
-        .subtasks {
-            margin-top: 10px;
-            padding-left: 20px;
-        }
-
-        .subtasks-title {
-            font-weight: bold;
-            margin-top: 5px;
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
     <link rel="apple-touch-icon" sizes="180x180" href="public/apple-touch-icon.png">
@@ -83,162 +54,16 @@
     <link rel="icon" type="image/png" sizes="16x16" href="public/favicon-16x16.png">
     <link rel="manifest" href="public/site.webmanifest">
 </head>
-
 <body>
-    <div id="container">
-        <h1>Performance Metrics Application</h1>
-        <button id="run-task">Run Tasks</button>
-        <div id="loading">Running task... Please wait.</div>
-        <div id="result"></div>
+    <div class="container">
+        <h1>Welcome to the Performance Testing Interface</h1>
+        <p>This page allows you to participate in performance testing for a research project.</p>
+        <p>Please make sure you're connected to a Wi-Fi network before proceeding, as there might be downloads involved in the testing.</p>
+        <p>By clicking the button below, you agree to provide information about your device and allow us to collect performance metrics.</p>
+
+        <button id="runButton">Run Performance Tasks</button>
     </div>
 
-    <script>
-        const simulatedResult = {
-            "metrics": {
-                "Resource Usage": 500,
-                "DeltaTime": 233
-            },
-            "data": {
-                "Task 1": {
-                    "metrics": {
-                        "Resource Usage": 400,
-                        "DeltaTime": 77
-                    }
-                },
-                "Task 2": {
-                    "metrics": {
-                        "Resource Usage": 400,
-                        "DeltaTime": 168
-                    }
-                },
-                "Composite Task": {
-                    "metrics": {
-                        "Resource Usage": 500,
-                        "DeltaTime": 233
-                    },
-                    "data": {
-                        "Task 3": {
-                            "metrics": {
-                                "Resource Usage": 400,
-                                "DeltaTime": 233
-                            }
-                        }, "Composite Task": {
-                            "metrics": {
-                                "Resource Usage": 500,
-                                "DeltaTime": 233
-                            },
-                            "data": {
-                                "Task 4": {
-                                    "metrics": {
-                                        "Resource Usage": 400,
-                                        "DeltaTime": 233
-                                    }
-                                },
-                                "Composite Task": {
-                                    "metrics": {
-                                        "Resource Usage": 500,
-                                        "DeltaTime": 233
-                                    },
-                                    "data": {
-                                        "Task 5": {
-                                            "metrics": {
-                                                "Resource Usage": 400,
-                                                "DeltaTime": 233
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        };
-        function renderMetrics(metrics) {
-            const metricsContainer = document.createElement("div");
-            metricsContainer.classList.add("metrics");
-
-            const metricsTitle = document.createElement("h3");
-            metricsTitle.textContent = "Metrics:";
-            metricsContainer.appendChild(metricsTitle);
-
-            const metricsList = document.createElement("div"); // Use a <div> instead of <ul>
-
-            for (const metric in metrics) {
-                if (metrics.hasOwnProperty(metric)) {
-                    const metricItem = document.createElement("div"); // Use a <div> instead of <li>
-                    metricItem.textContent = `${metric}: ${metrics[metric]}`;
-                    metricItem.classList.add("metric-item"); // Add a class for styling if needed
-                    metricsList.appendChild(metricItem);
-                }
-            }
-
-            metricsContainer.appendChild(metricsList);
-            return metricsContainer;
-        }
-
-
-        function renderTaskTree(taskName, taskData, level) {
-            const taskItem = document.createElement("li");
-            taskItem.classList.add("task");
-            taskItem.style.backgroundColor = `hsl(210, 100%, ${90 - level * 9}%)`;
-
-            const taskNameElement = document.createElement("h4");
-            taskNameElement.textContent = taskName;
-            taskItem.appendChild(taskNameElement);
-
-            if (taskData.metrics) {
-                const metricsContainer = renderMetrics(taskData.metrics);
-                taskItem.appendChild(metricsContainer);
-            }
-
-            if (taskData.data) {
-                const subtasksList = document.createElement("ul");
-                subtasksList.classList.add("subtasks");
-
-                for (const subtaskName in taskData.data) {
-                    if (taskData.data.hasOwnProperty(subtaskName)) {
-                        const subtaskItem = renderTaskTree(subtaskName, taskData.data[subtaskName], level + 1);
-                        subtasksList.appendChild(subtaskItem);
-                    }
-                }
-
-                taskItem.appendChild(subtasksList);
-
-                const subtasksTitle = document.createElement("p");
-                subtasksTitle.textContent = "Subtasks:";
-                subtasksList.parentNode.insertBefore(subtasksTitle, subtasksList);
-            }
-
-            return taskItem;
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const runButton = document.getElementById("run-task");
-            const loadingMessage = document.getElementById("loading");
-            const resultContainer = document.getElementById("result");
-
-            runButton.addEventListener("click", async function () {
-                runButton.disabled = true;
-                loadingMessage.style.display = "block";
-                resultContainer.innerHTML = ""; // Clear previous results
-
-                try {
-                    // Simulate fetching the task result
-                    const result = simulatedResult;
-
-                    const resultTree = document.createElement("ul");
-                    resultTree.appendChild(renderTaskTree("Root Task", result, 1));
-                    resultContainer.appendChild(resultTree);
-                } catch (error) {
-                    resultContainer.textContent = "An error occurred while rendering the result.";
-                } finally {
-                    runButton.disabled = false;
-                    loadingMessage.style.display = "none";
-                }
-            });
-        });
-    </script>
+    <script type="module" src="./dist/Index.js"></script>
 </body>
-
 </html>

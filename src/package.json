@@ -22,7 +22,5 @@
     "typescript": "^5.1.6"
   },
   "type": "module",
-  "dependencies": {
-    "flat": "^5.0.2"
-  }
+  "dependencies": {}
 }

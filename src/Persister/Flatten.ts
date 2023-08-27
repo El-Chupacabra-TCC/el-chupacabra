@@ -1,7 +1,7 @@
 /**
  * A utility class for flattening nested objects.
  */
-export default class Flat {
+export default class Flatten {
   /**
    * Checks if an object is a buffer.
    * @param obj - The object to check.
@@ -46,7 +46,7 @@ export default class Flat {
         const value = object[key];
         const isarray = safe && Array.isArray(value);
         const type = Object.prototype.toString.call(value);
-        const isbuffer = Flat.isBuffer(value);
+        const isbuffer = Flatten.isBuffer(value);
         const isobject =
           type === '[object Object]' ||
           type === '[object Array]';

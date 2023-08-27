@@ -35,4 +35,15 @@ export function Execute()
     return project.executeTask()
 }
 
-Execute()
+if (typeof document !== "undefined") {
+    const runButton: HTMLButtonElement | null = document?.getElementById("runButton") as HTMLButtonElement;
+
+    (runButton ?? (() => {
+        throw new Error("Error with the implementation of the button. Check the HTML.");
+    }))?.addEventListener("click", function() {
+        Execute();
+    });
+} else {
+    Execute();
+}
+
