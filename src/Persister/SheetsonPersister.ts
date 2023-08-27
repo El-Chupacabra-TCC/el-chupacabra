@@ -26,7 +26,9 @@ export default class SheetsonPersister implements IPersister {
      */
     async save(data: Record<string, any>): Promise<void> {
         try {
-            const flattenData = Flatten.flatten(data, { delimiter: '.' });
+            const flattenData = Flatten.flatten(data, { delimiter: '.', safe: true });
+            console.log(Object.keys(flattenData).join('\n'));
+            
             const response = await fetch(this.apiUrl, {
                 method: 'POST',
                 headers: {
@@ -34,12 +36,19 @@ export default class SheetsonPersister implements IPersister {
                     'Authorization': `Bearer ${this.apiKey}`,
                     'X-Sheetson-Spreadsheet-Id': this.spreadsheetId
                 },
-                body: JSON.stringify(flattenData)
+                body: JSON.stringify(flattenData, (_, value) => {
+                    if (!Array.isArray(value)) {
+                        return value
+                    }
+
+                    return JSON.stringify(value)
+                })
             });
 
             if (!response.ok) {
                 throw new Error(`Failed to save data: ${response.statusText}`);
             }
+
         } catch (error) {
             if (error instanceof Error) {
                 throw new Error(`Error saving data: ${error.message}`);
