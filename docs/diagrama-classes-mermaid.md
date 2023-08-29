@@ -24,6 +24,7 @@
         ITask "1..*" --* CompositeTask
 
         class ITask {
+            <<Interface>>
             +run() Promise~Record~
         }
 
