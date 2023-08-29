@@ -6,69 +6,81 @@
 
         %% PROJECT LEVEL
 
-        Project *-- "*" Task
-        Project --> ExecutionProfile
+        Project --> ITask
+        Project --> IExecutionProfile
         Project --> IPersister
-        Task --> "*" Metric
 
         class Project {
-            +executeTasks()
-        }
-
-        class ExecutionProfile {
-
+            +executeTask()
         }
 
 
+        %% TASK MODULE
 
-        %% Task family
+        ITask <|-- BaseTask
+        BaseTask --> "*" IMetric
+        BaseTask <|-- CompositeTask
+        BaseTask <|-- FirstNPrimesTask
+        ITask "1..*" --* CompositeTask
 
-        Task <|-- SimpleTask
-        Task <|-- CompositeTask
-        Task "1..*" --* CompositeTask
+        class ITask {
+            +run() Promise~Record~
+        }
 
-        class Task {
+        class BaseTask {
             <<Abstract>>
-            +run()
-            #execute()*
-            #preTaskJob()
-            #postTaskJob()
-        }
-
-        class SimpleTask {
-            #execute()
+            +run() Promise~Record~
+            #execute()* Promise~Record~
+            #preTaskJob() Promise~null~
+            #postTaskJob() Promise~null~
         }
 
         class CompositeTask {
-            #execute()
+            #execute() Promise~Record~
+            -generateChildTaskNamesMap(ITask[]) Record
+        }
+
+        class FirstNPrimesTask {
+            #execute() Promise~Record~
+            -isPrime(int) boolean
         }
 
 
+        %% EXECUTION PROFILE MODULE
 
-        %% Metric family
+        IExecutionProfile <|-- BrowserExecutionProfile
+        IExecutionProfile <|-- NodeExecutionProfile
 
-        Metric <|-- ProcessMemoryMetric
-        Metric <|-- DeltaTimeMetric
-
-        class Metric {
-            %% This should be a generic class where the type `T` will be the 
-            %% primitive type of the metric.
-            <<Abstract>>
-            List~T~ traces
-            +collect()* null
-            #preProcessing() T
-            +get() T
+        class IExecutionProfile {
+            <<Interface>>
+            +collect() Promise~Record~
         }
 
-        class ProcessMemoryMetric {
-            %% Gets the current memory allocated by the process.
-            +collect() null
+        class BrowserExecutionProfile {
+
+        }
+
+        class NodeExecutionProfile {
+
+        }
+
+
+        %% METRICS MODULE
+
+        IMetric <|-- MemoryMetric
+        IMetric <|-- DeltaTimeMetric
+
+        class IMetric {
+            <<Interface>>
+            +collect() Promise~Record~
+        }
+
+        class MemoryMetric {
+
         }
 
         class DeltaTimeMetric {
-            %% Calculates the time between the last two collect method calls.
-            +collect() null
-            #preProcessing() T
+
         }
 
 
@@ -76,14 +88,23 @@
         %% PERSISTENCE MODULE
 
         IPersister <|-- SheetsonPersister
+        IPersister <|-- JsonFilePersister
+        SheetsonPersister --> Flatten
 
         class IPersister {
             <<Interface>>
-
-
+            +save() null
         }
 
         class SheetsonPersister {
+
+        }
+
+        class JsonFilePersister {
+
+        }
+
+        class Flatten {
 
         }
 ```
