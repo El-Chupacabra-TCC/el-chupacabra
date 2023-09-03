@@ -3,25 +3,28 @@ Um framework para testes com voluntários de provas de conceito voltado para apl
 
 ## :owl: Índice
 1. Demo TLDR
-2. Coleta dados usando o Google Sheets
-3. Exemplo de uso
+2. Coleta de Dados via Google Sheets
+3. Exemplo de Uso
 
 ## :japanese_ogre: Demo TLDR
 Como executar em poucos passos a demonstração do framework.
 
 1. Certifique-se de ter instalado em sua máquina o [Node.js](https://nodejs.org/en) e o [npm](https://www.npmjs.com).
+
 2. Dentro do diretório `src`, execute o comando abaixo para instalar as dependências.
+
     ```bash
     npm install
     ```
 3. Ainda dentro de `src`, execute o comando abaixo para executar a demo usando o Node.js.
+
     ```bash
     npm run demo
     ```
 4. Veja a saída da demonstração no arquivo `/src/result.json`.
 
 
-## :rocket: Exemplo usando coleta dados via Google Sheets
+## :rocket: Coleta de Dados via Google Sheets
 
 Uma das principais vantagens de usar o framework El Chupacabra é sua capacidade de realizar a coleta de métricas por meio do Google Sheets com esforço mínimo. Deste modo, a coleta de métricas em diferentes ambientes se torna simples, pois os dados de todas as execuções são centralizado em uma única planilha. Além disso, a análise dos dados também é facilitada, por contar com todo do aparato do próprio Google Sheets.
 
@@ -81,3 +84,14 @@ Para isso usamos o [Sheetson](https://sheetson.com/), o qual é uma API que simp
     ```
 
 4. Veja o resultado da execução em sua planilha no Google Sheets.
+
+
+## :duck: Exemplo de Uso
+
+Neste exemplo, se considere um contribuidor do repositório [FirstNPrimes](https://github.com/El-Chupacabra-TCC/FirstNPrimes). O qual é um projeto de um [site](https://el-chupacabra-tcc.github.io/FirstNPrimes/) que calcula os primeiros `n` números primos dentro do próprio navegador. Ou seja, todo o processamento é no lado do cliente.
+
+O maior desafio do projeto é oferecer o algoritmo mais eficiente possível para o cálculo dos números primos. Pois, quanto mais eficiente for o algoritmo, maior é a quantidade de números primos o site é capaz de oferecer antes de haver lentidão na resposta.
+
+No repositório, dentro da pasta `front/src/PrimeDiscoveryStrategies` podemos encontrar a interface dos objetos de cálculo de números primos (`IPrimeDiscoveryStrategy.ts`) e suas implementações. Logo, o objetivo atual é descobrir qual dessas abordagens é mais eficiente.
+
+Para realizar essa comparação nós podemos usar o framework El Chupacabra :goat:.
