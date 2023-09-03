@@ -16,7 +16,7 @@ export default class SheetsonPersister implements IPersister {
      * @param {string} spreadsheetId - The ID of the Google Sheets spreadsheet.
      */
     constructor(apiUrl: string, apiKey: string, spreadsheetId: string) {
-        this.apiUrl = apiUrl;
+        this.apiUrl = "https://api.sheetson.com/v2/sheets/" + apiUrl;
         this.apiKey = apiKey;
         this.spreadsheetId = spreadsheetId;
     }

@@ -1,7 +1,7 @@
 # El Chupacabra
 Um framework para testes com voluntários de provas de conceito voltado para aplicações web do lado cliente.
 
-## Demo TLDR
+## Demo TLDR;
 Como executar em poucos passos a demonstração do framework.
 
 1. Certifique-se de ter instalado em sua máquina o [Node.js](https://nodejs.org/en) e o [npm](https://www.npmjs.com).
@@ -16,23 +16,43 @@ Como executar em poucos passos a demonstração do framework.
 4. Veja a saída da demonstração no arquivo `/src/result.json`.
 
 
-## Colete dados em uma planilha do Google Sheets
-Para isso usamos o [Sheetson](https://sheetson.com/), o qual é uma API que simplifica a interação com dados do Google Sheets. Ou seja, o meio pelo qual os dados de execução do El Chupacabra são coletados para uma planilha no Google Sheets.
+## Coleta dados usando o Google Sheets
 
-1. Se autentique no site do [Sheetson](https://sheetson.com/) usando uma conta Google e acesse o [console](https://sheetson.com/console).
-2. Crie uma nova planilha no [Google Sheets](https://docs.google.com/spreadsheets).
-3. Compartilhe essa planilha com o e-mail do Sheetson `google@sheetson.com`.
-    ![Compartilhando planilha com o Sheetson](./repo-images/sharing-sheet-with-sheetson.png)
+Uma das principais vantagens de usar o framework El Chupacabra é sua capacidade de realizar a coleta de métricas por meio do Google Sheets com esforço mínimo. Deste modo, a coleta de métricas em diferentes ambientes se torna simples, pois os dados de todas as execuções são centralizado em uma única planilha. Além disso, a análise dos dados também é facilitada, por contar com todo do aparato do próprio Google Sheets.
+
+### Configurando planilha para receber os dados
+
+1. Acesse a planilha: [Exemplo El Chupacabra](https://docs.google.com/spreadsheets).
+
+2. Clique em `Arquivo` do menu superior e selecione a opção `Fazer uma cópia`.
+    ![Abrindo modal de cópia de planilha](./repo-images/arquivo-copia.png)
+
+3. Clique no botão `Fazer uma cópia`.
+    ![Modal de cópia de planilha](./repo-images/modal-copia.png)
+
+> Após a criar a planilha, precisamos obter algumas informações dela para usarmos mais a frente Recomendamos que as guardem em algum editor de texto, como um bloco de notas ou gedit.
+
 4. Obtenha o ID da planilha na barra de endereço do navegador.
     ![Obtendo ID da planilha da barra de endereço do navegador](./repo-images/getting-sheet-id.png)
+
 5. Obtenha o nome da aba da sua planilha onde os dados serão inseridos.
     ![Obtendo nome da aba da planilha](./repo-images/sheet-name.png)
-6. No console do Sheetson, obtenha a sua API Key.
-7. Abra o arquivo `src/Index.ts`, comente a linha:
-    ```ts
-    const persister = new JsonFilePersister("./result.json") as IPersister
-    ```
-    E, descomente as linhas:
+
+### Configurando API de recebimento dos dados
+
+Para isso usamos o [Sheetson](https://sheetson.com/), o qual é uma API que simplifica a interação o Google Sheets.
+
+1. Se autentique no site do Sheetson usando uma conta Google e acesse o [console](https://sheetson.com/console).
+
+2. Compartilhe a planilha criada anteriormente com o e-mail `google@sheetson.com`
+    ![Compartilhando planilha com a API](./repo-images/sharing-sheet-with-sheetson.png)
+
+3. No [console](https://sheetson.com/console), obtenha a sua API Key.
+    ![Compartilhando planilha com a API](./repo-images/getting-api-key.png)
+
+### Configurando a aplicação para enviar os dados para sua planilha
+
+1. Abra o arquivo `src/Index.ts` e vá até o seguinte trecho:
     ```ts
     const persister = new SheetsonPersister(
         "NOME_DA_ABA_DA_SUA_PLANILHA",
@@ -40,26 +60,15 @@ Para isso usamos o [Sheetson](https://sheetson.com/), o qual é uma API que simp
         "ID_DA_PLANILHA"
     ) as IPersister
     ```
-8. Substitua os templates `NOME_DA_ABA_DA_SUA_PLANILHA`, `API_KEY` e `ID_DA_PLANILHA`, pelos respectivos dados que obtivemos anteriormente.
-9. Com tudo isso feito, agora precisamos obter as colunas da nossa planilha. Para isso, execute a aplicação de dentro da pasta `src`:
+
+2. Substitua os templates `NOME_DA_ABA_DA_SUA_PLANILHA`, `API_KEY` e `ID_DA_PLANILHA`, pelos respectivos dados que obtivemos anteriormente.
+
+3. Com tudo isso feito, agora podemos rodar a aplicação. Para isso, execute a aplicação de dentro da pasta `src`:
     ```bash
     npm run dev
     ```
-10. No seu terminal, foram imprimidas as colunas que devem estar presentes na planilha do Google Sheets.
-    ![Colunas presentes na saída da execução do El Chupacabra selecionadas dentro de um terminal](./repo-images/sheet-columns.png)
-11. [Opcional] Este passo guia como inserir as colunas na planilha de um modo mais fácil, mas sinta-se a vontade para inserir-lás na tabela como desejar.
-    1. Copie o nome das colunas no terminal.
-    2. Selecione a célula A1 na planilha e cole `Ctrl + V`.
-        ![Colunas do terminal coladas na planilha do Google Sheets](./repo-images/pasted-columns.png)
-    3. Selecione todas as células com algum valor e copie `Ctrl + C`.
-    4. Selecione novamente a célula A1 e clique com o botão direito.
-    5. Dentro do submenu `Paste special`, selecione `Transposed`.
-        ![Usando a colagem especial, transposta](./repo-images/paste-transposed.png)
-    6. Limpe todas as células preenchidas da linha 2 para baixo.
-        ![Células para limpar: A2, A3, A4...](./repo-images/clean-cells-after.png)
-12. Com o nome de cada coluna preenchida e sua planilha está parecida com essa abaixo:
-    ![Planilha com as colunas preenchidas e nada mais](./repo-images/prepared-sheet.png)
-13. Pronto, agora cada execução do El Chupacabra deve enviar as informações para a sua planilha no Google Sheets.
+
+4. Veja o resultado da execução em sua planilha no Google Sheets.
 
 # Documentação
 
