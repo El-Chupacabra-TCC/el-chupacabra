@@ -1,7 +1,12 @@
-# El Chupacabra
+# :goat: El Chupacabra
 Um framework para testes com voluntários de provas de conceito voltado para aplicações web do lado cliente.
 
-## Demo TLDR;
+## :owl: Índice
+1. Demo TLDR
+2. Coleta dados usando o Google Sheets
+3. Exemplo de uso
+
+## :japanese_ogre: Demo TLDR
 Como executar em poucos passos a demonstração do framework.
 
 1. Certifique-se de ter instalado em sua máquina o [Node.js](https://nodejs.org/en) e o [npm](https://www.npmjs.com).
@@ -16,7 +21,7 @@ Como executar em poucos passos a demonstração do framework.
 4. Veja a saída da demonstração no arquivo `/src/result.json`.
 
 
-## Coleta dados usando o Google Sheets
+## :rocket: Exemplo usando coleta dados via Google Sheets
 
 Uma das principais vantagens de usar o framework El Chupacabra é sua capacidade de realizar a coleta de métricas por meio do Google Sheets com esforço mínimo. Deste modo, a coleta de métricas em diferentes ambientes se torna simples, pois os dados de todas as execuções são centralizado em uma única planilha. Além disso, a análise dos dados também é facilitada, por contar com todo do aparato do próprio Google Sheets.
 
@@ -69,36 +74,3 @@ Para isso usamos o [Sheetson](https://sheetson.com/), o qual é uma API que simp
     ```
 
 4. Veja o resultado da execução em sua planilha no Google Sheets.
-
-# Documentação
-
-## Diagramas
-Os diagramas em `/docs` foram escritos usando [Mermaid syntax](https://mermaid.js.org/) os quais podem ser 
-visualizados no vscode com o uso da extensão [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid), além disso, para syntax highlighting a extensão 
-[Mermaid Markdown Syntax Highlighting](https://marketplace.visualstudio.com/items?itemName=bpruitt-goddard.mermaid-markdown-syntax-highlighting) também é necessária.
-
-
-## Trabalho com LaTeX
-Para conseguir trabalhar com LaTeX no vscode é necessário instalar a extensão [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) e configurar um compilador.
-
-### Configurando LaTeX localmente usando Docker
-1. Instale o Docker e configure seu usuário como membro do grupo `docker` para que não seja necessário utilizar sudo.
-2. Obtenha a imagem do LaTeX - obs: ela possui mais de 2GB de tamanho.
-```bash
-docker pull tianon/latex
-```
-3. Configure a extensão `LaTeX Workshop` para usar a imagem Docker.
-    - Abra a `Command Pallet`(Ctrl + Shift + p) do vscode e busque por `Open Settings (JSON)`.
-    - Adicione as seguintes configurações ao final do arquivo:
-    ```json
-    "latex-workshop.view.pdf.viewer": "tab",
-    "latex-workshop.docker.enabled": true,
-    "latex-workshop.latex.outDir": "./out",
-    "latex-workshop.synctex.afterBuild.enabled": true,
-    "latex-workshop.docker.image.latex": "tianon/latex",
-    ```
-
-## Compilando Projeto Mock
-```bash
-tsc -p ./tsconfig.json
-```
