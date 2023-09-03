@@ -9,10 +9,9 @@ Como executar em poucos passos a demonstração do framework.
     ```bash
     npm install
     ```
-3. Ainda dentro de `src`, execute o comando abaixo para executar o compilador do typescript e
-executar a aplicação no seu terminal usando o Node.js.
+3. Ainda dentro de `src`, execute o comando abaixo para executar a demo usando o Node.js.
     ```bash
-    npm run dev
+    npm run demo
     ```
 4. Veja a saída da demonstração no arquivo `/src/result.json`.
 

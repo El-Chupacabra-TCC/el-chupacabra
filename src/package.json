@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "npx tsc && node dist/Index.js",
     "compiler": "npx tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "demo": "npx tsc && node dist/Demo.js"
   },
   "keywords": [
     "big data",
