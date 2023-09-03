@@ -2,11 +2,11 @@
 Um framework para testes com voluntários de provas de conceito voltado para aplicações web do lado cliente.
 
 ## :owl: Índice
-1. Demo TLDR
+1. Demo TL;DR
 2. Coleta de Dados via Google Sheets
 3. Exemplo de Uso
 
-## :japanese_ogre: Demo TLDR
+## :japanese_ogre: Demo TL;DR
 Como executar em poucos passos a demonstração do framework.
 
 1. Certifique-se de ter instalado em sua máquina o [Node.js](https://nodejs.org/en) e o [npm](https://www.npmjs.com).
@@ -26,7 +26,7 @@ Como executar em poucos passos a demonstração do framework.
 
 ## :rocket: Coleta de Dados via Google Sheets
 
-Uma das principais vantagens de usar o framework El Chupacabra é sua capacidade de realizar a coleta de métricas por meio do Google Sheets com esforço mínimo. Deste modo, a coleta de métricas em diferentes ambientes se torna simples, pois os dados de todas as execuções são centralizado em uma única planilha. Além disso, a análise dos dados também é facilitada, por contar com todo do aparato do próprio Google Sheets.
+Uma das principais vantagens de usar o framework El Chupacabra é sua capacidade de realizar a coleta de métricas por meio do Google Sheets com esforço mínimo. Deste modo, a coleta de métricas em diferentes ambientes se torna simples, pois os dados de todas as execuções são centralizados em uma única planilha. Além disso, a análise dos dados também é facilitada, por contar com todo o aparato do próprio Google Sheets.
 
 ### Configurando planilha para receber os dados
 
@@ -41,7 +41,7 @@ Uma das principais vantagens de usar o framework El Chupacabra é sua capacidade
 
     ![Modal de cópia de planilha](./repo-images/modal-copia.png)
 
-> Após a criar a planilha, precisamos obter algumas informações dela para usarmos mais a frente Recomendamos que as guardem em algum editor de texto, como um bloco de notas ou gedit.
+> Após criar a planilha, precisamos obter algumas informações dela para usarmos mais a frente Recomendamos que as guarde em algum editor de texto, como um bloco de notas ou gedit.
 
 4. Obtenha o ID da planilha na barra de endereço do navegador.
 
@@ -53,7 +53,7 @@ Uma das principais vantagens de usar o framework El Chupacabra é sua capacidade
 
 ### Configurando API de recebimento dos dados
 
-Para isso usamos o [Sheetson](https://sheetson.com/), o qual é uma API que simplifica a interação o Google Sheets.
+Para isso usamos o [Sheetson](https://sheetson.com/), o qual é uma API que simplifica a interação com o Google Sheets.
 
 1. Se autentique no site do Sheetson usando uma conta Google e acesse o [console](https://sheetson.com/console).
 
@@ -90,7 +90,7 @@ Para isso usamos o [Sheetson](https://sheetson.com/), o qual é uma API que simp
 
 Neste exemplo, se considere um contribuidor do repositório [FirstNPrimes](https://github.com/El-Chupacabra-TCC/FirstNPrimes). O qual é um projeto de um [site](https://el-chupacabra-tcc.github.io/FirstNPrimes/) que calcula os primeiros `n` números primos dentro do próprio navegador. Ou seja, todo o processamento é no lado do cliente.
 
-O maior desafio do projeto é oferecer o algoritmo mais eficiente possível para o cálculo dos números primos. Pois, quanto mais eficiente for o algoritmo, maior é a quantidade de números primos o site é capaz de oferecer antes de haver lentidão na resposta.
+O maior desafio do projeto é oferecer o algoritmo mais eficiente possível para o cálculo dos números primos. Pois, quanto mais eficiente for o algoritmo, maior é a quantidade de números primos que o site é capaz de oferecer antes de haver lentidão na resposta.
 
 No repositório, dentro da pasta `front/src/PrimeDiscoveryStrategies` podemos encontrar a interface dos objetos de cálculo de números primos (`IPrimeDiscoveryStrategy.ts`) e suas implementações. Logo, o objetivo atual é descobrir qual dessas abordagens é mais eficiente.
 
