@@ -1,4 +1,4 @@
-# :goat: El Chupacabra
+# El Chupacabra :goat:
 Um framework para testes com voluntários de provas de conceito voltado para aplicações web do lado cliente.
 
 ## :owl: Índice
@@ -30,17 +30,22 @@ Uma das principais vantagens de usar o framework El Chupacabra é sua capacidade
 1. Acesse a planilha: [Exemplo El Chupacabra](https://docs.google.com/spreadsheets).
 
 2. Clique em `Arquivo` do menu superior e selecione a opção `Fazer uma cópia`.
+
     ![Abrindo modal de cópia de planilha](./repo-images/arquivo-copia.png)
 
 3. Clique no botão `Fazer uma cópia`.
+
+
     ![Modal de cópia de planilha](./repo-images/modal-copia.png)
 
 > Após a criar a planilha, precisamos obter algumas informações dela para usarmos mais a frente Recomendamos que as guardem em algum editor de texto, como um bloco de notas ou gedit.
 
 4. Obtenha o ID da planilha na barra de endereço do navegador.
+
     ![Obtendo ID da planilha da barra de endereço do navegador](./repo-images/getting-sheet-id.png)
 
 5. Obtenha o nome da aba da sua planilha onde os dados serão inseridos.
+
     ![Obtendo nome da aba da planilha](./repo-images/sheet-name.png)
 
 ### Configurando API de recebimento dos dados
@@ -50,9 +55,11 @@ Para isso usamos o [Sheetson](https://sheetson.com/), o qual é uma API que simp
 1. Se autentique no site do Sheetson usando uma conta Google e acesse o [console](https://sheetson.com/console).
 
 2. Compartilhe a planilha criada anteriormente com o e-mail `google@sheetson.com`
+
     ![Compartilhando planilha com a API](./repo-images/sharing-sheet-with-sheetson.png)
 
 3. No [console](https://sheetson.com/console), obtenha a sua API Key.
+
     ![Compartilhando planilha com a API](./repo-images/getting-api-key.png)
 
 ### Configurando a aplicação para enviar os dados para sua planilha
