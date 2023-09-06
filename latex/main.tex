@@ -135,7 +135,7 @@ Por fim, os capítulos \ref{cap:prova_de_conceito} e \ref{cap:estado_atual} apre
 
 \chapter{Fundamentação teórica}
 \label{cap:fundamentacao_teorica}
-Aqui vai um texto introduzindo
+Aqui vai um texto introduzindo a fundamentação teórica
 
 	\section{Evolução da web e a necessidade de performance}
 	\label{cap:medicao-client-side}
@@ -149,7 +149,11 @@ Aqui vai um texto introduzindo
 	\label{cap:typescript}
 	Inserir texto aqui
 
-	\section{SOLID}
+	\section{SOLID - Principio do Open/closed}
+	\label{cap:typescript}
+	Inserir texto aqui
+
+	\section{Padrão de software COmposite}
 	\label{cap:typescript}
 	Inserir texto aqui
 
@@ -402,30 +406,49 @@ Abaixo, está uma descrição de cada elemento do diagrama.
 
 A ferramenta foi implementada utilizando uma arquitetura modular, e seguindo fortemente o conceito do aberto/fechado (open/closed), trazido pelo SOLID (citar fundamentação teórica). Dessa forma, todas as relações entre as classes e módulos se dão através de interfaces, abstraindo o funcionamento interno de cada elemento. Isso contribui significativamente para a manutenabilidade do código, pois diminui as chances de problemas de compatibilidade entre as implementações caso alguma premissa seja alterada.
 
-Inicialmente, a ferramenta se estrutura em quatro módulos principais: Módulo de Perfil de Execução (ExecutionProfile), o módulo de Métricas (Metrics), o módulo de Persistência (Persister) e o módulo de Tarefas (Tasks). Cada um deles possui sua responsabilidade, como consta no diagrama a seguir (substituir o diagrama).
+Inicialmente, a ferramenta se estrutura em quatro módulos principais: Módulo de Perfil de Execução (ExecutionProfile), o módulo de Métricas (Metrics), o módulo de Persistência (Persister) e o módulo de Tarefas (Tasks). Cada um deles possui sua responsabilidade, como serão descritas nas próximas secções.
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.6\textwidth]{figures/diagrama-informal.pdf}
-	\caption{Principal fluxo de uso, onde um desenvolver avalia um conjunto de provas de conceitos com o auxílio de voluntários externos ao desenvolvimento.}
-	\label{fig:diagrama-informal}
+	\includegraphics[width=0.6\textwidth]{figures/diagramaarquiteturaelchupacabra.pdf}
+	\caption{Diagrama representando os relacionamentos entre os módulos internos da aplicação.}
+	\label{fig:diagrama-arquitetura}
 \end{figure}
-
-\section{Implementação}
 
 \subsection{Módulo de Perfil de Execução (ExecutionProfile)}
 
-Inserir texto
+A função principal desse módulo é permitir que o usuário consiga coletar informações a respeito do ambiente no qual estão sendo executadas as tarefas. Dessa forma, é possível não só diferenciar os voluntários após a coleta, mas também analisar os ambientes nos quais as tarefas foram executadas. Esse módulo consiste basicamente de uma interface, a IExecutionProfile, e de suas implementações concretas, que representam os tipos de ambientes nos quais as tarefas podem ser executadas. 
+
+{{INSERIR EXEMPLO DE IMPLEMENTAÇÃO DA INTERFACE}}.
+
+Essa interface contém os métodos collect(), que é o método que efetivamente coleta as informações do ambiente, e o método getVisitorId(), que provê um identificador único ao voluntário na execução para posterior análise. Ambos podem ser sobrescritos na implementação concreta de cada perfil, de acordo com a necessidade de cada ambiente.
+
+Supondo uma execução de tarefas em um navegador, deve implementada uma classe chamada BrowserExecutionProfile, que conteria as implementações concretas dos métodos para realizar a coleta dos dados do ambiente do navegador.
+
+{{INSERIR EXEMPLO DE IMPLEMENTAÇÃO DA CLASSE DO BROWSER}}.
+
+\subsection{Módulo de Tarefas (Tasks)}
+
+Esse módulo permite ao usuário implementar tarefas customizadas, sejam elas tarefas simples ou compostas (utilizando o padrão Composite), e também permite a realização de processamentos pré e pós tarefa. Essas tarefas posteriormente são executadas pelo módulo principal de Project.
+Assim como o anterior, consiste de uma interface genérica (nesse caso a ITask) e suas implementações concretas. 
+
+{{INSERIR EXEMPLO DE IMPLEMENTAÇÃO DA INTERFACE}}.
+
+A interface ITask contém três métodos principais, que permitem ao usuário criar sua tarefa customizada. O primeiro é o método principal run(), no qual é inserido a chamada para a execução dos jobs e das métricas. Após isso, também são declarados os métodos preTaskJob e postTaskJob, os quais respectivamente representam as execuções que devem rodar antes e depois da tarefa.
+
+A tarefa aqui pode ser desde a transferência de um arquivo, até a execução de uma consulta em um banco de dados. Respeitando a interface principal, podem ser inseritos n tipos de tarefas diferentes, de acordo com a necessidade do usuário.
+
+Quando houver a demanda de uma tarefa composta por mais de uma tarefa, a implementação se dá utilizando o padrão Composite (citar fundamentação teórica), e a tarefa passa a conter uma lista de tarefas associadas. Assim, quando o método run() é chamado na tarefa mãe, é feita uma iteração nas tarefas associadas para a execução em cadeia de todas as tarefas. 
+
+{{EXEMPLO DE IMPLEMENTAÇÃO DE TAREFA COMPOSTA}}
 
 \subsection{Módulo de Métricas (Metrics)}
 
-Inserir texto
+Esse módulo, assim como os anteriores, consiste de uma interface genérica (nesse caso a interface IMetric) e suas implementações. Abaixo segue o código base da interface: {inserir código da interface}.
+
+Esse módulo contém as implementações das métricas que compõem as tarefas a serem executadas pelos voluntários.
 
 \subsection{Módulo de Persistência (Persister)}
-
-Inserir texto
-
-\subsection{Módulo de Tarefas (Tasks)}
 
 Inserir texto
 
