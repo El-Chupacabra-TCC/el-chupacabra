@@ -25,5 +25,7 @@
     "typescript": "^5.1.6"
   },
   "type": "module",
-  "dependencies": {}
+  "dependencies": {
+    "acorn": "^8.10.0"
+  }
 }

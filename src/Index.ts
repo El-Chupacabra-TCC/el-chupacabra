@@ -23,8 +23,8 @@ export function Execute()
     const tasks = new CompositeTask(
         [new MemoryMetric(), new DeltaTimeMetric()],
         [
-            new FirstNPrimesTask([new DeltaTimeMetric()], 4),
-            new FirstNPrimesTask([new DeltaTimeMetric()], 10)
+            new FirstNPrimesTask(4),
+            new FirstNPrimesTask(10)
         ]
     ) as ITask
     var project = new Project(executionProfile, tasks, persister)
