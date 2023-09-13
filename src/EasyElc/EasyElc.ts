@@ -40,31 +40,10 @@ export default class EasyElc {
         if (profilingIndex == -1) {
             throw new Error(`There is no active profiling named: ${uniqueName}.`);
         }
-
         this._profilerCallStack.splice(profilingIndex, 1);
 
         let childs = this._profilingTree.childs;
-        // for (const profilingName of this._profilerCallStack) {
-        //     if (uniqueName in childs) {
-        //         break;
-        //     }
-        //     childs = childs[profilingName].childs;
-        // }
-
-        // while (true) {
-        //     if (uniqueName in childs) {
-        //         break;
-        //     }
-
-        //     for (const node of childs) {
-
-        //     }
-        // }
-
         const node = this._findNodeByName(this._profilingTree, uniqueName) ?? childs[uniqueName];
-        // console.log(childs);
-        
-        
         node.metrics = await this._resolveMetrics(node.metrics);
     }
 
