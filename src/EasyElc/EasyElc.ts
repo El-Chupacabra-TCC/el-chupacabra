@@ -14,7 +14,8 @@ export default class EasyElc {
         this._persister = persister;
     }
 
-    startProfiling(uniqueName: string, metrics: IMetric[]): void {
+    startProfiling(uniqueName: string, metrics: IMetric[]): Record<string, any> {
+        // Retornar objeto com função terminate. Ao invés, de passar token pro terminate.
         if (uniqueName == "metrics" || uniqueName == "childs") {
             throw new Error(`The name \"${uniqueName}\" is reserved. Please, choose other name.`);
         }
@@ -31,9 +32,12 @@ export default class EasyElc {
 
         node[uniqueName] = { metrics: metrics, childs: {} };
         this._profilerCallStack.push(uniqueName);
+        const profilingHandler = { finish: async () => await this.terminateProfiling(uniqueName) };
+        return profilingHandler;
     }
 
     async terminateProfiling(uniqueName: string): Promise<void> {
+        // Remover o asincronismo
         const profilingIndex = this._profilerCallStack.findIndex(
             profilingName => profilingName == uniqueName);
 
