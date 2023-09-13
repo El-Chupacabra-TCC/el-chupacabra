@@ -1,18 +1,15 @@
 import IMetric from "./IMetric";
 
+/**
+ * Measures the network consumption.
+ * @implements {IMetric}
+ */
 export default class NetworkMetric  implements IMetric {
   private chunkMetrics: { chunkVelocity: number, time: number, size: number }[] = [];
   private totalSize: number = 0;
 
   /**
-   * Creates a NetworkMetric instance.
-   */
-  constructor() {
-  }
-
-  /**
-   * Collects network metrics including maximum, minimum, and average velocities.
-   * @returns {Promise<Record<string, any>>} A record containing the collected metric data.
+   * @inheritdoc
    */
   async collect(): Promise<Record<string, any>> {
     try {
@@ -29,7 +26,8 @@ export default class NetworkMetric  implements IMetric {
         maxVelocity,
         minVelocity,
         averageVelocity,
-        chunkMetrics: this.chunkMetrics
+        totalSize: this.totalSize,
+        chunkMetrics: this.chunkMetrics.join(';')
       };
     } catch (error) {
       console.error("Error collecting network metric:", error);

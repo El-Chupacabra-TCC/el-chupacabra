@@ -2,6 +2,7 @@
 !**/latex/figures/*.pdf
 node_modules/
 dist/
+test_scripts/
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
