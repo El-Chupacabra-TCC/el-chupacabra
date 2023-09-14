@@ -3,6 +3,8 @@ import type IMetric from "../Metrics/IMetric";
 import type IPersister from "../Persister/IPersister";
 import Profiling from "./Profiling.js";
 
+type _persistenceCallback = (profilingTree: Profiling | null) => void
+
 
 /**
  * El Chupacabra simplified interface.
@@ -12,6 +14,7 @@ export default class EasyElc {
     protected _persister: IPersister;
     private _profilingsTree: Profiling | null;
     private _activeProfilingsStack: Profiling[];
+    private _persistenceCallbacks: _persistenceCallback[];
 
 
     /**
@@ -24,6 +27,7 @@ export default class EasyElc {
         this._persister = persister;
         this._activeProfilingsStack = [];
         this._profilingsTree = null;
+        this._persistenceCallbacks = [];
     }
 
     /**
@@ -51,6 +55,10 @@ export default class EasyElc {
         
         this._activeProfilingsStack.push(newProfiling);
         return { finish: async () => await this._terminateProfiling(newProfiling) };
+    }
+
+    registerPersistenceCallback(callback: _persistenceCallback): void {
+        this._persistenceCallbacks.push(callback);
     }
 
     /**
@@ -81,7 +89,32 @@ export default class EasyElc {
                 console.error(err);
                 console.log("There was an error while collecting a metric.");
                 aProfiling.metricsResults.push({ error: err})
+            })
+            .finally(() => {
+                if (this._activeProfilingsStack.length === 0) {
+                    this._saveResults().then(result => {
+                        for (const callback of this._persistenceCallbacks) {
+                            callback(result);
+                        }
+                    });
+                }
             });
+    }
+
+    private async _saveResults(): Promise<Profiling | null> {
+        if (this._activeProfilingsStack.length !== 0) {
+            throw Error(
+                `These profilings need to be stoped before saving the results: ${this._activeProfilingsStack.map(prof => prof.uniqueName)}`)
+        }
+
+        const profilingsData = {
+            profile: await this._executionProfile.collect(),
+            taskResult: this._profilingsTree
+        }
+        await this._persister.save(profilingsData);
+
+        this._profilingsTree = null;
+        return profilingsData.taskResult;
     }
 
     /**
