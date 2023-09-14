@@ -8,6 +8,13 @@ export default class MemoryMetric implements IMetric {
     /**
      * @inheritdoc
      */
+    start(): void {
+        return
+    }
+
+    /**
+     * @inheritdoc
+     */
     async collect(): Promise<Record<string, any>> {
         const memoryConsumption = { usedApis: [] as string[], measurements: {} }
         const measurements = [

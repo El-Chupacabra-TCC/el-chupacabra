@@ -44,6 +44,7 @@ export default class EasyElc {
         }
         else {
             const parentNode = this._getNewestActiveProfiling() ?? this._profilingsTree;
+
             if (uniqueName in parentNode.childs) {
                 const numberOfAppearences = Object.keys(parentNode.childs).filter(k => k.match(new RegExp(`^${uniqueName}(\$|_[0-9]{1,}\$`))).length
                 parentNode.childs[`${uniqueName}_${numberOfAppearences}`] = newProfiling;
@@ -54,6 +55,7 @@ export default class EasyElc {
         }
         
         this._activeProfilingsStack.push(newProfiling);
+        metrics.forEach(x => x.start());
         return { finish: async () => await this._terminateProfiling(newProfiling) };
     }
 

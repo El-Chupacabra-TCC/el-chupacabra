@@ -5,9 +5,12 @@ import IMetric from "./IMetric";
  * @implements {IMetric}
  */
 export default class DeltaTimeMetric implements IMetric {
-    private startTime: number
+    private startTime: number = Date.now()
 
-    constructor() {
+    /**
+     * @inheritdoc
+     */
+    start(): void {
         this.startTime = Date.now()
     }
 
