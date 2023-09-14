@@ -10,7 +10,7 @@ import Profiling from "./Profiling.js";
 export default class EasyElc {
     protected _executionProfile: IExecutionProfile;
     protected _persister: IPersister;
-    private _profilingsRoot: Profiling | null;
+    private _profilingsTree: Profiling | null;
     private _activeProfilingsStack: Profiling[];
 
 
@@ -23,7 +23,7 @@ export default class EasyElc {
         this._executionProfile = executionProfile;
         this._persister = persister;
         this._activeProfilingsStack = [];
-        this._profilingsRoot = null;
+        this._profilingsTree = null;
     }
 
     /**
@@ -35,11 +35,11 @@ export default class EasyElc {
     startProfiling(uniqueName: string, metrics: IMetric[]): Record<string, any> {
         const newProfiling = new Profiling(uniqueName, metrics);
 
-        if (this._profilingsRoot === null) {
-            this._profilingsRoot = newProfiling;
+        if (this._profilingsTree === null) {
+            this._profilingsTree = newProfiling;
         }
         else {
-            const parentNode = this._getNewestActiveProfiling() ?? this._profilingsRoot;
+            const parentNode = this._getNewestActiveProfiling() ?? this._profilingsTree;
             if (uniqueName in parentNode.childs) {
                 const numberOfAppearences = Object.keys(parentNode.childs).filter(k => k.match(new RegExp(`^${uniqueName}(\$|_[0-9]{1,}\$`))).length
                 parentNode.childs[`${uniqueName}_${numberOfAppearences}`] = newProfiling;
