@@ -55,6 +55,7 @@ export default class EasyElc {
         resolveMetrics(aProfiling.runningMetrics)
             .then(results => {
                 aProfiling.metricsResults = results
+                aProfiling.runningMetrics = []
             })
             .catch(err => {
                 console.error(err);
