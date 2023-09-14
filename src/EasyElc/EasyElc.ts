@@ -18,7 +18,7 @@ export default class EasyElc {
 
 
     /**
-     * Create an instance of EasyElc.
+     * Creates an instance of EasyElc.
      * @param {IExecutionProfile} executionProfile - The execution profile.
      * @param {IPersister} persister - The persister.
      */
@@ -31,7 +31,7 @@ export default class EasyElc {
     }
 
     /**
-     * Start profiling a specific operation.
+     * Starts profiling using El Chupacabra.
      * @param {string} uniqueName - A unique name for the profiling operation.
      * @param {IMetric[]} metrics - An array of metrics to collect during profiling.
      * @returns {Object} An object with a 'finish' function to terminate the profiling.
@@ -57,15 +57,14 @@ export default class EasyElc {
         return { finish: async () => await this._terminateProfiling(newProfiling) };
     }
 
+    /**
+     * Registers a function that will be called after the persistence being successfully executed.
+     * @param {_persistenceCallback} callback - It receives the profiling tree and should return void.
+     */
     registerPersistenceCallback(callback: _persistenceCallback): void {
         this._persistenceCallbacks.push(callback);
     }
 
-    /**
-     * Terminate a profiling operation.
-     * @param {Profiling} aProfiling - The profiling operation to terminate.
-     * @private
-     */
     private _terminateProfiling(aProfiling: Profiling): void {
         const index = this._activeProfilingsStack.indexOf(aProfiling);
         this._activeProfilingsStack.splice(index, 1);
@@ -117,11 +116,6 @@ export default class EasyElc {
         return profilingsData.taskResult;
     }
 
-    /**
-     * Get the newest active profiling operation.
-     * @returns {Profiling | null} The newest active profiling operation or null if none are active.
-     * @private
-     */
     private _getNewestActiveProfiling(): Profiling | null {
         if (this._activeProfilingsStack.length === 0) {
             return null;
