@@ -3,13 +3,22 @@ import type IMetric from "../Metrics/IMetric";
 import type IPersister from "../Persister/IPersister";
 import Profiling from "./Profiling.js";
 
- 
+
+/**
+ * El Chupacabra simplified interface.
+ */
 export default class EasyElc {
     protected _executionProfile: IExecutionProfile;
     protected _persister: IPersister;
     private _profilingsRoot: Profiling | null;
     private _activeProfilingsStack: Profiling[];
 
+
+    /**
+     * Create an instance of EasyElc.
+     * @param {IExecutionProfile} executionProfile - The execution profile.
+     * @param {IPersister} persister - The persister.
+     */
     constructor(executionProfile: IExecutionProfile, persister: IPersister) {
         this._executionProfile = executionProfile;
         this._persister = persister;
@@ -17,6 +26,12 @@ export default class EasyElc {
         this._profilingsRoot = null;
     }
 
+    /**
+     * Start profiling a specific operation.
+     * @param {string} uniqueName - A unique name for the profiling operation.
+     * @param {IMetric[]} metrics - An array of metrics to collect during profiling.
+     * @returns {Object} An object with a 'finish' function to terminate the profiling.
+     */
     startProfiling(uniqueName: string, metrics: IMetric[]): Record<string, any> {
         const newProfiling = new Profiling(uniqueName, metrics);
 
@@ -38,6 +53,11 @@ export default class EasyElc {
         return { finish: async () => await this._terminateProfiling(newProfiling) };
     }
 
+    /**
+     * Terminate a profiling operation.
+     * @param {Profiling} aProfiling - The profiling operation to terminate.
+     * @private
+     */
     private _terminateProfiling(aProfiling: Profiling): void {
         const index = this._activeProfilingsStack.indexOf(aProfiling);
         this._activeProfilingsStack.splice(index, 1);
@@ -64,6 +84,11 @@ export default class EasyElc {
             });
     }
 
+    /**
+     * Get the newest active profiling operation.
+     * @returns {Profiling | null} The newest active profiling operation or null if none are active.
+     * @private
+     */
     private _getNewestActiveProfiling(): Profiling | null {
         if (this._activeProfilingsStack.length === 0) {
             return null;
