@@ -1,94 +1,73 @@
 import type IExecutionProfile from "../ExecutionProfile/IExecutionProfile";
 import type IMetric from "../Metrics/IMetric";
 import type IPersister from "../Persister/IPersister";
+import Profiling from "./Profiling.js";
 
  
 export default class EasyElc {
     protected _executionProfile: IExecutionProfile;
     protected _persister: IPersister;
-    private _profilerCallStack: string[] = [];
-    private _profilingTree: Record<string, any> = { childs: {} };
+    private _profilingsRoot: Profiling | null;
+    private _activeProfilingsStack: Profiling[];
 
     constructor(executionProfile: IExecutionProfile, persister: IPersister) {
         this._executionProfile = executionProfile;
         this._persister = persister;
+        this._activeProfilingsStack = [];
+        this._profilingsRoot = null;
     }
 
     startProfiling(uniqueName: string, metrics: IMetric[]): Record<string, any> {
-        // Retornar objeto com função terminate. Ao invés, de passar token pro terminate.
-        if (uniqueName == "metrics" || uniqueName == "childs") {
-            throw new Error(`The name \"${uniqueName}\" is reserved. Please, choose other name.`);
+        const newProfiling = new Profiling(uniqueName, metrics);
+
+        if (this._profilingsRoot === null) {
+            this._profilingsRoot = newProfiling;
         }
-
-        if (this._profilerCallStack.includes(uniqueName) ||
-            !this._isNameUnique(this._profilingTree.childs, uniqueName)) {
-            throw new Error(`The name \"${uniqueName}\" is not unique.`);
-        }
-
-        let node = this._profilingTree.childs;
-        for (const profilingName of this._profilerCallStack) {
-            node = node[profilingName].childs;
-        }
-
-        node[uniqueName] = { metrics: metrics, childs: {} };
-        this._profilerCallStack.push(uniqueName);
-        const profilingHandler = { finish: async () => await this.terminateProfiling(uniqueName) };
-        return profilingHandler;
-    }
-
-    async terminateProfiling(uniqueName: string): Promise<void> {
-        // Remover o asincronismo
-        const profilingIndex = this._profilerCallStack.findIndex(
-            profilingName => profilingName == uniqueName);
-
-        if (profilingIndex == -1) {
-            throw new Error(`There is no active profiling named: ${uniqueName}.`);
-        }
-        this._profilerCallStack.splice(profilingIndex, 1);
-
-        let childs = this._profilingTree.childs;
-        const node = this._findNodeByName(this._profilingTree, uniqueName) ?? childs[uniqueName];
-        node.metrics = await this._resolveMetrics(node.metrics);
-    }
-
-    private _isNameUnique(profilingTree: Record<string, any>, name: string): boolean {
-        if (name in profilingTree) {
-            return false;
-        }
-
-        const childResults = [];
-        for (const key of Object.keys(profilingTree)) {
-            childResults.push(this._isNameUnique(profilingTree[key].childs, name));
-        }
-
-        return childResults.length > 0 ? childResults.every(v => v == true) : true;
-    }
-
-    private async _resolveMetrics(metrics: IMetric[]): Promise<Record<string, any>[]> {
-        const result: Record<string, any>[] = [];
-
-        for (const metric of metrics) {
-            result.push(await metric.collect());
-        }
-
-        return result;
-    }
-
-    private _findNodeByName(profilingTree: any, uniqueName: string): Record<string, any> | null {
-        let childs = profilingTree.childs;
-
-        if (uniqueName in childs) {
-            return childs[uniqueName];
-        }
-        
-        for (const childNode of Object.values(childs)) {
-            let childResult = this._findNodeByName(childNode, uniqueName);
-
-            if (childResult != null) {
-                return childResult;
+        else {
+            const parentNode = this._getNewestActiveProfiling() ?? this._profilingsRoot;
+            if (uniqueName in parentNode.childs) {
+                const numberOfAppearences = Object.keys(parentNode.childs).filter(k => k.match(new RegExp(`^${uniqueName}(\$|_[0-9]{1,}\$`))).length
+                parentNode.childs[`${uniqueName}_${numberOfAppearences}`] = newProfiling;
+            }
+            else {
+                parentNode.childs[uniqueName] = newProfiling;
             }
         }
+        
+        this._activeProfilingsStack.push(newProfiling);
+        return { finish: async () => await this._terminateProfiling(newProfiling) };
+    }
 
-        return null;
+    private _terminateProfiling(aProfiling: Profiling): void {
+        const index = this._activeProfilingsStack.indexOf(aProfiling);
+        this._activeProfilingsStack.splice(index, 1);
+
+        async function resolveMetrics(metrics: IMetric[]): Promise<Record<string, any>[]> {
+            const result = [];
+
+            for (const m of metrics) {
+                result.push({ [m.constructor.name]: await m.collect() })
+            }
+
+            return result;
+        }
+
+        resolveMetrics(aProfiling.runningMetrics)
+            .then(results => {
+                aProfiling.metricsResults = results
+            })
+            .catch(err => {
+                console.error(err);
+                console.log("There was an error while collecting a metric.");
+                aProfiling.metricsResults.push({ error: err})
+            });
+    }
+
+    private _getNewestActiveProfiling(): Profiling | null {
+        if (this._activeProfilingsStack.length === 0) {
+            return null;
+        }
+
+        return this._activeProfilingsStack.slice(-1)[0];
     }
 }
