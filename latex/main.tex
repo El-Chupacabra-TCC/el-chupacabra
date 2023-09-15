@@ -436,7 +436,7 @@ Assim como o anterior, consiste de uma interface genérica (nesse caso a ITask) 
 
 A interface ITask contém três métodos principais, que permitem ao usuário criar sua tarefa customizada. O primeiro é o método principal run(), no qual é inserido a chamada para a execução dos jobs e das métricas. Após isso, também são declarados os métodos preTaskJob e postTaskJob, os quais respectivamente representam as execuções que devem rodar antes e depois da tarefa.
 
-A tarefa aqui pode ser desde a transferência de um arquivo, até a execução de uma consulta em um banco de dados. Respeitando a interface principal, podem ser inseritos n tipos de tarefas diferentes, de acordo com a necessidade do usuário.
+A tarefa aqui pode ser desde a transferência de um arquivo, até a execução de uma consulta em um banco de dados. Respeitando a interface principal, podem ser inseritos n tipos de tarefas diferentes, de acordo com a necessidade do usuário. Cada tarefa contém um conjunto de métricas, que são as representações dos tipos de dados que serão coletados na execução daquela tarefa.
 
 Quando houver a demanda de uma tarefa composta por mais de uma tarefa, a implementação se dá utilizando o padrão Composite (citar fundamentação teórica), e a tarefa passa a conter uma lista de tarefas associadas. Assim, quando o método run() é chamado na tarefa mãe, é feita uma iteração nas tarefas associadas para a execução em cadeia de todas as tarefas. 
 
@@ -444,9 +444,14 @@ Quando houver a demanda de uma tarefa composta por mais de uma tarefa, a impleme
 
 \subsection{Módulo de Métricas (Metrics)}
 
-Esse módulo, assim como os anteriores, consiste de uma interface genérica (nesse caso a interface IMetric) e suas implementações. Abaixo segue o código base da interface: {inserir código da interface}.
+O módulo de métricas (Metrics) tem como objetivo representar as métricas que serão coletadas pela ferramenta. Essas métricas estão contidas nas tarefas (Tasks), e são elas as responsáveis de efetivamente coletar o dado desejado do ambiente no qual está sendo executada a tarefa. Esse módulo, assim como os anteriores, consiste de uma interface genérica (nesse caso a interface IMetric) e de suas implementações concretas. Abaixo segue o código base da interface IMetric: 
 
-Esse módulo contém as implementações das métricas que compõem as tarefas a serem executadas pelos voluntários.
+{{inserir código da interface}}.
+
+A interface principal contém somente um método chamado collect(), que é responsável por executar a coleta efetiva do dado desejado. Extendendo essa interface, a implementação concreta sobrescreve esse método inserindo nele os processamentos necessários para a coleta. Esse método é chamado posteriormente para cada uma das métricas associadas na execução de uma tarefa. Abaixo segue um exemplo de implementação de métrica.
+
+{{EXEMPLO DE IMPLEMENTAÇÃO DE MÉTRICA}}
+
 
 \subsection{Módulo de Persistência (Persister)}
 
@@ -470,9 +475,18 @@ Inserir texto
 \chapter{Resultados}
 \label{cap:resultados}
 
-Aqui deve ser feito um exemplo e explicado
+Aqui deve ser feito um exemplo e explicado sobre os dois exemplos
 
-\subsection{Ameaças}
+\section{Primeiro exemplo: Projeto X}
+
+Projeto mais complexo, no qual utilizamos o el-chupacabra de forma mais customizada, inclusive usando o Composite nas tasks.
+
+\section{Segundo exemplo: Projeto Y}
+
+Exemplo mais simples, customizando o menos possível, e com um uso mais simplificado. A ideia é fazer um projeto muito simples. 
+Usar as funções de begin e end pra coletar com base no código que já existe.
+
+\section{Ameaças}
 Aqui são as ameaças ao nosso framework
 	
 

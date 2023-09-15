@@ -18,8 +18,8 @@ const persister = new JsonFilePersister("./result.json") as IPersister
 const tasks = new CompositeTask(
     [new MemoryMetric(), new DeltaTimeMetric()],
     [
-        new FirstNPrimesTask(4),
-        new FirstNPrimesTask(10)
+        new FirstNPrimesTask([new DeltaTimeMetric()], 100000),
+        new FirstNPrimesTask([new DeltaTimeMetric()], 1000000)
     ]
 ) as ITask
 

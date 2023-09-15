@@ -21,6 +21,7 @@ export default abstract class BaseTask implements ITask {
      */
     async run(): Promise<Record<string, any>> {
         await this.preTaskJob()
+        this.metrics.forEach(x => x.start())
         const result = await this.execute()
 
         result.metrics = {}
