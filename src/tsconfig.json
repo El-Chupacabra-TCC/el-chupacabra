@@ -5,6 +5,7 @@
       "target": "ES6",
       "strict": true,
       "module": "ES6",
+      "moduleResolution": "node",
       "esModuleInterop": true,
       "forceConsistentCasingInFileNames": true
     },

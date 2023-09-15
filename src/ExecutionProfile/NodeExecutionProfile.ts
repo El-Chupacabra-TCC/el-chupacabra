@@ -11,7 +11,7 @@ export default class NodeExecutionProfile implements IExecutionProfile {
     /**
      * @inheritdoc
      */
-    async collect(taskBeingExecuted: ITask): Promise<Record<string, any>> {
+    async collect(): Promise<Record<string, any>> {
         const networkInterfaces = os.networkInterfaces()
         const executionProfile: Record<string, any> = {
             software: {

@@ -14,5 +14,5 @@ export default interface IMetric {
      * Collects data related to the execution metric.
      * @returns {Promise<Record<string, any>>} A record containing the collected metric data.
      */
-    collect(taskBeingExecuted: ITask): Promise<Record<string, any>>;
+    collect(): Promise<Record<string, any>>;
 }

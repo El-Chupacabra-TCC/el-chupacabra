@@ -10,7 +10,7 @@ export default class BrowserExecutionProfile implements IExecutionProfile {
     /**
      * @inheritdoc
      */
-    async collect(taskBeingExecuted: ITask): Promise<Record<string, any>> {
+    async collect(): Promise<Record<string, any>> {
         const date = new Date()
         const executionProfile: Record<string, any> = {
             software: {

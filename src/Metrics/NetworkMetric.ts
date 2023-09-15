@@ -19,7 +19,7 @@ export default class NetworkMetric  implements IMetric {
   /**
    * @inheritdoc
    */
-  async collect(taskBeingExecuted: ITask): Promise<Record<string, any>> {
+  async collect(): Promise<Record<string, any>> {
     try {
       const response = await fetch('your_url_here'); // Replace with your actual URL
       await this.fetchResponseMetrics(response);

@@ -9,23 +9,21 @@ import FirstNPrimesTask from "./Tasks/FirstNPrimesTask.js";
 import ITask from "./Tasks/ITask.js";
 import IPersister from "./Persister/IPersister.js";
 import FunctionLengthMetric from "./Metrics/FunctionLengthMetric.js";
+import JsonFilePersister from "./Persister/JsonFilePersister.js";
 
 
 export function Execute()
 {
     const executionProfile = new NodeExecutionProfile() as IExecutionProfile
     
-    const persister = new SheetsonPersister(
-        "NOME_DA_ABA_DA_SUA_PLANILHA",
-        "API_KEY",
-        "ID_DA_PLANILHA"
+    const persister = new JsonFilePersister("./"
     ) as IPersister
 
     const tasks = new CompositeTask(
         [new MemoryMetric(), new DeltaTimeMetric()],
         [
-            new FirstNPrimesTask([new DeltaTimeMetric(), new FunctionLengthMetric()], 4),
-            new FirstNPrimesTask([new DeltaTimeMetric(), new FunctionLengthMetric()], 10)
+            new FirstNPrimesTask([new DeltaTimeMetric()], 4),
+            new FirstNPrimesTask([new DeltaTimeMetric()], 10)
         ]
     ) as ITask
     var project = new Project(executionProfile, tasks, persister)

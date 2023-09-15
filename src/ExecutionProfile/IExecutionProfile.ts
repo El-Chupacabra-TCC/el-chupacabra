@@ -1,3 +1,4 @@
+import BaseTask from "../Tasks/BaseTask";
 import ITask from "../Tasks/ITask";
 
 /**
@@ -10,5 +11,5 @@ export default interface IExecutionProfile {
      * @returns {Promise<Record<string, any>>} An object containing every execution profile data the
      * implementation was able to collect.
      */
-    collect(taskBeingExecuted: ITask): Promise<Record<string, any>>;
+    collect(): Promise<Record<string, any>>;
 }
