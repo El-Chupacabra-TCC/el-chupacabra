@@ -1,6 +1,7 @@
 import os from 'os';
 import crypto from 'crypto';
 import IExecutionProfile from './IExecutionProfile';
+import ITask from '../Tasks/ITask';
 
 /**
  * Represents a profile for collecting execution data in a Node.js environment.
@@ -10,7 +11,7 @@ export default class NodeExecutionProfile implements IExecutionProfile {
     /**
      * @inheritdoc
      */
-    async collect(): Promise<Record<string, any>> {
+    async collect(taskBeingExecuted: ITask): Promise<Record<string, any>> {
         const networkInterfaces = os.networkInterfaces()
         const executionProfile: Record<string, any> = {
             software: {

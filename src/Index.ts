@@ -8,6 +8,7 @@ import CompositeTask from "./Tasks/CompositeTask.js";
 import FirstNPrimesTask from "./Tasks/FirstNPrimesTask.js";
 import ITask from "./Tasks/ITask.js";
 import IPersister from "./Persister/IPersister.js";
+import FunctionLengthMetric from "./Metrics/FunctionLengthMetric.js";
 
 
 export function Execute()
@@ -23,8 +24,8 @@ export function Execute()
     const tasks = new CompositeTask(
         [new MemoryMetric(), new DeltaTimeMetric()],
         [
-            new FirstNPrimesTask(4),
-            new FirstNPrimesTask(10)
+            new FirstNPrimesTask([new DeltaTimeMetric(), new FunctionLengthMetric()], 4),
+            new FirstNPrimesTask([new DeltaTimeMetric(), new FunctionLengthMetric()], 10)
         ]
     ) as ITask
     var project = new Project(executionProfile, tasks, persister)

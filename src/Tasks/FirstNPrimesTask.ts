@@ -15,9 +15,8 @@ export default class FirstNPrimesTask extends BaseTask {
      * @param {IMetric[]} metrics - Metrics to be collected from this task.
      * @param {number} howMany - Amount of prime numbers to be calculates.
      */
-    constructor(howMany: number) {
-        super([new DeltaTimeMetric()]);
-        this.metrics.push(new FunctionLengthMetric(this.execute));
+    constructor(metrics: IMetric[], howMany: number) {
+        super(metrics)
         this.howManyToCalculate = howMany > 0 ? Math.floor(howMany) : 0
     }
 

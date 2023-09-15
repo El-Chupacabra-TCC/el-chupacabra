@@ -8,6 +8,7 @@ import CompositeTask from "./Tasks/CompositeTask.js";
 import FirstNPrimesTask from "./Tasks/FirstNPrimesTask.js";
 import ITask from "./Tasks/ITask.js";
 import IPersister from "./Persister/IPersister.js";
+import FunctionLengthMetric from "./Metrics/FunctionLengthMetric.js";
 
 
 // Setup which executionProfile and persister are used.
@@ -18,8 +19,8 @@ const persister = new JsonFilePersister("./result.json") as IPersister
 const tasks = new CompositeTask(
     [new MemoryMetric(), new DeltaTimeMetric()],
     [
-        new FirstNPrimesTask([new DeltaTimeMetric()], 100000),
-        new FirstNPrimesTask([new DeltaTimeMetric()], 1000000)
+        new FirstNPrimesTask([new DeltaTimeMetric(), new FunctionLengthMetric()], 100000),
+        new FirstNPrimesTask([new DeltaTimeMetric(), new FunctionLengthMetric()], 1000000)
     ]
 ) as ITask
 

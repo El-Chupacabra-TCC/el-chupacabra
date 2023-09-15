@@ -1,3 +1,4 @@
+import ITask from "../Tasks/ITask";
 import IMetric from "./IMetric";
 
 /**
@@ -17,7 +18,7 @@ export default class DeltaTimeMetric implements IMetric {
     /**
      * @inheritdoc
      */
-    async collect(): Promise<Record<string, any>> {
+    async collect(taskBeingExecuted: ITask): Promise<Record<string, any>> {
         const currentTime = Date.now()
         const deltaTime = currentTime - this.startTime
 

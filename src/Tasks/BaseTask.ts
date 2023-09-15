@@ -26,7 +26,7 @@ export default abstract class BaseTask implements ITask {
 
         result.metrics = {}
         this.metrics.forEach(async x => {
-            result.metrics[x.constructor.name] = await x.collect()
+            result.metrics[x.constructor.name] = await x.collect(this)
         })
         await this.postTaskJob()
 

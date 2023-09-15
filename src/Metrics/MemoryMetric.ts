@@ -1,3 +1,4 @@
+import ITask from "../Tasks/ITask";
 import IMetric from "./IMetric";
 
 /**
@@ -15,7 +16,7 @@ export default class MemoryMetric implements IMetric {
     /**
      * @inheritdoc
      */
-    async collect(): Promise<Record<string, any>> {
+    async collect(taskBeingExecuted: ITask): Promise<Record<string, any>> {
         const memoryConsumption = { usedApis: [] as string[], measurements: {} }
         const measurements = [
             await this.getNewBrowserApiMemoryData(),

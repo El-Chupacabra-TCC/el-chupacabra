@@ -1,22 +1,24 @@
 import IMetric from "./IMetric";
 import acorn from "../node_modules/acorn/dist/acorn";
+import ITask from "../Tasks/ITask";
 
 /**
  * Measures the length of a function's abstract syntax tree (AST).
  * @implements {IMetric}
  */
 export default class FunctionLengthMetric implements IMetric {
-  private targetFunction: Function;
-
-  constructor(targetFunction: Function) {
-    this.targetFunction = targetFunction;
+  /**
+       * @inheritdoc
+       */
+  start(): void {
+    return
   }
 
   /**
    * @inheritdoc
    */
-  async collect(): Promise<Record<string, any>> {
-    const ast = acorn.parse(this.targetFunction.toString(), {
+  async collect(taskBeingExecuted: ITask): Promise<Record<string, any>> {
+    const ast = acorn.parse(taskBeingExecuted.run().toString(), {
       ecmaVersion: 2020,
       sourceType: "module",
     });

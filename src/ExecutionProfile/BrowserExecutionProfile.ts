@@ -1,3 +1,4 @@
+import ITask from "../Tasks/ITask"
 import IExecutionProfile from "./IExecutionProfile"
 
 /**
@@ -9,7 +10,7 @@ export default class BrowserExecutionProfile implements IExecutionProfile {
     /**
      * @inheritdoc
      */
-    async collect(): Promise<Record<string, any>> {
+    async collect(taskBeingExecuted: ITask): Promise<Record<string, any>> {
         const date = new Date()
         const executionProfile: Record<string, any> = {
             software: {
