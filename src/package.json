@@ -1,6 +1,6 @@
 {
   "name": "el-chupacabra",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A framework for executing proof of concepts while gathering performance metrics and consumption of computational resources.",
   "main": "dist/Module.js",
   "scripts": {
