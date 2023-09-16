@@ -108,14 +108,21 @@ export class EasyElc {
                 `These profilings need to be stoped before saving the results: ${this._activeProfilingsStack.map(prof => prof.uniqueName)}`)
         }
 
+        const profilingsTree = this._profilingsTree;
+        const executionMetadata = await this._executionProfile.collect();
+        const visitorId = executionMetadata.visitorId;
+        delete executionMetadata.visitorId;
+
         const profilingsData = {
-            profile: await this._executionProfile.collect(),
-            taskResult: this._profilingsTree
+            datetime: new Date(),
+            visitorId: visitorId,
+            executionMetadata: JSON.stringify(executionMetadata),
+            data: JSON.stringify(this._profilingsTree).replace("\"runningMetrics\":[],", "")
         }
-        await this._persister.save(profilingsData);
 
         this._profilingsTree = null;
-        return profilingsData.taskResult;
+        await this._persister.save(profilingsData);
+        return profilingsTree;
     }
 
     private _getNewestActiveProfiling(): Profiling | null {
