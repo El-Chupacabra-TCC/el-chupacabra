@@ -1,3 +1,5 @@
+import DeltaTimeMetric from "../Metrics/DeltaTimeMetric.js"
+import FunctionLengthMetric from "../Metrics/FunctionLengthMetric.js"
 import IMetric from "../Metrics/IMetric.js"
 import BaseTask from "./BaseTask.js"
 
@@ -15,6 +17,7 @@ export default class FirstNPrimesTask extends BaseTask {
      */
     constructor(metrics: IMetric[], howMany: number) {
         super(metrics)
+        metrics.push(new FunctionLengthMetric(this.execute))
         this.howManyToCalculate = howMany > 0 ? Math.floor(howMany) : 0
     }
 

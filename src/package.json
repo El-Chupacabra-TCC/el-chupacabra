@@ -21,9 +21,12 @@
   "author": "Filipe Shanon, Matheus Moura and Radhanama Messiano",
   "license": "MIT",
   "devDependencies": {
+    "@types/acorn": "^6.0.0",
     "@types/node": "^20.4.10",
     "typescript": "^5.1.6"
   },
   "type": "module",
-  "dependencies": {}
+  "dependencies": {
+    "acorn": "^8.10.0"
+  }
 }

@@ -1,3 +1,4 @@
+import ITask from "../Tasks/ITask";
 import IMetric from "./IMetric";
 
 /**

@@ -1,3 +1,6 @@
+import BaseTask from "../Tasks/BaseTask";
+import ITask from "../Tasks/ITask";
+
 /**
  * Represents a contract for collecting execution profile data.
  * @interface
