@@ -35,5 +35,5 @@ export const Tasks = {
 import Project from "./Project.js";
 export const project = Project;
 
-import EasyElc from "./EasyElc/EasyElc.js";
-export const easyElc = EasyElc;
+import { EasyElc as ez } from "./EasyElc/EasyElc.js";
+export const EasyElc = ez;

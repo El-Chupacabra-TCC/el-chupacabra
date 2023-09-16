@@ -9,7 +9,7 @@ type _persistenceCallback = (profilingTree: Profiling | null) => void
 /**
  * El Chupacabra simplified interface.
  */
-export default class EasyElc {
+export class EasyElc {
     protected _executionProfile: IExecutionProfile;
     protected _persister: IPersister;
     private _profilingsTree: Profiling | null;
@@ -56,7 +56,7 @@ export default class EasyElc {
         
         this._activeProfilingsStack.push(newProfiling);
         metrics.forEach(x => x.start());
-        return { finish: async () => await this._terminateProfiling(newProfiling) };
+        return { finish: () => this._terminateProfiling(newProfiling) };
     }
 
     /**
