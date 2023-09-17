@@ -138,7 +138,7 @@ Por fim, os capítulos \ref{cap:prova_de_conceito} e \ref{cap:estado_atual} apre
 Aqui vai um texto introduzindo a fundamentação teórica
 
 	\section{Evolução da web e a necessidade de performance}
-	\label{cap:medicao-client-side}
+	\label{cap:evolucao-web}
 	Inserir texto aqui
 
 	\section{Medição client-side}
@@ -146,15 +146,15 @@ Aqui vai um texto introduzindo a fundamentação teórica
 	Inserir texto aqui
 
 	\section{JS nos navegadores}
-	\label{cap:typescript}
+	\label{cap:js}
 	Inserir texto aqui
 
 	\section{SOLID - Principio do Open/closed}
-	\label{cap:typescript}
+	\label{cap:solid}
 	Inserir texto aqui
 
-	\section{Padrão de software COmposite}
-	\label{cap:typescript}
+	\section{Padrão de software Composite}
+	\label{cap:composite}
 	Inserir texto aqui
 
 
@@ -406,7 +406,7 @@ Abaixo, está uma descrição de cada elemento do diagrama.
 
 A ferramenta foi implementada utilizando uma arquitetura modular, e seguindo fortemente o conceito do aberto/fechado (open/closed), trazido pelo SOLID (citar fundamentação teórica). Dessa forma, todas as relações entre as classes e módulos se dão através de interfaces, abstraindo o funcionamento interno de cada elemento. Isso contribui significativamente para a manutenabilidade do código, pois diminui as chances de problemas de compatibilidade entre as implementações caso alguma premissa seja alterada.
 
-Inicialmente, a ferramenta se estrutura em quatro módulos principais: Módulo de Perfil de Execução (ExecutionProfile), o módulo de Métricas (Metrics), o módulo de Persistência (Persister) e o módulo de Tarefas (Tasks). Cada um deles possui sua responsabilidade, como serão descritas nas próximas secções.
+Inicialmente, a ferramenta se estrutura em seis módulos principais: o Módulo de Projeto (Project), Módulo de Perfil de Execução (ExecutionProfile), o módulo de Métricas (Metrics), o módulo de Persistência (Persister), o módulo de Tarefas (Tasks) e o Módulo Simplificado (EasyELC). Cada um deles possui sua responsabilidade, como serão descritas nas próximas secções. (atualizar diagrama pra inserir o módulo EasyELC)
 
 \begin{figure}[!ht]
 	\centering
@@ -414,6 +414,9 @@ Inicialmente, a ferramenta se estrutura em quatro módulos principais: Módulo d
 	\caption{Diagrama representando os relacionamentos entre os módulos internos da aplicação.}
 	\label{fig:diagrama-arquitetura}
 \end{figure}
+
+\subsection{Módulo de Projeto (Project)}
+
 
 \subsection{Módulo de Perfil de Execução (ExecutionProfile)}
 
@@ -446,7 +449,7 @@ Quando houver a demanda de uma tarefa composta por mais de uma tarefa, a impleme
 
 O módulo de métricas (Metrics) tem como objetivo representar as métricas que serão coletadas pela ferramenta. Essas métricas estão contidas nas tarefas (Tasks), e são elas as responsáveis de efetivamente coletar o dado desejado do ambiente no qual está sendo executada a tarefa. Esse módulo, assim como os anteriores, consiste de uma interface genérica (nesse caso a interface IMetric) e de suas implementações concretas. Abaixo segue o código base da interface IMetric: 
 
-{{inserir código da interface}}.
+{{CODIGO DA INTERFACE IMETRIC}}.
 
 A interface principal contém somente um método chamado collect(), que é responsável por executar a coleta efetiva do dado desejado. Extendendo essa interface, a implementação concreta sobrescreve esse método inserindo nele os processamentos necessários para a coleta. Esse método é chamado posteriormente para cada uma das métricas associadas na execução de uma tarefa. Abaixo segue um exemplo de implementação de métrica.
 
@@ -455,40 +458,46 @@ A interface principal contém somente um método chamado collect(), que é respo
 
 \subsection{Módulo de Persistência (Persister)}
 
-Inserir texto
+O módulo de persistência (Persister) tem como finalidade encapsular a persistência de dados após a coleta das métricas, afim de faciltar o uso de diferentes formas de persistência de dados no contexto do framework. Dessa forma, é possível adaptar facilmente a implementação da persistência sem interferir na estrutura das tarefas. Esse módulo é composto pela interface genérica IPersister e suas implementações concretas, assim como os anteriores. Abaixo segue a implementação da interface IPersister.
+
+{{CÓDIGO DA INTERFACE IPERSISTER}}
+
+A interface é composta somente por um método chamado save(), no qual é realizada a persistêcia dos dados propriamente dita. Desse modo, ao instanciar um novo Persister, é nesse método que são realizados os processamentos necessários para salvar o dado da forma desejada. Abaixo segue um exemplo de implementação da classe utilizada no exemplo proposto na secção X, o SheetsonPersister.
+
+{{EXEMPLO DE IMPLEMENTAÇÃO DE PERSISTER}}
+
+\subsection{Módulo Simplificado (EasyELC)}
 
 
-\section{Tecnologias Utilizadas}
+\chapter{Experimentos}
+\label{cap:experimentos}
 
-Inserir texto
+Neste capítulo estão descritos os dois experimentos implementados a fim de testar o projeto em diferentes cenários, cada um deles em sua respectiva secção. A primeira secção, referente ao projeto X, descreve um cenário de implementação mais completo do ELC, e a segunda, referente ao projeto Y, descreve uma abordagem de utilização mais simplificada com o módulo EasyELC, apresentado no capítulo anterior (referenciar a secção da proposta). 
 
-\subsection{Typescript}
+\section{Projeto dos números primos}
 
-Inserir texto
+Projeto dos números primos.Projeto no qual utilizamos o el-chupacabra de forma mais completa, inclusive usando o Composite nas tasks.
 
-\subsection{Sheetson}
 
-Inserir texto
+\section{Site dos números primos utilizando o EasyELC}
 
+Exemplo mais simples, customizando o menos possível, e com um uso mais simplificado. Utilizar a estrutura do EasyELC aplicada no site dos números primos.
 
 
 \chapter{Resultados}
 \label{cap:resultados}
 
-Aqui deve ser feito um exemplo e explicado sobre os dois exemplos
+Nessa secção serão discutidos os resultados dos exemplos propostos para o teste do framework.
 
-\section{Primeiro exemplo: Projeto X}
+\section{Resultado no projeto dos números primos}
 
-Projeto mais complexo, no qual utilizamos o el-chupacabra de forma mais customizada, inclusive usando o Composite nas tasks.
+Projeto dos números primos.Projeto no qual utilizamos o el-chupacabra de forma mais completa, inclusive usando o Composite nas tasks.
 
-\section{Segundo exemplo: Projeto Y}
 
-Exemplo mais simples, customizando o menos possível, e com um uso mais simplificado. A ideia é fazer um projeto muito simples. 
-Usar as funções de begin e end pra coletar com base no código que já existe.
+\section{Resultado no site dos números primos utilizando o EasyELC}
 
-\section{Ameaças}
-Aqui são as ameaças ao nosso framework
-	
+Exemplo mais simples, customizando o menos possível, e com um uso mais simplificado. Utilizar a estrutura do EasyELC aplicada no site dos números primos.
+
 
 \chapter{Conclusão}
 \label{cap:conclusão}
