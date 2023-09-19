@@ -417,6 +417,13 @@ Inicialmente, a ferramenta se estrutura em seis módulos principais: o Módulo d
 
 \subsection{Módulo de Projeto (Project)}
 
+O módulo de projeto é o módulo principal da ferramenta, onde o fluxo da coleta é iniciado. Ele é composto somente pela classe Project. Abaixo segue a implementação da classe:
+
+{{IMPLEMENTAÇÃO DA CLASSE PROJECT}}
+
+Essa classe possui como atributos uma instância da classe ExecutionProfile, que contem as informações de quem está executando aquele projeto, uma instância da classe Persister, que é a classe responsável pela persistência de dados, e uma instância da classe Task, que é a tarefa mãe a ser executada.
+
+Possui também um único método, o método executeTask(), que coleta as informações da máquina através do ExecutionProfile, dá inicio a execução das tarefas associadas aquele projeto e persiste os resultados.
 
 \subsection{Módulo de Perfil de Execução (ExecutionProfile)}
 
