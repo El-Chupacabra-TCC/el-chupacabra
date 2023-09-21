@@ -1,7 +1,6 @@
 import os from 'os';
 import crypto from 'crypto';
 import IExecutionProfile from './IExecutionProfile';
-import ITask from '../Tasks/ITask';
 
 /**
  * Represents a profile for collecting execution data in a Node.js environment.

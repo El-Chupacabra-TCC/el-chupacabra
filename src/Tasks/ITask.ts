@@ -1,4 +1,3 @@
-
 /**
  * Represents a contract for executing a task.
  * @interface
