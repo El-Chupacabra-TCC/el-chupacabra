@@ -101,6 +101,9 @@ In order to solve these problems, we propose a framework for the JavaScript ecos
 \chapter{Introdução}
 \label{cap:intro}
 
+-> Quais as contribuições?
+-> Quais as limitações da ferramenta?
+
 Desde o começo da era da informação e principalmente após a popularização dos smartphones a quantidade de informações geradas cresce em um ritmo sem precedentes \citep{Gandomi2015Beyond}.
 Este cenário com disponibilidade de grandes volumes de dados (do inglês, \emph{big data}), criou diversas oportunidades para modelos de negócios voltados para o uso desses dados.
 Empresas como Google e Meta (antigo Facebook), se tornaram gigantes do mercado explorando estes modelos de negócios baseados em dados.
@@ -352,11 +355,22 @@ Aqui vai um texto introduzindo a fundamentação teórica
 			\label{table:ferramentas-encontradas-com-nossa-ferramenta} % is used to refer this table in the text
 		\end{table}
 
-\chapter{Proposta}
-\label{cap:proposta}
+\chapter{Implementação}
+\label{cap:implementação}
 
 	O objetivo do framework é oferecer uma forma fácil e eficaz de realizar análises de desempenho e consumo de recursos computacionais em provas de conceito para aplicações Web no lado do cliente.
 	Dessa forma, o usuário do framework é capaz de realizar suas análises com a colaboração de voluntários, sendo o framework responsável pela coleta e agregação das métricas em uma base de dados. Nessa secção, explicaremos os principais pilares que sustentam a nossa solução, definindo os elementos que a compõem.
+
+\section{Estudos de caso}
+
+\subsection{Projeto dos números primos}
+
+Projeto no qual utilizamos o el-chupacabra de forma mais completa, inclusive usando o Composite nas tasks.
+
+
+\subsection{Site dos números primos utilizando o EasyELC}
+
+Exemplo mais simples, customizando o menos possível, e com um uso mais simplificado. Utilizar a estrutura do EasyELC aplicada no site dos números primos.
 
 \section{Diagrama de Casos de Uso}
 \label{cap:diagrama_de_caso_de_uso}
@@ -469,26 +483,25 @@ O módulo de persistência (Persister) tem como finalidade encapsular a persist�
 
 {{CÓDIGO DA INTERFACE IPERSISTER}}
 
-A interface é composta somente por um método chamado save(), no qual é realizada a persistêcia dos dados propriamente dita. Desse modo, ao instanciar um novo Persister, é nesse método que são realizados os processamentos necessários para salvar o dado da forma desejada. Abaixo segue um exemplo de implementação da classe utilizada no exemplo proposto na secção X, o SheetsonPersister.
+A interface é composta somente por um método chamado save(), no qual é realizada a persistêcia dos dados propriamente dita. Desse modo, ao instanciar um novo Persister, é nesse método que são realizados os processamentos necessários para salvar o dado da forma desejada. A seguir segue um exemplo de implementação da classe utilizada no exemplo proposto na seção X, o SheetsonPersister.
 
 {{EXEMPLO DE IMPLEMENTAÇÃO DE PERSISTER}}
 
 \subsection{Módulo Simplificado (EasyELC)}
 
 
-\chapter{Experimentos}
-\label{cap:experimentos}
+\chapter{Avaliação}
+\label{cap:avaliação}
 
 Neste capítulo estão descritos os dois experimentos implementados a fim de testar o projeto em diferentes cenários, cada um deles em sua respectiva secção. A primeira secção, referente ao projeto X, descreve um cenário de implementação mais completo do ELC, e a segunda, referente ao projeto Y, descreve uma abordagem de utilização mais simplificada com o módulo EasyELC, apresentado no capítulo anterior (referenciar a secção da proposta). 
 
-\section{Projeto dos números primos}
-
-Projeto dos números primos.Projeto no qual utilizamos o el-chupacabra de forma mais completa, inclusive usando o Composite nas tasks.
+Estudo de caso da tese do Renato
 
 
-\section{Site dos números primos utilizando o EasyELC}
+\section{Experimentos}
+Experimento envolvendo terceiros? Download de um arquivo... para construir uma visualização
 
-Exemplo mais simples, customizando o menos possível, e com um uso mais simplificado. Utilizar a estrutura do EasyELC aplicada no site dos números primos.
+
 
 
 \chapter{Resultados}
