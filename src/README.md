@@ -36,7 +36,7 @@ $ npm install el-chupacabra
 * Builtin integration with Google Sheets.
 * Builtin black box metrics.
 * Highly extensible.
-* Compatible with [Node.js](https://nodejs.org/en/) and Browser environments.
+* Compatible with both [Node.js](https://nodejs.org/en/) and Browser environments.
 
 ## Documentation
 
