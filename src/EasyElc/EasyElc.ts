@@ -56,7 +56,10 @@ export class EasyElc {
         
         this._activeProfilingsStack.push(newProfiling);
         metrics.forEach(x => x.start());
-        return { finish: () => this._terminateProfiling(newProfiling) };
+        return { finish: (metadata: Record<string, any> | null = null) => {
+            newProfiling.metadata = metadata;
+            this._terminateProfiling(newProfiling);
+        } };
     }
 
     /**
