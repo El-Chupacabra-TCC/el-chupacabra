@@ -17,7 +17,6 @@ export default class FirstNPrimesTask extends BaseTask {
      */
     constructor(metrics: IMetric[], howMany: number) {
         super(metrics)
-        metrics.push(new FunctionLengthMetric(this.execute))
         this.howManyToCalculate = howMany > 0 ? Math.floor(howMany) : 0
     }
 
