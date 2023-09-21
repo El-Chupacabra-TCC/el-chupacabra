@@ -16,7 +16,10 @@ export function Execute()
 {
     const executionProfile = new NodeExecutionProfile() as IExecutionProfile
     
-    const persister = new JsonFilePersister("./"
+    const persister = new SheetsonPersister(
+        "NOME_DA_ABA_DA_SUA_PLANILHA",
+        "API_KEY",
+        "ID_DA_PLANILHA"
     ) as IPersister
 
     const tasks = new CompositeTask(
