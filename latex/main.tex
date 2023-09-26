@@ -101,9 +101,6 @@ In order to solve these problems, we propose a framework for the JavaScript ecos
 \chapter{Introdução}
 \label{cap:intro}
 
--> Quais as contribuições?
--> Quais as limitações da ferramenta?
-
 Desde o começo da era da informação e principalmente após a popularização dos smartphones a quantidade de informações geradas cresce em um ritmo sem precedentes \citep{Gandomi2015Beyond}.
 Este cenário com disponibilidade de grandes volumes de dados (do inglês, \emph{big data}), criou diversas oportunidades para modelos de negócios voltados para o uso desses dados.
 Empresas como Google e Meta (antigo Facebook), se tornaram gigantes do mercado explorando estes modelos de negócios baseados em dados.
@@ -120,17 +117,19 @@ Além disso, mesmo quando existe acesso a diferentes tipos de ambiente, é impro
 A fim de atenuar estes problemas, estamos propondo um framework o qual um desenvolvedor de uma aplicação Web cliente-servidor seja capaz de facilmente obter métricas e estatísticas sobre provas de conceito, as quais, precisam ser executadas em diversas configurações de clientes por voluntários.
 Por exemplo, considere uma aplicação Web a qual precisa trafegar um volume suficientemente grande de dados entre o cliente e o servidor, de modo que, seja impossível de manter todos dados em cache no lado do cliente.
 
-Para realizar o tráfego de dados, a equipe de desenvolvimento considera as seguintes opções de formato de arquivo: CSV, JSON, Arrow e Parquet.
+Para realizar o tráfego de dados, uma equipe de desenvolvimento considera as seguintes opções de formato de arquivo: CSV, JSON, Arrow e Parquet.
 Com o objetivo de tomar essa decisão, a equipe decide realizar uma análise de desempenho e consumo de recursos em cada uma das abordagens variando os tipos de clientes.
 E, para incluir nas avaliações a maior variedade possível de clientes, eles também decidem automatizá-la, de modo que seja possível contar com o auxílio de voluntários.
-Porém, com o intuito de tornar isso possível, além da prova de conceito, a equipe ainda precisaria desenvolver como expor, executar e coletar as métricas durante a avaliação.
+Porém, com o intuito de tornar isso possível, além da prova de conceito, a equipe ainda precisaria desenvolver como expor, executar e coletar as métricas durante a avaliação. Este é o tipo de cenário para qual o framework está sendo proposto. 
 
-Este é o tipo de cenário para qual o framework está sendo proposto.
-Por disponibilizar uma aplicação Web pronta e capaz de envolver provas de conceito, automatizar sua execução, coletar métricas e ser de fácil extensão.
-Ademais, o framework por padrão possui as métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada, identificação do ambiente de execução e os dados são armazenados em uma planilha online para fácil obtenção e análise.
+A contribuição principal do ELC é oferecer uma forma fácil e eficaz de realizar a execução de tarefas customizáveis no lado do cliente, e também o registro dos resultados dessas execuções em uma base de dados, também customizável. Dessa forma, seria possível de forma simples resolver o problema da equipe de desenvolvimento.
+
+Ademais, o framework por padrão possui algumas métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada e a identificação do ambiente de execução, e os dados são armazenados em uma planilha online para fácil obtenção e análise.
+
 Deste modo, o desenvolvedor pode focar nas provas de conceito e na obtenção de ambientes e voluntários, ao invés do desenvolvimento de infraestrutura para realização das avaliações.
 
-Além disso, o trabalho está dividido em cinco capítulos.
+
+O trabalho está dividido em cinco capítulos.
 O capítulo \ref{cap:met_pesquisa} e \ref{sec:trab_relacionados} correspondem a metodologia da pesquisa e trabalhos relacionados encontrados no campo de estudo.
 O capítulo \ref{cap:proposta} apresenta a proposta de desenvolvimento da ferramenta.
 Por fim, os capítulos \ref{cap:prova_de_conceito} e \ref{cap:estado_atual} apresenta o estado atual do framework e o cronograma para a próxima etapa.
@@ -358,8 +357,8 @@ Aqui vai um texto introduzindo a fundamentação teórica
 \chapter{Implementação}
 \label{cap:implementação}
 
-	O objetivo do framework é oferecer uma forma fácil e eficaz de realizar análises de desempenho e consumo de recursos computacionais em provas de conceito para aplicações Web no lado do cliente.
-	Dessa forma, o usuário do framework é capaz de realizar suas análises com a colaboração de voluntários, sendo o framework responsável pela coleta e agregação das métricas em uma base de dados. Nessa secção, explicaremos os principais pilares que sustentam a nossa solução, definindo os elementos que a compõem.
+	O objetivo principal do framework é oferecer uma forma fácil e eficaz de realizar a execução de tarefas no lado do cliente, e o registro dos resultados dessas execuções em uma base de dados.
+	Dessa forma, o usuário do framework é capaz de realizar seus experimentos com a colaboração de voluntários mais facilmente, tendo a estrutura básica do projeto. Nessa secção, explicaremos os principais pilares que sustentam a nossa solução, definindo os elementos que a compõem.
 
 \section{Estudos de caso}
 
