@@ -260,8 +260,9 @@ Aqui vai um texto introduzindo a fundamentação teórica
 
 
 	\section{Ferramentas Para Medição no Lado do Cliente}
-	Utilizando os métodos descritos na seção anterior do trabalho, conseguimos levantar um panorama geral dos frameworks e soluções existentes e propostos à academia, assim como classificá-los utilizando alguns parâmetros, afim de entender se a nossa proposta se demonstra complementar ao estado da arte. 
-	Os critérios da classificação são: 
+
+	Utilizando os procedimentos descritos na Seção \ref{cap:met_pesquisa}, conseguimos obter uma visão abrangente dos frameworks e soluções existentes e propostas no âmbito acadêmico.
+	Além disso, efetuamos uma categorização dessas abordagens com base em uma série de parâmetros, com o objetivo de avaliar a complementaridade de nossa proposta em relação ao estado da arte.
 
 
 	\begin{table}[!ht]
@@ -282,7 +283,7 @@ Aqui vai um texto introduzindo a fundamentação teórica
 	\end{table}
 
 
-	\par Dessa forma, a classificação dos trabalhos selecionados se encontra na tabela abaixo:
+	\par Dessa forma, a classificação dos trabalhos selecionados se encontra na tabela \ref{table:ferramentas-encontradas}:
 
 		\begin{table}[ht]
 			\scriptsize
@@ -305,17 +306,17 @@ Aqui vai um texto introduzindo a fundamentação teórica
 	
 
 		\subsection{MemInsight}
-		\par No contexto de medição de memória, temos a MemInsight \citep{Jensen2015MemInsight}. Essa ferramenta roda de forma independente sobre uma engine Javascript, não sendo necessário um browser para executar, e faz a análise do consumo de memória por meio de um conjunto de medições que visam remontar o ciclo de vida dos objetos em memória, e que permitem a análise de desperdício de recursos durante a execução do programa. 
+		\par No contexto de medição de memória, temos o MemInsight \citep{Jensen2015MemInsight}. Essa ferramenta roda de forma independente sobre um motor Javascript, não sendo necessário um navegador para executá-la, e faz a análise do consumo de memória por meio de um conjunto de medições que visam remontar o ciclo de vida dos objetos em memória, e que permitem a análise de desperdício de recursos durante a execução do programa. 
 		\par Analisando a ferramenta, foi observado que ela só trabalha com medição de métricas de memória, não permitindo generalizar consultas de outros tipos, por isso classificamos como não flexível com relação às métricas. Além disso, por ser uma ferramenta com foco em depurar aplicações, não realiza nativamente a persistência e organização desses dados.
 		
 
 		\subsection{WePR}
-		\par \citep{Asrese2019MeasuringWL} também propôs uma ferramenta para medição no lado do cliente, porém agora com o enfoque em medir métricas de \acr{QoS}, nomeada WePR. No trabalho, ele apresenta um panorama da evolução da web, especialmente de como a latência se desenvolveu nos sites, e sustenta a necessidade desse tipo de medição como forma de melhorar a experiência do usuário, que indicam ser um fator determinante no abandono ou sucesso de um website. A ferramenta foi testada utilizando grandes sites como Google, Youtube e Facebook. 
+		\par \citet{Asrese2019MeasuringWL} também propôs uma ferramenta para medição no lado do cliente, porém com o foco em métricas de \acr{QoS}, nomeada WePR. No trabalho, ele apresenta um panorama da evolução da web, especialmente de como a latência se desenvolveu nos sites, e sustenta a necessidade desse tipo de medição como forma de melhorar a experiência do usuário, que indicam ser um fator determinante no abandono ou sucesso de um website. A ferramenta foi testada utilizando grandes sites como Google, Youtube e Facebook. 
 		\par A arquitetura da ferramenta é distribuída, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador de carga (do inglês, \emph{load balancer}), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor as URLs dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o balanceador de carga, e por fim algum dos servidores de renderização envia os dados para persistência.
 		\par O enfoque da ferramenta é a análise de desempenho de sites, dessa forma sua arquitetura e usabilidade não foram construídas de forma simples de estender, tornando difícil a utilização da ferramenta em outros contextos. Além disso, não temos a possibilidade de incluir métricas customizadas, o que torna sua análise pouco flexível.
 		
 		\subsection{Gember}
-		\par \citep{Gember2012Obtaining} também traz um estudo sobre medição no lado do cliente, porém dessa vez em clientes móveis, utilizando dados de um provedor de internet e também de experimentos controlados. Esse tipo de medição é muito útil para provedores de internet e desenvolvedores, que precisam entender como suas aplicações se saem interagindo com redes móveis de internet.
+		\par \citet{Gember2012Obtaining} também traz um estudo sobre medição no lado do cliente, porém dessa vez em clientes móveis, utilizando dados de um provedor de internet e também de experimentos controlados. Esse tipo de medição é muito útil para provedores de internet e desenvolvedores, que precisam entender como suas aplicações se saem interagindo com redes móveis de internet.
 		\par Foi desenvolvido no trabalho um protótipo para Android de um medidor de performance para analisar somente quando o dispositivo está ativo, e que é integrado ao app como uma biblioteca. A arquitetura consiste basicamente de um controlador central (servidor), e múltiplos clientes (aparelhos) com o código rodando em seus celulares. Dessa forma, o pesquisador faz uma requisição para esse controlador, e ele coordena a coleta do que foi solicitado nos aparelhos, salvando os resultados no servidor.
 		\par O serviço inicialmente coleta latência, taxa de transferência (do inglês, {throughput}) e o tempo de carregamento de páginas Web, é extensível para outras métricas de rede, porém limitado a elas. Outra limitação aqui é a utilização no cliente, que se encontra somente no sistema operacional Android, tornando pouco flexível a utilização dessa ferramenta nos contextos de pesquisas multiplataforma.
 

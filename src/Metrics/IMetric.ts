@@ -1,5 +1,3 @@
-import ITask from "../Tasks/ITask";
-
 /**
  * Represents a contract for collecting an execution metric.
  * @interface

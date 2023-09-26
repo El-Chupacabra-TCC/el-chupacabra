@@ -8,8 +8,6 @@ import CompositeTask from "./Tasks/CompositeTask.js";
 import FirstNPrimesTask from "./Tasks/FirstNPrimesTask.js";
 import ITask from "./Tasks/ITask.js";
 import IPersister from "./Persister/IPersister.js";
-import FunctionLengthMetric from "./Metrics/FunctionLengthMetric.js";
-import JsonFilePersister from "./Persister/JsonFilePersister.js";
 
 
 export function Execute()

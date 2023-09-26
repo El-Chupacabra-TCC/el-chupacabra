@@ -1,5 +1,3 @@
-import DeltaTimeMetric from "../Metrics/DeltaTimeMetric.js"
-import FunctionLengthMetric from "../Metrics/FunctionLengthMetric.js"
 import IMetric from "../Metrics/IMetric.js"
 import BaseTask from "./BaseTask.js"
 
