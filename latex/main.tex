@@ -54,6 +54,7 @@
 \newacro{TCC}{Trabalho de Conclusão de Curso}
 \newacro{QoS}{qualidade de serviço}
 \newacro{API}{\emph{Application Programming Interface}}
+\newacro{ELC}{El Chupacabra Framework}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -367,19 +368,84 @@ Para fins didáticos, estão descritos nesta seção dois estudos de caso práti
 
 TO-DO: Analisar ordem dos exemplos. Se o mais simples será antes do mais complexo.
 
-\subsection{Site dos números primos}
-
-TO-DO: Inserir as figuras da tela e da planilha, explicando o fluxo do site.
-
-Neste exemplo, se considere um contribuidor do repositório FirstNPrimes. O qual é um projeto de um site que calcula os primeiros n números primos dentro do próprio navegador. Ou seja, todo o processamento é no lado do cliente.
-
-O maior desafio do projeto é oferecer o algoritmo mais eficiente possível para o cálculo dos números primos. Pois, quanto mais eficiente for o algoritmo, maior é a quantidade de números primos que o site é capaz de oferecer antes de haver lentidão na resposta.
-
-No repositório, dentro da pasta front/src/PrimeDiscoveryStrategies podemos encontrar a interface dos objetos de cálculo de números primos (IPrimeDiscoveryStrategy.ts) e suas implementações. Logo, o objetivo atual é descobrir qual dessas abordagens é mais eficiente.
-
 \subsection{Projeto dos números primos}
 
 TO-DO: Projeto no qual utilizamos o ELC de forma mais completa, inclusive usando o Composite nas tasks.
+
+
+\subsection{Uso do chupacabra em ambiente produtivo}
+
+Considere o caso de uma aplicação que já está em ambiente de produção com fluxo ativo de usuários.
+E, estes usuários contantemente reclamam sobre lentidões no site.
+Portanto, algum desenvolvedor é designado a investigar as causas dessas lentidões.
+Neste cenário, o desenvolvedor geralmente realiza tentativas de reproduzir o problema do cliente em sua máquina.
+Entretanto, o ideal seria que ele tivesse os dados das execuções dos usuários e para isso o \acr{ELC} oferece o módulo EasyElc.
+
+% TO-DO: Criar um apêndice detalhado sobre o First n Primes Calculator.
+
+Com o propósito de exercitar este cenário desenvolvemos o site Calculadora dos Primeiros n Números Primos (do inglês, \emph{First n Primes Calculator})
+\footnote{\url{https://el-chupacabra-tcc.github.io/FirstNPrimes/}}.
+Onde o usuário insere a quantidade de números primos que deseja e o site calcula a sequência dos números primos, do 2 até a quantidade solicitada.
+Porém, o site sempre calcula a sequência dos números primos do início e usando os recursos da máquina do usuário.
+Além disso, o site também permite a configuração de qual método será usado para o cálculo dos números primos.
+
+% TO-DO: Adicionar imagem do site após realizar o cálculo de 10 números primos com as configurações abertas.
+
+Para realizar a coleta de métricas dentro do site com o \acr{ELC}, o primeiro passo é realizar a instalação do pacote el-chupacabra por meio do npm\footnote{https://www.npmjs.com/package/el-chupacabra}.
+Com o \acr{ELC} instalado como depêndencia do seu projeto, podemos dentro da base de código do site criar uma instância do EasyElc.
+E, como o objetivo é obter métricas dos usuários de um site, são utilizadas como configurações:
+O perfilador de execução para navegadores e a coleta de métricas por meio do Google Sheets.
+
+\begin{lstlisting}[label={lst:easyelc_setup}, caption={Instância do módulo EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
+import { EasyElc, ExecutionProfiles, Persisters, Metrics } from "el-chupacabra"
+
+const easyElc = new EasyElc(
+  new ExecutionProfiles.BrowserExecutionProfile(),
+  new Persisters.SheetsonPersister(
+    import.meta.env.VITE_SHEET_TAB_NAME,
+    import.meta.env.VITE_API_KEY,
+    import.meta.env.VITE_SHEET_ID
+  )
+);
+\end{lstlisting}
+
+Com uma instância do EasyElc criada, já somos capazes de realizar a coleta de métricas.
+A qual é realizada por meio da chamada do método startProfiling que recebe 
+um nome do que está sendo medido e uma lista de métricas para coletar.
+% TO-DO: Adicionar referência do livro do GOF no Strategy.
+Como a implementação do site faz uso do padrão de projeto Strategy, tudo que é preciso é envolver a chamada do método getFirstNPrimeNumbers.
+Então, com a chamada do método finish finalizamos aquela coleta de métricas, passando metadados como argumento, e os dados coletados são enviados para a planilha.
+
+%\begin{lstlisting}[label={lst:easyelc_usage_firstnprimes}, caption={Coleta de métricas usando o EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
+%const calculatePrimes = () => {
+%  let strategy: IPrimalityTestStrategy = primalityTestStrategies[selectedStrategy]
+%
+%  const profilerController = easyElc.startProfiling(selectedStrategy, [new Metrics.DeltaTimeMetric()])
+%  primes = strategy.getFirstNPrimeNumbers(howManyToCalc)
+%  profilerController.finish({ numberOfCalculatedNumbers: howManyToCalc })
+%}
+%\end{lstlisting}
+
+Após a implantação da versão com o \acr{ELC}, o desenvolvedor pode acompanhar o tempo gasto em cada processamento realizado no site.
+Além disso, ele também terá informações sobre o hardware, a quantidade de números primos calculados e qual método foi usado no cálculo.
+
+\begin{table}
+    \centering
+    \caption{Amostra formatada dos dados coletados na Calculadora dos Primeiros n Números Primos por meio do \acr{ELC}.}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Estratégia Usada & Tempo Gasto (ms) & Quantidade de números calculados\\
+        \hline
+		Naive approach & 139 & 100.000 \\
+        \hline
+		Miller-Rabin & 2141 & 100.000 \\
+        \hline
+		Naive approach & 3244 & 1.000.000 \\
+        \hline
+        Miller-Rabin & 27076 & 1.000.000 \\
+        \hline
+    \end{tabular}
+\end{table}
 
 \section{Arquitetura}
 \label{cap:diagrama_de_arq}
