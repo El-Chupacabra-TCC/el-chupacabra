@@ -113,28 +113,26 @@ Pois, eles podem superar o tamanho de qualquer memória principal ou secundária
 Alguns exemplos desses tratamentos especiais para o manuseio de grandes volumes de dados são o modelo de programação MapReduce \citep{Dean2008MapReduce} e o sistema de armazenamento de objetos Haystack \citep{Beaver2010Finding}.
 Portanto, os sistemas que manuseiam grandes volumes de dados precisam ser planejados para sua carga de trabalho.
 
-Por outro lado, aplicações Web com arquitetura cliente-servidor sofrem com o problema da ampla variedade de configurações tanto de hardware quanto de software no lado do cliente.
-E, os desenvolvedores, por sua vez, não possuem diversos tipos de ambientes para exercitar suas aplicações, o que pode levar a problemas com alguns tipos de configurações.
-Além disso, mesmo quando existe acesso a diferentes tipos de ambiente, é improvável que a equipe de desenvolvimento tenha acesso direto, sendo necessário a colaboração de alguém externo.
+Por outro lado, aplicações Web com arquitetura cliente-servidor sofrem com o problema da ampla variedade de configurações tanto de hardware quanto de software no lado do cliente. E, os desenvolvedores, por sua vez, não possuem diversos tipos de ambientes para exercitar suas aplicações, o que pode levar a problemas com alguns tipos de configurações. % Além disso, mesmo quando existe acesso a diferentes tipos de ambiente, é improvável que a equipe de desenvolvimento tenha acesso direto, sendo necessário a colaboração de alguém externo. 
 
-A fim de atenuar estes problemas, estamos propondo um framework o qual um desenvolvedor de uma aplicação Web cliente-servidor seja capaz de facilmente obter métricas e estatísticas sobre provas de conceito, as quais, precisam ser executadas em diversas configurações de clientes por voluntários.
-Por exemplo, considere uma aplicação Web a qual precisa trafegar um volume suficientemente grande de dados entre o cliente e o servidor, de modo que, seja impossível de manter todos dados em cache no lado do cliente.
+%A fim de atenuar estes problemas, estamos propondo um framework o qual um desenvolvedor de uma aplicação Web cliente-servidor seja capaz de facilmente obter métricas e estatísticas sobre provas de conceito, as quais, precisam ser executadas em diversas configurações de clientes por voluntários.
 
-Para realizar o tráfego de dados, uma equipe de desenvolvimento considera as seguintes opções de formato de arquivo: CSV, JSON, Arrow e Parquet.
-Com o objetivo de tomar essa decisão, a equipe decide realizar uma análise de desempenho e consumo de recursos em cada uma das abordagens variando os tipos de clientes.
-E, para incluir nas avaliações a maior variedade possível de clientes, eles também decidem automatizá-la, de modo que seja possível contar com o auxílio de voluntários.
-Porém, com o intuito de tornar isso possível, além da prova de conceito, a equipe ainda precisaria desenvolver como expor, executar e coletar as métricas durante a avaliação. Este é o tipo de cenário para qual o ELC (TO-DO: Definir a sigla - incluir nota de rodapé) está sendo proposto. 
+Por exemplo, considere que um conjunto de professores pesquisadores que estão desenvolvendo uma aplicação Web a qual precisa trafegar um volume suficientemente grande de dados entre o cliente e o servidor, de modo que, seja impossível de manter todos dados no lado do cliente. Para realizar o tráfego de dados, são consideradas as seguintes opções de formato de arquivo: CSV, JSON, Arrow e Parquet. 
 
-{{TO-DO: INSERIR FIGURA DO ELC. VISÃO ARQUITETURAL. UMA VISÃO SIMPLIFICADA DO QUE O ELC FAZ}}
+Com o objetivo de tomar a decisão de qual tipo utilizar, a equipe decide realizar uma análise de desempenho e consumo de recursos em cada uma das abordagens variando os tipos de clientes. E também, para incluir nas avaliações a maior variedade possível de ambientes de execução, eles também decidem automatizá-la, de modo que seja possível contar com o auxílio de voluntários. Porém, com o intuito de tornar isso possível, além da prova de conceito, a equipe ainda precisaria desenvolver como expor, executar e coletar as métricas durante a avaliação. Este é um tipo de cenário para qual o \acr{ELC} está sendo proposto. 
 
-A contribuição principal do ELC é oferecer uma forma fácil e eficaz de realizar a execução de tarefas customizáveis no lado do cliente, e também o registro dos resultados dessas execuções em uma base de dados, também customizável. Dessa forma, seria possível de forma simples resolver o problema da equipe de desenvolvimento. - TO-DO: O que seria fácil? (Pouca configuração, sem mexer muito no código do cliente, integração rápida sem a necessidade de refatorar a aplicação.) - Lembrar isso na conclusão.
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/exemplo-tipo-de-dado.png}
+	\caption{Exemplo de como seria o cenário da pesquisa sobre o tráfego de dados usando o \acr{ELC}.}
+	\label{fig:exemplo-tipo-de-dado}
+\end{figure}
 
-TO-DO: Limitação: métricas de caixa branca são uma limitação. Só são coletadas métricas em tempo de execução. Métricas visuais: os outros frameworks abordam, mas o ELC não.
+A contribuição principal do \acr{ELC} é oferecer uma abordagem prática de realizar a execução de tarefas customizáveis no lado do cliente, e também o registro dos resultados dessas execuções em uma base de dados, também customizável, para análise. Dessa forma, seria possível resolver o problema da equipe sem muitas complicações. %- TO-DO: O que seria fácil? (Pouca configuração, sem mexer muito no código do cliente, integração rápida sem a necessidade de refatorar a aplicação.) - Lembrar isso na conclusão.
 
-Ademais, o framework por padrão possui algumas métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada e a identificação do ambiente de execução, e os dados são armazenados em uma planilha online para fácil obtenção e análise.
+Ademais, o framework por padrão possui algumas métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada e a identificação do ambiente de execução, e os dados são armazenados em uma planilha online para fácil obtenção e análise. Deste modo, o desenvolvedor tem uma base pronta para extender, e pode focar nas provas de conceito e na obtenção de ambientes e voluntários para seus testes, ao invés do desenvolvimento de infraestrutura para realização e registro das medições.
 
-Deste modo, o desenvolvedor pode focar nas provas de conceito e na obtenção de ambientes e voluntários, ao invés do desenvolvimento de infraestrutura para realização das avaliações.
-
+Entretanto, existem algumas limitações que podem ser trabalhadas futuramente no \acr{ELC}. Somente métricas e dados em execução conseguem ser coletados pela ferramenta, ou seja, ainda não é possível realizar testes de caixa branca. Além disso, não são contempladas métricas de renderização, como o tempo de carregamento de páginas, já que existem outras ferramentas que abordam esse tipo de medição, como a WePR, mencionada na seção \ref{WePR}
 
 O trabalho está organizado da seguinte forma: O capítulo \ref{cap:fundamentacao_teorica} corresponde à fundamentação teórica do projeto. O capítulo \ref{cap:metodologiatrabsrelacionados} corresponde à metodologia utilizada na pesquisa dos trabalhos relacionados e contém também os principais trabalhos relacionados encontrados.
 O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da ferramenta. O capítulo \ref{cap:experimentos} apresenta os experimentos realizados utilizando a ferramenta e seus resultados, e por fim o capítulo \ref{cap:conclusão} traz a conclusão do projeto.
@@ -142,21 +140,20 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 
 \chapter{Fundamentação teórica}
 \label{cap:fundamentacao_teorica}
-Aqui vai um texto introduzindo a fundamentação teórica
 
-	\section{Evolução da web e a necessidade de performance}
-	\label{cap:evolucao-web}
+	\section{Big Data e a necessidade de performance}
+	\label{cap:big-data}
 	Inserir texto aqui
 
-	\section{Medição client-side}
+	\section{Medição no lado do cliente}
 	\label{cap:medicao-client-side}
 	Inserir texto aqui
 
-	\section{JS nos navegadores}
+	\section{Javascript e seu uso nos navegadores}
 	\label{cap:js}
 	Inserir texto aqui
 
-	\section{SOLID - Principio do Open/closed}
+	\section{Principio do Aberto/Fechado - SOLID}
 	\label{cap:solid}
 	Inserir texto aqui
 
@@ -313,6 +310,7 @@ Aqui vai um texto introduzindo a fundamentação teórica
 		
 
 		\subsection{WePR}
+		\label{WePR}
 		\par \citet{Asrese2019MeasuringWL} também propôs uma ferramenta para medição no lado do cliente, porém com o foco em métricas de \acr{QoS}, nomeada WePR. No trabalho, ele apresenta um panorama da evolução da web, especialmente de como a latência se desenvolveu nos sites, e sustenta a necessidade desse tipo de medição como forma de melhorar a experiência do usuário, que indicam ser um fator determinante no abandono ou sucesso de um website. A ferramenta foi testada utilizando grandes sites como Google, Youtube e Facebook. 
 		\par A arquitetura da ferramenta é distribuída, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador de carga (do inglês, \emph{load balancer}), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor as URLs dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o balanceador de carga, e por fim algum dos servidores de renderização envia os dados para persistência.
 		\par O enfoque da ferramenta é a análise de desempenho de sites, dessa forma sua arquitetura e usabilidade não foram construídas de forma simples de estender, tornando difícil a utilização da ferramenta em outros contextos. Além disso, não temos a possibilidade de incluir métricas customizadas, o que torna sua análise pouco flexível.
@@ -373,30 +371,33 @@ TO-DO: Analisar ordem dos exemplos. Se o mais simples será antes do mais comple
 TO-DO: Projeto no qual utilizamos o ELC de forma mais completa, inclusive usando o Composite nas tasks.
 
 
-\subsection{Uso do chupacabra em ambiente produtivo}
+\subsection{Uso do ELC em ambiente produtivo}
 
-Considere o caso de uma aplicação que já está em ambiente de produção com fluxo ativo de usuários.
-E, estes usuários contantemente reclamam sobre lentidões no site.
-Portanto, algum desenvolvedor é designado a investigar as causas dessas lentidões.
-Neste cenário, o desenvolvedor geralmente realiza tentativas de reproduzir o problema do cliente em sua máquina.
-Entretanto, o ideal seria que ele tivesse os dados das execuções dos usuários e para isso o \acr{ELC} oferece o módulo EasyElc.
+Considere o caso de uma aplicação que já está em ambiente de produção com fluxo ativo de usuários, e onde estes usuários contantemente reclamam sobre lentidões no site.
+Então, algum desenvolvedor é designado a investigar as causas dessas lentidões.
+Neste cenário, o desenvolvedor geralmente realiza tentativas de reproduzir o problema do cliente em sua máquina. Um facilitador seria se ele tivesse dados sobre as execuções dos usuários para análise, e para isso o \acr{ELC} pode auxiliá-lo, através do módulo EasyElc.
 
 % TO-DO: Criar um apêndice detalhado sobre o First n Primes Calculator.
 
-Com o propósito de exercitar este cenário desenvolvemos o site Calculadora dos Primeiros n Números Primos (do inglês, \emph{First n Primes Calculator})
-\footnote{\url{https://el-chupacabra-tcc.github.io/FirstNPrimes/}}.
-Onde o usuário insere a quantidade de números primos que deseja e o site calcula a sequência dos números primos, do 2 até a quantidade solicitada.
+Com o propósito de exercitar este cenário, foi desenvolvido um site chamado Calculadora dos Primeiros n Números Primos (do inglês, \emph{First n Primes Calculator})
+\footnote{\url{https://el-chupacabra-tcc.github.io/FirstNPrimes/}}, onde o usuário insere a quantidade de números primos que deseja e o site calcula a sequência dos números primos do 2 até a quantidade solicitada.
 Porém, o site sempre calcula a sequência dos números primos do início e usando os recursos da máquina do usuário.
 Além disso, o site também permite a configuração de qual método será usado para o cálculo dos números primos.
 
-% TO-DO: Adicionar imagem do site após realizar o cálculo de 10 números primos com as configurações abertas.
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{figures/print-elc-numeros-primos.jpeg}
+	\caption{Imagem do site após realizar o cálculo de 10 números primos com as configurações abertas.}
+	\label{fig:site-numeros-primos}
+\end{figure}
 
 Para realizar a coleta de métricas dentro do site com o \acr{ELC}, o primeiro passo é realizar a instalação do pacote el-chupacabra por meio do npm\footnote{https://www.npmjs.com/package/el-chupacabra}.
-Com o \acr{ELC} instalado como depêndencia do seu projeto, podemos dentro da base de código do site criar uma instância do EasyElc.
-E, como o objetivo é obter métricas dos usuários de um site, são utilizadas como configurações:
-O perfilador de execução para navegadores e a coleta de métricas por meio do Google Sheets.
+Com o \acr{ELC} instalado como depêndencia do seu projeto, é possível dentro da base de código do site criar uma instância do EasyElc.
+E, como o objetivo da aplicação do \acr{ELC} é obter métricas dos usuários de um site, são utilizadas como configurações: O perfilador de execução para navegadores e a coleta de métricas por meio do Google Sheets.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[label={lst:easyelc_setup}, caption={Instância do módulo EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
+	
 import { EasyElc, ExecutionProfiles, Persisters, Metrics } from "el-chupacabra"
 
 const easyElc = new EasyElc(
@@ -408,28 +409,27 @@ const easyElc = new EasyElc(
   )
 );
 \end{lstlisting}
+\end{minipage}
 
-Com uma instância do EasyElc criada, já somos capazes de realizar a coleta de métricas.
-A qual é realizada por meio da chamada do método startProfiling que recebe 
-um nome do que está sendo medido e uma lista de métricas para coletar.
+Com uma instância do EasyElc criada, já é possível realizar a coleta das métricas desejadas, a qual é realizada por meio da chamada do método startProfiling que recebe um nome do que está sendo medido e uma lista de métricas para coletar.
 % TO-DO: Adicionar referência do livro do GOF no Strategy.
-Como a implementação do site faz uso do padrão de projeto Strategy, tudo que é preciso é envolver a chamada do método getFirstNPrimeNumbers.
-Então, com a chamada do método finish finalizamos aquela coleta de métricas, passando metadados como argumento, e os dados coletados são enviados para a planilha.
+Como a implementação do site faz uso do padrão de projeto Strategy, so é necessário inserir a chamada do método getFirstNPrimeNumbers.
+Então, com a chamada do método finish, é finalizada a coleta das métricas, passando metadados como argumento, e os dados coletados são enviados para a planilha.
 
-%\begin{lstlisting}[label={lst:easyelc_usage_firstnprimes}, caption={Coleta de métricas usando o EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
-%const calculatePrimes = () => {
-%  let strategy: IPrimalityTestStrategy = primalityTestStrategies[selectedStrategy]
-%
-%  const profilerController = easyElc.startProfiling(selectedStrategy, [new Metrics.DeltaTimeMetric()])
-%  primes = strategy.getFirstNPrimeNumbers(howManyToCalc)
-%  profilerController.finish({ numberOfCalculatedNumbers: howManyToCalc })
-%}
-%\end{lstlisting}
+\begin{lstlisting}[label={lst:easyelc_usage_firstnprimes}, caption={Coleta de métricas usando o EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
+const calculatePrimes = () => {
+ let strategy: IPrimalityTestStrategy = primalityTestStrategies[selectedStrategy]
+
+ const profilerController = easyElc.startProfiling(selectedStrategy, [new Metrics.DeltaTimeMetric()])
+ primes = strategy.getFirstNPrimeNumbers(howManyToCalc)
+ profilerController.finish({ numberOfCalculatedNumbers: howManyToCalc })
+}
+\end{lstlisting}
 
 Após a implantação da versão com o \acr{ELC}, o desenvolvedor pode acompanhar o tempo gasto em cada processamento realizado no site.
 Além disso, ele também terá informações sobre o hardware, a quantidade de números primos calculados e qual método foi usado no cálculo.
 
-\begin{table}
+\begin{table}[!h]
     \centering
     \caption{Amostra formatada dos dados coletados na Calculadora dos Primeiros n Números Primos por meio do \acr{ELC}.}
     \begin{tabular}{|c|c|c|}
