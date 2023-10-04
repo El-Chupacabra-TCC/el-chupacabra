@@ -9,6 +9,8 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage[toc,page]{appendix}
+\usepackage{courier}
+
 \definecolor{mygreen}{RGB}{64,100,64}
 
 \renewcommand{\lstlistingname}{Listagem}
@@ -39,7 +41,8 @@
     numberstyle=\small\ttfamily\color{gray},
     numbersep=5pt,
     aboveskip=10pt,
-    belowskip=10pt
+    belowskip=10pt,
+	basicstyle=\footnotesize\ttfamily,
 }
 
 % As figuras ficam armazenadas na pasta figuras.
@@ -55,6 +58,8 @@
 \newacro{QoS}{qualidade de serviço}
 \newacro{API}{\emph{Application Programming Interface}}
 \newacro{ELC}{El Chupacabra Framework}
+\newacro{CSV}{El Chupacabra Framework}
+\newacro{JSON}{El Chupacabra Framework}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -117,7 +122,7 @@ Por outro lado, aplicações Web com arquitetura cliente-servidor sofrem com o p
 
 %A fim de atenuar estes problemas, estamos propondo um framework o qual um desenvolvedor de uma aplicação Web cliente-servidor seja capaz de facilmente obter métricas e estatísticas sobre provas de conceito, as quais, precisam ser executadas em diversas configurações de clientes por voluntários.
 
-Por exemplo, considere que um conjunto de professores pesquisadores que estão desenvolvendo uma aplicação Web a qual precisa trafegar um volume suficientemente grande de dados entre o cliente e o servidor, de modo que, seja impossível de manter todos dados no lado do cliente. Para realizar o tráfego de dados, são consideradas as seguintes opções de formato de arquivo: CSV, JSON, Arrow e Parquet. 
+Por exemplo, considere que um conjunto de professores pesquisadores que estão desenvolvendo uma aplicação Web a qual precisa trafegar um volume suficientemente grande de dados entre o cliente e o servidor, de modo que, seja impossível de manter todos dados no lado do cliente (Figura \ref{fig:exemplo-tipo-de-dado}). Para realizar o tráfego de dados, são consideradas as seguintes opções de formato de arquivo: \acr{CSV}, \acr{JSON}, Arrow e Parquet. 
 
 Com o objetivo de tomar a decisão de qual tipo utilizar, a equipe decide realizar uma análise de desempenho e consumo de recursos em cada uma das abordagens variando os tipos de clientes. E também, para incluir nas avaliações a maior variedade possível de ambientes de execução, eles também decidem automatizá-la, de modo que seja possível contar com o auxílio de voluntários. Porém, com o intuito de tornar isso possível, além da prova de conceito, a equipe ainda precisaria desenvolver como expor, executar e coletar as métricas durante a avaliação. Este é um tipo de cenário para qual o \acr{ELC} está sendo proposto. 
 
@@ -128,11 +133,13 @@ Com o objetivo de tomar a decisão de qual tipo utilizar, a equipe decide realiz
 	\label{fig:exemplo-tipo-de-dado}
 \end{figure}
 
-A contribuição principal do \acr{ELC} é oferecer uma abordagem prática de realizar a execução de tarefas customizáveis no lado do cliente, e também o registro dos resultados dessas execuções em uma base de dados, também customizável, para análise. Dessa forma, seria possível resolver o problema da equipe sem muitas complicações. %- TO-DO: O que seria fácil? (Pouca configuração, sem mexer muito no código do cliente, integração rápida sem a necessidade de refatorar a aplicação.) - Lembrar isso na conclusão.
+A contribuição principal da solução proposta é oferecer uma abordagem prática para realizar a execução de tarefas customizáveis no lado do cliente, e também o registro dos resultados dessas execuções em uma base de dados, também customizável, para análise. Dessa forma, seria possível resolver o problema da equipe sem muitas complicações. O \acr{ELC} é um componente vital desta arquitetura.
 
-Ademais, o framework por padrão possui algumas métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada e a identificação do ambiente de execução, e os dados são armazenados em uma planilha online para fácil obtenção e análise. Deste modo, o desenvolvedor tem uma base pronta para extender, e pode focar nas provas de conceito e na obtenção de ambientes e voluntários para seus testes, ao invés do desenvolvimento de infraestrutura para realização e registro das medições.
+Ademais, o \emph{framework} por padrão possui algumas métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada e a identificação do ambiente de execução, e os dados são armazenados em uma planilha online para fácil obtenção e análise. Deste modo, o desenvolvedor tem uma base pronta para extender, e pode focar nas provas de conceito e na obtenção de ambientes e voluntários para seus testes, ao invés do desenvolvimento de infraestrutura para realização e registro das medições.
 
-Entretanto, existem algumas limitações que podem ser trabalhadas futuramente no \acr{ELC}. Somente métricas e dados em execução conseguem ser coletados pela ferramenta, ou seja, ainda não é possível realizar testes de caixa branca. Além disso, não são contempladas métricas de renderização, como o tempo de carregamento de páginas, já que existem outras ferramentas que abordam esse tipo de medição, como a WePR, mencionada na seção \ref{WePR}
+As principais limitações da metodologia proposta nesse trabalho são: somente métricas e dados em execução conseguem ser coletados pela ferramenta, ou seja, ainda não é possível realizar testes de caixa branca. Além disso, não são contempladas métricas de renderização, como o tempo de carregamento de páginas, já que existem outras ferramentas que abordam esse tipo de medição, como a WePR, mencionada na seção \ref{WePR}.
+
+%TODO-Citar o capítulo do Sommerville ou do Prestman que falam de testes de caixa branca.
 
 O trabalho está organizado da seguinte forma: O capítulo \ref{cap:fundamentacao_teorica} corresponde à fundamentação teórica do projeto. O capítulo \ref{cap:metodologiatrabsrelacionados} corresponde à metodologia utilizada na pesquisa dos trabalhos relacionados e contém também os principais trabalhos relacionados encontrados.
 O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da ferramenta. O capítulo \ref{cap:experimentos} apresenta os experimentos realizados utilizando a ferramenta e seus resultados, e por fim o capítulo \ref{cap:conclusão} traz a conclusão do projeto.
@@ -141,7 +148,7 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 \chapter{Fundamentação teórica}
 \label{cap:fundamentacao_teorica}
 
-	\section{Big Data e a necessidade de performance}
+	\section{Desempenho no processamento de \emph{big data}}
 	\label{cap:big-data}
 	Inserir texto aqui
 
@@ -395,9 +402,11 @@ Para realizar a coleta de métricas dentro do site com o \acr{ELC}, o primeiro p
 Com o \acr{ELC} instalado como depêndencia do seu projeto, é possível dentro da base de código do site criar uma instância do EasyElc.
 E, como o objetivo da aplicação do \acr{ELC} é obter métricas dos usuários de um site, são utilizadas como configurações: O perfilador de execução para navegadores e a coleta de métricas por meio do Google Sheets.
 
-\begin{minipage}{\linewidth}
+% REMOVE A PÁGINA EM BRANCO UTILIZANDO MINIPAGE
+%\begin{minipage}{\linewidth}
+%\end{minipage}
+
 \begin{lstlisting}[label={lst:easyelc_setup}, caption={Instância do módulo EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
-	
 import { EasyElc, ExecutionProfiles, Persisters, Metrics } from "el-chupacabra"
 
 const easyElc = new EasyElc(
@@ -409,7 +418,6 @@ const easyElc = new EasyElc(
   )
 );
 \end{lstlisting}
-\end{minipage}
 
 Com uma instância do EasyElc criada, já é possível realizar a coleta das métricas desejadas, a qual é realizada por meio da chamada do método startProfiling que recebe um nome do que está sendo medido e uma lista de métricas para coletar.
 % TO-DO: Adicionar referência do livro do GOF no Strategy.
@@ -429,6 +437,7 @@ const calculatePrimes = () => {
 Após a implantação da versão com o \acr{ELC}, o desenvolvedor pode acompanhar o tempo gasto em cada processamento realizado no site.
 Além disso, ele também terá informações sobre o hardware, a quantidade de números primos calculados e qual método foi usado no cálculo.
 
+%TO-DO: Alterar o nome da estratégia de Naive approach para outro nome. 
 \begin{table}[!h]
     \centering
     \caption{Amostra formatada dos dados coletados na Calculadora dos Primeiros n Números Primos por meio do \acr{ELC}.}
