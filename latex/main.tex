@@ -437,7 +437,6 @@ const calculatePrimes = () => {
 Após a implantação da versão com o \acr{ELC}, o desenvolvedor pode acompanhar o tempo gasto em cada processamento realizado no site.
 Além disso, ele também terá informações sobre o hardware, a quantidade de números primos calculados e qual método foi usado no cálculo.
 
-%TO-DO: Alterar o nome da estratégia de Naive approach para outro nome. 
 \begin{table}[!h]
     \centering
     \caption{Amostra formatada dos dados coletados na Calculadora dos Primeiros n Números Primos por meio do \acr{ELC}.}
@@ -445,13 +444,13 @@ Além disso, ele também terá informações sobre o hardware, a quantidade de n
         \hline
         Estratégia Usada & Tempo Gasto (ms) & Quantidade de números calculados\\
         \hline
-		Naive approach & 139 & 100.000 \\
+		Força bruta & 1680 & 10.000 \\
         \hline
-		Miller-Rabin & 2141 & 100.000 \\
+		Ingênua otimizada & 17 & 10.000 \\
         \hline
-		Naive approach & 3244 & 1.000.000 \\
+		Força bruta & 16612 & 30.000 \\
         \hline
-        Miller-Rabin & 27076 & 1.000.000 \\
+        Ingênua otimizada & 30 & 30.000 \\
         \hline
     \end{tabular}
 \end{table}
