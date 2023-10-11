@@ -60,6 +60,7 @@
 \newacro{ELC}{El Chupacabra Framework}
 \newacro{CSV}{Comma-Separated Values}
 \newacro{JSON}{JavaScript Object Notation}
+\newacro{IoT}{Internet das coisas (do inglês, \emph{Internet of Things})}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -113,8 +114,7 @@ Desde o começo da era da informação e principalmente após a popularização 
 Este cenário com disponibilidade de grandes volumes de dados (do inglês, \emph{big data}), criou diversas oportunidades para modelos de negócios voltados para o uso desses dados.
 Empresas como Google e Meta (antigo Facebook), se tornaram gigantes do mercado explorando estes modelos de negócios baseados em dados.
 
-Entretanto, o manuseio de grandes volumes de dados necessita de cuidados especiais.
-Pois, eles podem superar o tamanho de qualquer memória principal ou secundária as quais são encontradas no mercado.
+Entretanto, o manuseio de grandes volumes de dados necessita de cuidados especiais, poi, eles podem superar o tamanho de qualquer memória principal ou secundária, as quais são encontradas no mercado.
 Alguns exemplos desses tratamentos especiais para o manuseio de grandes volumes de dados são o modelo de programação MapReduce \citep{Dean2008MapReduce} e o sistema de armazenamento de objetos Haystack \citep{Beaver2010Finding}.
 Portanto, os sistemas que manuseiam grandes volumes de dados precisam ser planejados para sua carga de trabalho.
 
@@ -137,9 +137,7 @@ A contribuição principal da solução proposta é oferecer uma abordagem prát
 
 Ademais, o \emph{framework} por padrão possui algumas métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada e a identificação do ambiente de execução, e os dados são armazenados em uma planilha online para fácil obtenção e análise. Deste modo, o desenvolvedor tem uma base pronta para extender, e pode focar nas provas de conceito e na obtenção de ambientes e voluntários para seus testes, ao invés do desenvolvimento de infraestrutura para realização e registro das medições.
 
-As principais limitações da metodologia proposta nesse trabalho são: somente métricas e dados em execução conseguem ser coletados pela ferramenta, ou seja, ainda não é possível realizar testes de caixa branca. Além disso, não são contempladas métricas de renderização, como o tempo de carregamento de páginas, já que existem outras ferramentas que abordam esse tipo de medição, como a WePR, mencionada na seção \ref{WePR}.
-
-%TODO-Citar o capítulo do Sommerville ou do Prestman que falam de testes de caixa branca.
+As principais limitações da metodologia proposta nesse trabalho são: somente métricas e dados em execução conseguem ser coletados pela ferramenta, ou seja, ainda não é possível realizar testes de caixa branca \footnote{Sobre testes de caixa branca: \citep[Capítulo 21]{Sommerville2015Software}}. Além disso, não são contempladas métricas de renderização, como o tempo de carregamento de páginas, já que existem outras ferramentas que abordam esse tipo de medição, como a WePR, mencionada na seção \ref{WePR}.
 
 O trabalho está organizado da seguinte forma: O capítulo \ref{cap:fundamentacao_teorica} corresponde à fundamentação teórica do projeto. O capítulo \ref{cap:metodologiatrabsrelacionados} corresponde à metodologia utilizada na pesquisa dos trabalhos relacionados e contém também os principais trabalhos relacionados encontrados.
 O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da ferramenta. O capítulo \ref{cap:experimentos} apresenta os experimentos realizados utilizando a ferramenta e seus resultados, e por fim o capítulo \ref{cap:conclusão} traz a conclusão do projeto.
@@ -148,9 +146,15 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 \chapter{Fundamentação teórica}
 \label{cap:fundamentacao_teorica}
 
-	\section{Desempenho no processamento de \emph{big data}}
+	\section{Desempenho no processamento de grandes volumes de dados}
 	\label{cap:big-data}
-	Inserir texto aqui
+	
+	Grandes volumes de dados (do inglês, \emph{Big data}) é um termo utilizado para refletir dados de alta complexidade, velocidade e variação, que necessitam de técnicas e tecnologias avançadas para habilitar sua coleta, armazenamento, distribuição, organização e análise \citep{Gandomi2015Beyond}. 
+
+	Enquanto os dados estruturados ocupam uma grande parcela nesses grandes volumes, é crescente e notória a utilização de dados não estruturados no processo, como na coleta de vídeos e imagens, as quais as tecnologias tradicionais não processam adequadamente. Somado a isso, uma larga parcela dos dados gerados mundialmente hoje é proveniente do uso de aparelhos diversos, como sensores de ambiente, assessórios inteligentes, e até eletrodomésticos, no fenômeno que chamamos de \acr{IoT} \citep{Lee2017293}.
+
+	Nesse contexto, tecnologias performáticas são de extrema necessidade na construção de aplicações que utilizam \emph{big data}.
+
 
 	\section{Medição no lado do cliente}
 	\label{cap:medicao-client-side}
@@ -164,10 +168,22 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 	\label{cap:solid}
 	Inserir texto aqui
 
-	\section{Padrão de software Composite}
-	\label{cap:composite}
-	Inserir texto aqui
+	\section{Padrões de Software}
+	\label{cap:padroes-de-software}
 
+
+	\subsection{Composite}
+	\label{subsection:composite}
+
+	O padrão de projeto Composite é utilizado quando é desejado representar uma hierarquia de objetos, e o objetivo é fazer com que o cliente ignore as diferenças entre os objetos compostos e os individuais, interagindo da mesma maneira nos dois casos. Como consequência, esse padrão faz com que o cliente seja simples. Como os objetos são tratados da mesma maneira, o código do cliente acaba ficando mais simples \citep[Capítulo 4]{gamma1994design}.
+	
+	Além disso, o uso do padrão torna facil a adição de novos tipos de componentes, basta implementar a classe que o cliente entende. Dessa forma, os clientes não precisam ser alterados caso os objetos sejam modificados. Uma desvantagem desse padrão é que torna a validação dos componentes mais complicada, pois não se pode contar plenamente com a tipagem para garantir os requisitos dos dados. São necessárias validações em tempo de execução \citep[Capítulo 4]{gamma1994design}. Esse padrão foi utilizado na construção das tarefas, processo descrito na seção \ref{subsection:modulo-tasks}.
+
+
+
+	\subsection{Strategy}
+	\label{subsection:strategy}
+	Inserir texto aqui \citep{gamma1994design}
 
 
 \chapter{Trabalhos Relacionados}
@@ -420,8 +436,7 @@ const easyElc = new EasyElc(
 \end{lstlisting}
 
 Com uma instância do EasyElc criada, já é possível realizar a coleta das métricas desejadas, a qual é realizada por meio da chamada do método startProfiling que recebe um nome do que está sendo medido e uma lista de métricas para coletar.
-% TO-DO: Adicionar referência do livro do GOF no Strategy.
-Como a implementação do site faz uso do padrão de projeto Strategy, so é necessário inserir a chamada do método getFirstNPrimeNumbers.
+Como a implementação do site faz uso do padrão de projeto \hyperref[subsection:strategy]{Strategy}, só é necessário inserir a chamada do método getFirstNPrimeNumbers.
 Então, com a chamada do método finish, é finalizada a coleta das métricas, passando metadados como argumento, e os dados coletados são enviados para a planilha.
 
 \begin{lstlisting}[label={lst:easyelc_usage_firstnprimes}, caption={Coleta de métricas usando o EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
@@ -472,6 +487,7 @@ Inicialmente, a ferramenta se estrutura em seis módulos principais: o Módulo d
 \end{figure}
 
 \subsection{Módulo de Projeto (Project)}
+\label{subsection:modulo-project}
 
 O módulo de projeto é o módulo principal da ferramenta, onde o fluxo da coleta é iniciado. Ele é composto somente pela classe Project. O bloco de código \ref{lst:project_class} contém a classe criada para representar um projeto.
 
@@ -510,6 +526,7 @@ Essa classe possui como atributos uma instância da classe ExecutionProfile, que
 Possui também um único método, o método executeTask(), que coleta as informações da máquina através do ExecutionProfile, dá inicio a execução das tarefas associadas aquele projeto e persiste os resultados.
 
 \subsection{Módulo de Perfil de Execução (ExecutionProfile)}
+\label{subsection:modulo-execution-profile}
 
 A função principal desse módulo é permitir que o usuário consiga coletar informações a respeito do ambiente no qual estão sendo executadas as tarefas. Dessa forma, é possível não só diferenciar os voluntários após a coleta, mas também analisar os ambientes nos quais as tarefas foram executadas. Esse módulo consiste basicamente de uma interface, a IExecutionProfile, e de suas implementações concretas, que representam os tipos de ambientes nos quais as tarefas podem ser executadas. O bloco de código \ref{lst:execution_profile_abstract_class} a seguir contém a classe abstrata IExecutionProfile.
 
@@ -597,8 +614,9 @@ export default class BrowserExecutionProfile implements IExecutionProfile {
 \end{lstlisting}
 
 \subsection{Módulo de Tarefas (Tasks)}
+\label{subsection:modulo-tasks}
 
-Esse módulo permite ao usuário implementar tarefas customizadas, sejam elas tarefas simples ou compostas (utilizando o padrão Composite), e também permite a realização de processamentos pré e pós tarefa. Essas tarefas posteriormente são executadas pelo módulo principal de Project.
+Esse módulo permite ao usuário implementar tarefas customizadas, sejam elas tarefas simples ou compostas (utilizando o padrão \hyperref[subsection:composite]{Composite}), e também permite a realização de processamentos pré e pós tarefa. Essas tarefas posteriormente são executadas pelo módulo principal de Project.
 Assim como o anterior, consiste de uma interface genérica (nesse caso a ITask) e suas implementações concretas. A classe exemplo para a criação de outras classes é a BaseTask, que traz a estrutura básica de uma tarefa, implementando a interface ITask. O bloco de código \ref{lst:basetask_class} a seguir contém a classe BaseTask.
 
 \begin{lstlisting}[label={lst:basetask_class}, caption={Implementação da classe responsável por representar uma tarefa básica.}, language=TypeScript, breaklines=true]
@@ -708,6 +726,7 @@ export default class CompositeTask extends BaseTask {
 
 
 \subsection{Módulo de Métricas (Metrics)}
+\label{subsection:modulo-metrics}
 
 O módulo de métricas (Metrics) tem como objetivo representar as métricas que serão coletadas pela ferramenta. Essas métricas estão contidas nas tarefas (Tasks), e são elas as responsáveis de efetivamente coletar o dado desejado do ambiente no qual está sendo executada a tarefa. Esse módulo, assim como os anteriores, consiste de uma interface genérica (nesse caso a interface IMetric) e de suas implementações concretas. O bloco de código \ref{lst:imetric_abstract_class} a seguir contém a classe abstrata IMetric.
 
@@ -812,6 +831,7 @@ export default class MemoryMetric implements IMetric {
 
 
 \subsection{Módulo de Persistência (Persister)}
+\label{subsection:modulo-persister}
 
 O módulo de persistência (Persister) tem como finalidade encapsular a persistência de dados após a coleta das métricas, afim de faciltar o uso de diferentes formas de persistência de dados no contexto do framework. Dessa forma, é possível adaptar facilmente a implementação da persistência sem interferir na estrutura das tarefas. Esse módulo é composto pela interface genérica IPersister e suas implementações concretas, assim como os anteriores. O bloco de código \ref{lst:ipersister_abstract_class} a seguir contém a classe abstrata IPersister.
 
