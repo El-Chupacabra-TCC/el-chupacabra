@@ -29,7 +29,8 @@
     "dist/**/*",
     "types/**/*",
     "README.md",
-    "package.json"
+    "package.json",
+    "index.html"
   ],
   "dependencies": {}
 }
