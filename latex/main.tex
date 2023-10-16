@@ -146,31 +146,44 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 \chapter{Fundamentação teórica}
 \label{cap:fundamentacao_teorica}
 
-	\section{Desempenho no processamento de grandes volumes de dados}
-	\label{cap:big-data}
-	
-	Grandes volumes de dados (do inglês, \emph{Big data}) é um termo utilizado para refletir dados de alta complexidade, velocidade e variação, que necessitam de técnicas e tecnologias avançadas para habilitar sua coleta, armazenamento, distribuição, organização e análise \citep{Gandomi2015Beyond}. 
+	\section{Testes de Software}
+	\label{cap:software-testing}
+	O desenvolvimento de software é uma atividade propensa a erros humanos, que podem ser introduzidos em várias etapas do processo.
+	Para mitigar essa característica inerente, a área de testes de software surgiu como um componente crítico da engenharia de software, no âmbito da garantia de qualidade de software.
+	O principal objetivo dos testes de software é identificar e corrigir o maior número possível de erros antes da entrega do software ao cliente.
+	Isso é realizado por meio da criação de uma série de casos de teste que, utilizando técnicas específicas de teste de software, exercitam o software com alta probabilidade de encontrar erros.
+	% TO-DO: \citep{PressmanBook}
 
-	Enquanto os dados estruturados ocupam uma grande parcela nesses grandes volumes, é crescente e notória a utilização de dados não estruturados no processo, como na coleta de vídeos e imagens, as quais as tecnologias tradicionais não processam adequadamente. Somado a isso, uma larga parcela dos dados gerados mundialmente hoje é proveniente do uso de aparelhos diversos, como sensores de ambiente, assessórios inteligentes, e até eletrodomésticos, no fenômeno que chamamos de \acr{IoT} \citep{Lee2017293}.
+	Os testes de software desempenham um papel fundamental na garantia de qualidade de software, uma vez que suas outras atividades não são, por si só, suficientes na detecção e correção de erros.
+	Isso ocorre porque, sempre que um programa é executado, ele está, de fato, passando por um processo de teste.
+	Portanto, a extensa aplicação de testes é necessária para identificar e solucionar erros antes que o software chegue às mãos do cliente.
+	% TO-DO: \citep{PressmanBook}
 
-	Nesse contexto, tecnologias performáticas são de extrema necessidade na construção de aplicações que utilizam \emph{big data}.
+	Os testes de software podem ser classificados em dois tipos principais: testes de caixa branca e testes de caixa preta.
+	No caso dos testes de caixa branca, o conhecimento das estruturas internas do software é utilizado para projetar os casos de teste.
+	Em contrapartida, os testes de caixa preta se concentram em exercitar os requisitos do software, ignorando sua estrutura interna. Esses testes avaliam o que o software faz, sem se preocupar com como ele faz.
+	% TO-DO: \citep{PressmanBook}
+
+	Dentro do contexto de um framework de análise de consumo de recursos computacionais de aplicações web do lado cliente, a escolha dos tipos de teste a serem realizados é crucial.
+	O \acr{ELC} é primariamente focado na análise do consumo de recursos computacionais, sem acoplamento com o funcionamento interno do software testado.
+	Portanto, os casos de teste de caixa preta são os mais apropriados.
+	No entanto, é importante destacar que, devido à capacidade do ELC de permitir análises compostas, por meio da árvore de tarefas \ref{task-tree}, ele também pode oferecer algum nível de visibilidade das estruturas internas do objeto de teste.
 
 
-	\section{Medição no lado do cliente}
-	\label{cap:medicao-client-side}
-	Inserir texto aqui
+	\section{Abordagem empírica em engenharia de software}
+	\label{cap:engenharia-de-software-empirica}
 
-	\section{Javascript e seu uso nos navegadores}
-	\label{cap:js}
-	Inserir texto aqui
 
-	\section{Principio do Aberto/Fechado - SOLID}
-	\label{cap:solid}
-	Inserir texto aqui
+	A engenharia de software é um campo multi-disciplinar. Abrange desde tópicos técnicos, como bancos de dados e sistemas operacionais, até questões relacionadas a linguagens de programação, como sintaxe e semântica, e também temas sociais e até psicologia. O desenvolvimento de software é humano; que é até hoje incapacitado de criar um código completamente do zero. É uma disciplina baseada em criatividade, e na ingenuidade das pessoas trabalhando na área \citep{10.5555/2349018}.
+
+	Em contraponto, é necessário, quando estudando ou fazendo pesquisas no campo, mirar em trata-la como uma disciplina científica. Ou seja, utilizar métodos científicos para realizar as pesquisas, e também na hora de tomar decisões sobre mudanças na forma na qual é feita o desenvolvimento. Para isso, é preciso entender os métodos que estão disponíveis para serem utilizados, suas limitações e quando eles devem ser aplicados \citep{10.5555/2349018}. Isso também pode ser aplicado na hora de escolher as ferramentas para o desenvolvimento de aplicações.
+
+	Nesse contexto, o \acr{ELC} fornece insumos úteis aos pesquisadores e desenvolvedores na hora de avaliar essas ferramentas, pois permite estabelecer critérios objetivos na hora de comparar abordagens no desenvolvimento de aplicações web.
 
 	\section{Padrões de Software}
 	\label{cap:padroes-de-software}
 
+	% TO-DO: O que é padrão de projeto, qual a sua importância. Existem muitos padrões mas nós utilizamos o COmposite e o Strategy
 
 	\subsection{Composite}
 	\label{subsection:composite}
@@ -184,6 +197,13 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 	\subsection{Strategy}
 	\label{subsection:strategy}
 	Inserir texto aqui \citep{gamma1994design}
+
+
+	\section{Principio do Aberto/Fechado - SOLID}
+	\label{cap:solid}
+	Clean Architecture.
+
+	% TO-DO: dar uma lida em Coesão/acoplamento no sommerville ou prestman.
 
 
 \chapter{Trabalhos Relacionados}
@@ -452,7 +472,6 @@ const calculatePrimes = () => {
 Após a implantação da versão com o \acr{ELC}, o desenvolvedor pode acompanhar o tempo gasto em cada processamento realizado no site.
 Além disso, ele também terá informações sobre o hardware, a quantidade de números primos calculados e qual método foi usado no cálculo.
 
-%TO-DO: Alterar o nome da estratégia de Naive approach para outro nome. 
 \begin{table}[!h]
     \centering
     \caption{Amostra formatada dos dados coletados na Calculadora dos Primeiros n Números Primos por meio do \acr{ELC}.}
@@ -460,13 +479,13 @@ Além disso, ele também terá informações sobre o hardware, a quantidade de n
         \hline
         Estratégia Usada & Tempo Gasto (ms) & Quantidade de números calculados\\
         \hline
-		Naive approach & 139 & 100.000 \\
+		Força bruta & 1680 & 10.000 \\
         \hline
-		Miller-Rabin & 2141 & 100.000 \\
+		Ingênua otimizada & 17 & 10.000 \\
         \hline
-		Naive approach & 3244 & 1.000.000 \\
+		Força bruta & 16612 & 30.000 \\
         \hline
-        Miller-Rabin & 27076 & 1.000.000 \\
+        Ingênua otimizada & 30 & 30.000 \\
         \hline
     \end{tabular}
 \end{table}
@@ -1011,6 +1030,7 @@ class Resource {
 
 
 \subsection{Árvore de Tarefas}
+\label{task-tree}
 
 A árvore de tarefas é definida basicamente por três classes:
 a classe abstrata \emph{Task}, responsável por definir o que uma tarefa faz, ou seja, a sua interface pública.
