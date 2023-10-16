@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
       "declaration": true,
+      "declarationDir": "types", 
       "outDir": "./dist",
       "lib": ["es2017", "dom"],
       "target": "ES6",
