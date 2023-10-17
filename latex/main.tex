@@ -61,6 +61,7 @@
 \newacro{CSV}{Comma-Separated Values}
 \newacro{JSON}{JavaScript Object Notation}
 \newacro{IoT}{Internet das coisas (do inglês, \emph{Internet of Things})}
+\newacro{OCP}{Princípio Aberto/Fechado (do inglês, \emph{Open-Closed Principle})}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -199,9 +200,28 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 	Inserir texto aqui \citep{gamma1994design}
 
 
-	\section{Principio do Aberto/Fechado - SOLID}
-	\label{cap:solid}
-	Clean Architecture.
+	\section{Principio do Aberto/Fechado}
+	\label{cap:solid-ocp}
+	\citet{MartinCleanArchtecture} popularizou os princípios de design de software SOLID.
+	Os quais atuam como guias na organização de funções e estruturas de dados em classes e como essas classes devem ser interconectadas.
+	Outro ponto importante, é que esses princípios são pensados para serem aplicados por programadores que trabalham no nível do módulo.
+	Ou seja, sua aplicação ocorre um nível de abstração acima do código e visa definir os tipos de estruturas usadas dentro de módulos e componentes.
+	O principal objetivo dos princípios SOLID é a criação de estruturas de software que tolerem mudanças, sejam fáceis de entender e sejam a base de componentes reutilizáveis em diferentes sistemas de software.
+
+	O princípio do aberto/fechado (do inglês, \emph{open/closed principle} ou OCP) pode ser definido como um artefato de software deve ser aberto para extensão, mas fechado para modificação. \citep{Meyer1988ObjectOrientedSoftwareConstruction}
+	Em outras palavras, podemos afirmar que o princípio não foi respeitado quando uma extensão simples de um requisito resulta em uma cascata de mudanças em módulos dependentes.
+	O \acr{OCP} provoca justamente neste ponto, onde idealmente os módulos nunca são alterados.
+	Deste modo, quando houver a extensão de algum requisito, a extensão no software é feita adicionando código novo, ao invés de, alterar o código existente que funciona. \citep{Martin1996TheOpen-ClosedPrinciple}
+
+	O \acr{OCP} é reconhecido como o coração do design de classes e módulos por estudantes de design de software. \citep{CleanArchtecture}
+	Pois, permite que mudanças aconteçam sem que haja um grande impacto no software.
+	E, atinge este objetivo por meio do particionamento do sistema em componentes, organizando eles em uma hieraquia de dependência a qual protege os componentes de nível mais alto das mudanças no componentes de nível mais baixo. \citep{CleanArchtecture}
+
+	A arquitetura do framework ELC utiliza como principal guia o \acr{OCP}.
+	Pois, organizamos os módulos do framework como entidades completamente independentes, assegurando que qualquer referência intermodular deveria ser feita para a interface do módulo.
+	Desta forma, o risco de alguma mudança em um módulo resultar em alterações em outro módulo é minimizado e permite que multiplos módulos sejam desenvolvidos em paralelo sem haver retrabalho.
+	Ademais, definimos os módulos do \acr{ELC} como os pontos de extensão do framework.
+	Ou seja, cada módulo é projetado para caso alguma mudança comportamento seja necessária, a alteração é incluida criando uma nova classe a qual extende a interface do módulo.
 
 	% TO-DO: dar uma lida em Coesão/acoplamento no sommerville ou prestman.
 
