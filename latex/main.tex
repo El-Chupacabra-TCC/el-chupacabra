@@ -171,20 +171,21 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 	No entanto, é importante destacar que, devido à capacidade do ELC de permitir análises compostas, por meio da árvore de tarefas \ref{task-tree}, ele também pode oferecer algum nível de visibilidade das estruturas internas do objeto de teste.
 
 
-	\section{Abordagem empírica em engenharia de software}
+	\section{Abordagem Empírica em Engenharia de Software}
 	\label{cap:engenharia-de-software-empirica}
 
+	A engenharia de software é um campo multi-disciplinar. Abrange desde tópicos técnicos, como bancos de dados e sistemas operacionais, até questões relacionadas a linguagens de programação, como sintaxe e semântica, e até temas sociais e  psicologia. O desenvolvimento de software é humano; esse que é até hoje incapacitado de criar um código completamente do zero. É uma disciplina baseada em criatividade, e na ingenuidade das pessoas trabalhando na área. \citep{10.5555/2349018}.
 
-	A engenharia de software é um campo multi-disciplinar. Abrange desde tópicos técnicos, como bancos de dados e sistemas operacionais, até questões relacionadas a linguagens de programação, como sintaxe e semântica, e também temas sociais e até psicologia. O desenvolvimento de software é humano; que é até hoje incapacitado de criar um código completamente do zero. É uma disciplina baseada em criatividade, e na ingenuidade das pessoas trabalhando na área \citep{10.5555/2349018}.
-
-	Em contraponto, é necessário, quando estudando ou fazendo pesquisas no campo, mirar em trata-la como uma disciplina científica. Ou seja, utilizar métodos científicos para realizar as pesquisas, e também na hora de tomar decisões sobre mudanças na forma na qual é feita o desenvolvimento. Para isso, é preciso entender os métodos que estão disponíveis para serem utilizados, suas limitações e quando eles devem ser aplicados \citep{10.5555/2349018}. Isso também pode ser aplicado na hora de escolher as ferramentas para o desenvolvimento de aplicações.
+	Em contraponto, é necessário, quando estudando ou fazendo pesquisas no campo, mirar em trata-la como uma disciplina científica. Ou seja, utilizar métodos científicos para realizar as pesquisas, e também na hora de tomar decisões sobre mudanças na forma com a qual é feita o desenvolvimento. Para isso, é preciso entender os métodos que estão disponíveis para serem utilizados, suas limitações e quando eles devem ser aplicados \citep{10.5555/2349018}. Isso também deve ser aplicado na hora de escolher as ferramentas para o desenvolvimento das aplicações.
 
 	Nesse contexto, o \acr{ELC} fornece insumos úteis aos pesquisadores e desenvolvedores na hora de avaliar essas ferramentas, pois permite estabelecer critérios objetivos na hora de comparar abordagens no desenvolvimento de aplicações web.
 
-	\section{Padrões de Software}
-	\label{cap:padroes-de-software}
+	\section{Padrões de Projeto}
+	\label{cap:padroes-de-projeto}
 
-	% TO-DO: O que é padrão de projeto, qual a sua importância. Existem muitos padrões mas nós utilizamos o COmposite e o Strategy
+	Padrões de Projeto dão nome, abstraem e identificam os aspectos comuns da construção de uma estrutura, e são úteis para implementar uma abordagem orientada a objetos reutilizável em aplicações. Eles identificam as instâncias e classes, seus papéis e colaborações e a distribuição de responsabilidades na implementação. Cada padrão foca em um problema específico de projeto já abordado e provado, tornando acessível à desenvolvedores de novos sistemas soluções úteis na construção de uma implementação reutilizável \citep{gamma1994design}.
+	
+	Existem diversos padrões de projeto diferentes, como descritos no livro de \cite{gamma1994design}. Os padrões utilizados na implementação do \acr{ELC} foram o Composite e o Strategy.
 
 	\subsection{Composite}
 	\label{subsection:composite}
@@ -193,11 +194,12 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 	
 	Além disso, o uso do padrão torna facil a adição de novos tipos de componentes, basta implementar a classe que o cliente entende. Dessa forma, os clientes não precisam ser alterados caso os objetos sejam modificados. Uma desvantagem desse padrão é que torna a validação dos componentes mais complicada, pois não se pode contar plenamente com a tipagem para garantir os requisitos dos dados. São necessárias validações em tempo de execução \citep[Capítulo 4]{gamma1994design}. Esse padrão foi utilizado na construção das tarefas, processo descrito na seção \ref{subsection:modulo-tasks}.
 
-
-
 	\subsection{Strategy}
 	\label{subsection:strategy}
-	Inserir texto aqui \citep{gamma1994design}
+
+	O padrão de projeto Strategy é ideal para ser utilizado quando muitas classes diferem somente no seu comportamento, ou são desejadas diferentes variações de um mesmo algoritmo. Dessa forma, é possível definir a implementação de cada uma das variações mantendo a mesma estrutura para a aplicação \citep{gamma1994design}. 
+
+	Essa abordagem faz com que diminua o uso de condições que gerenciem o comportamento do algoritmo na classe principal, abstraindo essa lógica para dentro do Strategy. Assim, esse tipo de lógica mais específica do comportamento da classe fica oculta da classe principal, tornando mais simples de ser entendida  \citep{gamma1994design}. O padrão Strategy foi utilizado na contrução do site utilizado no exemplo descrito na seção \ref{subsection:exemplo-elc-prod}, na implementação dos diferentes algoritmos para o cálculo de números primos.
 
 
 	\section{Principio do Aberto/Fechado}
@@ -435,6 +437,7 @@ TO-DO: Projeto no qual utilizamos o ELC de forma mais completa, inclusive usando
 
 
 \subsection{Uso do ELC em ambiente produtivo}
+\label{subsection:exemplo-elc-prod}
 
 Considere o caso de uma aplicação que já está em ambiente de produção com fluxo ativo de usuários, e onde estes usuários contantemente reclamam sobre lentidões no site.
 Então, algum desenvolvedor é designado a investigar as causas dessas lentidões.
