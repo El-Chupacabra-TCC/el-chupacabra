@@ -147,20 +147,22 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 \chapter{Fundamentação teórica}
 \label{cap:fundamentacao_teorica}
 
+	% TO-DO: Criar uma seção introdutória: Nesse capítulo, vamos tratar de ... . Constam as seções ...
+
 	\section{Testes de Software}
 	\label{cap:software-testing}
 	O desenvolvimento de software é uma atividade propensa a erros humanos, que podem ser introduzidos em várias etapas do processo.
 	Para mitigar essa característica inerente, a área de testes de software surgiu como um componente crítico da engenharia de software, no âmbito da garantia de qualidade de software.
 	O principal objetivo dos testes de software é identificar e corrigir o maior número possível de erros antes da entrega do software ao cliente.
-	Isso é realizado por meio da criação de uma série de casos de teste que, utilizando técnicas específicas de teste de software, exercitam o software com alta probabilidade de encontrar erros \citep{10.5555/1593949}.
+	Isso é realizado por meio da criação de uma série de casos de teste que, utilizando técnicas específicas de teste de software, exercitam o software com alta probabilidade de encontrar erros \citep{pressman2009software}.
 
 	Os testes de software desempenham um papel fundamental na garantia de qualidade de software, uma vez que suas outras atividades não são, por si só, suficientes na detecção e correção de erros.
 	Isso ocorre porque, sempre que um programa é executado, ele está, de fato, passando por um processo de teste.
-	Portanto, a extensa aplicação de testes é necessária para identificar e solucionar erros antes que o software chegue às mãos do cliente \citep{10.5555/1593949}.
+	Portanto, a extensa aplicação de testes é necessária para identificar e solucionar erros antes que o software chegue às mãos do cliente \citep{pressman2009software}.
 
 	Os testes de software podem ser classificados em dois tipos principais: testes de caixa branca e testes de caixa preta.
 	No caso dos testes de caixa branca, o conhecimento das estruturas internas do software é utilizado para projetar os casos de teste.
-	Em contrapartida, os testes de caixa preta se concentram em exercitar os requisitos do software, ignorando sua estrutura interna. Esses testes avaliam o que o software faz, sem se preocupar com como ele faz \citep{10.5555/1593949}.
+	Em contrapartida, os testes de caixa preta se concentram em exercitar os requisitos do software, ignorando sua estrutura interna. Esses testes avaliam o que o software faz, sem se preocupar com como ele faz \citep{pressman2009software}.
 
 	Dentro do contexto de um framework de análise de consumo de recursos computacionais de aplicações web do lado cliente, a escolha dos tipos de teste a serem realizados é crucial.
 	O \acr{ELC} é primariamente focado na análise do consumo de recursos computacionais, sem acoplamento com o funcionamento interno do software testado.
@@ -170,17 +172,18 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 
 	\section{Abordagem Empírica em Engenharia de Software}
 	\label{cap:engenharia-de-software-empirica}
+% TO-DO: procurar citar o Guilherme Horta Travassos
 
-	A engenharia de software é um campo multi-disciplinar. Abrange desde tópicos técnicos, como bancos de dados e sistemas operacionais, até questões relacionadas a linguagens de programação, como sintaxe e semântica, e até temas sociais e  psicologia. O desenvolvimento de software é humano; esse que é até hoje incapacitado de criar um código completamente do zero. É uma disciplina baseada em criatividade, e na ingenuidade das pessoas trabalhando na área. \citep{10.5555/2349018}.
+	A engenharia de software é um campo multi-disciplinar. Abrange desde tópicos técnicos, como bancos de dados e sistemas operacionais, até questões relacionadas a linguagens de programação, como sintaxe e semântica, e até temas sociais e  psicologia. O desenvolvimento de software é humano; esse que é até hoje incapacitado de criar um código completamente do zero. É uma disciplina baseada em criatividade, e na ingenuidade das pessoas trabalhando na área. \citep{wohlin2012experimentation}.
 
-	Em contraponto, é necessário, quando estudando ou fazendo pesquisas no campo, mirar em trata-la como uma disciplina científica. Ou seja, utilizar métodos científicos para realizar as pesquisas, e também na hora de tomar decisões sobre mudanças na forma com a qual é feita o desenvolvimento. Para isso, é preciso entender os métodos que estão disponíveis para serem utilizados, suas limitações e quando eles devem ser aplicados \citep{10.5555/2349018}. Isso também deve ser aplicado na hora de escolher as ferramentas para o desenvolvimento das aplicações.
+	Em contraponto, é necessário, quando estudando ou fazendo pesquisas no campo, mirar em trata-la como uma disciplina científica. Ou seja, utilizar métodos científicos para realizar as pesquisas, e também na hora de tomar decisões sobre mudanças na forma com a qual é feita o desenvolvimento. Para isso, é preciso entender os métodos que estão disponíveis para serem utilizados, suas limitações e quando eles devem ser aplicados \citep{wohlin2012experimentation}. Isso também deve ser aplicado na hora de escolher as ferramentas para o desenvolvimento das aplicações.
 
 	Nesse contexto, o \acr{ELC} fornece insumos úteis aos pesquisadores e desenvolvedores na hora de avaliar essas ferramentas, pois permite estabelecer critérios objetivos na hora de comparar abordagens no desenvolvimento de aplicações web.
 
 	\section{Padrões de Projeto}
 	\label{cap:padroes-de-projeto}
 
-	Padrões de Projeto dão nome, abstraem e identificam os aspectos comuns da construção de uma estrutura, e são úteis para implementar uma abordagem orientada a objetos reutilizável em aplicações. Eles identificam as instâncias e classes, seus papéis e colaborações e a distribuição de responsabilidades na implementação. Cada padrão foca em um problema específico de projeto já abordado e provado, tornando acessível à desenvolvedores de novos sistemas soluções úteis na construção de uma implementação reutilizável \citep{gamma1994design}.
+	Os Padrões de Projeto dão nome, abstraem e identificam os aspectos comuns da construção de uma estrutura, e são úteis para implementar uma abordagem orientada a objetos reutilizável em aplicações. Eles identificam as instâncias e classes, seus papéis e colaborações e a distribuição de responsabilidades na implementação. Cada padrão foca em um problema específico de projeto já abordado e provado, tornando acessível à desenvolvedores de novos sistemas soluções úteis na construção de uma implementação reutilizável \citep{gamma1994design}.
 	
 	Existem diversos padrões de projeto diferentes, como descritos no livro de \cite{gamma1994design}. Os padrões utilizados na implementação do \acr{ELC} foram o Composite e o Strategy.
 
@@ -222,8 +225,22 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 	Ademais, definimos os módulos do \acr{ELC} como os pontos de extensão do framework.
 	Ou seja, cada módulo é projetado para caso alguma mudança comportamento seja necessária, a alteração é incluida criando uma nova classe a qual extende a interface do módulo.
 
-	% TO-DO: dar uma lida em Coesão/acoplamento no sommerville ou prestman.
+	\section{Coesão e Acoplamento}
+	\label{section:coesao-e-acoplamento}
 
+	Coesão implica que um componente ou classe encapsule somente atributos e operações que são relacionadas diretamente entre si ou a própria classe ou componente. Na engenharia de software são definidos diversos tipos, dentre eles \citep{pressman2009software}:
+
+	\begin{enumerate}
+		\item Coesão funcional: demonstrada primariamente por operações, esse nível de coesão ocorre quando um componente executa uma operação e retorna um resultado.
+		\item Coesão de camadas: Demonstrada nos pacotes, componentes e classes, esse tipo de coesão ocorre quando uma camada superior da arquitetura acessa os serviços de uma camada inferior, mas o contrário não é possível.
+		\item Coesão comunicacional: Todas as operações que acessam o mesmo dado são definidas em uma única classe. NO geral, essas classes focam primariamente no dado em sí, o acessando e armazenando.
+	\end{enumerate}
+
+	Classes e componentes que exibem esses três níveis de coesão são relativamente fáceis de implementar, testar e manter. Esse deve ser um objetivo na hora do desenvolvimento de software \citep{pressman2009software}.
+	
+	Conforme o nível de comunicação e colaboração cresce, a complexidade do sistema também cresce. Isso gera dificuldades na implementação, testes e na manutenção do software. Acoplamento é uma medida de qualidade que quantifica o nível no qual as classes estão conectadas entre sí. Conforme as classes e componentes se tornam mais dependentes uns dos outros, o acoplamento cresce. Um objetivo importante no projeto de uma arquitetura é manter o acoplamento o mais baixo possível \citep{pressman2009software}.
+
+	No desenvolvimento do \acr{ELC}, foram considerados esses padrões de qualidade, tanto no desenvolvimento da arquitetura de módulos, como explicado na seção \ref{cap:arquitetura}, quanto na implementação das classes internas da aplicação.
 
 \chapter{Trabalhos Relacionados}
 \label{cap:metodologiatrabsrelacionados}
@@ -511,7 +528,7 @@ Além disso, ele também terá informações sobre o hardware, a quantidade de n
 \end{table}
 
 \section{Arquitetura}
-\label{cap:diagrama_de_arq}
+\label{cap:arquitetura}
 
 A ferramenta foi implementada utilizando uma arquitetura modular, e seguindo o conceito do aberto/fechado (open/closed), trazido pelo SOLID (citar fundamentação teórica). Dessa forma, todas as relações entre as classes e módulos se dão através de interfaces, abstraindo o funcionamento interno de cada elemento. Isso contribui significativamente para a manutenabilidade do código, pois diminui as chances de problemas de compatibilidade entre as implementações caso alguma premissa seja alterada.
 
