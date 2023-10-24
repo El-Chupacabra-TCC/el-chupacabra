@@ -244,9 +244,8 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 
 \chapter{Trabalhos Relacionados}
 \label{cap:metodologiatrabsrelacionados}
-	% \item \textbf{Paper 1}: Summary of the first paper goes here. This paragraph provides a concise overview of the paper's objectives, methodology, and key findings.
-
 	\section{Metodologia de Pesquisa}
+	\label{section:metodologia-de-pesquisa}
 
 	Para a revisão bibliográfica as duas principais ferramentas utilizadas foram: Elicit, um assistente de pesquisa baseado em modelos de transformador pré-treinado generativo (do inglês, \emph{generative pre-trained transformer}) de aprendizado de máquina, e a ferramenta Connected Papers, a qual  gera um grafo de artigos relacionados baseado em cocitações e acoplamento bibliográfico.
 	A ferramenta Elicit funciona recebendo uma pergunta em linguagem natural e retornando os trabalhos que considera mais relevantes, junto a um resumo, em uma tabela paginada.
@@ -255,70 +254,60 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 	\begin{table}[h!]
 	\centering
 	\caption{Strings utilizadas na ferramenta Elicit.\label{long}}
+		\begin{tabular}{||c||} 
+			
+		\hline
+			Strings de Busca \\
+		\hline\hline
+		``browsing memory'' \\
+		``client side memory performance'' \\
+		``client side memory profiling'' \\
+		``memory network management web client'' \\
+		``memory network performance web client'' \\
+		``memory network profiling web client'' \\
+		``memory network waste web client'' \\
+		``measuring performance in client side'' \\
+		``measuring in client side'' \\
+		``performance measurement'' \\
+		``tools to measure performance in client side'' \\
+		``evaluating latency on client side'' \\
+		``optimizing web browsing'' \\
+		``performance tool web client side'' \\
+		``waste resources client side'' \\
+		``waste resources web client'' \\
+		``web client side memory performance'' \\
+		``What are the impacts of memory management in mobile Web Browsing?'' \\
+		``What is the state-of-the-art for measuring performance of client side?'' \\
+		``What is the state-of-the-art for measuring QoE and memory of Web Browsing?'' \\
 
-	\begin{tabular}{||c||} 
-		
-	\hline
-		Strings de Busca \\
-	\hline\hline
-	``browsing memory'' \\
-	``client side memory performance'' \\
-	``client side memory profiling'' \\
-	``memory network management web client'' \\
-	``memory network performance web client'' \\
-	``memory network profiling web client'' \\
-	``memory network waste web client'' \\
-	``measuring performance in client side'' \\
-	``measuring in client side'' \\
-	``performance measurement'' \\
-	``tools to measure performance in client side'' \\
-	``evaluating latency on client side'' \\
-	``optimizing web browsing'' \\
-	``performance tool web client side'' \\
-	``waste resources client side'' \\
-	``waste resources web client'' \\
-	``web client side memory performance'' \\
-	``What are the impacts of memory management in mobile Web Browsing?'' \\
-	``What is the state-of-the-art for measuring performance of client side?'' \\
-	``What is the state-of-the-art for measuring QoE and memory of Web Browsing?'' \\
-
-	\hline
-	\end{tabular}
+		\hline
+		\end{tabular}
 	\label{tab:strings-elicit}
 	\end{table}
 
 	Além disso, três trabalhos encontrados por meio do Elicit foram utilizados como entrada para a ferramenta Connected Papers.
+
 	O Connected Papers é um outro assistente de pesquisa, o qual recebe como entrada o título ou o DOI de um trabalho para gerar um grafo de trabalhos relacionados destacando suas principais conexões e trabalhos influentes.
-	As strings de busca utilizadas no Connected Papers estão listadas na tabela \ref{tab:strings-connected-papers}, de modo que, para cada uma, a ferramenta gerou um grafo com 40 trabalhos relacionados, os quais também podem ser visualizados em uma tabela. \\
+
+	Na tabela \ref{tab:strings-connected-papers} estão listadas as strings de busca utilizadas no Connected Papers, de modo que, para cada uma, a ferramenta gerou um grafo com 40 trabalhos relacionados, os quais também podem ser visualizados em uma tabela.
 
 	\begin{table}[h!]
 	\centering
-
 	\caption{Strings utilizadas na ferramenta Connected Papers.}
-	\begin{tabular}{||c||} 
+		\begin{tabular}{||c||} 
 
-	\hline
-		Strings de Busca \\
-	\hline\hline
-	``Measuring Web Latency and Rendering Performance: Method, Tools, and Longitudinal Dataset''\\
-	``MemInsight: platform-independent memory debugging for JavaScript''\\
-	``Obtaining in-context measurements of cellular network performance''\\
-	\hline
-	\end{tabular}
-	\label{tab:strings-connected-papers}
+		\hline
+			Strings de Busca \\
+		\hline\hline
+		``Measuring Web Latency and Rendering Performance: Method, Tools, and Longitudinal Dataset''\\
+		``MemInsight: platform-independent memory debugging for JavaScript''\\
+		``Obtaining in-context measurements of cellular network performance''\\
+		\hline
+		\end{tabular}
+		\label{tab:strings-connected-papers}
 	\end{table}
 
-	Os critérios usados para filtrar os trabalhos encontrados por meio de ambas as ferramentas estão descritos na figura \ref{fig:fluxo-leitura}.
-	Em suma, após a leitura do resumo de cada trabalho, três critérios são avaliados, sendo cada um deles um filtro.
-	O qual indica se o trabalho não tem relação suficiente com o tema, se é necessário ler a introdução para a tomada da decisão ou se é um trabalho o qual a leitura completa deve ser realizada.
-
-	\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=0.6\textwidth]{figures/fluxo-decisao-leitura.pdf}
-		\caption{Critérios utilizados para seleção de trabalhos para leitura.}
-		\label{fig:fluxo-leitura}
-	\end{figure}
-
+	Na tabela \ref{tab:trabalhos-encontrados} constam os resultados da pesquisa bibliográfica no estado da arte. No total foram 400 trabalhos relacionados pré selecionados, e foram selecionados 4 trabalhos contendo ferramentas relevantes no tema proposto, a serem apresentados na próxima seção. 
 
 	\begin{table}[!ht]
 		\centering
@@ -337,10 +326,23 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 	\end{table}
 
 
-	\section{Ferramentas Para Medição no Lado do Cliente}
+	Os critérios usados para filtrar os trabalhos encontrados por meio de ambas as ferramentas estão descritos na figura \ref{fig:fluxo-leitura}.
 
-	Utilizando os procedimentos descritos na Seção \ref{cap:met_pesquisa}, conseguimos obter uma visão abrangente dos frameworks e soluções existentes e propostas no âmbito acadêmico.
-	Além disso, efetuamos uma categorização dessas abordagens com base em uma série de parâmetros, com o objetivo de avaliar a complementaridade de nossa proposta em relação ao estado da arte.
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{figures/fluxo-decisao-leitura.pdf}
+		\caption{Critérios utilizados para seleção de trabalhos para leitura.}
+		\label{fig:fluxo-leitura}
+	\end{figure}
+
+	Em suma, após a leitura do resumo de cada trabalho, três critérios foram avaliados, sendo cada um deles um dos filtros.	Os critérios foram se o trabalho não teria relação suficiente com o tema, se é necessário ler a introdução para a tomada da decisão ou se é um trabalho o qual a leitura completa deve ser realizada.
+
+
+	\section{Ferramentas Para Medição no Lado do Cliente}
+	\label{sec:avaliacao-ferramentas-encontradas}
+
+	Utilizando os procedimentos descritos na seção \ref{section:metodologia-de-pesquisa}, conseguimos obter uma visão abrangente das ferramentas e soluções existentes e propostas no âmbito acadêmico. Com isso, foi efetuada uma categorização dessas ferramentas com base em uma série de parâmetros, explicitados na tabela \ref{tab:criterio-avaliacao-ferramentas}, e com o objetivo de avaliar o quão complementar é o \acr{ELC} em relação ao estado da arte.
 
 
 	\begin{table}[!ht]
@@ -350,42 +352,22 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 			\toprule
 			\textbf{Critério} & \textbf{Descrição}\\
 			\midrule 
-			Arquitetura Simples & Se a arquitetura da ferramenta é de fácil entendimento.\\
-			Flexibilidade&Se a ferramenta se adapta em diversos contextos de medição.\\
-			Curva de Aprendizado&Se a ferramenta possui uma curva de aprendizado rápida.\\
-			Multiplataforma&Se a ferramenta suporta o uso em diversas plataformas.\\
-			Persistência&Se a ferramenta persiste dados para análise futura.\\
+			Preservação do código fonte & Se a utilização da ferramenta exige que o código fonte seja pouco alterado.\\
+			Métricas customizáveis & Se a ferramenta permite a coleta de métricas customizáveis.\\
+			Multiplataforma & Se a ferramenta pode ser utilizada em testes multiplataforma.\\
+			Geração de dados & Se a ferramenta gera dados estruturados para análise futura.\\
 			\bottomrule
 		\end{tabular}
-		\label{tab:string-busca-connected-papers}
+		\label{tab:criterio-avaliacao-ferramentas}
 	\end{table}
-
-
-	\par Dessa forma, a classificação dos trabalhos selecionados se encontra na tabela \ref{table:ferramentas-encontradas}:
-
-		\begin{table}[ht]
-			\scriptsize
-			\caption{Classificação das ferramentas encontradas} % title of Table
-			\centering % used for centering table
-			\begin{tabular}{l c c c c c} % centered columns (4 columns)
-			\toprule
-			\textbf{Plataforma} & \textbf{Arquitetura Simples} & \textbf{Flexibilidade} & \textbf{Curva de Aprendizado} & \textbf{Multiplataforma} & \textbf{Persistência} \\[0.5ex]
-
-			%heading
-			\midrule % inserts single horizontal line
-			MemInsight & sim & não & sim & sim & não \\
-			WePR & não & não & não & sim & sim \\
-			Gember & sim & não & sim & não & sim \\
-			Mobilyzer & sim & não & não & não & sim \\
-			\hline %inserts single line
-			\end{tabular}
-			\label{table:ferramentas-encontradas} % is used to refer this table in the text
-		\end{table}
 	
 
 		\subsection{MemInsight}
-		\par No contexto de medição de memória, temos o MemInsight \citep{Jensen2015MemInsight}. Essa ferramenta roda de forma independente sobre um motor Javascript, não sendo necessário um navegador para executá-la, e faz a análise do consumo de memória por meio de um conjunto de medições que visam remontar o ciclo de vida dos objetos em memória, e que permitem a análise de desperdício de recursos durante a execução do programa. 
-		\par Analisando a ferramenta, foi observado que ela só trabalha com medição de métricas de memória, não permitindo generalizar consultas de outros tipos, por isso classificamos como não flexível com relação às métricas. Além disso, por ser uma ferramenta com foco em depurar aplicações, não realiza nativamente a persistência e organização desses dados.
+		\label{subsection:meminsight}
+
+		No contexto de medição de memória, temos o MemInsight \citep{Jensen2015MemInsight}. Essa ferramenta roda de forma independente sobre um motor Javascript, não sendo necessário um navegador para executá-la, e faz a análise do consumo de memória por meio de um conjunto de medições que visam remontar o ciclo de vida dos objetos em memória, e que permitem a análise de desperdício de recursos durante a execução do programa. 
+		
+		Analisando a ferramenta, foi observado que ela só trabalha com medição de métricas de memória, não permitindo generalizar consultas de outros tipos, por isso classificamos como não flexível com relação às métricas. Além disso, por ser uma ferramenta com foco em depurar aplicações, não realiza nativamente a persistência e organização desses dados.
 		
 
 		\subsection{WePR}
