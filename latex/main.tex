@@ -11,6 +11,8 @@
 \usepackage[toc,page]{appendix}
 \usepackage{courier}
 \usepackage{pifont}
+\usepackage{pgfplots}
+
 \newcommand{\cmark}{\ding{51}}
 \newcommand{\xmark}{\ding{55}}
 \definecolor{mygreen}{RGB}{64,100,64}
@@ -335,7 +337,6 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 
 	Em suma, após a leitura do resumo de cada trabalho, três critérios foram avaliados, sendo cada um deles um dos filtros.	Os critérios foram se o trabalho não teria relação suficiente com o tema, se é necessário ler a introdução para a tomada da decisão ou se é um trabalho o qual a leitura completa deve ser realizada.
 
-	% TO-DO: Trabalhar na análise do chupacabra aqui, depois mover para a conclusão. 
 
 	\section{Ferramentas Para Medição no Lado do Cliente}
 	\label{sec:avaliacao-ferramentas-encontradas}
@@ -343,11 +344,10 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 	Utilizando os procedimentos descritos na seção \ref{section:metodologia-de-pesquisa}, conseguimos obter uma visão abrangente das ferramentas e soluções existentes e propostas no âmbito acadêmico. Com isso, foi efetuada uma categorização dessas ferramentas com base em uma série de parâmetros, explicitados na tabela \ref{tab:criterio-avaliacao-ferramentas}, e com o objetivo de avaliar o quão complementar é o \acr{ELC} em relação ao estado da arte.
 	
 
-	% TO-DO: Arrumar um nome melhor para Persistência de dados de forma remota
 	\begin{table}[!ht]
 		\centering
 		\caption{Critérios de classificação das ferramentas}
-		\begin{tabular}{l c L{1.5cm} R{1.5cm}}
+		\begin{tabular}{lp{8.5cm}}
 			\toprule
 			\textbf{Critério} & \textbf{Descrição}\\
 			\midrule 
@@ -360,9 +360,30 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 		\label{tab:criterio-avaliacao-ferramentas}
 	\end{table}
 	
-	O critério de coesão e acoplamento é importante na avaliação das ferramentas pois facilita na utilização, diminuindo a dificuldade de implementação da ferramenta. O segundo critério citado, extensibilidade, é importante pois, dado o universo de métricas possíveis, habilita ao pesquisador mais possibilidades de medições e cenários de teste, inclusive cenários customizados. Já o critério de portabilidade é essencial pois o ambiente da \emph{web} moderna é diverso, contendo diferentes plataformas e dispositivos, e a possibilidade de testar o desempenho de um método em diferentes ambientes traz mais solidez para os resultados da pesquisa. E o último critério que foi destacado, o de Armazenamento em nuvem, é um grande facilitador para o trabalho de análise posterior, que poderá utilizar esses dados centralizados de forma remota e simplificada, apenas consumindo uma planilha ou obtendo os dados via banco de dados pela internet.
+	\par O critério de coesão e acoplamento é importante na avaliação das ferramentas pois facilita na utilização, diminuindo a dificuldade de implementação da ferramenta. O segundo critério citado, extensibilidade, é importante pois, dado o universo de métricas possíveis, habilita ao pesquisador mais possibilidades de medições e cenários de teste, inclusive cenários customizados. Já o critério de portabilidade é essencial pois o ambiente da \emph{web} moderna é diverso, contendo diferentes plataformas e dispositivos, e a possibilidade de testar o desempenho de um método em diferentes ambientes traz mais solidez para os resultados da pesquisa. E o último critério que foi destacado, o de Armazenamento em nuvem, é um grande facilitador para o trabalho de análise posterior, que poderá utilizar esses dados centralizados de forma remota e simplificada, apenas consumindo uma planilha ou obtendo os dados via banco de dados pela internet.
 
+	\subsection{Análise das ferramentas}
+	\label{subsection:analise-ferramentas}
+	Após a análise individual de cada ferramenta, foi possível representar suas classificações dados os critérios definidos anteriormente. Esse processo está exemplificado na tabela \ref{table:classificacao-sem-elc}. Essa análise foi importante para entender aonde o \acr{ELC} se encaixa no panorama geral das ferramentas de medição no lado do cliente.
 
+	\begin{table}[ht]
+		\caption{Classificação das ferramentas encontradas} % title of Table
+		\centering % used for centering table
+		\begin{tabular}{c c c c c } % centered columns (4 columns)
+		\toprule %inserts double horizontal lines
+		
+		\textbf{Ferramentas} &\textbf{MemInsight} & \textbf{WePR} & \textbf{Gember} & \textbf{Mobilyzer}  \\ [0.4ex]
+		
+		%heading
+		\midrule % inserts single horizontal line
+		Coesão e Acoplamento & \cmark & \xmark & \cmark & \cmark   \\
+		Extensibilidade & \xmark & \xmark & \xmark & \cmark  \\
+		Portabilidade & \cmark & \xmark & \cmark & \xmark  \\
+		Armazenamento em núvem & \cmark & \xmark & \xmark & \xmark  \\
+		\bottomrule %inserts single line
+		\end{tabular}
+		\label{table:classificacao-sem-elc} % is used to refer this table in the text
+		\end{table}
 		\subsection{MemInsight}
 		\label{subsection:meminsight}
 
@@ -393,28 +414,7 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 		\end{enumerate}
 		\par Uma dificuldade no uso do Mobilyzer em pesquisas é que essa plataforma também se restringe a plataforma Android. Diminuindo bastante as possibilidades de medição em pesquisas multiplataforma. Além disso, não possui muita flexibilidade com relação às métricas, sendo em sua maior parte métricas de rede.
 
-		\subsection{Análise das ferramentas}
-		\label{subsection:analise-ferramentas}
-		Após a análise individual de cada ferramenta, é possível representá-las em uma tabela com os critérios utilizados, que está na tabela \ref{table:classificacao-sem-elc}
-
-		\begin{table}[ht]
-			\scriptsize
-			\caption{Classificação das ferramentas encontradas} % title of Table
-			\centering % used for centering table
-			\begin{tabular}{c c c c c c} % centered columns (4 columns)
-			\toprule %inserts double horizontal lines
-			\textbf{Ferramenta} & \textbf{Coesão e Acoplamento} & \textbf{Extensibilidade} & \textbf{Portabilidade} & \textbf{Armazenamento em núvem}  \\[0.5ex]
 		
-			%heading
-			\midrule % inserts single horizontal line
-			MemInsight & \cmark & \xmark & \cmark & \cmark & \\
-			WePR & \xmark & \xmark & \xmark & \cmark & \\
-			Gember & \cmark & \xmark & \cmark & \xmark & \\
-			Mobilyzer & \cmark & \xmark & \xmark & \xmark & \\
-			\bottomrule %inserts single line
-			\end{tabular}
-			\label{table:classificacao-sem-elc} % is used to refer this table in the text
-			\end{table}
 
 		% TO-DO: Citar a seção dos critérios, e revisitar cada um dos critérios justificando o pq o chupacabra é bom. Remover a primeira pessoa do texto. 
 	
@@ -992,47 +992,125 @@ Abaixo, está uma descrição de cada elemento do diagrama.
 \chapter{Experimentos}
 \label{cap:experimentos}
 
-Experimento envolvendo terceiros? Download de um arquivo... para construir uma visualização.
-Framework na prática
+Neste capítulo estão as descrições do experimento utilizado para avaliar o \acr{ELC} por volutários externos, bem como sua preparação e execução. Além disso, estão contidos também os resultados do experimento, e também a análise parcial dos resultados.
 
+\section{Preparação do experimento}
+\label{section:preparacao-experimento}
+
+Para o experimento, foram definidas duas etapas. A primeira é a utilização do EasyELC em um projeto exemplo, na plataforma \emph{Codepen}\footnote{Plataforma Codepen: https://codepen.io/}. A segunda foi o preenchimento de um formulário no Google Forms, com o fim de coletar a avaliação do voluntário de como foi a experiência de uso do \acr{ELC}. 
+Para o grupo de controle, foram consideradas XX pessoas,entre alunos e professores. 
+
+\section{Uso do ELC pelos voluntários}
+\label{section:parte-1-experimento}
+
+O experimento consiste basicamente...
+
+Baixar um JSON no código Javascript
+O JSON vai ficar em uma variável 
+E será ordenado usando: heapsort e bubblesort
+O desafio do usuário vai ser descobrir qual o consumo de memória e quanto tempo ele leva pra ordenar
+O ELC vai estar pré configurado para subir os dados em uma planilha do google sheets
+Com isso ele vai adicionar o que precisa no código javascript pra coleta acontecer
+E depois preencher o formulário
+
+\section{Formulário}
+\label{section:parte-2-formulario}
+
+Na Tabela \ref{tab:perguntas-experimentos} estão descritas as perguntas utilizadas no formulário enviado para ser preenchido após o experimento.
+
+\begin{table}[h!]
+\centering
+\caption{Perguntas utilizadas no formulário de avaliação}
+	\begin{tabular}{c} 
+	\hline
+		Pergunta 1 \\
+		Pergunta 2 \\
+		Pergunta 3 \\
+	\hline
+	\end{tabular}
+	\label{tab:perguntas-experimentos}
+\end{table}
+
+\section{Resultados}
+\label{section:resultados}
+
+%Parágrafo sobre o resultado no codepen. Se alguém teve dificuldade, etc.
+
+Após a submissão dos formulários, foi possível gerar um gráfico com as respostas para cada pergunta do experimento, descritos abaixo.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/exemplo-tipo-de-dado.png}
+	\caption{Respostas obtidas na pergunta 1}
+	\label{fig:respostas-pergunta-1}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/exemplo-tipo-de-dado.png}
+	\caption{Respostas obtidas na pergunta 2}
+	\label{fig:respostas-pergunta-2}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/exemplo-tipo-de-dado.png}
+	\caption{Respostas obtidas na pergunta 3}
+	\label{fig:respostas-pergunta-3}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/exemplo-tipo-de-dado.png}
+	\caption{Respostas obtidas na pergunta 4}
+	\label{fig:respostas-pergunta-4}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/exemplo-tipo-de-dado.png}
+	\caption{Respostas obtidas na pergunta 5}
+	\label{fig:respostas-pergunta-5}
+\end{figure}
+
+% Analisar os resultados.
 
 \chapter{Conclusão}
 \label{cap:conclusão}
 
-\section{Classificando o ELC}
+\section{Vantagens do ELC}
 \label{subsection:classificando-o-elc}
 
-\par Após o desenvolvimento da ferramenta, é possível posicioná-la com relação aos critérios que foram estabelecidos na seção \ref{sec:avaliacao-ferramentas-encontradas}. 
+\par Após o desenvolvimento da ferramenta, é possível posicioná-la com relação aos critérios que foram estabelecidos na seção \ref{sec:avaliacao-ferramentas-encontradas}. O resultado da comparação com as outras ferramentas se encontra na tabela \ref{table:classificacao-com-elc}.
+
+\begin{table}[ht]
+\caption{Classificação das ferramentas encontradas com o ELC} % title of Table
+\centering % used for centering table
+\begin{tabular}{c c c c c c} % centered columns (4 columns)
+\toprule %inserts double horizontal lines
+
+\textbf{Ferramentas} &\textbf{MemInsight} & \textbf{WePR} & \textbf{Gember} & \textbf{Mobilyzer} & \textbf{ELC}  \\ [0.4ex]
+
+%heading
+\midrule % inserts single horizontal line
+Coesão e Acoplamento & \cmark & \xmark & \cmark & \cmark  & \cmark \\
+Extensibilidade & \xmark & \xmark & \xmark & \cmark & \cmark  \\
+Portabilidade & \cmark & \xmark & \cmark & \xmark & \cmark  \\
+Armazenamento em núvem & \cmark & \xmark & \xmark & \xmark & \cmark  \\
+\bottomrule %inserts single line
+\end{tabular}
+\label{table:classificacao-com-elc} % is used to refer this table in the text
+\end{table}
 
 O \acr{ELC} não exige que o código fonte da aplicação seja alterado para a sua utilização. Ou seja, possui um nível bom de coesão e baixo de acoplamento. Através da modelagem das tarefas e métricas, é possível realizar um experimento utilizando o código como foi implementado inicialmente, apenas inserindo chamadas dentro da estrutura extensível do \acr{ELC}. Assim, podem ser executadas diversas tarefas diferentes, mas medidas na mesma estrutura e registradas na mesma base de dados.
 
-Além disso, o \acr{ELC} tem uma arquitetura extensível, tanto na parte de métricas e tarefas já citadas, mas também nas partes de perfis de execução e persistência. É possível utilizar diversos tipos de bases de dados, seja o Sheetson, ou um banco de dados Postgres, basta extender a interface do Persister e iplementar suas particularidades. 
+Além disso, o \acr{ELC} tem uma arquitetura extensível, tanto na parte de métricas e tarefas já citadas, quanto nas partes de perfis de execução e persistência. É possível utilizar diversos tipos de bases de dados, seja o Sheetson, como foi exemplificado, ou um banco de dados Postgres, basta extender a interface do Persister e implementar suas particularidades. 
 
 Como o \acr{ELC} é executado no navegador, é possível medir em diversos dispositivos diferentes, sem problemas de compatibilidade, já que a execução é no próprio navegador. Além da métrica escolhida pelo pesquisador, é possível registrar também juntamente qual foi o aparelho que a executou e suas informações básicas, atendendo à experimentos multiplataforma que precisam dessas informações.
 
 Na parte do armazenamento das informações, o \acr{ELC} também se destaca, por ser bastante extensível. No trabalho foi utilizado o Sheetson, uma ferramenta para habilitar a escrita de dados em planilhas do Google via \acr{API}, mas podem ser utilizados diversos tipos de bases de dados, como bancos de dados Postgres ou MongoDB.
 
-Após a análise da ferramenta, ela foi classificada e o resultado da comparação com as outras se encontra na tabela \ref{table:classificacao-com-elc}.
 
-\begin{table}[ht]
-\scriptsize
-\caption{Classificação das ferramentas encontradas com o ELC} % title of Table
-\centering % used for centering table
-\begin{tabular}{c c c c c c} % centered columns (4 columns)
-\toprule %inserts double horizontal lines
-\textbf{Ferramenta} & \textbf{Coesão e Acoplamento} & \textbf{Extensibilidade} & \textbf{Portabilidade} & \textbf{Armazenamento em núvem}  \\[0.5ex]
-
-%heading
-\midrule % inserts single horizontal line
-MemInsight & \cmark & \xmark & \cmark & \cmark & \\
-WePR & \xmark & \xmark & \xmark & \cmark & \\
-Gember & \cmark & \xmark & \cmark & \xmark & \\
-Mobilyzer & \cmark & \xmark & \xmark & \xmark & \\
-ELC & \cmark & \cmark & \cmark & \cmark & \\
-\bottomrule %inserts single line
-\end{tabular}
-\label{table:classificacao-com-elc} % is used to refer this table in the text
-\end{table}
 
 
 \section{Trabalhos Futuros}
