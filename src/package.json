@@ -1,6 +1,6 @@
 {
   "name": "el-chupacabra",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A framework for executing proof of concepts while gathering performance metrics and consumption of computational resources.",
   "main": "dist/Module.js",
   "scripts": {
@@ -12,11 +12,9 @@
   "keywords": [
     "elc",
     "el-chupacabra",
-    "big data",
-    "Web",
-    "data visualization",
-    "performance",
-    "resource consumption"
+    "performance test",
+    "web",
+    "performance"
   ],
   "author": "Filipe Shanon, Matheus Moura and Radhanama Messiano",
   "license": "MIT",
