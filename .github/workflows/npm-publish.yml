@@ -6,16 +6,6 @@ name: Node.js Package
 on: workflow_dispatch
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - run: npm ci
-        working-directory: src
-
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
@@ -26,6 +16,10 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org/
       - run: ls
+      - run: npm ci
+        working-directory: src
+      - run: npm ls
+        working-directory: src
       - run: npm run compiler
         working-directory: src
       - run: ls
