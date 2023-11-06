@@ -3,9 +3,7 @@
 
 name: Node.js Package
 
-on:
-  release:
-    types: [created]
+on: workflow_dispatch
 
 jobs:
   build:
@@ -14,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
       - run: npm ci
         working-directory: src
 
@@ -25,9 +23,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+        working-directory: src
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
