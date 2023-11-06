@@ -14,14 +14,15 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
-      - run: ls
+      - run: ls src/dist || ls src 
       - run: npm ci
         working-directory: src
       - run: npm ls
         working-directory: src
       - run: npm run compiler
         working-directory: src
-      - run: ls
+      - run: ls src
+      - run: ls src/dist
       # - run: npm publish
       #   env:
       #     NODE_AUTH_TOKEN: ${{secrets.npm_token}}
