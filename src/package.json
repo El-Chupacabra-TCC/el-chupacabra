@@ -1,13 +1,15 @@
 {
   "name": "el-chupacabra",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "A framework for executing proof of concepts while gathering performance metrics and consumption of computational resources.",
   "main": "dist/Module.js",
+  "browser": "dist/BrowserModule.js",
   "scripts": {
     "dev": "npx tsc && node dist/Index.js",
     "compiler": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "demo": "npx tsc && node dist/Demo.js"
+    "demo": "npx tsc && node dist/Demo.js",
+    "build": "rollup -c && mv Module.js ./dist"
   },
   "keywords": [
     "elc",
@@ -19,7 +21,12 @@
   "author": "Filipe Shanon, Matheus Moura and Radhanama Messiano",
   "license": "MIT",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.5",
     "@types/node": "^20.4.10",
+    "rollup": "^4.3.0",
+    "tslib": "^2.6.2",
     "typescript": "^5.1.6"
   },
   "type": "module",
@@ -29,6 +36,5 @@
     "README.md",
     "package.json",
     "index.html"
-  ],
-  "dependencies": {}
+  ]
 }

@@ -1,8 +1,6 @@
 import IExecutionProfile from "./ExecutionProfile/IExecutionProfile.js";
 import BrowserExecutionProfile from "./ExecutionProfile/BrowserExecutionProfile.js";
-import NodeExecutionProfile from "./ExecutionProfile/NodeExecutionProfile.js";
 export const ExecutionProfiles = {
-    NodeExecutionProfile,
     BrowserExecutionProfile
 };
 
@@ -15,11 +13,9 @@ export const Metrics = {
 };
 
 import IPersister from "./Persister/IPersister.js";
-import JsonFilePersister from "./Persister/JsonFilePersister.js";
 import SheetsonPersister from "./Persister/SheetsonPersister.js";
 import LogPersister from "./Persister/LogPersister.js";
 export const Persisters = {
-    JsonFilePersister,
     SheetsonPersister,
     LogPersister
 };
