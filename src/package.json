@@ -9,6 +9,7 @@
     "compiler": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "demo": "npx tsc && node dist/Demo.js",
+    "build-only": "rollup -c",
     "build": "rollup -c && mv Module.js ./dist"
   },
   "keywords": [
