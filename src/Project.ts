@@ -14,7 +14,7 @@ export default class Project {
     /**
      * The persister used to save data.
      */
-    protected Persister: IPersister;
+    protected Persisters: IPersister[];
 
     /**
      * The task to be executed.
@@ -27,9 +27,9 @@ export default class Project {
      * @param {ITask} task - The task to be executed.
      * @param {IExecutionProfile} profile - The execution profile used to collect metric data.
      */
-    constructor(profile: IExecutionProfile, task: ITask, persister: IPersister) {
+    constructor(profile: IExecutionProfile, task: ITask, persisters: IPersister[]) {
         this.ExecutionProfile = profile;
-        this.Persister = persister;
+        this.Persisters = persisters;
         this.Task = task;
     }
 
@@ -43,10 +43,10 @@ export default class Project {
 
             const result = await this.Task.run();
 
-            await this.Persister.save({
+            this.Persisters.forEach(async x => await x.save({
                 profile: profileData,
                 taskResult: result,
-            });
+            }));
         } catch (error) {
             console.error("An error occurred during task execution:", error);
         }

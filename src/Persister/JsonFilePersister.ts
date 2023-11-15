@@ -21,7 +21,10 @@ export default class JsonFilePersister implements IPersister {
     async save(data: Record<string, any>): Promise<void> {
         try {
             const jsonContent = JSON.stringify(data, null, 2); // Indentation for readability
-            await fs.writeFile(this.filePath, jsonContent, 'utf-8');
+            if(jsonContent != null)
+            {
+                await fs.writeFile(this.filePath, jsonContent, 'utf-8');
+            }
         } catch (error) {
             if (error instanceof Error) {
                 throw new Error(`Error saving data: ${error.message}`);

@@ -24,5 +24,5 @@ const tasks = new CompositeTask(
 ) as ITask
 
 // See the data collected in result.json.
-const project = new Project(executionProfile, tasks, persister)
+const project = new Project(executionProfile, tasks, [persister])
 project.executeTask()

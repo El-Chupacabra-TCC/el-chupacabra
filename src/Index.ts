@@ -27,7 +27,7 @@ export function Execute()
             new FirstNPrimesTask([new DeltaTimeMetric()], 10)
         ]
     ) as ITask
-    var project = new Project(executionProfile, tasks, persister)
+    var project = new Project(executionProfile, tasks, [persister])
     return project.executeTask()
 }
 
