@@ -5,11 +5,17 @@ import IMetric from "./IMetric";
  * @implements {IMetric}
  */
 export default class MemoryMetric implements IMetric {
+    private firstMeasurement: Record<string, any>[] = [];
+
     /**
      * @inheritdoc
      */
     start(): void {
-        return
+        this.firstMeasurement = [
+            this.getNewBrowserApiMemoryData(),
+            this.getOldBrowserApiMemoryData(),
+            this.getNodeMemoryData()
+        ]
     }
 
     /**
@@ -23,13 +29,22 @@ export default class MemoryMetric implements IMetric {
             this.getNodeMemoryData()
         ]
 
-        for (let m of measurements) {
-            if (Object.keys(m).length === 0) {
+        for (let index = 0; index < measurements.length; index++) {
+            if (Object.keys(measurements[index]).length === 0) {
                 continue
             }
 
-            memoryConsumption.usedApis.push(Object.keys(m)[0])
-            memoryConsumption.measurements = { ...memoryConsumption.measurements, ...m }
+            memoryConsumption.usedApis.push(Object.keys(measurements[index])[0])
+            memoryConsumption.measurements = {
+                start: {
+                    ...memoryConsumption.measurements,
+                    ...this.firstMeasurement[index]
+                },
+                end: {
+                    ...memoryConsumption.measurements,
+                    ...measurements[index] 
+                }
+            }
         }
 
         return memoryConsumption
