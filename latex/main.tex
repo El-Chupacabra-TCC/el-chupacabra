@@ -66,6 +66,7 @@
 \newacro{JSON}{JavaScript Object Notation}
 \newacro{IoT}{Internet das coisas (do inglês, \emph{Internet of Things})}
 \newacro{OCP}{Princípio Aberto/Fechado (do inglês, \emph{Open-Closed Principle})}
+\newacro{SUS}{System Usability Scale}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -992,51 +993,59 @@ Abaixo, está uma descrição de cada elemento do diagrama.
 \chapter{Experimentos}
 \label{cap:experimentos}
 
-Neste capítulo estão as descrições do experimento utilizado para avaliar o \acr{ELC} por volutários externos, bem como sua preparação e execução. Além disso, estão contidos também os resultados do experimento, e também a análise parcial dos resultados.
+Após o desenvolvimento do \acr{ELC}, é necessária a realização de um experimento para avaliar como se daria o seu uso em um cenário real. Neste capítulo estão contidas as descrições do experimento utilizado para avaliar o \acr{ELC} por volutários externos, bem como sua preparação e execução. Além disso, estão contidos também os resultados do experimento.
 
 \section{Preparação do experimento}
 \label{section:preparacao-experimento}
 
-Para o experimento, foram definidas duas etapas. A primeira é a utilização do EasyELC em um projeto exemplo, na plataforma \emph{Codepen}\footnote{Plataforma Codepen: https://codepen.io/}. A segunda foi o preenchimento de um formulário no Google Forms, com o fim de coletar a avaliação do voluntário de como foi a experiência de uso do \acr{ELC}. 
-Para o grupo de controle, foram consideradas XX pessoas,entre alunos e professores. 
+O experimento consiste em duas etapas principais. A primeira é a utilização do \acr{ELC} em um projeto exemplo, e segunda é o preenchimento de um formulário no Google Forms baseado no \acr{SUS}, buscando coletar a opinião do voluntário de como foi a experiência de uso.
+
+Para o grupo de controle, estão sendo considerados XX voluntários, em sua maioria alunos e/ou pertencentes à comunidade do CEFET e já com alguma experiência em programação. 
 
 \section{Uso do ELC pelos voluntários}
 \label{section:parte-1-experimento}
 
-O experimento consiste basicamente...
+A primeira parte do experimento consiste basicamente do uso do \acr{ELC}, mais especificamente do módulo EasyELC, pelos voluntários através da plataforma \emph{Codepen}\footnote{Plataforma Codepen: https://codepen.io/}. Um projeto padrão foi criado e disponibilizado para os voluntários, e ele consiste em comparar o desempenho de dois algoritmos de ordenação já conhecidos sobre um conjunto de dados. Os algoritmos são o Bubble Sort e o Heap Sort, e o conjunto de dados está inicialmente desordenado e representado no formato \acr{JSON}. Dessa forma, o fluxo do experimento a ser realizado é: fazer o download do arquivo, e realizar a ordenação duas vezes, uma utilizando cada algoritmo, para comparar qual tem o melhor desempenho.
 
-Baixar um JSON no código Javascript
-O JSON vai ficar em uma variável 
-E será ordenado usando: heapsort e bubblesort
-O desafio do usuário vai ser descobrir qual o consumo de memória e quanto tempo ele leva pra ordenar
-O ELC vai estar pré configurado para subir os dados em uma planilha do google sheets
-Com isso ele vai adicionar o que precisa no código javascript pra coleta acontecer
-E depois preencher o formulário
+A métrica utilizada na comparação foi a métrica de tempo, como mostra a figura XX. Essa parte do código é uma das partes que o voluntário preenche, com o auxilio de comentários deixados mostrando o passo a passo da criação da métrica. Dessa forma, ele consegue ter a experiência de criar uma métrica utilizando a ferramenta.
+
+{{INSERIR FIGURA DA MÉTRICA QUE ESTÁ NO CODEPEN}}
+
+Após a ordenação de cada um dos algoritmos, no código principal o \acr{ELC} é chamado para registrar quanto tempo o algoritmo usou para ordenar todo o arquivo. Esse fluxo está descrito na figura XX.
+
+{{INSERIR FIGURA DO FLUXO PRINCIPAL DA APLICAÇÃO}}
+
+Os resultados da execução do experimento são inseridos em uma tabela no Google Sheets, como mostra a figura XX, e disponibilizados para os voluntários verem como a inserção das métricas acontece. Assim, a primeira parte do experimento cobre todo o fluxo principal de execução do \acr{ELC}, desde a criação da métrica até a persistência.
+
+{{INSERIR FIGURA DA TABELA DE RESULTADOS}}
 
 \section{Formulário}
 \label{section:parte-2-formulario}
 
-Na Tabela \ref{tab:perguntas-experimentos} estão descritas as perguntas utilizadas no formulário enviado para ser preenchido após o experimento.
+Após a realização da primeira etapa do experimento, os voluntários preenchem um formulário, cujo objetivo é avaliar a experiência de uso da ferramenta, bem como outras características relevantes para a análise do seu desempenho e qualidade. As perguntas do formulário são baseadas no conceito trazido pelo \acr{SUS}. Esse sistema de avaliação foi construido para fornecer uma forma sólida e com baixo custo de implementação de avaliar a usabilidade de sistemas de software \citep{brooke1995sus}. Na lista abaixo estão as perguntas já traduzidas que são utilizadas no formulário.
 
-\begin{table}[h!]
-\centering
-\caption{Perguntas utilizadas no formulário de avaliação}
-	\begin{tabular}{c} 
-	\hline
-		Pergunta 1 \\
-		Pergunta 2 \\
-		Pergunta 3 \\
-	\hline
-	\end{tabular}
-	\label{tab:perguntas-experimentos}
-\end{table}
+\begin{enumerate}
+	\itemsep 0em 
+
+	\item Eu acho que gostaria de usar esse sistema com frequência.
+	\item Eu acho o sistema desnecessariamente complexo.
+	\item Eu achei o sistema fácil de usar.
+	\item Eu acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar o sistema.
+	\item Eu acho que as várias funções do sistema estão muito bem integradas.
+	\item Eu acho que o sistema apresenta muita inconsistência.
+	\item Eu imagino que as pessoas aprenderão como usar esse sistema rapidamente.
+	\item Eu achei o sistema atrapalhado de usar.
+	\item Eu me senti confiante ao usar o sistema.
+	\item Eu precisei aprender várias coisas novas antes de conseguir usar o sistema.
+\end{enumerate}
+
 
 \section{Resultados}
 \label{section:resultados}
 
-%Parágrafo sobre o resultado no codepen. Se alguém teve dificuldade, etc.
+Na primeira parte do experimento, foi observada uma grande adesão por parte dos voluntários, e nenhum dos voluntários necessitou de ajuda para realizar a tarefa. Isso demonstra sucesso na utilização da ferramenta, e é um indício de que o \acr{ELC} não é uma ferramenta complicada de se utilizar no dia a dia.
 
-Após a submissão dos formulários, foi possível gerar um gráfico com as respostas para cada pergunta do experimento, descritos abaixo.
+Na segunda parte do experimento, após a submissão dos formulários, é possível gerar um gráfico para cada pergunta contendo quais foram as respostas mais selecionadas pelos voluntários. Os resultados do formulário mostram que o \acr{ELC} conseguiu atingir um nível adequado de usabilidade em sua primeira versão, obtendo uma nota média de XX.
 
 \begin{figure}[!ht]
 	\centering
@@ -1073,15 +1082,12 @@ Após a submissão dos formulários, foi possível gerar um gráfico com as resp
 	\label{fig:respostas-pergunta-5}
 \end{figure}
 
-% Analisar os resultados.
-
-\chapter{Conclusão}
 \label{cap:conclusão}
 
 \section{Vantagens do ELC}
 \label{subsection:classificando-o-elc}
 
-\par Após o desenvolvimento da ferramenta, é possível posicioná-la com relação aos critérios que foram estabelecidos na seção \ref{sec:avaliacao-ferramentas-encontradas}. O resultado da comparação com as outras ferramentas se encontra na tabela \ref{table:classificacao-com-elc}.
+\par Após a experimentação da ferramenta, é possível posicioná-la com relação aos critérios que foram estabelecidos na seção \ref{sec:avaliacao-ferramentas-encontradas}. O resultado da comparação com as outras ferramentas se encontra na tabela \ref{table:classificacao-com-elc}.
 
 \begin{table}[ht]
 \caption{Classificação das ferramentas encontradas com o ELC} % title of Table
@@ -1115,7 +1121,8 @@ Na parte do armazenamento das informações, o \acr{ELC} também se destaca, por
 
 \section{Trabalhos Futuros}
 \label{section:trabalhos-futuros}
-Inclusão de métricas de caixa branca
+
+Como possibilidades de trabalhos futuros, é possível trazer o conceito de testes de caixa branca \footnote{Sobre testes de caixa branca: \citep[Capítulo 21]{Sommerville2015Software}} para a ferramenta, visto que hoje o \acr{ELC} só consegue realizar testes de caixa preta. Dessa forma, o \acr{ELC} ficaria ainda mais robusto, abrangendo mais cenários de teste e contextos onde pode ser utilizado.
 
 \label{bibpage}
 \renewcommand\bibname{Referências}
