@@ -11,7 +11,7 @@ type _persistenceCallback = (profilingTree: Profiling | null) => void
  */
 export class EasyElc {
     protected _executionProfile: IExecutionProfile;
-    protected _persister: IPersister;
+    protected _persisters: IPersister[];
     private _profilingsTree: Profiling | null;
     private _activeProfilingsStack: Profiling[];
     private _persistenceCallbacks: _persistenceCallback[];
@@ -20,11 +20,11 @@ export class EasyElc {
     /**
      * Creates an instance of EasyElc.
      * @param {IExecutionProfile} executionProfile - The execution profile.
-     * @param {IPersister} persister - The persister.
+     * @param {IPersister} persisters - The persister.
      */
-    constructor(executionProfile: IExecutionProfile, persister: IPersister) {
+    constructor(executionProfile: IExecutionProfile, persisters: IPersister[]) {
         this._executionProfile = executionProfile;
-        this._persister = persister;
+        this._persisters = persisters;
         this._activeProfilingsStack = [];
         this._profilingsTree = null;
         this._persistenceCallbacks = [];
@@ -124,7 +124,14 @@ export class EasyElc {
         }
 
         this._profilingsTree = null;
-        await this._persister.save(profilingsData);
+
+        if (profilingsData !== null) {
+            await Promise.all(
+                this._persisters.map(async (x) => {
+                    await x.save(profilingsData);
+                })
+            );
+        }
         return profilingsTree;
     }
 

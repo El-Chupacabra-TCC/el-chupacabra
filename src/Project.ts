@@ -43,10 +43,17 @@ export default class Project {
 
             const result = await this.Task.run();
 
-            this.Persisters.forEach(async x => await x.save({
-                profile: profileData,
-                taskResult: result,
-            }));
+            if (result !== null) {
+                await Promise.all(
+                    this.Persisters.map(async (x) => {
+                        await x.save({
+                            profile: profileData,
+                            taskResult: result,
+                        });
+                    })
+                );
+            }
+            
         } catch (error) {
             console.error("An error occurred during task execution:", error);
         }
