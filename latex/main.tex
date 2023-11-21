@@ -67,6 +67,9 @@
 \newacro{IoT}{Internet das coisas (do inglês, \emph{Internet of Things})}
 \newacro{OCP}{Princípio Aberto/Fechado (do inglês, \emph{Open-Closed Principle})}
 \newacro{SUS}{System Usability Scale}
+\newacro{DOM}{Modelo de documento por objetos (do inglês, \emph{Document Object Model})}
+\newacro{HTTP}{\emph{Hypertext Transfer Protocol}}
+
 
 \begin{document}
 \pagenumbering{gobble}
@@ -352,18 +355,18 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 			\toprule
 			\textbf{Critério} & \textbf{Descrição}\\
 			\midrule 
-			Coesão e acoplamento & Se a utilização da ferramenta exige que o código fonte seja pouco alterado.\\
+			Coesão e Acoplamento & Se a utilização da ferramenta exige que o código fonte seja pouco alterado.\\
 			Extensibilidade & Se a ferramenta permite a coleta de métricas customizáveis.\\
 			Portabilidade & Se a ferramenta pode ser utilizada em testes multiplataforma.\\
-			Armazenamento em nuvem & Se a ferramenta gera dados estruturados para análise futura.\\
+			Armazenamento em Nuvem & Se a ferramenta gera dados estruturados para análise futura.\\
 			\bottomrule
 		\end{tabular}
 		\label{tab:criterio-avaliacao-ferramentas}
 	\end{table}
 	
-	\par O critério de coesão e acoplamento é importante na avaliação das ferramentas pois facilita na utilização, diminuindo a dificuldade de implementação da ferramenta. O segundo critério citado, extensibilidade, é importante pois, dado o universo de métricas possíveis, habilita ao pesquisador mais possibilidades de medições e cenários de teste, inclusive cenários customizados. Já o critério de portabilidade é essencial pois o ambiente da \emph{web} moderna é diverso, contendo diferentes plataformas e dispositivos, e a possibilidade de testar o desempenho de um método em diferentes ambientes traz mais solidez para os resultados da pesquisa. E o último critério que foi destacado, o de Armazenamento em nuvem, é um grande facilitador para o trabalho de análise posterior, que poderá utilizar esses dados centralizados de forma remota e simplificada, apenas consumindo uma planilha ou obtendo os dados via banco de dados pela internet.
+	\par O critério de Coesão e Acoplamento é importante na avaliação das ferramentas pois facilita na utilização, diminuindo a dificuldade de implementação da ferramenta. O segundo critério citado, Extensibilidade, é importante pois, dado o universo de métricas possíveis, habilita ao pesquisador mais possibilidades de medições e cenários de teste, inclusive cenários customizados. Já o critério de Portabilidade é essencial pois o ambiente da \emph{web} moderna é diverso, contendo diferentes plataformas e dispositivos, e a possibilidade de testar o desempenho de um método em diferentes ambientes traz mais solidez para os resultados da pesquisa. E o último critério que foi destacado, o de Armazenamento em Nuvem, é um grande facilitador para o trabalho de análise posterior, que poderá utilizar esses dados centralizados de forma remota e simplificada, apenas consumindo uma planilha ou obtendo os dados via banco de dados pela internet.
 
-	\subsection{Análise das ferramentas}
+	\subsection{Classificação das ferramentas}
 	\label{subsection:analise-ferramentas}
 	Após a análise individual de cada ferramenta, foi possível representar suas classificações dados os critérios definidos anteriormente. Esse processo está exemplificado na tabela \ref{table:classificacao-sem-elc}. Essa análise foi importante para entender aonde o \acr{ELC} se encaixa no panorama geral das ferramentas de medição no lado do cliente.
 
@@ -377,10 +380,10 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 		
 		%heading
 		\midrule % inserts single horizontal line
-		Coesão e Acoplamento & \cmark & \xmark & \cmark & \cmark   \\
-		Extensibilidade & \xmark & \xmark & \xmark & \cmark  \\
-		Portabilidade & \cmark & \xmark & \cmark & \xmark  \\
-		Armazenamento em núvem & \cmark & \xmark & \xmark & \xmark  \\
+		Coesão e Acoplamento & \cmark & \cmark & \cmark & \cmark   \\
+		Extensibilidade & \xmark & \xmark & \xmark & \xmark  \\
+		Portabilidade & \cmark & \xmark & \xmark & \xmark  \\
+		Armazenamento em núvem & \xmark & \cmark & \cmark & \cmark  \\
 		\bottomrule %inserts single line
 		\end{tabular}
 		\label{table:classificacao-sem-elc} % is used to refer this table in the text
@@ -389,31 +392,44 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 		\label{subsection:meminsight}
 
 		No contexto de medição de memória, temos o MemInsight \citep{Jensen2015MemInsight}. Essa ferramenta roda de forma independente sobre um motor Javascript, não sendo necessário um navegador para executá-la, e faz a análise do consumo de memória por meio de um conjunto de medições que visam remontar o ciclo de vida dos objetos em memória, e que permitem a análise de desperdício de recursos durante a execução do programa. 
-		
-		Analisando a ferramenta, foi observado que ela só trabalha com medição de métricas de memória, não permitindo generalizar consultas de outros tipos, por isso classificamos como não flexível com relação às métricas. Além disso, por ser uma ferramenta com foco em depurar aplicações, não realiza nativamente a persistência e organização desses dados.
-		
+
+		Para a implementação da ferramenta, não são necessárias alterações no código fonte, visto que ela opera sobre os nós do \acr{DOM}, atendendo dessa forma ao critério de Coesão e Acoplamento. É possível executar a ferramenta sob qualquer motor Javascript, seja um navegador de \emph{Desktop} ou em celulares, até em servidores utilizando NodeJS. Portanto, atende ao critério de Portabilidade.
+
+
+		É observável que a ferramenta só trabalha com medição de métricas de memória, não permitindo generalizar consultas de outros tipos, por isso não atende ao critério de Extensibilidade. Além disso, por ser uma ferramenta com foco em depurar aplicações, não realiza nativamente a persistência e organização desses dados, não atendendo ao critério de Armazenamento em Nuvem.		
 
 		\subsection{WePR}
 		\label{WePR}
-		\par \citet{Asrese2019MeasuringWL} também propôs uma ferramenta para medição no lado do cliente, porém com o foco em métricas de \acr{QoS}, nomeada WePR. No trabalho, ele apresenta um panorama da evolução da web, especialmente de como a latência se desenvolveu nos sites, e sustenta a necessidade desse tipo de medição como forma de melhorar a experiência do usuário, que indicam ser um fator determinante no abandono ou sucesso de um website. A ferramenta foi testada utilizando grandes sites como Google, Youtube e Facebook. 
-		\par A arquitetura da ferramenta é distribuída, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador de carga (do inglês, \emph{load balancer}), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor as URLs dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o balanceador de carga, e por fim algum dos servidores de renderização envia os dados para persistência.
-		\par O enfoque da ferramenta é a análise de desempenho de sites, dessa forma sua arquitetura e usabilidade não foram construídas de forma simples de estender, tornando difícil a utilização da ferramenta em outros contextos. Além disso, não temos a possibilidade de incluir métricas customizadas, o que torna sua análise pouco flexível.
+		\par \citet{Asrese2019MeasuringWL} também propôs uma ferramenta para medição no lado do cliente, porém com o foco em métricas de \acr{QoS}, nomeada WePR. A ferramenta é distribuída, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador de carga (do inglês, \emph{load balancer}), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor as URLs dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o balanceador de carga, e por fim algum dos servidores de renderização envia os dados para persistência. 
+
+		A ferramenta é orientada à medição de websites e páginas na web, e interaje com essas páginas via requisições do tipo \acr{HTTP}. Dessa forma, atende ao critério de Coesão e Acoplamento, pois não exige que o código fonte seja modificado para o seu uso, mas não atende ao critério de Portabilidade, pois é utilizada somente para o contexto de websites.
+
+		Como a ferramenta realiza a persistência de dados de forma remota, atende ao critério de Armazenamento em Núvem. Em contrapartida, a ferramenta é capaz de lidar somente com métricas de \acr{QoS}, não sendo possível customizar métricas, e por isso não atende ao critério de Extensibilidade.
+
 		
 		\subsection{Gember}
-		\par \citet{Gember2012Obtaining} também traz um estudo sobre medição no lado do cliente, porém dessa vez em clientes móveis, utilizando dados de um provedor de internet e também de experimentos controlados. Esse tipo de medição é muito útil para provedores de internet e desenvolvedores, que precisam entender como suas aplicações se saem interagindo com redes móveis de internet.
-		\par Foi desenvolvido no trabalho um protótipo para Android de um medidor de performance para analisar somente quando o dispositivo está ativo, e que é integrado ao app como uma biblioteca. A arquitetura consiste basicamente de um controlador central (servidor), e múltiplos clientes (aparelhos) com o código rodando em seus celulares. Dessa forma, o pesquisador faz uma requisição para esse controlador, e ele coordena a coleta do que foi solicitado nos aparelhos, salvando os resultados no servidor.
-		\par O serviço inicialmente coleta latência, taxa de transferência (do inglês, {throughput}) e o tempo de carregamento de páginas Web, é extensível para outras métricas de rede, porém limitado a elas. Outra limitação aqui é a utilização no cliente, que se encontra somente no sistema operacional Android, tornando pouco flexível a utilização dessa ferramenta nos contextos de pesquisas multiplataforma.
+		\par \citet{Gember2012Obtaining} também traz um estudo sobre medição no lado do cliente, porém dessa vez em clientes móveis, buscando medir o desempenho de rede desses aparelhos em um período de tempo. Foi desenvolvido no trabalho um protótipo para Android de um medidor de performance para analisar somente quando o dispositivo está ativo. A arquitetura da ferramenta consiste basicamente de um controlador central (servidor), e múltiplos clientes (aparelhos) com o medidor instalado e rodando em seus celulares. Dessa forma, o pesquisador faz uma requisição para esse controlador, e ele coordena a coleta do que foi solicitado nos aparelhos, salvando os resultados no servidor.
+
+		O serviço inicialmente coleta latência, taxa de transferência (do inglês, \emph{throughput}) e o tempo de carregamento de páginas Web, e é extensível para outras métricas de rede, porém limitado a elas. Isso torna a ferramenta insuficiente no critério de Extensibilidade, pois não é possível coletar métricas customizadas. 
+
+		Com relação ao seu uso, não é necessário modificar o código das aplicações que utilizam a rede celular para as medições, visto que o medidor é uma aplicação apartada instalada no aparelho do cliente. Isso faz com que a ferramenta satisfaça o critério de Coesão e Acoplamento. 
+		
+		Os dados coletados são persistidos no próprio servidor remoto que coordena as coletas, o que atende ao critério de Armazenamento em Núvem. Porém, uma limitação da ferramenta é a utilização somente em clientes Android, tornando pouco flexível o seu uso em contextos de pesquisas multiplataforma, e fazendo com que a ferramenta não atenda ao critério de Portabilidade.
+
 
 		\subsection{Mobilyzer}
 		\par Ainda no contexto de medição de rede, se encontra o Mobilyzer \citep{Nikravesh2015Mobilyzer}, uma plataforma aberta para medição de rede em dispositivos móveis. Essa plataforma foi criada com o objetivo de prover uma solução escalável, eficiente e controlável, que fosse possível de ser incorporada tanto a apps em desenvolvimento, quanto em apps que já estão desenvolvidos, para suportar pesquisas e testes em medição de rede. 
 		\par Ela funciona utilizando alguns componentes básicos, sendo eles: 
 		\begin{enumerate}
-			\item Uma biblioteca Android, que é integrada aos aplicativos para coletar as informações e enviar ao servidor. Ela é incorporada direto no código fonte.
+			\item Uma biblioteca Android, que é integrada aos aplicativos para coletar as informações e enviar ao servidor. Ela é incorporada direto no código fonte das aplicações.
 			\item Um componente chamado gerenciador de memória, no qual o pesquisador pode inserir medições de forma customizada e mais eficiente. Ele também realiza o agendamento das medições, e também coordena e monitora os dispositivos para que não tenha sobrecarga em nenhum aparelho ou rede medida. 
 			\item Um servidor na nuvem, que fica responsável por coletar, analisar aplicando regras e publicar os dados coletados dos dispositivos. Essa arquitetura centralizada simplifica o compartilhamento de dados entre essas etapas, podendo integrar outras ferramentas de análise de dados com a base das coletas.
 
 		\end{enumerate}
-		\par Uma dificuldade no uso do Mobilyzer em pesquisas é que essa plataforma também se restringe a plataforma Android. Diminuindo bastante as possibilidades de medição em pesquisas multiplataforma. Além disso, não possui muita flexibilidade com relação às métricas, sendo em sua maior parte métricas de rede.
+		
+		A utilização da biblioteca Android nos aplicativos não exige muitas alterações no código fonte das aplicações, bastando apenas instalar a biblioteca e adicionar as chamadas a \acr{API} do gerenciador de memória rodando no aparelho. Isso torna a ferramenta apta no critério Coesão e Acoplamento, já que são poucas alterações no código fonte. Com relação a persistência, o servidor na nuvem mantém uma base de dados anonimizada com os resultados das medições para consulta, tornando a ferramenta apta no critério de Armazenamento em Núvem.
+
+		Uma limitação no uso do Mobilyzer em pesquisas é que essa plataforma também se restringe a plataforma Android, não atendendo ao critério de Portabilidade. Além disso, não possui muita flexibilidade com relação às métricas, sendo em sua maior parte métricas de rede, e por isso não atende ao critério de Extensibilidade.
 
 		
 
@@ -1005,19 +1021,44 @@ Para o grupo de controle, estão sendo considerados XX voluntários, em sua maio
 \section{Uso do ELC pelos voluntários}
 \label{section:parte-1-experimento}
 
-A primeira parte do experimento consiste basicamente do uso do \acr{ELC}, mais especificamente do módulo EasyELC, pelos voluntários através da plataforma \emph{Codepen}\footnote{Plataforma Codepen: https://codepen.io/}. Um projeto padrão foi criado e disponibilizado para os voluntários, e ele consiste em comparar o desempenho de dois algoritmos de ordenação já conhecidos sobre um conjunto de dados. Os algoritmos são o Bubble Sort e o Heap Sort, e o conjunto de dados está inicialmente desordenado e representado no formato \acr{JSON}. Dessa forma, o fluxo do experimento a ser realizado é: fazer o download do arquivo, e realizar a ordenação duas vezes, uma utilizando cada algoritmo, para comparar qual tem o melhor desempenho.
+A primeira parte do experimento consiste basicamente do uso do \acr{ELC}, mais especificamente do módulo EasyELC, pelos voluntários através da plataforma \emph{ObservableHQ}\footnote{Plataforma ObservableHQ: https://observablehq.com/}. Um projeto padrão foi criado e disponibilizado para os voluntários, e ele consiste em comparar o desempenho de dois algoritmos de ordenação já conhecidos sobre um conjunto de dados. Os algoritmos são o Bubble Sort e o Heap Sort, e o conjunto de dados está inicialmente desordenado e representado no formato \acr{JSON}. Dessa forma, o fluxo do experimento a ser realizado é: realizar a ordenação duas vezes, uma utilizando cada algoritmo, para comparar qual tem o melhor desempenho.
 
-A métrica utilizada na comparação foi a métrica de tempo, como mostra a figura XX. Essa parte do código é uma das partes que o voluntário preenche, com o auxilio de comentários deixados mostrando o passo a passo da criação da métrica. Dessa forma, ele consegue ter a experiência de criar uma métrica utilizando a ferramenta.
+Foi adicionado uma seção chamada Implementação de Métrica Customizada, como mostra a figura \ref{fig:metrica-observable}. Essa parte do código é uma das partes que o voluntário preenche, com o auxilio de comentários deixados mostrando o passo a passo da criação da métrica. O exemplo trata de uma métrica cujo comportamento é retornar um número aleatório. Dessa forma, ele consegue ter a experiência de criar uma métrica utilizando a ferramenta.
 
-{{INSERIR FIGURA DA MÉTRICA QUE ESTÁ NO CODEPEN}}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{figures/experimento-metrica.jpeg}
+	\caption{Seção para criação de métrica customizada pelo usuário no experimento.}
+	\label{fig:metrica-observable}
+\end{figure}
 
-Após a ordenação de cada um dos algoritmos, no código principal o \acr{ELC} é chamado para registrar quanto tempo o algoritmo usou para ordenar todo o arquivo. Esse fluxo está descrito na figura XX.
 
-{{INSERIR FIGURA DO FLUXO PRINCIPAL DA APLICAÇÃO}}
+Após a ordenação realizada pelo algoritmo, o \acr{ELC} é chamado para registrar quanto tempo durou a ordenação de todo o arquivo. O fluxo para o Bubble Sort está descrito na figura \ref{fig:experimento-bubble}, e para o Heap Sort na figura \ref{fig:experimento-heap}.
 
-Os resultados da execução do experimento são inseridos em uma tabela no Google Sheets, como mostra a figura XX, e disponibilizados para os voluntários verem como a inserção das métricas acontece. Assim, a primeira parte do experimento cobre todo o fluxo principal de execução do \acr{ELC}, desde a criação da métrica até a persistência.
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{figures/experimento-bubble.jpeg}
+	\caption{Fluxo de código referente a execução da ordenação com o Bubble Sort.}
+	\label{fig:experimento-bubble}
+\end{figure}
 
-{{INSERIR FIGURA DA TABELA DE RESULTADOS}}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{figures/experimento-heap.jpeg}
+	\caption{Fluxo de código referente a execução da ordenação com o Heap Sort.}
+	\label{fig:experimento-heap}
+\end{figure}
+
+
+Os resultados da execução do experimento são inseridos em uma tabela no Google Sheets, como mostra a figura \ref{fig:experimento-tabela-resultado}, e disponibilizados para os voluntários verem como a inserção das métricas acontece. Assim, a primeira parte do experimento cobre todo o fluxo principal de execução do \acr{ELC}.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{figures/experimento-heap.jpeg}
+	\caption{Seção para criação de métrica customizada pelo usuário no experimento.}
+	\label{fig:experimento-tabela-resultado}
+\end{figure}
+
 
 \section{Formulário}
 \label{section:parte-2-formulario}
@@ -1049,39 +1090,80 @@ Na segunda parte do experimento, após a submissão dos formulários, é possív
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{figures/exemplo-tipo-de-dado.png}
+	\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-1.jpeg}
 	\caption{Respostas obtidas na pergunta 1}
 	\label{fig:respostas-pergunta-1}
 \end{figure}
 
+\pagebreak
+
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{figures/exemplo-tipo-de-dado.png}
+	\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-2.jpeg}
 	\caption{Respostas obtidas na pergunta 2}
 	\label{fig:respostas-pergunta-2}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{figures/exemplo-tipo-de-dado.png}
+	\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-3.jpeg}
 	\caption{Respostas obtidas na pergunta 3}
 	\label{fig:respostas-pergunta-3}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{figures/exemplo-tipo-de-dado.png}
+	\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-4.jpeg}
 	\caption{Respostas obtidas na pergunta 4}
 	\label{fig:respostas-pergunta-4}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{figures/exemplo-tipo-de-dado.png}
+	\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-5.jpeg}
 	\caption{Respostas obtidas na pergunta 5}
 	\label{fig:respostas-pergunta-5}
 \end{figure}
 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-6.jpeg}
+	\caption{Respostas obtidas na pergunta 6}
+	\label{fig:respostas-pergunta-6}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-7.jpeg}
+	\caption{Respostas obtidas na pergunta 7}
+	\label{fig:respostas-pergunta-7}
+\end{figure}
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-8.jpeg}
+	\caption{Respostas obtidas na pergunta 8}
+	\label{fig:respostas-pergunta-8}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-9.jpeg}
+	\caption{Respostas obtidas na pergunta 9}
+	\label{fig:respostas-pergunta-9}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-10.jpeg}
+	\caption{Respostas obtidas na pergunta 10}
+	\label{fig:respostas-pergunta-10}
+\end{figure}
+
+
+
+\chapter{Conclusão}
 \label{cap:conclusão}
 
 \section{Vantagens do ELC}
@@ -1099,10 +1181,10 @@ Na segunda parte do experimento, após a submissão dos formulários, é possív
 
 %heading
 \midrule % inserts single horizontal line
-Coesão e Acoplamento & \cmark & \xmark & \cmark & \cmark  & \cmark \\
-Extensibilidade & \xmark & \xmark & \xmark & \cmark & \cmark  \\
-Portabilidade & \cmark & \xmark & \cmark & \xmark & \cmark  \\
-Armazenamento em núvem & \cmark & \xmark & \xmark & \xmark & \cmark  \\
+Coesão e Acoplamento & \cmark & \cmark & \cmark & \cmark  & \cmark  \\ 
+Extensibilidade & \xmark & \xmark & \xmark & \xmark  & \cmark \\
+Portabilidade & \cmark & \xmark & \xmark & \xmark  & \cmark \\
+Armazenamento em núvem & \xmark & \cmark & \cmark & \cmark & \cmark  \\
 \bottomrule %inserts single line
 \end{tabular}
 \label{table:classificacao-com-elc} % is used to refer this table in the text
