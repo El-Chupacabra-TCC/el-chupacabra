@@ -212,20 +212,20 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 
 	\section{Principio do Aberto/Fechado}
 	\label{cap:solid-ocp}
-	\citet{MartinCleanArchtecture} popularizou os princípios de design de software SOLID.
+	\citet{MartinCleanArchtecture2017} popularizou os princípios de design de software SOLID.
 	Os quais atuam como guias na organização de funções e estruturas de dados em classes e como essas classes devem ser interconectadas.
 	Outro ponto importante, é que esses princípios são pensados para serem aplicados por programadores que trabalham no nível do módulo.
 	Ou seja, sua aplicação ocorre um nível de abstração acima do código e visa definir os tipos de estruturas usadas dentro de módulos e componentes.
 	O principal objetivo dos princípios SOLID é a criação de estruturas de software que tolerem mudanças, sejam fáceis de entender e sejam a base de componentes reutilizáveis em diferentes sistemas de software.
 
-	O princípio do aberto/fechado (do inglês, \emph{open/closed principle} ou OCP) pode ser definido como um artefato de software deve ser aberto para extensão, mas fechado para modificação. \citep{Meyer1988ObjectOrientedSoftwareConstruction}
+	O princípio do aberto/fechado (do inglês, \emph{open/closed principle} ou OCP) pode ser definido como um artefato de software deve ser aberto para extensão, mas fechado para modificação. \citep{Meyer1997ObjectOrientedSoftwareConstruction}
 	Em outras palavras, podemos afirmar que o princípio não foi respeitado quando uma extensão simples de um requisito resulta em uma cascata de mudanças em módulos dependentes.
 	O \acr{OCP} provoca justamente neste ponto, onde idealmente os módulos nunca são alterados.
-	Deste modo, quando houver a extensão de algum requisito, a extensão no software é feita adicionando código novo, ao invés de, alterar o código existente que funciona. \citep{Martin1996TheOpen-ClosedPrinciple}
+	Deste modo, quando houver a extensão de algum requisito, a extensão no software é feita adicionando código novo, ao invés de, alterar o código existente que funciona. \citep{Martin2000TheOP}
 
-	O \acr{OCP} é reconhecido como o coração do design de classes e módulos por estudantes de design de software. \citep{CleanArchtecture}
+	O \acr{OCP} é reconhecido como o coração do design de classes e módulos por estudantes de design de software. \citep{MartinCleanArchtecture2017}
 	Pois, permite que mudanças aconteçam sem que haja um grande impacto no software.
-	E, atinge este objetivo por meio do particionamento do sistema em componentes, organizando eles em uma hieraquia de dependência a qual protege os componentes de nível mais alto das mudanças no componentes de nível mais baixo. \citep{CleanArchtecture}
+	E, atinge este objetivo por meio do particionamento do sistema em componentes, organizando eles em uma hieraquia de dependência a qual protege os componentes de nível mais alto das mudanças no componentes de nível mais baixo. \citep{MartinCleanArchtecture2017}
 
 	A arquitetura do framework ELC utiliza como principal guia o \acr{OCP}.
 	Pois, organizamos os módulos do framework como entidades completamente independentes, assegurando que qualquer referência intermodular deveria ser feita para a interface do módulo.
@@ -439,13 +439,13 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 \chapter{Implementação}
 \label{cap:implementação}
 
-Neste capítulo estão descritos os tópicos relacionados a implementação da ferramenta, bem como da sua elaboração conceitual e da sua arquitetura interna. - No final, descrever mais o que foi feito no formato de um roteiro
+Neste capítulo estão descritos os tópicos relacionados a implementação da ferramenta, bem como da sua elaboração conceitual e da sua arquitetura interna. 
+
+TO-DO: No final, descrever mais o que foi feito no formato de um roteiro
 
 \section{Estudos de caso}
 
 Para fins didáticos, estão descritos nesta seção dois estudos de caso práticos, buscando ilustrar o funcionamento do ELC em diferentes cenários. Dessa forma, é possível entender mais facilmente não só como a ferramenta é aplicada, mas também como ela foi projetada e implementada.
-
-TO-DO: Analisar ordem dos exemplos. Se o mais simples será antes do mais complexo.
 
 \subsection{Projeto dos números primos}
 
@@ -478,8 +478,8 @@ Com o \acr{ELC} instalado como depêndencia do seu projeto, é possível dentro 
 E, como o objetivo da aplicação do \acr{ELC} é obter métricas dos usuários de um site, são utilizadas como configurações: O perfilador de execução para navegadores e a coleta de métricas por meio do Google Sheets.
 
 % REMOVE A PÁGINA EM BRANCO UTILIZANDO MINIPAGE
-%\begin{minipage}{\linewidth}
-%\end{minipage}
+\begin{minipage}{\linewidth}
+
 
 \begin{lstlisting}[label={lst:easyelc_setup}, caption={Instância do módulo EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
 import { EasyElc, ExecutionProfiles, Persisters, Metrics } from "el-chupacabra"
@@ -494,6 +494,7 @@ const easyElc = new EasyElc(
 );
 \end{lstlisting}
 
+\end{minipage}
 Com uma instância do EasyElc criada, já é possível realizar a coleta das métricas desejadas, a qual é realizada por meio da chamada do método startProfiling que recebe um nome do que está sendo medido e uma lista de métricas para coletar.
 Como a implementação do site faz uso do padrão de projeto \hyperref[subsection:strategy]{Strategy}, só é necessário inserir a chamada do método getFirstNPrimeNumbers.
 Então, com a chamada do método finish, é finalizada a coleta das métricas, passando metadados como argumento, e os dados coletados são enviados para a planilha.
@@ -534,8 +535,9 @@ Além disso, ele também terá informações sobre o hardware, a quantidade de n
 
 A ferramenta foi implementada utilizando uma arquitetura modular, e seguindo o conceito do aberto/fechado (open/closed), trazido pelo SOLID (citar fundamentação teórica). Dessa forma, todas as relações entre as classes e módulos se dão através de interfaces, abstraindo o funcionamento interno de cada elemento. Isso contribui significativamente para a manutenabilidade do código, pois diminui as chances de problemas de compatibilidade entre as implementações caso alguma premissa seja alterada.
 
-Inicialmente, a ferramenta se estrutura em seis módulos principais: o Módulo de Projeto (Project), Módulo de Perfil de Execução (ExecutionProfile), o módulo de Métricas (Metrics), o módulo de Persistência (Persister), o módulo de Tarefas (Tasks) e o Módulo Simplificado (EasyELC). Cada um deles possui sua responsabilidade, como serão descritas nas próximas secções. (TO-DO: atualizar diagrama pra inserir o módulo EasyELC)
+Inicialmente, a ferramenta se estrutura em seis módulos principais: o Módulo de Projeto (Project), Módulo de Perfil de Execução (ExecutionProfile), o módulo de Métricas (Metrics), o módulo de Persistência (Persister), o módulo de Tarefas (Tasks) e o Módulo Simplificado (EasyELC). Cada um deles possui sua responsabilidade, como serão descritas nas próximas secções. 
 
+% (TO-DO: atualizar diagrama pra inserir o módulo EasyELC) - EasyELC se relaciona com ExecutionProfile, Persister e Metrics
 
 \begin{figure}[!ht]
 	\centering
@@ -543,6 +545,7 @@ Inicialmente, a ferramenta se estrutura em seis módulos principais: o Módulo d
 	\caption{Diagrama representando os relacionamentos entre os módulos internos da aplicação.}
 	\label{fig:diagrama-arquitetura}
 \end{figure}
+
 
 \subsection{Módulo de Projeto (Project)}
 \label{subsection:modulo-project}
@@ -1021,7 +1024,7 @@ Para o grupo de controle, estão sendo considerados XX voluntários, em sua maio
 \section{Uso do ELC pelos voluntários}
 \label{section:parte-1-experimento}
 
-A primeira parte do experimento consiste basicamente do uso do \acr{ELC}, mais especificamente do módulo EasyELC, pelos voluntários através da plataforma \emph{ObservableHQ}\footnote{Plataforma ObservableHQ: https://observablehq.com/}. Um projeto padrão foi criado e disponibilizado para os voluntários, e ele consiste em comparar o desempenho de dois algoritmos de ordenação já conhecidos sobre um conjunto de dados. Os algoritmos são o Bubble Sort e o Heap Sort, e o conjunto de dados está inicialmente desordenado e representado no formato \acr{JSON}. Dessa forma, o fluxo do experimento a ser realizado é: realizar a ordenação duas vezes, uma utilizando cada algoritmo, para comparar qual tem o melhor desempenho.
+A primeira parte do experimento consiste basicamente do uso do \acr{ELC}, mais especificamente do módulo EasyELC, pelos voluntários através da plataforma \emph{ObservableHQ}\footnote{Link para o experimento na plataforma ObservableHQ: https://observablehq.com/@moura/framework-el-chupacabra-experimento}. Um projeto padrão foi criado e disponibilizado para os voluntários, e ele consiste em comparar o desempenho de dois algoritmos de ordenação já conhecidos sobre um conjunto de dados. Os algoritmos são o Bubble Sort e o Heap Sort, e o conjunto de dados está inicialmente desordenado e representado no formato \acr{JSON}. Dessa forma, o fluxo do experimento a ser realizado é: realizar a ordenação duas vezes, uma utilizando cada algoritmo, para comparar qual tem o melhor desempenho.
 
 Foi adicionado uma seção chamada Implementação de Métrica Customizada, como mostra a figura \ref{fig:metrica-observable}. Essa parte do código é uma das partes que o voluntário preenche, com o auxilio de comentários deixados mostrando o passo a passo da criação da métrica. O exemplo trata de uma métrica cujo comportamento é retornar um número aleatório. Dessa forma, ele consegue ter a experiência de criar uma métrica utilizando a ferramenta.
 
@@ -1205,6 +1208,8 @@ Na parte do armazenamento das informações, o \acr{ELC} também se destaca, por
 \label{section:trabalhos-futuros}
 
 Como possibilidades de trabalhos futuros, é possível trazer o conceito de testes de caixa branca \footnote{Sobre testes de caixa branca: \citep[Capítulo 21]{Sommerville2015Software}} para a ferramenta, visto que hoje o \acr{ELC} só consegue realizar testes de caixa preta. Dessa forma, o \acr{ELC} ficaria ainda mais robusto, abrangendo mais cenários de teste e contextos onde pode ser utilizado.
+
+% TO-DO: Falar sobre o experimento mais completo, usando o ELC clonando direto do repositório.
 
 \label{bibpage}
 \renewcommand\bibname{Referências}
