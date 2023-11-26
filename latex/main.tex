@@ -68,8 +68,8 @@
 \newacro{OCP}{Princípio Aberto/Fechado (do inglês, \emph{Open-Closed Principle})}
 \newacro{SUS}{System Usability Scale}
 \newacro{DOM}{Modelo de documento por objetos (do inglês, \emph{Document Object Model})}
-\newacro{HTTP}{\emph{Hypertext Transfer Protocol}}
-
+\newacro{HTTP}{Hypertext Transfer Protocol}
+\newacro{NPM}{Node Package Manager}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -155,7 +155,7 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 \chapter{Fundamentação teórica}
 \label{cap:fundamentacao_teorica}
 
-	% TO-DO: Criar uma seção introdutória: Nesse capítulo, vamos tratar de ... . Constam as seções ...
+	Neste capítulo será apresentada a fundamentação teórica do trabalho, ou seja, os principais conceitos teóricos a serem utilizados no entendimento da construção e do uso do \acr{ELC}. Dessa forma, a primeira seção trata de Testes de Software, a segunda sobre Abordagem Empírica em Engenharia de Software, a terceira sobre Padrões de Projeto (os utilizados no projeto foram o Strategy e o Composite), a quarta do princípio do Aberto-Fechado e a última sobre Coesão e Acoplamento.
 
 	\section{Testes de Software}
 	\label{cap:software-testing}
@@ -430,18 +430,12 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 		A utilização da biblioteca Android nos aplicativos não exige muitas alterações no código fonte das aplicações, bastando apenas instalar a biblioteca e adicionar as chamadas a \acr{API} do gerenciador de memória rodando no aparelho. Isso torna a ferramenta apta no critério Coesão e Acoplamento, já que são poucas alterações no código fonte. Com relação a persistência, o servidor na nuvem mantém uma base de dados anonimizada com os resultados das medições para consulta, tornando a ferramenta apta no critério de Armazenamento em Núvem.
 
 		Uma limitação no uso do Mobilyzer em pesquisas é que essa plataforma também se restringe a plataforma Android, não atendendo ao critério de Portabilidade. Além disso, não possui muita flexibilidade com relação às métricas, sendo em sua maior parte métricas de rede, e por isso não atende ao critério de Extensibilidade.
-
-		
-
-		% TO-DO: Citar a seção dos critérios, e revisitar cada um dos critérios justificando o pq o chupacabra é bom. Remover a primeira pessoa do texto. 
 	
 
 \chapter{Implementação}
 \label{cap:implementação}
 
-Neste capítulo estão descritos os tópicos relacionados a implementação da ferramenta, bem como da sua elaboração conceitual e da sua arquitetura interna. 
-
-TO-DO: No final, descrever mais o que foi feito no formato de um roteiro
+Neste capítulo estão descritos os tópicos relacionados a implementação da ferramenta, bem como da sua elaboração conceitual e da sua arquitetura interna. Dessa forma, primeiro são apresentados os estudos de caso utilizados para exemplificar o uso da ferramenta, e posteriormente detalhados os detalhes de implementação, desde a elaboração dos Diagramas de Arquitetura, Casos de Uso e Classes até a construção interna de cada módulo.
 
 \section{Estudos de caso}
 
@@ -449,15 +443,22 @@ Para fins didáticos, estão descritos nesta seção dois estudos de caso práti
 
 \subsection{Projeto dos números primos}
 
-TO-DO: Projeto no qual utilizamos o ELC de forma mais completa, inclusive usando o Composite nas tasks.
+Considere uma pesquisa onde são comparadas diferentes métodos para gerar sequências de números primos, e deseja-se de forma empírica obter qual é a melhor abordagem. Para isso, é necessário gerar essas sequências utilizando esses diferentes métodos e persistir esses resultados, afim de analisar qual tem o melhor comportamento. Porém, existe uma variável nesse processo que é o ambiente no qual estão sendo executados esses métodos. Nesse caso o \acr{ELC} pode ajudar, pois habilita que esse experimento seja feito de forma remota por voluntários, que podem ter diversos tipos de ambientes. 
 
+Para realizar esse experimento utilizando o \acr{ELC}, primeiro é necessário criar um projeto para o experimento, como é mostrado na figura XX. No projeto, sequencialmente, são executadas as Tarefas, e após a execução de cada uma, persistidos os dados em uma tabela no Google Sheets. No contexto do exemplo, para cada execução serão persistidos N registros, onde N é o número de métodos diferentes de se gerar números primos a serem avaliados.
+
+Após a criação do projeto, devem ser criadas tarefas para cada um dos métodos, ou seja, funções que executem a geração de uma mesma sequência de números primos, porém utilizando as diferentes abordagens. Essas funções estão na figura XX, e implementam duas formas de se gerar números primos: a primeira é ....  e a segunda ..... . Para a criação dessas tarefas, foi utilizado o padrão de projeto Strategy, descrito na seção \ref{subsection:strategy}, visto que são implementações diferentes do mesmo processo.
+
+Após a criação das Tarefas, é necessário criar as métricas a serem coletadas na execução das tarefas. A métrica utilizada para esse caso de uso foi a métrica de tempo de processamento (DeltaTime), e está na figura XX.
+
+Após seguir esses passos, já é possível hospedar esse projeto na núvem e enviar o link para os voluntários participarem. Conforme as execuções forem acontecendo, a planilha será atualizada automaticamente com as novas entradas.
+
+% TO-DO: Inserir dados do exemplo e prints.
 
 \subsection{Uso do ELC em ambiente produtivo}
 \label{subsection:exemplo-elc-prod}
 
-Considere o caso de uma aplicação que já está em ambiente de produção com fluxo ativo de usuários, e onde estes usuários contantemente reclamam sobre lentidões no site.
-Então, algum desenvolvedor é designado a investigar as causas dessas lentidões.
-Neste cenário, o desenvolvedor geralmente realiza tentativas de reproduzir o problema do cliente em sua máquina. Um facilitador seria se ele tivesse dados sobre as execuções dos usuários para análise, e para isso o \acr{ELC} pode auxiliá-lo, através do módulo EasyElc.
+Ainda na mesma temática de números primos, imagine o caso de uma aplicação web que calcula números primos, e que já está em ambiente de produção com fluxo ativo de usuários, onde estes usuários contantemente reclamam sobre lentidões no site. Portanto, algum desenvolvedor é designado a investigar as causas dessas lentidões. Para fins de depuração, o desenvolvedor geralmente realiza tentativas de reproduzir o problema do cliente em sua máquina. Um facilitador seria se ele tivesse alguma forma de obter dados sobre as execuções dos usuários para análise, e para isso o \acr{ELC} pode auxiliá-lo, através do módulo EasyElc.
 
 % TO-DO: Criar um apêndice detalhado sobre o First n Primes Calculator.
 
@@ -473,7 +474,7 @@ Além disso, o site também permite a configuração de qual método será usado
 	\label{fig:site-numeros-primos}
 \end{figure}
 
-Para realizar a coleta de métricas dentro do site com o \acr{ELC}, o primeiro passo é realizar a instalação do pacote el-chupacabra por meio do npm\footnote{https://www.npmjs.com/package/el-chupacabra}.
+Para realizar a coleta de métricas dentro do site com o \acr{ELC}, o primeiro passo é realizar a instalação do pacote el-chupacabra por meio do \acr{NPM}\footnote{https://www.npmjs.com/package/el-chupacabra}.
 Com o \acr{ELC} instalado como depêndencia do seu projeto, é possível dentro da base de código do site criar uma instância do EasyElc.
 E, como o objetivo da aplicação do \acr{ELC} é obter métricas dos usuários de um site, são utilizadas como configurações: O perfilador de execução para navegadores e a coleta de métricas por meio do Google Sheets.
 
@@ -536,8 +537,6 @@ Além disso, ele também terá informações sobre o hardware, a quantidade de n
 A ferramenta foi implementada utilizando uma arquitetura modular, e seguindo o conceito do aberto/fechado (open/closed), trazido pelo SOLID (citar fundamentação teórica). Dessa forma, todas as relações entre as classes e módulos se dão através de interfaces, abstraindo o funcionamento interno de cada elemento. Isso contribui significativamente para a manutenabilidade do código, pois diminui as chances de problemas de compatibilidade entre as implementações caso alguma premissa seja alterada.
 
 Inicialmente, a ferramenta se estrutura em seis módulos principais: o Módulo de Projeto (Project), Módulo de Perfil de Execução (ExecutionProfile), o módulo de Métricas (Metrics), o módulo de Persistência (Persister), o módulo de Tarefas (Tasks) e o Módulo Simplificado (EasyELC). Cada um deles possui sua responsabilidade, como serão descritas nas próximas secções. 
-
-% (TO-DO: atualizar diagrama pra inserir o módulo EasyELC) - EasyELC se relaciona com ExecutionProfile, Persister e Metrics
 
 \begin{figure}[!ht]
 	\centering
@@ -961,8 +960,20 @@ export default class SheetsonPersister implements IPersister {
   }
 }
 \end{lstlisting}
+
+
 \subsection{Módulo Simplificado (EasyELC)}
-TO-DO
+
+Para o uso simplificado do \acr{ELC}, foi criado um módulo que contém somente o básico para executar um experimento com a ferramenta. Esse módulo foi disponibilizado via \acr{NPM}, e pode ser instalado em qualquer projeto Javascript. Esse módulo é composto de duas classes principais, a EasyElc e a Profiling.
+
+A classe Profiling representa quem está executando o experimento, ou seja, é uma versão condensada do ExecutionProfile. Possui como atributos 
+
+\begin{lstlisting}[label={lst:sheetson_class}, caption={Implementação da classe responsável pela persistência dos dados usando o Sheetson.}, language=TypeScript, breaklines=true]
+
+\end{lstlisting}
+
+
+
 
 
 \section{Diagrama de Casos de Uso}
