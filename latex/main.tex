@@ -207,7 +207,7 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 
 	O padrão de projeto Strategy é ideal para ser utilizado quando muitas classes diferem somente no seu comportamento, ou são desejadas diferentes variações de um mesmo algoritmo. Dessa forma, é possível definir a implementação de cada uma das variações mantendo a mesma estrutura para a aplicação \citep{gamma1994design}. 
 
-	Essa abordagem faz com que diminua o uso de condições que gerenciem o comportamento do algoritmo na classe principal, abstraindo essa lógica para dentro do Strategy. Assim, esse tipo de lógica mais específica do comportamento da classe fica oculta da classe principal, tornando mais simples de ser entendida  \citep{gamma1994design}. O padrão Strategy foi utilizado na contrução do site utilizado no exemplo descrito na seção \ref{subsection:exemplo-elc-prod}, na implementação dos diferentes algoritmos para o cálculo de números primos.
+	Essa abordagem faz com que diminua o uso de condições que gerenciem o comportamento do algoritmo na classe principal, abstraindo essa lógica para dentro do Strategy. Assim, esse tipo de lógica mais específica do comportamento da classe fica oculta da classe principal, tornando mais simples de ser entendida  \citep{gamma1994design}. O padrão Strategy foi utilizado na contrução do site utilizado no exemplo descrito na seção \ref{subsection:study-case-easyelc}, na implementação dos diferentes algoritmos para o cálculo de números primos.
 
 
 	\section{Principio do Aberto/Fechado}
@@ -442,9 +442,12 @@ Neste capítulo estão descritos os tópicos relacionados a implementação da f
 Para fins didáticos, estão descritos nesta seção dois estudos de caso práticos, buscando ilustrar os dois possíveis fluxos de funcionamento do \acr{ELC} em um mesmo cenário.
 O objetivo é esclarecer tanto os fluxos de aplicação da ferramenta quanto suas características de projeto.
 
-\subsection{Projeto dos números primos}
+\subsection{Calculando os Primeiros n Números Primos}
 
-Considere uma pesquisa onde são comparadas diferentes métodos para gerar sequências de números primos, e deseja-se de forma empírica obter qual é a melhor abordagem. Para isso, é necessário gerar essas sequências utilizando esses diferentes métodos e persistir esses resultados, afim de analisar qual tem o melhor comportamento. Porém, existe uma variável nesse processo que é o ambiente no qual estão sendo executados esses métodos. Nesse caso o \acr{ELC} pode ajudar, pois habilita que esse experimento seja feito de forma remota por voluntários, que podem ter diversos tipos de ambientes. 
+Considere uma pesquisa onde são comparadas diferentes métodos para gerar listas contendo os primeiros $n$ números primos, e deseja-se de forma empírica obter qual é a melhor abordagem.
+Para isso, é necessário obter métricas sobre cada algoritmo utilizado e persistir estes resultados, a fim de concluir qual é o mais eficiente.
+Porém, como o foco está nos aspectos empíricos, o ambiente de execução das avaliações possui um papel relevante.
+Neste caso, o uso do \acr{ELC} habilita que esse experimento seja feito de forma remota e por voluntários, permitindo aumentar a variabilidade de ambientes que participaram da avaliação.
 
 Para realizar esse experimento utilizando o \acr{ELC}, primeiro é necessário criar um projeto para o experimento, como é mostrado na figura XX. No projeto, sequencialmente, são executadas as Tarefas, e após a execução de cada uma, persistidos os dados em uma tabela no Google Sheets. No contexto do exemplo, para cada execução serão persistidos N registros, onde N é o número de métodos diferentes de se gerar números primos a serem avaliados.
 
@@ -456,28 +459,31 @@ Após seguir esses passos, já é possível hospedar esse projeto na núvem e en
 
 % TO-DO: Inserir dados do exemplo e prints.
 
-\subsection{Uso do ELC em ambiente produtivo}
-\label{subsection:exemplo-elc-prod}
+\subsection{Uso do ELC Por Meio da Interface EasyElc}
+\label{subsection:study-case-easyelc}
 
-Ainda na mesma temática de números primos, imagine o caso de uma aplicação web que calcula números primos, e que já está em ambiente de produção com fluxo ativo de usuários, onde estes usuários contantemente reclamam sobre lentidões no site. Portanto, algum desenvolvedor é designado a investigar as causas dessas lentidões. Para fins de depuração, o desenvolvedor geralmente realiza tentativas de reproduzir o problema do cliente em sua máquina. Um facilitador seria se ele tivesse alguma forma de obter dados sobre as execuções dos usuários para análise, e para isso o \acr{ELC} pode auxiliá-lo, através do módulo EasyElc.
+Nesta seção o \acr{ELC} é utilizado como uma dependência de um projeto em ambiente produtivo.
+Considere o cenário de um site estático que realiza o cálculo da lista de números primos no navegador do usuário.
+Este site possui mais de um algoritmo para o cálculo dos números primos e seu usuário pode escolher qual quer utilizar.
+E, para coletar métricas das execuções dos algoritmos o \acr{ELC} é utilizado.
 
 % TO-DO: Criar um apêndice detalhado sobre o First n Primes Calculator.
 
-Com o propósito de exercitar este cenário, foi desenvolvido um site chamado Calculadora dos Primeiros n Números Primos (do inglês, \emph{First n Primes Calculator})
-\footnote{\url{https://el-chupacabra-tcc.github.io/FirstNPrimes/}}, onde o usuário insere a quantidade de números primos que deseja e o site calcula a sequência dos números primos do 2 até a quantidade solicitada.
-Porém, o site sempre calcula a sequência dos números primos do início e usando os recursos da máquina do usuário.
-Além disso, o site também permite a configuração de qual método será usado para o cálculo dos números primos.
+Com o propósito de exercitar este exato cenário, desenvolvemos o site Calculadora dos Primeiros n Números Primos (do inglês, \emph{First n Primes Calculator})
+\footnote{\url{https://el-chupacabra-tcc.github.io/FirstNPrimes}}.
+Onde o usuário insere o tamanho da lista de números primos que deseja e o site calcula a subsequência dos números primos do 2 até a quantidade solicitada.
+Porém, o site sempre recalcula a sequência dos números primos, não conta com qualquer mecanismo de cache, e usando os recursos da máquina do usuário.
 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=1\textwidth]{figures/print-elc-numeros-primos.jpeg}
-	\caption{Imagem do site após realizar o cálculo de 10 números primos com as configurações abertas.}
+	\caption{Impressão de tela do site Calculadora dos Primeiros n Números Primos (do inglês, \emph{First n Primes Calculator}) após o cálculo da lista dos 10 primeiros números primos utilizando o algoritmo ingênuo (do inglês, \emph{Naive approach}).}
 	\label{fig:site-numeros-primos}
 \end{figure}
 
-Para realizar a coleta de métricas dentro do site com o \acr{ELC}, o primeiro passo é realizar a instalação do pacote el-chupacabra por meio do \acr{NPM}\footnote{https://www.npmjs.com/package/el-chupacabra}.
-Com o \acr{ELC} instalado como depêndencia do seu projeto, é possível dentro da base de código do site criar uma instância do EasyElc.
-E, como o objetivo da aplicação do \acr{ELC} é obter métricas dos usuários de um site, são utilizadas como configurações: O perfilador de execução para navegadores e a coleta de métricas por meio do Google Sheets.
+Para realizar a coleta de métricas com o \acr{ELC}, é necessário instalar o pacote el-chupacabra por meio do \acr{NPM}\footnote{https://www.npmjs.com/package/el-chupacabra}.
+Com o pacote, é possível dentro da base de código do site criar uma instância da classe EasyElc.
+Por ela somo capazes de configurar alguns parâmetros da coleta de métricas como a especificação do local para persistência das mesmas.
 
 % REMOVE A PÁGINA EM BRANCO UTILIZANDO MINIPAGE
 \begin{minipage}{\linewidth}
@@ -497,9 +503,9 @@ const easyElc = new EasyElc(
 \end{lstlisting}
 
 \end{minipage}
-Com uma instância do EasyElc criada, já é possível realizar a coleta das métricas desejadas, a qual é realizada por meio da chamada do método startProfiling que recebe um nome do que está sendo medido e uma lista de métricas para coletar.
+Através da instância do EasyElc, é possível realizar a coleta das métricas desejadas, a qual é realizada por meio da chamada do método startProfiling que recebe dois parâmetros: Um nome para o que sendo avaliado e uma lista de métricas.
 Como a implementação do site faz uso do padrão de projeto \hyperref[subsection:strategy]{Strategy}, só é necessário inserir a chamada do método getFirstNPrimeNumbers.
-Então, com a chamada do método finish, é finalizada a coleta das métricas, passando metadados como argumento, e os dados coletados são enviados para a planilha.
+Então, com a chamada do método finish, é finalizada a coleta das métricas, passando metadados como argumento, e as métricas coletados são enviados para a persistência.
 
 \begin{lstlisting}[label={lst:easyelc_usage_firstnprimes}, caption={Coleta de métricas usando o EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
 const calculatePrimes = () => {
@@ -511,23 +517,20 @@ const calculatePrimes = () => {
 }
 \end{lstlisting}
 
-Após a implantação da versão com o \acr{ELC}, o desenvolvedor pode acompanhar o tempo gasto em cada processamento realizado no site.
-Além disso, ele também terá informações sobre o hardware, a quantidade de números primos calculados e qual método foi usado no cálculo.
+Após a implantação da versão com o \acr{ELC}, o desenvolvedor é capaz de acompanhar o tempo gasto em cada processamento realizado no site.
+Além disso, o \acr{ELC} também coleta informações sobre o ambiente o qual aquela coleta de métricas ocorreu, como informações de hardware e software usados.
 
 \begin{table}[!h]
     \centering
-    \caption{Amostra formatada dos dados coletados na Calculadora dos Primeiros n Números Primos por meio do \acr{ELC}.}
-    \begin{tabular}{|c|c|c|}
+    \caption{Amostra formatada de tempo gasto em cálculos da lista de números no site Calculadora dos Primeiros n Números Primos (do inglês, \emph{First n Primes Calculator}) utilizando o \acr{ELC}.}
+    \begin{tabular}{lcc}
         \hline
-        Estratégia Usada & Tempo Gasto (ms) & Quantidade de números calculados\\
+        Algoritmo & Tempo Gasto (ms) & Quantidade de Números Calculados \\
         \hline
-		Força bruta & 1680 & 10.000 \\
-        \hline
-		Ingênua otimizada & 17 & 10.000 \\
-        \hline
-		Força bruta & 16612 & 30.000 \\
-        \hline
-        Ingênua otimizada & 30 & 30.000 \\
+		Força Bruta & 1680 & 10.000 \\
+		Ingênua Otimizada & 17 & 10.000 \\
+		Força Bruta & 16612 & 30.000 \\
+        Ingênua Otimizada & 30 & 30.000 \\
         \hline
     \end{tabular}
 \end{table}
