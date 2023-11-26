@@ -964,6 +964,8 @@ export default class SheetsonPersister implements IPersister {
 
 \subsection{Módulo Simplificado (EasyELC)}
 
+% TO-DO: Escrever seção
+
 Para o uso simplificado do \acr{ELC}, foi criado um módulo que contém somente o básico para executar um experimento com a ferramenta. Esse módulo foi disponibilizado via \acr{NPM}, e pode ser instalado em qualquer projeto Javascript. Esse módulo é composto de duas classes principais, a EasyElc e a Profiling.
 
 A classe Profiling representa quem está executando o experimento, ou seja, é uma versão condensada do ExecutionProfile. Possui como atributos 
@@ -1212,15 +1214,12 @@ Como o \acr{ELC} é executado no navegador, é possível medir em diversos dispo
 
 Na parte do armazenamento das informações, o \acr{ELC} também se destaca, por ser bastante extensível. No trabalho foi utilizado o Sheetson, uma ferramenta para habilitar a escrita de dados em planilhas do Google via \acr{API}, mas podem ser utilizados diversos tipos de bases de dados, como bancos de dados Postgres ou MongoDB.
 
-
-
-
 \section{Trabalhos Futuros}
 \label{section:trabalhos-futuros}
 
 Como possibilidades de trabalhos futuros, é possível trazer o conceito de testes de caixa branca \footnote{Sobre testes de caixa branca: \citep[Capítulo 21]{Sommerville2015Software}} para a ferramenta, visto que hoje o \acr{ELC} só consegue realizar testes de caixa preta. Dessa forma, o \acr{ELC} ficaria ainda mais robusto, abrangendo mais cenários de teste e contextos onde pode ser utilizado.
 
-% TO-DO: Falar sobre o experimento mais completo, usando o ELC clonando direto do repositório.
+Além disso, pode ser realizado mais um experimento, dessa vez contemplando o uso mais completo do \acr{ELC}, clonando diretamente do repositório. Esse experimento exige um rigor maior em sua estrutura, construção, e também necessita de voluntários mais experientes, além de precisar de mais tempo para ser realizado.
 
 \label{bibpage}
 \renewcommand\bibname{Referências}
