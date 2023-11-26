@@ -1042,19 +1042,67 @@ export default class SheetsonPersister implements IPersister {
 \end{lstlisting}
 
 
-\subsection{Módulo Simplificado (EasyELC)}
+\subsection{Módulo da Interface de Uso Simplificada (EasyELC)}
 
-% TO-DO: Escrever seção
+O módulo EasyElc tem como principal objetivo simplificar o uso do framework quando ele for uma dependência de outro projeto.
+Um dos possíveis casos de uso para o \acr{ELC}, é quando os procedimentos a serem avaliados existem em um sistema grande e complexo com múltiplas dependências.
+Neste cenário, incluir o \acr{ELC} como uma dependência no sistema que executa suas avaliações com o mínimo de modificações é na prática um pré-requisito.
+Para isso, publicamos o \acr{ELC} como um pacote no \acr{NPM} onde seu principal fluxo de uso é por meio do módulo EasyElc.
 
-Para o uso simplificado do \acr{ELC}, foi criado um módulo que contém somente o básico para executar um experimento com a ferramenta. Esse módulo foi disponibilizado via \acr{NPM}, e pode ser instalado em qualquer projeto Javascript. Esse módulo é composto de duas classes principais, a EasyElc e a Profiling.
+A principal classe do módulo também é EasyElc, a qual recebe as mesmas configurações que uma instância de Project \ref{subsection:modulo-project}.
+A instância do EasyElc possui apenas o método público startProfiling \ref{lst:easyelc_startprofiling}, responsável por iniciar uma avaliação.
+Ele recebe como parâmetros uma string que é utilizada como token de identificação daquela avaliação nos resultados e uma lista de métricas.
+Além disso, o método retorna um objeto que contém apenas um método finish, que finaliza aquela análise e recebe possíveis metadados para agregar nos resultados.
 
-A classe Profiling representa quem está executando o experimento, ou seja, é uma versão condensada do ExecutionProfile. Possui como atributos 
+O funcionamento do módulo consiste em construir uma árvore de Profilings \ref{lst:easyelc_profiling_class} a partir das chamadas de startProfiling.
+Uma chamada de startProfiling cria um nó na árvore, se uma nova chamada for feita antes do finish da anterior, então, o novo nó será um filho do nó anterior.
+Por fim, a persistência das métricas coletadas é realizada quando todos os nós da árvore tiverem seu método finish executado e depois a árvore é descartada.
 
-\begin{lstlisting}[label={lst:sheetson_class}, caption={Implementação da classe responsável pela persistência dos dados usando o Sheetson.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:easyelc_startprofiling}, caption={Implementação do método startProfiling da classe EasyElc.}, language=TypeScript, breaklines=true]
+startProfiling(uniqueName: string, metrics: IMetric[]): Record<string, any> {
+	const newProfiling = new Profiling(uniqueName, metrics);
 
+	if (this._profilingsTree === null) {
+		this._profilingsTree = newProfiling;
+	}
+	else {
+		const parentNode = this._getNewestActiveProfiling() ?? this._profilingsTree;
+
+		if (uniqueName in parentNode.childs) {
+			const numberOfAppearences = Object.keys(parentNode.childs).filter(k => k.match(new RegExp(`^${uniqueName}(\$|_[0-9]{1,}\$`))).length
+			parentNode.childs[`${uniqueName}_${numberOfAppearences}`] = newProfiling;
+		}
+		else {
+			parentNode.childs[uniqueName] = newProfiling;
+		}
+	}
+	
+	this._activeProfilingsStack.push(newProfiling);
+	metrics.forEach(x => x.start());
+	return { finish: (metadata: Record<string, any> | null = null) => {
+		newProfiling.metadata = metadata;
+		this._terminateProfiling(newProfiling);
+	} };
+}
 \end{lstlisting}
 
+\begin{lstlisting}[label={lst:easyelc_profiling_class}, caption={Implementação do nó da árvore de análises usado no EasyElc.}, language=TypeScript, breaklines=true]
+export default class Profiling {
+	uniqueName: string;
+	runningMetrics: IMetric[];
+	metricsResults: Record<string, any>[];
+	metadata: Record<string, any> | null;
+	childs: Record<string, Profiling>;
 
+	constructor(uniqueName: string, metrics: IMetric[]) {
+		this.uniqueName = uniqueName;
+		this.runningMetrics = metrics;
+		this.metricsResults = [];
+		this.metadata = null;
+		this.childs = {};
+	}
+}
+\end{lstlisting}
 
 
 
