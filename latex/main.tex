@@ -21,9 +21,9 @@
 
 % Define TypeScript language style
 \lstdefinelanguage{TypeScript}{
-    keywords=[1]{import, from, export, static, public, implements, extends, class, extends, private, void, constructor, super, this, async, await, for, of, let, in, return, console, log, abstract},
+    keywords=[1]{import, from, export, static, public, implements, extends, class, extends, private, void, constructor, super, this, async, await, for, of, let, in, return, console, log, abstract, protected, default},
     keywordstyle=[1]\color{blue},
-    keywords=[3]{MockTime, Promise, IPersister, Task, CompositeTask, BasicPersister, Resource, Project, MockTask, Metric, DeltaTimeMetric, ProcessMemoryMetric, Set, JSON, Math, any, string},
+    keywords=[3]{MockTime, Promise, IPersister, Task, CompositeTask, BasicPersister, Resource, Project, MockTask, Metric, DeltaTimeMetric, ProcessMemoryMetric, Set, JSON, Math, any, string, Record},
     keywordstyle=[3]\color{mygreen},
     ndkeywords={true, false, catch, function, null, undefined},
     ndkeywordstyle=\color{darkgray},
@@ -449,17 +449,93 @@ Para isso, é necessário obter métricas sobre cada algoritmo utilizado e persi
 Porém, como o foco está nos aspectos empíricos, o ambiente de execução das avaliações possui um papel relevante.
 Neste caso, o uso do \acr{ELC} habilita que esse experimento seja feito de forma remota e por voluntários, permitindo aumentar a variabilidade de ambientes que participaram da avaliação.
 
-Para realizar esse experimento utilizando o \acr{ELC}, primeiro é necessário criar um projeto para o experimento, como é mostrado na figura XX. No projeto, sequencialmente, são executadas as Tarefas, e após a execução de cada uma, persistidos os dados em uma tabela no Google Sheets. No contexto do exemplo, para cada execução serão persistidos N registros, onde N é o número de métodos diferentes de se gerar números primos a serem avaliados.
+\subsection{Uso do ELC a partir de um Clone do Repositório}
+\label{subsection:study-case-cloning-elc}
 
-Após a criação do projeto, devem ser criadas tarefas para cada um dos métodos, ou seja, funções que executem a geração de uma mesma sequência de números primos, porém utilizando as diferentes abordagens. Essas funções estão na figura XX, e implementam duas formas de se gerar números primos: a primeira é ....  e a segunda ..... . Para a criação dessas tarefas, foi utilizado o padrão de projeto Strategy, descrito na seção \ref{subsection:strategy}, visto que são implementações diferentes do mesmo processo.
+Para realizar o experimento do cálculo dos números primos utilizando o \acr{ELC}, uma das opções é realizando um clone de seu repositório no GitHub\footnote{\url{https://github.com/El-Chupacabra-TCC/el-chupacabra}}.
+Após isso, para cada algoritmo que se deseja avaliar, é necessário implementar uma classe herdeira de BaseTask, onde o método execute encapsula o algoritmo.
 
-Após a criação das Tarefas, é necessário criar as métricas a serem coletadas na execução das tarefas. A métrica utilizada para esse caso de uso foi a métrica de tempo de processamento (DeltaTime), e está na figura XX.
+\begin{lstlisting}[label={lst:elc_firstnprimes_task}, caption={Exemplo de classe encapulando um algoritmo de cálculo de números primos.}, language=TypeScript, breaklines=true]
+export default class FirstNPrimesTask extends BaseTask {
+	private howMany: number
 
-Após seguir esses passos, já é possível hospedar esse projeto na núvem e enviar o link para os voluntários participarem. Conforme as execuções forem acontecendo, a planilha será atualizada automaticamente com as novas entradas.
+	constructor(metrics: IMetric[], howMany: number) {
+		super(metrics)
+		this.howMany = howMany
+	}
 
-% TO-DO: Inserir dados do exemplo e prints.
+	protected async execute(): Promise<Record<string, any>> {
+		const results = { amountOfPrimes: 0, primes: [] }
+		const primes: number[] = []
 
-\subsection{Uso do ELC Por Meio da Interface EasyElc}
+		for (let i = 0; primes.length < this.howMany; i++) {
+			if (this.isPrime(i)) {
+				primes.push(i)
+			}
+		}
+
+		results.primes = primes
+		results.amountOfPrimes = primes.length
+		return results
+	}
+
+	private isPrime(i: number): boolean {
+		// ...
+		return true
+	}
+}	
+\end{lstlisting}
+
+Com uma classe para cada algoritmo em avaliação como no exemplo de código \ref{lst:elc_firstnprimes_task}.
+O próximo passo é criar um script principal para a execução das avaliações.
+O repositório já contém um arquivo Index.ts como exemplo de script principal para avaliações executadas em navegadores.
+Partindo desta base, é necessário configurar quatro pontos:
+
+\begin{itemize}
+	\item Perfil do ambiente de execução: As avaliações usando o \acr{ELC} podem ser executadas em diferentes tipos ambientes. Para que seja possível coletar informações sobre o ambiente que a avaliação está sendo executada é necessário utilizar uma instancia de perfil de execução adequada. Para este exemplo, consideramos a execução em navegadores.
+	\item Persistência das métricas: Onde os dados coletados pelo \acr{ELC} são armazedados. Para este exemplo, consideramos que as métricas coletadas devem ser enviadas para uma planilha no Google Sheets.
+	\item Árvore de tarefas: Tarefa é nome das classes que são a carga de trabalho sob avaliação do \acr{ELC}. Porém, a estrutura utilizada para sua execução é de árvore, deste modo, somos capazes de subdividir análises.
+	\item Métricas em uso: Cada instância de tarefa recebe uma lista de métricas que devem ser coletadas em sua execução. Permitindo que cada análise tenha seu conjunto independente de métricas.
+\end{itemize}
+
+\begin{lstlisting}[label={lst:elc_index_ts_example}, caption={Exemplo de script principal avaliando uma comparação de tempo de execução entre duas execuções de uma tarefa FirstNPrimesTask. Onde a avaliação é executada em navegadores e as métricas coletadas são armazenadas em uma planilha online.}, language=TypeScript, breaklines=true]
+export function Execute()
+{
+	const executionProfile = new BrowserExecutionProfile();
+	const persister = new SheetsonPersister(
+		"SHEET_NAME",
+		"API_KEY",
+		"SHEET_ID"
+	);
+
+	const tasks = new CompositeTask(
+		[new MemoryMetric(), new DeltaTimeMetric()],
+		[
+			new FirstNPrimesTask([new DeltaTimeMetric()], 10000),
+			new FirstNPrimesTask([new DeltaTimeMetric()], 30000)
+		]
+	);
+
+	var project = new Project(executionProfile, tasks, [persister]);
+	return project.executeTask();
+}
+
+// ...
+\end{lstlisting}
+
+Após isso, somos capazes de criar uma instância de Project utilizando as configurações como argumentos de seu construtor.
+E, a avaliação será executada quando o método executeTask da instância de Project for invocado.
+Como último passo, utilizamos o compilador do TypeScript para gerar os arquivos JavaScript e hospedar o artefato gerado em algum servidor Web.
+Se o artefato for gerado com tudo padrão do repositório, ele será um site estático com um botão para executar a avaliação.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/elc-clone-artifact.png}
+	\caption{Página HTML padrão gerada como artefato para avaliações do ELC no fluxo de uso por clone do repositório. Ela contém um botão o qual inicia a execução das tarefas e a coleta das métricas.}
+	\label{fig:elc_clone_artifact}
+\end{figure}
+
+\subsection{Uso do ELC por meio da Interface EasyElc}
 \label{subsection:study-case-easyelc}
 
 Nesta seção o \acr{ELC} é utilizado como uma dependência de um projeto em ambiente produtivo.
