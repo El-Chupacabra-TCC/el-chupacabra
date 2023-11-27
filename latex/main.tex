@@ -57,7 +57,7 @@
 \newcommand\dauthor{Filipe Shanom Glathardt de Azeredo Xavier\\Matheus dos Santos Moura\\Radhanama Dasa de Maria Moraes Mesiano}
 \newcommand\dadvisor{Renato Campos Mauro}
 
-% Definição de acronimos
+% Definição de acrônimos
 \newacro{TCC}{Trabalho de Conclusão de Curso}
 \newacro{QoS}{qualidade de serviço}
 \newacro{API}{\emph{Application Programming Interface}}
@@ -144,9 +144,9 @@ Com o objetivo de tomar a decisão de qual tipo utilizar, a equipe decide realiz
 
 A contribuição principal da solução proposta é oferecer uma abordagem prática para realizar a execução de tarefas customizáveis no lado do cliente, e também o registro dos resultados dessas execuções em uma base de dados, também customizável, para análise. Dessa forma, seria possível resolver o problema da equipe sem muitas complicações. O \acr{ELC} é um componente vital desta arquitetura.
 
-Ademais, o \emph{framework} por padrão possui algumas métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada e a identificação do ambiente de execução, e os dados são armazenados em uma planilha online para fácil obtenção e análise. Deste modo, o desenvolvedor tem uma base pronta para extender, e pode focar nas provas de conceito e na obtenção de ambientes e voluntários para seus testes, ao invés do desenvolvimento de infraestrutura para realização e registro das medições.
+Ademais, o \emph{framework} por padrão possui algumas métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada e a identificação do ambiente de execução, e os dados são armazenados em uma planilha online para fácil obtenção e análise. Deste modo, o desenvolvedor tem uma base pronta para estender, e pode focar nas provas de conceito e na obtenção de ambientes e voluntários para seus testes, ao invés do desenvolvimento de infraestrutura para realização e registro das medições.
 
-As principais limitações da metodologia proposta nesse trabalho são: somente métricas e dados em execução conseguem ser coletados pela ferramenta, ou seja, ainda não é possível realizar testes de caixa branca \footnote{Sobre testes de caixa branca: \citep[Capítulo 21]{Sommerville2015Software}}. Além disso, não são contempladas métricas de renderização, como o tempo de carregamento de páginas, já que existem outras ferramentas que abordam esse tipo de medição, como a WePR, mencionada na seção \ref{WePR}.
+As principais limitações da metodologia proposta neste trabalho são: somente métricas e dados em execução conseguem ser coletados pela ferramenta, ou seja, ainda não é possível realizar testes de caixa branca \footnote{Sobre testes de caixa branca: \citep[Capítulo 21]{Sommerville2015Software}}. Além disso, não são contempladas métricas de renderização, como o tempo de carregamento de páginas, já que existem outras ferramentas que abordam esse tipo de medição, como a WePR, mencionada na seção \ref{WePR}.
 
 O trabalho está organizado da seguinte forma: O capítulo \ref{cap:fundamentacao_teorica} corresponde à fundamentação teórica do projeto. O capítulo \ref{cap:metodologiatrabsrelacionados} corresponde à metodologia utilizada na pesquisa dos trabalhos relacionados e contém também os principais trabalhos relacionados encontrados.
 O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da ferramenta. O capítulo \ref{cap:experimentos} apresenta os experimentos realizados utilizando a ferramenta e seus resultados, e por fim o capítulo \ref{cap:conclusão} traz a conclusão do projeto.
@@ -182,16 +182,16 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 	\label{cap:engenharia-de-software-empirica}
 % TO-DO: procurar citar o Guilherme Horta Travassos
 
-	A engenharia de software é um campo multi-disciplinar. Abrange desde tópicos técnicos, como bancos de dados e sistemas operacionais, até questões relacionadas a linguagens de programação, como sintaxe e semântica, e até temas sociais e  psicologia. O desenvolvimento de software é humano; esse que é até hoje incapacitado de criar um código completamente do zero. É uma disciplina baseada em criatividade, e na ingenuidade das pessoas trabalhando na área. \citep{wohlin2012experimentation}.
+	A engenharia de software é um campo multidisciplinar. Abrange desde tópicos técnicos, como bancos de dados e sistemas operacionais, até questões relacionadas a linguagens de programação, como sintaxe e semântica, e até temas sociais e  psicologia. O desenvolvimento de software é humano; esse que é até hoje incapacitado de criar um código completamente do zero. É uma disciplina baseada em criatividade, e na ingenuidade das pessoas trabalhando na área. \citep{wohlin2012experimentation}.
 
-	Em contraponto, é necessário, quando estudando ou fazendo pesquisas no campo, mirar em trata-la como uma disciplina científica. Ou seja, utilizar métodos científicos para realizar as pesquisas, e também na hora de tomar decisões sobre mudanças na forma com a qual é feita o desenvolvimento. Para isso, é preciso entender os métodos que estão disponíveis para serem utilizados, suas limitações e quando eles devem ser aplicados \citep{wohlin2012experimentation}. Isso também deve ser aplicado na hora de escolher as ferramentas para o desenvolvimento das aplicações.
+	Em contraponto, é necessário, quando estudando ou fazendo pesquisas no campo, mirar em tratá-la como uma disciplina científica. Ou seja, utilizar métodos científicos para realizar as pesquisas, e também na hora de tomar decisões sobre mudanças na forma com a qual é feito o desenvolvimento. Para isso, é preciso entender os métodos que estão disponíveis para serem utilizados, suas limitações e quando eles devem ser aplicados \citep{wohlin2012experimentation}. Isso também deve ser aplicado na hora de escolher as ferramentas para o desenvolvimento das aplicações.
 
 	Nesse contexto, o \acr{ELC} fornece insumos úteis aos pesquisadores e desenvolvedores na hora de avaliar essas ferramentas, pois permite estabelecer critérios objetivos na hora de comparar abordagens no desenvolvimento de aplicações web.
 
 	\section{Padrões de Projeto}
 	\label{cap:padroes-de-projeto}
 
-	Os Padrões de Projeto dão nome, abstraem e identificam os aspectos comuns da construção de uma estrutura, e são úteis para implementar uma abordagem orientada a objetos reutilizável em aplicações. Eles identificam as instâncias e classes, seus papéis e colaborações e a distribuição de responsabilidades na implementação. Cada padrão foca em um problema específico de projeto já abordado e provado, tornando acessível à desenvolvedores de novos sistemas soluções úteis na construção de uma implementação reutilizável \citep{gamma1994design}.
+	Os Padrões de Projeto dão nome, abstraem e identificam os aspectos comuns da construção de uma estrutura, e são úteis para implementar uma abordagem orientada a objetos reutilizável em aplicações. Eles identificam as instâncias e classes, seus papéis e colaborações e a distribuição de responsabilidades na implementação. Cada padrão foca em um problema específico de projeto já abordado e provado, tornando acessível aos desenvolvedores de novos sistemas soluções úteis na construção de uma implementação reutilizável \citep{gamma1994design}.
 	
 	Existem diversos padrões de projeto diferentes, como descritos no livro de \cite{gamma1994design}. Os padrões utilizados na implementação do \acr{ELC} foram o Composite e o Strategy.
 
@@ -200,17 +200,17 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 
 	O padrão de projeto Composite é utilizado quando é desejado representar uma hierarquia de objetos, e o objetivo é fazer com que o cliente ignore as diferenças entre os objetos compostos e os individuais, interagindo da mesma maneira nos dois casos. Como consequência, esse padrão faz com que o cliente seja simples. Como os objetos são tratados da mesma maneira, o código do cliente acaba ficando mais simples \citep[Capítulo 4]{gamma1994design}.
 	
-	Além disso, o uso do padrão torna facil a adição de novos tipos de componentes, basta implementar a classe que o cliente entende. Dessa forma, os clientes não precisam ser alterados caso os objetos sejam modificados. Uma desvantagem desse padrão é que torna a validação dos componentes mais complicada, pois não se pode contar plenamente com a tipagem para garantir os requisitos dos dados. São necessárias validações em tempo de execução \citep[Capítulo 4]{gamma1994design}. Esse padrão foi utilizado na construção das tarefas, processo descrito na seção \ref{subsection:modulo-tasks}.
+	Além disso, o uso do padrão torna fácil a adição de novos tipos de componentes, basta implementar a classe que o cliente entende. Dessa forma, os clientes não precisam ser alterados caso os objetos sejam modificados. Uma desvantagem desse padrão é que torna a validação dos componentes mais complicada, pois não se pode contar plenamente com a tipagem para garantir os requisitos dos dados. São necessárias validações em tempo de execução \citep[Capítulo 4]{gamma1994design}. Esse padrão foi utilizado na construção das tarefas, processo descrito na seção \ref{subsection:modulo-tasks}.
 
 	\subsection{Strategy}
 	\label{subsection:strategy}
 
 	O padrão de projeto Strategy é ideal para ser utilizado quando muitas classes diferem somente no seu comportamento, ou são desejadas diferentes variações de um mesmo algoritmo. Dessa forma, é possível definir a implementação de cada uma das variações mantendo a mesma estrutura para a aplicação \citep{gamma1994design}. 
 
-	Essa abordagem faz com que diminua o uso de condições que gerenciem o comportamento do algoritmo na classe principal, abstraindo essa lógica para dentro do Strategy. Assim, esse tipo de lógica mais específica do comportamento da classe fica oculta da classe principal, tornando mais simples de ser entendida  \citep{gamma1994design}. O padrão Strategy foi utilizado na contrução do site utilizado no exemplo descrito na seção \ref{subsection:study-case-easyelc}, na implementação dos diferentes algoritmos para o cálculo de números primos.
+	Essa abordagem faz com que diminua o uso de condições que gerenciam o comportamento do algoritmo na classe principal, abstraindo essa lógica para dentro do Strategy. Assim, esse tipo de lógica mais específica do comportamento da classe fica oculta da classe principal, tornando mais simples de ser entendida  \citep{gamma1994design}. O padrão Strategy foi utilizado na construção do site utilizado no exemplo descrito na seção \ref{subsection:study-case-easyelc}, na implementação dos diferentes algoritmos para o cálculo de números primos.
 
 
-	\section{Principio do Aberto/Fechado}
+	\section{Princípio do Aberto/Fechado}
 	\label{cap:solid-ocp}
 	\citet{MartinCleanArchtecture2017} popularizou os princípios de design de software SOLID.
 	Os quais atuam como guias na organização de funções e estruturas de dados em classes e como essas classes devem ser interconectadas.
@@ -225,13 +225,13 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 
 	O \acr{OCP} é reconhecido como o coração do design de classes e módulos por estudantes de design de software. \citep{MartinCleanArchtecture2017}
 	Pois, permite que mudanças aconteçam sem que haja um grande impacto no software.
-	E, atinge este objetivo por meio do particionamento do sistema em componentes, organizando eles em uma hieraquia de dependência a qual protege os componentes de nível mais alto das mudanças no componentes de nível mais baixo. \citep{MartinCleanArchtecture2017}
+	E, atinge este objetivo por meio do particionamento do sistema em componentes, organizando eles em uma hierarquia de dependência a qual protege os componentes de nível mais alto das mudanças no componentes de nível mais baixo. \citep{MartinCleanArchtecture2017}
 
 	A arquitetura do framework ELC utiliza como principal guia o \acr{OCP}.
 	Pois, organizamos os módulos do framework como entidades completamente independentes, assegurando que qualquer referência intermodular deveria ser feita para a interface do módulo.
-	Desta forma, o risco de alguma mudança em um módulo resultar em alterações em outro módulo é minimizado e permite que multiplos módulos sejam desenvolvidos em paralelo sem haver retrabalho.
+	Desta forma, o risco de alguma mudança em um módulo resultar em alterações em outro módulo é minimizado e permite que múltiplos módulos sejam desenvolvidos em paralelo sem haver retrabalho.
 	Ademais, definimos os módulos do \acr{ELC} como os pontos de extensão do framework.
-	Ou seja, cada módulo é projetado para caso alguma mudança comportamento seja necessária, a alteração é incluida criando uma nova classe a qual extende a interface do módulo.
+	Ou seja, cada módulo é projetado para caso alguma mudança de comportamento seja necessária, a alteração é incluída criando uma nova classe a qual estende a interface do módulo.
 
 	\section{Coesão e Acoplamento}
 	\label{section:coesao-e-acoplamento}
@@ -241,12 +241,12 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 	\begin{enumerate}
 		\item Coesão funcional: demonstrada primariamente por operações, esse nível de coesão ocorre quando um componente executa uma operação e retorna um resultado.
 		\item Coesão de camadas: Demonstrada nos pacotes, componentes e classes, esse tipo de coesão ocorre quando uma camada superior da arquitetura acessa os serviços de uma camada inferior, mas o contrário não é possível.
-		\item Coesão comunicacional: Todas as operações que acessam o mesmo dado são definidas em uma única classe. NO geral, essas classes focam primariamente no dado em sí, o acessando e armazenando.
+		\item Coesão comunicacional: Todas as operações que acessam o mesmo dado são definidas em uma única classe. No geral, essas classes focam primariamente no dado em sí, o acessando e armazenando.
 	\end{enumerate}
 
 	Classes e componentes que exibem esses três níveis de coesão são relativamente fáceis de implementar, testar e manter. Esse deve ser um objetivo na hora do desenvolvimento de software \citep{pressman2009software}.
 	
-	Conforme o nível de comunicação e colaboração cresce, a complexidade do sistema também cresce. Isso gera dificuldades na implementação, testes e na manutenção do software. Acoplamento é uma medida de qualidade que quantifica o nível no qual as classes estão conectadas entre sí. Conforme as classes e componentes se tornam mais dependentes uns dos outros, o acoplamento cresce. Um objetivo importante no projeto de uma arquitetura é manter o acoplamento o mais baixo possível \citep{pressman2009software}.
+	Conforme o nível de comunicação e colaboração cresce, a complexidade do sistema também cresce. Isso gera dificuldades na implementação, testes e na manutenção do software. Acoplamento é uma medida de qualidade que quantifica o nível no qual as classes estão conectadas entre si. Conforme as classes e componentes se tornam mais dependentes uns dos outros, o acoplamento cresce. Um objetivo importante no projeto de uma arquitetura é manter o acoplamento o mais baixo possível \citep{pressman2009software}.
 
 	No desenvolvimento do \acr{ELC}, foram considerados esses padrões de qualidade, tanto no desenvolvimento da arquitetura de módulos, como explicado na seção \ref{cap:arquitetura}, quanto na implementação das classes internas da aplicação.
 
@@ -339,7 +339,7 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 		\label{fig:fluxo-leitura}
 	\end{figure}
 
-	Em suma, após a leitura do resumo de cada trabalho, três critérios foram avaliados, sendo cada um deles um dos filtros.	Os critérios foram se o trabalho não teria relação suficiente com o tema, se é necessário ler a introdução para a tomada da decisão ou se é um trabalho o qual a leitura completa deve ser realizada.
+	Em suma, após a leitura do resumo de cada trabalho, três critérios foram avaliados, sendo cada um deles um dos filtros.	Os critérios foram: Se o trabalho não teria relação suficiente com o tema, se é necessário ler a introdução para a tomada da decisão ou se é um trabalho o qual a leitura completa deve ser realizada.
 
 
 	\section{Ferramentas Para Medição no Lado do Cliente}
@@ -402,9 +402,9 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 		\label{WePR}
 		\par \citet{Asrese2019MeasuringWL} também propôs uma ferramenta para medição no lado do cliente, porém com o foco em métricas de \acr{QoS}, nomeada WePR. A ferramenta é distribuída, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador de carga (do inglês, \emph{load balancer}), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor as URLs dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o balanceador de carga, e por fim algum dos servidores de renderização envia os dados para persistência. 
 
-		A ferramenta é orientada à medição de websites e páginas na web, e interaje com essas páginas via requisições do tipo \acr{HTTP}. Dessa forma, atende ao critério de Coesão e Acoplamento, pois não exige que o código fonte seja modificado para o seu uso, mas não atende ao critério de Portabilidade, pois é utilizada somente para o contexto de websites.
+		A ferramenta é orientada à medição de websites e páginas na web, e interage com essas páginas via requisições do tipo \acr{HTTP}. Dessa forma, atende ao critério de Coesão e Acoplamento, pois não exige que o código fonte seja modificado para o seu uso, mas não atende ao critério de Portabilidade, pois é utilizada somente para o contexto de websites.
 
-		Como a ferramenta realiza a persistência de dados de forma remota, atende ao critério de Armazenamento em Núvem. Em contrapartida, a ferramenta é capaz de lidar somente com métricas de \acr{QoS}, não sendo possível customizar métricas, e por isso não atende ao critério de Extensibilidade.
+		Como a ferramenta realiza a persistência de dados de forma remota, atende ao critério de Armazenamento em Nuvem. Em contrapartida, a ferramenta é capaz de lidar somente com métricas de \acr{QoS}, não sendo possível customizar métricas, e por isso não atende ao critério de Extensibilidade.
 
 		
 		\subsection{Gember}
@@ -414,7 +414,7 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 
 		Com relação ao seu uso, não é necessário modificar o código das aplicações que utilizam a rede celular para as medições, visto que o medidor é uma aplicação apartada instalada no aparelho do cliente. Isso faz com que a ferramenta satisfaça o critério de Coesão e Acoplamento. 
 		
-		Os dados coletados são persistidos no próprio servidor remoto que coordena as coletas, o que atende ao critério de Armazenamento em Núvem. Porém, uma limitação da ferramenta é a utilização somente em clientes Android, tornando pouco flexível o seu uso em contextos de pesquisas multiplataforma, e fazendo com que a ferramenta não atenda ao critério de Portabilidade.
+		Os dados coletados são persistidos no próprio servidor remoto que coordena as coletas, o que atende ao critério de Armazenamento em Nuvem. Porém, uma limitação da ferramenta é a utilização somente em clientes Android, tornando pouco flexível o seu uso em contextos de pesquisas multiplataforma, e fazendo com que a ferramenta não atenda ao critério de Portabilidade.
 
 
 		\subsection{Mobilyzer}
@@ -427,7 +427,7 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 
 		\end{enumerate}
 		
-		A utilização da biblioteca Android nos aplicativos não exige muitas alterações no código fonte das aplicações, bastando apenas instalar a biblioteca e adicionar as chamadas a \acr{API} do gerenciador de memória rodando no aparelho. Isso torna a ferramenta apta no critério Coesão e Acoplamento, já que são poucas alterações no código fonte. Com relação a persistência, o servidor na nuvem mantém uma base de dados anonimizada com os resultados das medições para consulta, tornando a ferramenta apta no critério de Armazenamento em Núvem.
+		A utilização da biblioteca Android nos aplicativos não exige muitas alterações no código fonte das aplicações, bastando apenas instalar a biblioteca e adicionar as chamadas a \acr{API} do gerenciador de memória rodando no aparelho. Isso torna a ferramenta apta no critério Coesão e Acoplamento, já que são poucas alterações no código fonte. Com relação a persistência, o servidor na nuvem mantém uma base de dados anonimizada com os resultados das medições para consulta, tornando a ferramenta apta no critério de Armazenamento em Nuvem.
 
 		Uma limitação no uso do Mobilyzer em pesquisas é que essa plataforma também se restringe a plataforma Android, não atendendo ao critério de Portabilidade. Além disso, não possui muita flexibilidade com relação às métricas, sendo em sua maior parte métricas de rede, e por isso não atende ao critério de Extensibilidade.
 	
@@ -435,7 +435,7 @@ O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da
 \chapter{Implementação}
 \label{cap:implementação}
 
-Neste capítulo estão descritos os tópicos relacionados a implementação da ferramenta, bem como da sua elaboração conceitual e da sua arquitetura interna. Dessa forma, primeiro são apresentados os estudos de caso utilizados para exemplificar o uso da ferramenta, e posteriormente detalhados os detalhes de implementação, desde a elaboração dos Diagramas de Arquitetura, Casos de Uso e Classes até a construção interna de cada módulo.
+Neste capítulo estão descritos os tópicos relacionados à implementação da ferramenta, bem como da sua elaboração conceitual e da sua arquitetura interna. Dessa forma, primeiro são apresentados os estudos de caso utilizados para exemplificar o uso da ferramenta, e posteriormente detalhados os detalhes de implementação, desde a elaboração dos Diagramas de Arquitetura, Casos de Uso e Classes até a construção interna de cada módulo.
 
 \section{Estudos de Caso}
 
@@ -444,7 +444,7 @@ O objetivo é esclarecer tanto os fluxos de aplicação da ferramenta quanto sua
 
 \subsection{Calculando os Primeiros n Números Primos}
 
-Considere uma pesquisa onde são comparadas diferentes métodos para gerar listas contendo os primeiros $n$ números primos, e deseja-se de forma empírica obter qual é a melhor abordagem.
+Considere uma pesquisa onde são comparados diferentes métodos para gerar listas contendo os primeiros $n$ números primos, e deseja-se de forma empírica obter qual é a melhor abordagem.
 Para isso, é necessário obter métricas sobre cada algoritmo utilizado e persistir estes resultados, a fim de concluir qual é o mais eficiente.
 Porém, como o foco está nos aspectos empíricos, o ambiente de execução das avaliações possui um papel relevante.
 Neste caso, o uso do \acr{ELC} habilita que esse experimento seja feito de forma remota e por voluntários, permitindo aumentar a variabilidade de ambientes que participaram da avaliação.
@@ -492,9 +492,9 @@ O repositório já contém um arquivo Index.ts como exemplo de script principal 
 Partindo desta base, é necessário configurar quatro pontos:
 
 \begin{itemize}
-	\item Perfil do ambiente de execução: As avaliações usando o \acr{ELC} podem ser executadas em diferentes tipos ambientes. Para que seja possível coletar informações sobre o ambiente que a avaliação está sendo executada é necessário utilizar uma instancia de perfil de execução adequada. Para este exemplo, consideramos a execução em navegadores.
-	\item Persistência das métricas: Onde os dados coletados pelo \acr{ELC} são armazedados. Para este exemplo, consideramos que as métricas coletadas devem ser enviadas para uma planilha no Google Sheets.
-	\item Árvore de tarefas: Tarefa é nome das classes que são a carga de trabalho sob avaliação do \acr{ELC}. Porém, a estrutura utilizada para sua execução é de árvore, deste modo, somos capazes de subdividir análises.
+	\item Perfil do ambiente de execução: As avaliações usando o \acr{ELC} podem ser executadas em diferentes tipos ambientes. Para que seja possível coletar informações sobre o ambiente que a avaliação está sendo executada é necessário utilizar uma instância de perfil de execução adequada. Para este exemplo, consideramos a execução em navegadores.
+	\item Persistência das métricas: Onde os dados coletados pelo \acr{ELC} são armazenados. Para este exemplo, consideramos que as métricas coletadas devem ser enviadas para uma planilha no Google Sheets.
+	\item Árvore de tarefas: Tarefa é o nome dado às classes que são a carga sob avaliação do \acr{ELC}. Porém, a estrutura utilizada para sua execução é de árvore, deste modo, somos capazes de subdividir análises.
 	\item Métricas em uso: Cada instância de tarefa recebe uma lista de métricas que devem ser coletadas em sua execução. Permitindo que cada análise tenha seu conjunto independente de métricas.
 \end{itemize}
 
@@ -526,7 +526,7 @@ export function Execute()
 Após isso, somos capazes de criar uma instância de Project utilizando as configurações como argumentos de seu construtor.
 E, a avaliação será executada quando o método executeTask da instância de Project for invocado.
 Como último passo, utilizamos o compilador do TypeScript para gerar os arquivos JavaScript e hospedar o artefato gerado em algum servidor Web.
-Se o artefato for gerado com tudo padrão do repositório, ele será um site estático com um botão para executar a avaliação.
+Se o artefato for gerado com o código padrão do repositório, ele será um site estático com um botão para executar a avaliação.
 
 \begin{figure}[!ht]
 	\centering
@@ -541,13 +541,13 @@ Se o artefato for gerado com tudo padrão do repositório, ele será um site est
 Nesta seção o \acr{ELC} é utilizado como uma dependência de um projeto em ambiente produtivo.
 Considere o cenário de um site estático que realiza o cálculo da lista de números primos no navegador do usuário.
 Este site possui mais de um algoritmo para o cálculo dos números primos e seu usuário pode escolher qual quer utilizar.
-E, para coletar métricas das execuções dos algoritmos o \acr{ELC} é utilizado.
+E, para coletar métricas das execuções dos algoritmos, o \acr{ELC} é utilizado.
 
 % TO-DO: Criar um apêndice detalhado sobre o First n Primes Calculator.
 
 Com o propósito de exercitar este exato cenário, desenvolvemos o site Calculadora dos Primeiros n Números Primos (do inglês, \emph{First n Primes Calculator})
 \footnote{\url{https://el-chupacabra-tcc.github.io/FirstNPrimes}}.
-Onde o usuário insere o tamanho da lista de números primos que deseja e o site calcula a subsequência dos números primos do 2 até a quantidade solicitada.
+Onde o usuário insere o tamanho da lista de números primos que deseja e o site calcula a sequência dos números primos do 2 até a quantidade solicitada.
 Porém, o site sempre recalcula a sequência dos números primos, não conta com qualquer mecanismo de cache, e usando os recursos da máquina do usuário.
 
 \begin{figure}[!ht]
@@ -559,7 +559,7 @@ Porém, o site sempre recalcula a sequência dos números primos, não conta com
 
 Para realizar a coleta de métricas com o \acr{ELC}, é necessário instalar o pacote el-chupacabra por meio do \acr{NPM}\footnote{https://www.npmjs.com/package/el-chupacabra}.
 Com o pacote, é possível dentro da base de código do site criar uma instância da classe EasyElc.
-Por ela somo capazes de configurar alguns parâmetros da coleta de métricas como a especificação do local para persistência das mesmas.
+Por ela somos capazes de configurar alguns parâmetros da coleta de métricas como a especificação do local para persistência das mesmas.
 
 % REMOVE A PÁGINA EM BRANCO UTILIZANDO MINIPAGE
 \begin{minipage}{\linewidth}
@@ -579,9 +579,9 @@ const easyElc = new EasyElc(
 \end{lstlisting}
 
 \end{minipage}
-Através da instância do EasyElc, é possível realizar a coleta das métricas desejadas, a qual é realizada por meio da chamada do método startProfiling que recebe dois parâmetros: Um nome para o que sendo avaliado e uma lista de métricas.
+Através da instância do EasyElc, é possível realizar a coleta das métricas desejadas, a qual é realizada por meio da chamada do método startProfiling que recebe dois parâmetros: Um nome para o que está sendo avaliado e uma lista de métricas.
 Como a implementação do site faz uso do padrão de projeto \hyperref[subsection:strategy]{Strategy}, só é necessário inserir a chamada do método getFirstNPrimeNumbers.
-Então, com a chamada do método finish, é finalizada a coleta das métricas, passando metadados como argumento, e as métricas coletados são enviados para a persistência.
+Então, com a chamada do método finish, é finalizada a coleta das métricas, passando metadados como argumento, e as métricas coletadas são enviadas para a persistência.
 
 \begin{lstlisting}[label={lst:easyelc_usage_firstnprimes}, caption={Coleta de métricas usando o EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
 const calculatePrimes = () => {
@@ -614,7 +614,7 @@ Além disso, o \acr{ELC} também coleta informações sobre o ambiente o qual aq
 \section{Arquitetura}
 \label{cap:arquitetura}
 
-A ferramenta foi implementada utilizando uma arquitetura modular, e seguindo o conceito do aberto/fechado (open/closed), trazido pelo SOLID (citar fundamentação teórica). Dessa forma, todas as relações entre as classes e módulos se dão através de interfaces, abstraindo o funcionamento interno de cada elemento. Isso contribui significativamente para a manutenabilidade do código, pois diminui as chances de problemas de compatibilidade entre as implementações caso alguma premissa seja alterada.
+A ferramenta foi implementada utilizando uma arquitetura modular, e seguindo o conceito do aberto/fechado (open/closed), trazido pelo SOLID (citar fundamentação teórica). Dessa forma, todas as relações entre as classes e módulos se dão através de interfaces, abstraindo o funcionamento interno de cada elemento. Isso contribui significativamente para a manutenibilidade do código, pois diminui as chances de problemas de compatibilidade entre as implementações caso alguma premissa seja alterada.
 
 Inicialmente, a ferramenta se estrutura em seis módulos principais: o Módulo de Projeto (Project), Módulo de Perfil de Execução (ExecutionProfile), o módulo de Métricas (Metrics), o módulo de Persistência (Persister), o módulo de Tarefas (Tasks) e o Módulo Simplificado (EasyELC). Cada um deles possui sua responsabilidade, como serão descritas nas próximas secções. 
 
@@ -661,9 +661,9 @@ export default class Project {
 }
 \end{lstlisting}
 
-Essa classe possui como atributos uma instância da classe ExecutionProfile, que contem as informações de quem está executando aquele projeto, uma instância da classe Persister, que é a classe responsável pela persistência de dados, e uma instância da classe Task, que é a tarefa mãe a ser executada.
+Essa classe possui como atributos uma instância da classe ExecutionProfile, que contém as informações de quem está executando aquele projeto, uma instância da classe Persister, que é a classe responsável pela persistência de dados, e uma instância da classe Task, que é a tarefa mãe a ser executada.
 
-Possui também um único método, o método executeTask(), que coleta as informações da máquina através do ExecutionProfile, dá inicio a execução das tarefas associadas aquele projeto e persiste os resultados.
+Possui também um único método, o método executeTask(), que coleta as informações da máquina através do ExecutionProfile, dá início a execução das tarefas associadas àquele projeto e persiste os resultados.
 
 \subsection{Módulo de Perfil de Execução (ExecutionProfile)}
 \label{subsection:modulo-execution-profile}
@@ -683,7 +683,7 @@ export default interface IExecutionProfile {
 
 Essa interface contém os métodos collect(), que é o método que efetivamente coleta as informações do ambiente, e o método getVisitorId(), que provê um identificador único ao voluntário na execução para posterior análise. Ambos podem ser sobrescritos na implementação concreta de cada perfil, de acordo com a necessidade de cada ambiente.
 
-Supondo uma execução de tarefas em um navegador, deve implementada uma classe chamada BrowserExecutionProfile, que conteria as implementações concretas dos métodos para realizar a coleta dos dados do ambiente do navegador. O bloco de código \ref{lst:browser_execution_profile_abstract_class} a seguir contém a classe BrowserExecutionProfile.
+Supondo uma execução de tarefas em um navegador, deve ser implementada uma classe chamada BrowserExecutionProfile, que conteria as implementações concretas dos métodos para realizar a coleta dos dados do ambiente do navegador. O bloco de código \ref{lst:browser_execution_profile_abstract_class} a seguir contém a classe BrowserExecutionProfile.
 
 \begin{lstlisting}[label={lst:browser_execution_profile_abstract_class}, caption={Implementação da classe responsável por representar um perfil de execução.}, language=TypeScript, breaklines=true]
 export default class BrowserExecutionProfile implements IExecutionProfile {
@@ -797,7 +797,7 @@ export default abstract class BaseTask implements ITask {
   protected abstract execute(): Promise<Record<string, any>>
 
   /**
-    * Override this method to performs pre-task jobs.
+    * Override this method to perform pre-task jobs.
     * @protected
     */
   protected async preTaskJob(): Promise<void> {
@@ -805,7 +805,7 @@ export default abstract class BaseTask implements ITask {
   }
 
   /**
-    * Override this method to performs post-task jobs.
+    * Override this method to perform post-task jobs.
     * @protected
     */
   protected async postTaskJob(): Promise<void> {
@@ -816,9 +816,9 @@ export default abstract class BaseTask implements ITask {
 
 A interface ITask contém três métodos principais, que permitem ao usuário criar sua tarefa customizada. O primeiro é o método principal run(), no qual é inserido a chamada para a execução dos jobs e das métricas. Após isso, também são declarados os métodos preTaskJob e postTaskJob, os quais respectivamente representam as execuções que devem rodar antes e depois da tarefa.
 
-A tarefa aqui pode ser desde a transferência de um arquivo, até a execução de uma consulta em um banco de dados. Respeitando a interface principal, podem ser inseritos n tipos de tarefas diferentes, de acordo com a necessidade do usuário. Cada tarefa contém um conjunto de métricas, que são as representações dos tipos de dados que serão coletados na execução daquela tarefa.
+A tarefa aqui pode ser desde a transferência de um arquivo, até a execução de uma consulta em um banco de dados. Respeitando a interface principal, podem ser inseridos n tipos de tarefas diferentes, de acordo com a necessidade do usuário. Cada tarefa contém um conjunto de métricas, que são as representações dos tipos de dados que serão coletados na execução daquela tarefa.
 
-Quando houver a demanda de uma tarefa composta por mais de uma tarefa, a implementação se dá utilizando o padrão Composite (citar fundamentação teórica), e a tarefa passa a conter uma lista de tarefas associadas. Assim, quando o método run() é chamado na tarefa mãe, é feita uma iteração nas tarefas associadas para a execução em cadeia de todas as tarefas. O bloco de código \ref{lst:compositetask_class} a seguir contém a classe CompositeTask, que extende a BaseTask e representa uma tarefa composta.
+Quando houver a demanda de uma tarefa composta por mais de uma tarefa, a implementação se dá utilizando o padrão Composite (citar fundamentação teórica), e a tarefa passa a conter uma lista de tarefas associadas. Assim, quando o método run() é chamado na tarefa mãe, é feita uma iteração nas tarefas associadas para a execução em cadeia de todas as tarefas. O bloco de código \ref{lst:compositetask_class} a seguir contém a classe CompositeTask, que estende a BaseTask e representa uma tarefa composta.
 
 \begin{lstlisting}[label={lst:compositetask_class}, caption={Implementação da classe responsável por representar uma tarefa composta.}, language=TypeScript, breaklines=true]
 
@@ -889,7 +889,7 @@ export default interface IMetric {
 }
 \end{lstlisting}
 
-A interface principal contém somente um método chamado collect(), que é responsável por executar a coleta efetiva do dado desejado. Extendendo essa interface, a implementação concreta sobrescreve esse método inserindo nele os processamentos necessários para a coleta. Esse método é chamado posteriormente para cada uma das métricas associadas na execução de uma tarefa. O bloco de código \ref{lst:memorymetric_class} a seguir contém um exemplo de implementação de métrica, a classe MemoryMetric.
+A interface principal contém somente um método chamado collect(), que é responsável por executar a coleta efetiva do dado desejado. Estendendo essa interface, a implementação concreta sobrescreve esse método inserindo nele os processamentos necessários para a coleta. Esse método é chamado posteriormente para cada uma das métricas associadas na execução de uma tarefa. O bloco de código \ref{lst:memorymetric_class} a seguir contém um exemplo de implementação de métrica, a classe MemoryMetric.
 
 \begin{lstlisting}[label={lst:memorymetric_class}, caption={Implementação da classe responsável por representar uma métrica de memória.}, language=TypeScript, breaklines=true]
 
@@ -973,7 +973,7 @@ export default class MemoryMetric implements IMetric {
 \subsection{Módulo de Persistência (Persister)}
 \label{subsection:modulo-persister}
 
-O módulo de persistência (Persister) tem como finalidade encapsular a persistência de dados após a coleta das métricas, afim de faciltar o uso de diferentes formas de persistência de dados no contexto do framework. Dessa forma, é possível adaptar facilmente a implementação da persistência sem interferir na estrutura das tarefas. Esse módulo é composto pela interface genérica IPersister e suas implementações concretas, assim como os anteriores. O bloco de código \ref{lst:ipersister_abstract_class} a seguir contém a classe abstrata IPersister.
+O módulo de persistência (Persister) tem como finalidade encapsular a persistência de dados após a coleta das métricas, a fim de facilitar o uso de diferentes formas de persistência de dados no contexto do framework. Dessa forma, é possível adaptar facilmente a implementação da persistência sem interferir na estrutura das tarefas. Esse módulo é composto pela interface genérica IPersister e suas implementações concretas, assim como os anteriores. O bloco de código \ref{lst:ipersister_abstract_class} a seguir contém a classe abstrata IPersister.
 
 \begin{lstlisting}[label={lst:ipersister_abstract_class}, caption={Implementação da classe responsável pela persistência dos dados.}, language=TypeScript, breaklines=true]
 /**
@@ -1153,12 +1153,12 @@ Abaixo, está uma descrição de cada elemento do diagrama.
 \chapter{Experimentos}
 \label{cap:experimentos}
 
-Após o desenvolvimento do \acr{ELC}, é necessária a realização de um experimento para avaliar como se daria o seu uso em um cenário real. Neste capítulo estão contidas as descrições do experimento utilizado para avaliar o \acr{ELC} por volutários externos, bem como sua preparação e execução. Além disso, estão contidos também os resultados do experimento.
+Após o desenvolvimento do \acr{ELC}, é necessária a realização de um experimento para avaliar como se daria o seu uso em um cenário real. Neste capítulo estão contidas as descrições do experimento utilizado para avaliar o \acr{ELC} por voluntários externos, bem como sua preparação e execução. Além disso, estão contidos também os resultados do experimento.
 
 \section{Preparação do experimento}
 \label{section:preparacao-experimento}
 
-O experimento consiste em duas etapas principais. A primeira é a utilização do \acr{ELC} em um projeto exemplo, e segunda é o preenchimento de um formulário no Google Forms baseado no \acr{SUS}, buscando coletar a opinião do voluntário de como foi a experiência de uso.
+O experimento consiste em duas etapas principais. A primeira é a utilização do \acr{ELC} em um projeto exemplo, e a segunda é o preenchimento de um formulário no Google Forms baseado no \acr{SUS}, buscando coletar a opinião do voluntário de como foi a experiência de uso.
 
 Para o grupo de controle, estão sendo considerados XX voluntários, em sua maioria alunos e/ou pertencentes à comunidade do CEFET e já com alguma experiência em programação. 
 
@@ -1171,9 +1171,9 @@ Para o grupo de controle, estão sendo considerados XX voluntários, em sua maio
 % TO-DO: Revisar seção pra bater com o que está no observable
 
 
-A primeira parte do experimento consiste basicamente do uso do \acr{ELC}, mais especificamente do módulo EasyELC, pelos voluntários através da plataforma \emph{ObservableHQ}\footnote{Link para o experimento na plataforma ObservableHQ: https://observablehq.com/@moura/framework-el-chupacabra-experimento}. Um projeto padrão foi criado e disponibilizado para os voluntários, e ele consiste em comparar o desempenho de dois algoritmos de ordenação já conhecidos sobre um conjunto de dados. Os algoritmos são o Bubble Sort e o Heap Sort, e o conjunto de dados está inicialmente desordenado e representado no formato \acr{JSON}. Dessa forma, o fluxo do experimento a ser realizado é: realizar a ordenação duas vezes, uma utilizando cada algoritmo, para comparar qual tem o melhor desempenho.
+A primeira parte do experimento consiste basicamente do uso do \acr{ELC}, mais especificamente do módulo EasyELC, pelos voluntários através da plataforma \emph{ObservableHQ}\footnote{Link para o experimento na plataforma ObservableHQ: https://observablehq.com/@moura/framework-el-chupacabra-experimento}. Um projeto padrão foi criado e disponibilizado para os voluntários, e consiste em comparar o desempenho de dois algoritmos de ordenação já conhecidos sobre um conjunto de dados. Os algoritmos são o Bubble Sort e o Heap Sort, e o conjunto de dados está inicialmente desordenado e representado no formato \acr{JSON}. Dessa forma, o fluxo do experimento a ser realizado é: realizar a ordenação duas vezes, uma utilizando cada algoritmo, para comparar qual tem o melhor desempenho.
 
-Foi adicionado uma seção chamada Implementação de Métrica Customizada, como mostra a figura \ref{fig:metrica-observable}. Essa parte do código é uma das partes que o voluntário preenche, com o auxilio de comentários deixados mostrando o passo a passo da criação da métrica. O exemplo trata de uma métrica cujo comportamento é retornar um número aleatório. Dessa forma, ele consegue ter a experiência de criar uma métrica utilizando a ferramenta.
+Foi adicionado uma seção chamada Implementação de Métrica Customizada, como mostra a figura \ref{fig:metrica-observable}. Essa parte do código é uma das partes que o voluntário preenche, com o auxílio de comentários deixados mostrando o passo a passo da criação da métrica. O exemplo trata de uma métrica cujo comportamento é retornar um número aleatório. Dessa forma, ele consegue ter a experiência de criar uma métrica utilizando a ferramenta.
 
 \begin{figure}[!ht]
 	\centering
@@ -1213,7 +1213,7 @@ Os resultados da execução do experimento são inseridos em uma tabela no Googl
 \section{Formulário}
 \label{section:parte-2-formulario}
 
-Após a realização da primeira etapa do experimento, os voluntários preenchem um formulário, cujo objetivo é avaliar a experiência de uso da ferramenta, bem como outras características relevantes para a análise do seu desempenho e qualidade. As perguntas do formulário são baseadas no conceito trazido pelo \acr{SUS}. Esse sistema de avaliação foi construido para fornecer uma forma sólida e com baixo custo de implementação de avaliar a usabilidade de sistemas de software \citep{brooke1995sus}. Na lista abaixo estão as perguntas já traduzidas que são utilizadas no formulário.
+Após a realização da primeira etapa do experimento, os voluntários preenchem um formulário, cujo objetivo é avaliar a experiência de uso da ferramenta, bem como outras características relevantes para a análise do seu desempenho e qualidade. As perguntas do formulário são baseadas no conceito trazido pelo \acr{SUS}. Esse sistema de avaliação foi construído para fornecer uma forma sólida e com baixo custo de implementação de avaliar a usabilidade de sistemas de software \citep{brooke1995sus}. Na lista abaixo estão as perguntas já traduzidas que são utilizadas no formulário.
 
 \begin{enumerate}
 	\itemsep 0em 
@@ -1346,11 +1346,11 @@ Armazenamento em núvem & \xmark & \cmark & \cmark & \cmark & \cmark  \\
 
 O \acr{ELC} não exige que o código fonte da aplicação seja alterado para a sua utilização. Ou seja, possui um nível bom de coesão e baixo de acoplamento. Através da modelagem das tarefas e métricas, é possível realizar um experimento utilizando o código como foi implementado inicialmente, apenas inserindo chamadas dentro da estrutura extensível do \acr{ELC}. Assim, podem ser executadas diversas tarefas diferentes, mas medidas na mesma estrutura e registradas na mesma base de dados.
 
-Além disso, o \acr{ELC} tem uma arquitetura extensível, tanto na parte de métricas e tarefas já citadas, quanto nas partes de perfis de execução e persistência. É possível utilizar diversos tipos de bases de dados, seja o Sheetson, como foi exemplificado, ou um banco de dados Postgres, basta extender a interface do Persister e implementar suas particularidades. 
+Além disso, o \acr{ELC} tem uma arquitetura extensível, tanto na parte de métricas e tarefas já citadas, quanto nas partes de perfis de execução e persistência. É possível utilizar diversos tipos de bases de dados, seja o Sheetson, como foi exemplificado, ou um banco de dados Postgres, basta estender a interface do Persister e implementar suas particularidades. 
 
 Como o \acr{ELC} é executado no navegador, é possível medir em diversos dispositivos diferentes, sem problemas de compatibilidade, já que a execução é no próprio navegador. Além da métrica escolhida pelo pesquisador, é possível registrar também juntamente qual foi o aparelho que a executou e suas informações básicas, atendendo à experimentos multiplataforma que precisam dessas informações.
 
-Na parte do armazenamento das informações, o \acr{ELC} também se destaca, por ser bastante extensível. No trabalho foi utilizado o Sheetson, uma ferramenta para habilitar a escrita de dados em planilhas do Google via \acr{API}, mas podem ser utilizados diversos tipos de bases de dados, como bancos de dados Postgres ou MongoDB.
+Na parte do armazenamento das informações, o \acr{ELC} também se destaca, por ser bastante extensível. No trabalho foi utilizado o Sheetson, uma ferramenta para habilitar a escrita de dados em planilhas do Google via \acr{API}, mas podem ser utilizados diversos tipos de bases de dados, como bancos de dados Postgresql e MongoDB.
 
 \section{Trabalhos Futuros}
 \label{section:trabalhos-futuros}
