@@ -430,98 +430,118 @@ To address this problem, this paper proposes El-Chupacabra, an extensible and cu
 
 	% TO-DO: Melhorar fluidez do texto. Quando mostrar código, integrar ele no texto. 
 
-	Neste capítulo estão descritos os tópicos relacionados à implementação da ferramenta, bem como da sua elaboração conceitual e da sua arquitetura interna. Dessa forma, primeiro são apresentados os estudos de caso utilizados para exemplificar o uso da ferramenta, e posteriormente detalhados os detalhes de implementação, desde a elaboração dos Diagramas de Arquitetura, Casos de Uso e Classes até a construção interna de cada módulo.
+	Neste capítulo, abordamos os aspectos relacionados à implementação da ferramenta, incluindo sua concepção e arquitetura interna.
+	Inicialmente, apresentamos estudos de caso \ref{sec:estudos-de-caso} que exemplificam o uso da ferramenta.
+	Em seguida, exploramos os detalhes de implementação, que incluem diagramas de arquitetura \ref{cap:arquitetura} e a construção interna de cada módulo a partir da subseção \ref{subsection:modulo-project} até a \ref{subsec:implemencao-easyelc}.
 
 	\section{Estudos de Caso}
+	\label{sec:estudos-de-caso}
 
-	Para fins didáticos, estão descritos nesta seção dois estudos de caso práticos, buscando ilustrar os dois possíveis fluxos de funcionamento do \acr{ELC} em um mesmo cenário.
-	O objetivo é esclarecer tanto os fluxos de aplicação da ferramenta quanto suas características de projeto.
+	Para fins didáticos, estão descritos nesta seção dois estudos de caso, os quais ilustram os possíveis fluxos de uso da ferramenta.
+	A subseção \ref{subsection:study-case-cloning-elc} exemplifica o uso do \acr{ELC} a partir de um clone de seu repositório.
+	Enquanto, a subseção \ref{subsection:study-case-easyelc} exemplifica o uso da ferramenta como uma biblioteca. 
+	Em ambos cenários, utilizamos o mesmo objeto de estudo, uma avaliação empírica de funções que calculam se um número é primo.
+	O racional por trás deste exemplo consiste em sua facilidade de explicação, sua adaptação a ambos os fluxos de uso e na alta probabilidade de os usuários do \acr{ELC}, notadamente programadores, terem tido algum contato com problemas semelhantes durante sua formação.
 
-	\subsection{Calculando os Primeiros n Números Primos}
-
-	Considere uma pesquisa onde são comparados diferentes métodos para gerar listas contendo os primeiros $n$ números primos, e deseja-se de forma empírica obter qual é a melhor abordagem.
-	Para isso, é necessário obter métricas sobre cada algoritmo utilizado e persistir estes resultados, a fim de concluir qual é o mais eficiente.
-	Porém, como o foco está nos aspectos empíricos, o ambiente de execução das avaliações possui um papel relevante.
-	Neste caso, o uso do \acr{ELC} habilita que esse experimento seja feito de forma remota e por voluntários, permitindo aumentar a variabilidade de ambientes que participaram da avaliação.
+	Então, considere haver uma pesquisa onde são comparadas diferentes funções para gerar listas contendo os primeiros $n$ números primos. 
+	Deseja-se, de forma empírica, obter qual função em média leva menos tempo para calcular as listas de números primos em múltiplos tipos de hardware.
+	Para isso, é necessário executar as funções, obter o tempo de execução para cada tamanho de lista testado e centralizar os resultados obtidos, a fim de concluir qual função é mais eficiente.
+	O meio para realizar esta avaliação será um site estático, o qual pode ser facilmente gerado a partir do repositório do \acr{ELC}.
 
 	\subsection{Uso do ELC a partir de um Clone do Repositório}
 	\label{subsection:study-case-cloning-elc}
 
 	Para realizar o experimento do cálculo dos números primos utilizando o \acr{ELC}, uma das opções é realizando um clone de seu repositório no GitHub\footnote{\url{https://github.com/El-Chupacabra-TCC/el-chupacabra}}.
-	Após isso, para cada algoritmo que se deseja avaliar, é necessário implementar uma classe herdeira de BaseTask, onde o método execute encapsula o algoritmo.
+	Após isso, para cada algoritmo que se deseja avaliar, é necessário implementar uma classe herdeira de \emph{BaseTask}, onde o método \emph{execute} encapsula o algoritmo.
 
-	\begin{lstlisting}[label={lst:elc_firstnprimes_task}, caption={Exemplo de classe encapulando um algoritmo de cálculo de números primos.}, language=TypeScript, breaklines=true]
-	export default class FirstNPrimesTask extends BaseTask {
-		private howMany: number
+	A listagem \ref{lst:elc_firstnprimes_task} contém um exemplo de classe base para as funções de calcular números primos.
+	O tamanho da lista é definida via construtor e armazenado na variável de instância \emph{howMany}.
+	Enquando, o método \emph{execute} contém um laço na linha 13 que preenche a lista com números primos detectados pelo método \emph{isPrime}.
+	Este que, por sua vez, pode ser sobrescrito nas subclasses para conter a implementação de cada função que o experimento avalie.
 
-		constructor(metrics: IMetric[], howMany: number) {
-			super(metrics)
-			this.howMany = howMany
-		}
+\begin{lstlisting}[label={lst:elc_firstnprimes_task}, caption={Exemplo de classe encapulando um algoritmo de cálculo de números primos.}, language=TypeScript, breaklines=true]
+export default class FirstNPrimesTask extends BaseTask {
+  protected howMany: number
 
-		protected async execute(): Promise<Record<string, any>> {
-			const results = { amountOfPrimes: 0, primes: [] }
-			const primes: number[] = []
+  constructor(metrics: IMetric[], howMany: number) {
+    super(metrics)
+    this.howMany = howMany
+  }
 
-			for (let i = 0; primes.length < this.howMany; i++) {
-				if (this.isPrime(i)) {
-					primes.push(i)
-				}
-			}
+  protected async execute(): Promise<Record<string, any>> {
+    const results = { amountOfPrimes: 0, primes: [] }
+    const primes: number[] = []
 
-			results.primes = primes
-			results.amountOfPrimes = primes.length
-			return results
-		}
+    for (let i = 0; primes.length < this.howMany; i++) {
+      if (this.isPrime(i)) {
+        primes.push(i)
+      }
+    }
 
-		private isPrime(i: number): boolean {
-			// ...
-			return true
-		}
-	}	
-	\end{lstlisting}
+    results.primes = primes
+    results.amountOfPrimes = primes.length
+    return results
+  }
 
-	Com uma classe para cada algoritmo em avaliação como no exemplo de código \ref{lst:elc_firstnprimes_task}.
-	O próximo passo é criar um script principal para a execução das avaliações.
+  protected isPrime(i: number): boolean {
+    // ...
+    return true
+  }
+}
+\end{lstlisting}
+
+	Com uma classe para cada algoritmo em avaliação, o próximo passo é criar um script principal para a execução das avaliações.
 	O repositório já contém um arquivo Index.ts como exemplo de script principal para avaliações executadas em navegadores.
-	Partindo desta base, é necessário configurar quatro pontos:
+	Partindo dele como base, é necessário realizar quatro configurações:
 
 	\begin{itemize}
-		\item Perfil do ambiente de execução: As avaliações usando o \acr{ELC} podem ser executadas em diferentes tipos ambientes. Para que seja possível coletar informações sobre o ambiente que a avaliação está sendo executada é necessário utilizar uma instância de perfil de execução adequada. Para este exemplo, consideramos a execução em navegadores.
-		\item Persistência das métricas: Onde os dados coletados pelo \acr{ELC} são armazenados. Para este exemplo, consideramos que as métricas coletadas devem ser enviadas para uma planilha no Google Sheets.
-		\item Árvore de tarefas: Tarefa é o nome dado às classes que são a carga sob avaliação do \acr{ELC}. Porém, a estrutura utilizada para sua execução é de árvore, deste modo, somos capazes de subdividir análises.
-		\item Métricas em uso: Cada instância de tarefa recebe uma lista de métricas que devem ser coletadas em sua execução. Permitindo que cada análise tenha seu conjunto independente de métricas.
+		\item Perfil do ambiente de execução: As avaliações usando o \acr{ELC} podem ser executadas em diferentes tipos ambientes.
+		Para que seja possível coletar informações sobre o ambiente que a avaliação está sendo executada é necessário utilizar uma instância de perfil de execução adequada.
+		Na listagem \ref{lst:elc_index_ts_example}, na linha 3 instanciamos o perfil de execução para navegadores.
+
+		\item Persistência das métricas: Define onde os dados coletados pelo \acr{ELC} são armazenados.
+		Na listagem \ref{lst:elc_index_ts_example}, consideramos que as métricas coletadas devem ser enviadas para uma planilha no Google Sheets.
+		Deste modo, mesmo executando a avaliação em múltiplos ambientes, os dados coletados são armazenado em um único lugar.
+		Para tal, na linha 4 instanciamos o \emph{SheetsonPersister} com configurações de qual planilha usar e um token de autenticação.
+
+		\item Árvore de tarefas: Tarefa é o nome dado às classes que são a carga sob avaliação do \acr{ELC} e entre as linhas 10 e 16 da listagem \ref{lst:elc_index_ts_example} há a construção de uma árvore de tarefas.
+		Utilizamos o \emph{CompositeTask} como raíz da árvore, o qual tem como papel agrupar outras tarefas, além de receber uma lista de métricas para avaliar o grupo que engloba.
+		Nas linhas 14 e 15, são definidas duas instâncias da classe \emph{FirstNPrimesTask}, pois a primeira é uma avaliação para o tamanho de lista $10000$ e a segunda $30000$, ademais \emph{DeltaTimeMetric} será a única métrica coletada individualmente.
+
+		\item Métricas em uso: Cada instância de tarefa possui como primeiro argumento uma lista de métricas, como podemos observar nas linhas 11, 13 e 14 da listagem \ref{lst:elc_index_ts_example}.
+		Deste modo, cada instância de tarefa possui um conjunto independente de métricas.
+		Por outro lado, métricas podem ser coletadas sobre um conjunto de tarefas quando este é agrupado por uma \emph{CompositeTask} como é o caso das métricas na linha 11.
 	\end{itemize}
 
-	\begin{lstlisting}[label={lst:elc_index_ts_example}, caption={Exemplo de script principal avaliando uma comparação de tempo de execução entre duas execuções de uma tarefa FirstNPrimesTask. Onde a avaliação é executada em navegadores e as métricas coletadas são armazenadas em uma planilha online.}, language=TypeScript, breaklines=true]
-	export function Execute()
-	{
-		const executionProfile = new BrowserExecutionProfile();
-		const persister = new SheetsonPersister(
-			"SHEET_NAME",
-			"API_KEY",
-			"SHEET_ID"
-		);
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[label={lst:elc_index_ts_example}, caption={Exemplo de script principal avaliando uma comparação de tempo de execução entre duas execuções de uma tarefa FirstNPrimesTask. Onde a avaliação é executada em navegadores e as métricas coletadas são armazenadas em uma planilha online.}, language=TypeScript, breaklines=true]
+export function Execute()
+{
+  const executionProfile = new BrowserExecutionProfile();
+  const persister = new SheetsonPersister(
+    "SHEET_NAME",
+    "API_KEY",
+    "SHEET_ID"
+  );
 
-		const tasks = new CompositeTask(
-			[new MemoryMetric(), new DeltaTimeMetric()],
-			[
-				new FirstNPrimesTask([new DeltaTimeMetric()], 10000),
-				new FirstNPrimesTask([new DeltaTimeMetric()], 30000)
-			]
-		);
+  const tasks = new CompositeTask(
+    [new MemoryMetric(), new DeltaTimeMetric()],
+    [
+      new FirstNPrimesTask([new DeltaTimeMetric()], 10000),
+      new FirstNPrimesTask([new DeltaTimeMetric()], 30000)
+    ]
+  );
 
-		var project = new Project(executionProfile, tasks, [persister]);
-		return project.executeTask();
-	}
-
-	// ...
-	\end{lstlisting}
+  var project = new Project(executionProfile, tasks, [persister]);
+  return project.executeTask();
+}
+\end{lstlisting}
+\end{minipage}
 
 	Após isso, somos capazes de criar uma instância de Project utilizando as configurações como argumentos de seu construtor.
 	E, a avaliação será executada quando o método executeTask da instância de Project for invocado.
 	Como último passo, utilizamos o compilador do TypeScript para gerar os arquivos JavaScript e hospedar o artefato gerado em algum servidor Web.
-	Se o artefato for gerado com o código padrão do repositório, ele será um site estático com um botão para executar a avaliação.
+	Se o artefato for gerado com o código padrão do repositório, ele será um site estático com um botão para executar a avaliação como ilustra a figura \ref{fig:elc_clone_artifact}.
 
 	\begin{figure}[!ht]
 		\centering
@@ -1038,6 +1058,7 @@ To address this problem, this paper proposes El-Chupacabra, an extensible and cu
 
 
 	\subsection{Módulo da Interface de Uso Simplificada (EasyELC)}
+		\label{subsec:implemencao-easyelc}
 
 	O módulo EasyElc tem como principal objetivo simplificar o uso do framework quando ele for uma dependência de outro projeto.
 	Um dos possíveis casos de uso para o \acr{ELC}, é quando os procedimentos a serem avaliados existem em um sistema grande e complexo com múltiplas dependências.
