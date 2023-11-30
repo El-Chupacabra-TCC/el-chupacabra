@@ -446,7 +446,14 @@ To address this problem, this paper proposes El-Chupacabra, an extensible and cu
 	Então, considere haver uma pesquisa onde são comparadas diferentes funções para gerar listas contendo os primeiros $n$ números primos. 
 	Deseja-se, de forma empírica, obter qual função em média leva menos tempo para calcular as listas de números primos em múltiplos tipos de hardware.
 	Para isso, é necessário executar as funções, obter o tempo de execução para cada tamanho de lista testado e centralizar os resultados obtidos, a fim de concluir qual função é mais eficiente.
-	O meio para realizar esta avaliação será um site estático, o qual pode ser facilmente gerado a partir do repositório do \acr{ELC}.
+	O meio para realizar esta avaliação será um site estático, o qual pode ser facilmente gerado a partir do repositório do \acr{ELC} e este processo pode ser visualizado na figura \ref{fig:diagrama-informal}.
+
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=\textwidth]{figures/diagrama-informal.pdf}
+		\caption{Diagrama informal ilustrando o caso onde um desenvolvedor utiliza o \acr{ELC} para encapsular provas de conceito e métricas customizadas, neste exemplo são respectivamente algoritmos para calcular se um número é primo e métricas de tempo despendido, gerando um site estático como artefato para que voluntários em diferentes tipos de hardware executem e as métricas destas execuções sejam coletadas.}
+		\label{fig:diagrama-informal}
+	\end{figure}
 
 	\subsection{Uso do ELC a partir de um Clone do Repositório}
 	\label{subsection:study-case-cloning-elc}
@@ -699,6 +706,7 @@ const calculatePrimes = () => {
 	Essa classe possui como atributos uma instância da classe ExecutionProfile, que contém as informações de quem está executando aquele projeto, uma instância da classe Persister, que é a classe responsável pela persistência de dados, e uma instância da classe Task, que é a tarefa mãe a ser executada.
 
 	Possui também um único método, o método executeTask(), que coleta as informações da máquina através do ExecutionProfile, dá início a execução das tarefas associadas àquele projeto e persiste os resultados.
+
 
 	\subsection{Módulo de Perfil de Execução (ExecutionProfile)}
 	\label{subsection:modulo-execution-profile}
@@ -1139,20 +1147,6 @@ const calculatePrimes = () => {
 		}
 	}
 	\end{lstlisting}
-
-
-
-	\section{Diagrama de Casos de Uso}
-	\label{sec:diagrama_de_caso_de_uso}
-
-	O diagrama de casos de uso é o diagrama responsável por prever como a ferramenta será utilizada, embasando futuramente o desenvolvimento e os testes da aplicação. No caso do ELC, temos os atores ...
-
-	\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=0.6\textwidth]{figures/diagrama-informal.pdf}
-		\caption{Principal fluxo de uso, onde um desenvolver avalia um conjunto de provas de conceitos com o auxílio de voluntários externos ao desenvolvimento.}
-		\label{fig:diagrama-informal}
-	\end{figure}
 
 		
 	\section{Diagrama de Classes}
