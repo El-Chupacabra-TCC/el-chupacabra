@@ -538,10 +538,13 @@ export function Execute()
 \end{lstlisting}
 \end{minipage}
 
-	Após isso, somos capazes de criar uma instância de Project utilizando as configurações como argumentos de seu construtor.
-	E, a avaliação será executada quando o método executeTask da instância de Project for invocado.
-	Como último passo, utilizamos o compilador do TypeScript para gerar os arquivos JavaScript e hospedar o artefato gerado em algum servidor Web.
+	Após isso, somos capazes de criar uma instância de \emph{Project} utilizando as configurações como argumentos de seu construtor.
+	E, a avaliação será executada quando o método \emph{executeTask} da instância de \emph{Project} for invocado.
+	Como último passo, utilizamos o compilador do TypeScript para gerar os arquivos JavaScript os quais podem ser hospedados em algum servidor Web.
 	Se o artefato for gerado com o código padrão do repositório, ele será um site estático com um botão para executar a avaliação como ilustra a figura \ref{fig:elc_clone_artifact}.
+	Entretanto, caso o desejado seja avaliar as funcionalidades de uma aplicação complexa, esta abordagem realizando clone do repositório pode ser consideravelmente difícil de aplicar.
+	Nesse sentido, o \acr{ELC} oferece um segundo fluxo de utilização, no qual o incorporamos como uma biblioteca externa por meio de uma interface simplificada denominada EasyElc.
+
 
 	\begin{figure}[!ht]
 		\centering
@@ -555,15 +558,10 @@ export function Execute()
 
 	Nesta seção o \acr{ELC} é utilizado como uma dependência de um projeto em ambiente produtivo.
 	Considere o cenário de um site estático que realiza o cálculo da lista de números primos no navegador do usuário.
-	Este site possui mais de um algoritmo para o cálculo dos números primos e seu usuário pode escolher qual quer utilizar.
-	E, para coletar métricas das execuções dos algoritmos, o \acr{ELC} é utilizado.
+	Este site possui mais de um algoritmo para o cálculo dos números primos e seu usuário pode escolher qual deseja utilizar.
+	Além disso, para a coleta de métricas das execuções o site faz uso do \acr{ELC}.
 
 	% TO-DO: Criar um apêndice detalhado sobre o First n Primes Calculator.
-
-	Com o propósito de exercitar este exato cenário, desenvolvemos o site Calculadora dos Primeiros n Números Primos (do inglês, \emph{First n Primes Calculator})
-	\footnote{\url{https://el-chupacabra-tcc.github.io/FirstNPrimes}}.
-	Onde o usuário insere o tamanho da lista de números primos que deseja e o site calcula a sequência dos números primos do 2 até a quantidade solicitada.
-	Porém, o site sempre recalcula a sequência dos números primos, não conta com qualquer mecanismo de cache, e usando os recursos da máquina do usuário.
 
 	\begin{figure}[!ht]
 		\centering
@@ -572,44 +570,55 @@ export function Execute()
 		\label{fig:site-numeros-primos}
 	\end{figure}
 
-	Para realizar a coleta de métricas com o \acr{ELC}, é necessário instalar o pacote el-chupacabra por meio do \acr{NPM}\footnote{https://www.npmjs.com/package/el-chupacabra}.
-	Com o pacote, é possível dentro da base de código do site criar uma instância da classe EasyElc.
-	Por ela somos capazes de configurar alguns parâmetros da coleta de métricas como a especificação do local para persistência das mesmas.
+	Com o propósito de exercitar este cenário, desenvolvemos o site Calculadora dos Primeiros n Números Primos (do inglês, \emph{First n Primes Calculator})
+	\footnote{\url{https://el-chupacabra-tcc.github.io/FirstNPrimes}}.
+	Onde o usuário insere o tamanho da lista de números primos que deseja obter.
+	Ademais, o site sempre recalcula a sequência dos números primos, pois não conta com qualquer mecanismo de cache, além de usar os recursos da máquina do usuário.
+
+	Para realizar a coleta de métricas com o \acr{ELC}, é necessário instalar o pacote el-chupacabra por meio do \acr{NPM}\footnote{\url{https://www.npmjs.com/package/el-chupacabra}}.
+	Com o pacote, é possível dentro da base de código do site criar uma instância da classe EasyElc como demonstrado na listagem \ref{lst:easyelc_setup}.
+	Por ela, somos capazes de configurar alguns parâmetros da coleta de métricas como a especificar o local de persistência e a escolha de perfil de execução adequado.
 
 	% REMOVE A PÁGINA EM BRANCO UTILIZANDO MINIPAGE
 	\begin{minipage}{\linewidth}
 
 
 	\begin{lstlisting}[label={lst:easyelc_setup}, caption={Instância do módulo EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
-	import { EasyElc, ExecutionProfiles, Persisters, Metrics } from "el-chupacabra"
+import { EasyElc, ExecutionProfiles, Persisters, Metrics } from "el-chupacabra"
 
-	const easyElc = new EasyElc(
-	new ExecutionProfiles.BrowserExecutionProfile(),
-	new Persisters.SheetsonPersister(
-		import.meta.env.VITE_SHEET_TAB_NAME,
-		import.meta.env.VITE_API_KEY,
-		import.meta.env.VITE_SHEET_ID
-	)
-	);
+const easyElc = new EasyElc(
+  new ExecutionProfiles.BrowserExecutionProfile(),
+  new Persisters.SheetsonPersister(
+    import.meta.env.VITE_SHEET_TAB_NAME,
+    import.meta.env.VITE_API_KEY,
+    import.meta.env.VITE_SHEET_ID
+  )
+);
 	\end{lstlisting}
 
 	\end{minipage}
-	Através da instância do EasyElc, é possível realizar a coleta das métricas desejadas, a qual é realizada por meio da chamada do método startProfiling que recebe dois parâmetros: Um nome para o que está sendo avaliado e uma lista de métricas.
-	Como a implementação do site faz uso do padrão de projeto \hyperref[subsection:strategy]{Strategy}, só é necessário inserir a chamada do método getFirstNPrimeNumbers.
-	Então, com a chamada do método finish, é finalizada a coleta das métricas, passando metadados como argumento, e as métricas coletadas são enviadas para a persistência.
 
-	\begin{lstlisting}[label={lst:easyelc_usage_firstnprimes}, caption={Coleta de métricas usando o EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
-	const calculatePrimes = () => {
-	let strategy: IPrimalityTestStrategy = primalityTestStrategies[selectedStrategy]
+	Através da instância do EasyElc, é possível realizar a coleta das métricas, por meio do método \emph{startProfiling}.
+	Ele possui dois parâmetros: Um nome para o que está sendo avaliado e uma lista de métricas, conforme demonstrado nas linhas 3 e 4 da listagem \ref{lst:easyelc_usage_firstnprimes}.
+	Como a implementação do site faz uso do padrão de projeto \hyperref[subsection:strategy]{Strategy}, somente é necessário inserir a chamada do método \emph{getFirstNPrimeNumbers} entre as chamadas dos métodos de começar e finalizar a análise.
+	Por sua vez, a chamada do método \emph{finish} na linha 6, marca o fim da análise e tem como único parâmetro um objeto por onde metadados são agregados ao resultado.
+	Por último, quando todas as análise são finalizadas, o \acr{ELC} realiza a persistência dos dados.
 
-	const profilerController = easyElc.startProfiling(selectedStrategy, [new Metrics.DeltaTimeMetric()])
-	primes = strategy.getFirstNPrimeNumbers(howManyToCalc)
-	profilerController.finish({ numberOfCalculatedNumbers: howManyToCalc })
-	}
-	\end{lstlisting}
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[label={lst:easyelc_usage_firstnprimes}, caption={Coleta de métricas usando o EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
+const calculatePrimes = () => {
+  let strategy = primalityTestStrategies[selectedStrategy];
+  const profilerController = easyElc.startProfiling(
+    selectedStrategy, [new Metrics.DeltaTimeMetric()]);
+  primes = strategy.getFirstNPrimeNumbers(howManyToCalc);
+  profilerController.finish({ numberOfCalculatedNumbers: howManyToCalc });
+}
+\end{lstlisting}
+\end{minipage}
 
-	Após a implantação da versão com o \acr{ELC}, o desenvolvedor é capaz de acompanhar o tempo gasto em cada processamento realizado no site.
-	Além disso, o \acr{ELC} também coleta informações sobre o ambiente o qual aquela coleta de métricas ocorreu, como informações de hardware e software usados.
+	Após a implantação da versão com o \acr{ELC}, o desenvolvedor é capaz de visualizar o tempo gasto nas execuções dos algoritmos como na tabela \ref{table:resultado-easyelc}.
+	Além disso, o \acr{ELC} também coleta informações sobre o ambiente de execução, como informações de hardware e software usados, que também são agregados nos resultados de cada análise.
+	Logo, em uma visão completa dos dados somos capazes de observar a influência que diferentes ambientes de execução tem nos algoritmos.
 
 	\begin{table}[!h]
 		\centering
@@ -619,12 +628,17 @@ export function Execute()
 			Algoritmo & Tempo Gasto (ms) & Quantidade de Números Calculados \\
 			\hline
 			Força Bruta & 1680 & 10.000 \\
-			Ingênua Otimizada & 17 & 10.000 \\
+			Ingênuo Otimizado & 17 & 10.000 \\
 			Força Bruta & 16612 & 30.000 \\
-			Ingênua Otimizada & 30 & 30.000 \\
+			Ingênuo Otimizado & 30 & 30.000 \\
 			\hline
 		\end{tabular}
+		\label{table:resultado-easyelc}
 	\end{table}
+
+	Com esta visão geral do funcionamento da ferramenta, estamos preparados para nos aprofundar nos detalhes de implementação do \acr{ELC}.
+	A arquitetura da ferramenta e organização de seus módulos fornecem uma visão clara de seus pontos de extensão e de como suas engrenagens trabalham em conjunto.
+	Por outro lado, a implementação dos módulos fornecem uma visão do que é possível realizar usando o \acr{ELC}.
 
 	\section{Arquitetura}
 	\label{cap:arquitetura}
