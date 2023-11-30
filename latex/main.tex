@@ -201,7 +201,7 @@ To address this problem, this paper proposes El-Chupacabra, an extensible and cu
 
 
 		\section{Princípio do Aberto/Fechado}
-		\label{cap:solid-ocp}
+		\label{sec:solid-ocp}
 		\citet{MartinCleanArchtecture2017} popularizou os princípios de design de software SOLID.
 		Os quais atuam como guias na organização de funções e estruturas de dados em classes e como essas classes devem ser interconectadas.
 		Outro ponto importante, é que esses princípios são pensados para serem aplicados por programadores que trabalham no nível do módulo.
@@ -238,7 +238,7 @@ To address this problem, this paper proposes El-Chupacabra, an extensible and cu
 		
 		Conforme o nível de comunicação e colaboração cresce, a complexidade do sistema também cresce. Isso gera dificuldades na implementação, testes e na manutenção do software. Acoplamento é uma medida de qualidade que quantifica o nível no qual as classes estão conectadas entre si. Conforme as classes e componentes se tornam mais dependentes uns dos outros, o acoplamento cresce. Um objetivo importante no projeto de uma arquitetura é manter o acoplamento o mais baixo possível \citep{pressman2009software}.
 
-		Esse critério é importantíssimo quando se avalia a escolha de uma ferramenta para medição no lado do cliente, pois quanto mais acoplada a ferramenta for à implementação do problema, mais difícil e demorada será sua utilização. No desenvolvimento do \acr{ELC}, foram considerados esses padrões de qualidade, tanto no desenvolvimento da arquitetura de módulos, como explicado na seção \ref{cap:arquitetura}, quanto na implementação das classes internas da aplicação. 
+		Esse critério é importantíssimo quando se avalia a escolha de uma ferramenta para medição no lado do cliente, pois quanto mais acoplada a ferramenta for à implementação do problema, mais difícil e demorada será sua utilização. No desenvolvimento do \acr{ELC}, foram considerados esses padrões de qualidade, tanto no desenvolvimento da arquitetura de módulos, como explicado na seção \ref{sec:arquitetura}, quanto na implementação das classes internas da aplicação. 
 
 
 \chapter{Trabalhos Relacionados}
@@ -432,7 +432,7 @@ To address this problem, this paper proposes El-Chupacabra, an extensible and cu
 
 	Neste capítulo, abordamos os aspectos relacionados à implementação da ferramenta, incluindo sua concepção e arquitetura interna.
 	Inicialmente, apresentamos estudos de caso \ref{sec:estudos-de-caso} que exemplificam o uso da ferramenta.
-	Em seguida, exploramos os detalhes de implementação, que incluem diagramas de arquitetura \ref{cap:arquitetura} e a construção interna de cada módulo a partir da subseção \ref{subsection:modulo-project} até a \ref{subsec:implemencao-easyelc}.
+	Em seguida, exploramos os detalhes de implementação, que incluem diagramas de arquitetura \ref{sec:arquitetura} e a construção interna de cada módulo a partir da subseção \ref{subsection:modulo-project} até a \ref{subsec:implemencao-easyelc}.
 
 	\section{Estudos de Caso}
 	\label{sec:estudos-de-caso}
@@ -641,18 +641,24 @@ const calculatePrimes = () => {
 	Por outro lado, a implementação dos módulos fornecem uma visão do que é possível realizar usando o \acr{ELC}.
 
 	\section{Arquitetura}
-	\label{cap:arquitetura}
+	\label{sec:arquitetura}
 
-	A ferramenta foi implementada utilizando uma arquitetura modular, e seguindo o conceito do aberto/fechado (open/closed), trazido pelo SOLID (citar fundamentação teórica). Dessa forma, todas as relações entre as classes e módulos se dão através de interfaces, abstraindo o funcionamento interno de cada elemento. Isso contribui significativamente para a manutenibilidade do código, pois diminui as chances de problemas de compatibilidade entre as implementações caso alguma premissa seja alterada.
+	A arquitetura do \acr{ELC} tem como guia fundamental o princípio aberto/fechado (\acr{OCP}), o qual é detalhado na seção \ref{sec:solid-ocp}.
+	Desde a concepção da ideia do \acr{ELC}, uma de suas principais características é a capacidade de customização da ferramenta para os objetivos específicos do usuário.
+	Dessa forma, extensões simples de seus requisitos não devem causar de mudanças massivas no código.
 
-	Inicialmente, a ferramenta se estrutura em seis módulos principais: o Módulo de Projeto (Project), Módulo de Perfil de Execução (ExecutionProfile), o módulo de Métricas (Metrics), o módulo de Persistência (Persister), o módulo de Tarefas (Tasks) e o Módulo Simplificado (EasyELC). Cada um deles possui sua responsabilidade, como serão descritas nas próximas secções. 
+	O \acr{ELC} é subdividido em seis módulos e todos relacionamentos intermodulares são realizados por meio de interfaces, como ilustrado na figura \ref{fig:diagrama-arquitetura}.
+	Existem dois módulos principais, os quais coordenam a execução dos outros módulos, sendo ele o módulo de Projeto (do inglês, \emph{Project}) e o módulo \acr{ELC} simplificado (do inglês, \emph{EasyElc}).
+	Cada um deles foi projetado para atender um fluxo de uso da ferramenta, respectivamente sendo o fluxo de clone do repositório e o fluxo como biblioteca.
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.6\textwidth]{figures/diagramaarquiteturaelchupacabra.pdf}
-		\caption{Diagrama representando os relacionamentos entre os módulos internos da aplicação.}
+		\includegraphics[width=0.8\textwidth]{figures/diagramaarquiteturaelchupacabra.pdf}
+		\caption{Diagrama representando os relacionamentos entre os módulos do \acr{ELC}.}
 		\label{fig:diagrama-arquitetura}
 	\end{figure}
+	
+	Por outro lado, os outros módulos compõem o núclo do \acr{ELC}, sendo eles: O módulo de perfil de execução (do inglês, \emph{ExecutionProfile}) para obteção de dados sobre o ambiente o qual está sendo executado, o módulo de persistência (do inglês, \emph{Persister}) para encapsular o meios de armazenar os resultados das análises, o módulo de métricas (do inglês, \emph{Metrics}) que corresponde as medições o qual o \acr{ELC} é capaz de realizar e o módulo de tarefas (do inglês, \emph{Tasks}) encapsula os procedimentos em análise pela ferramenta.
 
 
 	\subsection{Módulo de Projeto (Project)}
