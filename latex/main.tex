@@ -926,73 +926,54 @@ export default class DeltaTimeMetric implements IMetric {
 	\subsection{Módulo de Persistência (Persister)}
 	\label{subsection:modulo-persister}
 
-	O módulo de persistência (Persister) tem como finalidade encapsular a persistência de dados após a coleta das métricas, a fim de facilitar o uso de diferentes formas de persistência de dados no contexto do framework. Dessa forma, é possível adaptar facilmente a implementação da persistência sem interferir na estrutura das tarefas. Esse módulo é composto pela interface genérica IPersister e suas implementações concretas, assim como os anteriores. O bloco de código \ref{lst:ipersister_abstract_class} a seguir contém a classe abstrata IPersister.
+	O módulo de persistência tem como responsabilidade definir a interface de armazenamento das métricas geradas pelo \acr{ELC}.
+	Dessa forma, torna simples intercambiar diferentes métodos de armazenamento, sendo necessário apenas a implementação de uma simples interface.
+	A interface \emph{IPersister}, apresentada na listagem \ref{lst:ipersister_abstract_class}, define apenas o método \emph{save} que tem como único papel armazenar as métricas e metadados obtidos pelos outros módulos.
 
-	\begin{lstlisting}[label={lst:ipersister_abstract_class}, caption={Implementação da classe responsável pela persistência dos dados.}, language=TypeScript, breaklines=true]
-	/**
-	* Represents a contract for persisting data.
-	* @interface
-	*/
-	export default interface IPersister {
-		/**
-		* Saves data to a persistent storage.
-		* @param {Record<string, any>} data - The data to be saved.
-		* @returns {Promise<void>} A promise that resolves when the data is saved.
-		*/
-		save(data: Record<string, any>): Promise<void>;
-	}
-	\end{lstlisting}
+\begin{lstlisting}[label={lst:ipersister_abstract_class}, caption={Implementação da interface \emph{IPersister}.}, language=TypeScript, breaklines=true]
+export default interface IPersister {
+  /**
+  * Saves data to a persistent storage.
+  * @param {Record<string, any>} data - The data to be saved.
+  * @returns {Promise<void>} A promise that resolves when the data is saved.
+  */
+  save(data: Record<string, any>): Promise<void>;
+}
+\end{lstlisting}
 
-	A interface é composta somente por um método chamado save(), no qual é realizada a persistêcia dos dados propriamente dita. Desse modo, ao instanciar um novo Persister, é nesse método que são realizados os processamentos necessários para salvar o dado da forma desejada. No bloco de código \ref{lst:sheetson_class} segue um exemplo de implementação da classe utilizada no exemplo proposto na seção X, o SheetsonPersister.
+	Devido as suas vantagens, a principal implementação de \emph{IPersister} incluída no \acr{ELC} é o \emph{SheetsonPersister}.
+	Ele utiliza uma \acr{API} gratuita denominada Sheetson para persistir os dado em uma planilha do Google Sheets e sua configuração de uso é simples, como pode ser visto na listagem \ref{lst:elc_index_ts_example}.
+	Porém, a listagem \ref{lst:json_persister_class} contém o código do \emph{JsonFilePersister} por ilustrar de modo mais simples como é uma implementação de \emph{IPersister}.
+	Seu construtor recebe como parâmetro a localização onde o arquivo \acr{JSON} e o método \emph{save} apenas serializa os dados, linha 10, e escreve no arquivo, linha 13.
 
-	\begin{lstlisting}[label={lst:sheetson_class}, caption={Implementação da classe responsável pela persistência dos dados usando o Sheetson.}, language=TypeScript, breaklines=true]
 
-	export default class SheetsonPersister implements IPersister {
-	private apiUrl: string;
-	private apiKey: string;
-	private spreadsheetId: string;
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[label={lst:json_persister_class}, caption={Fragmento de código da classe \emph{JsonFilePersister} o qual implementa a camada de persistência para armazenar os resultado em um arquivo \acr{JSON}.}, language=TypeScript, breaklines=true]
+export default class JsonFilePersister implements IPersister {
+  private filePath: string;
 
-	constructor(apiUrl: string, apiKey: string, spreadsheetId: string) {
-		this.apiUrl = "https://api.sheetson.com/v2/sheets/" + apiUrl;
-		this.apiKey = apiKey;
-		this.spreadsheetId = spreadsheetId;
-	}
+  constructor(filePath: string) {
+    this.filePath = filePath;
+  }
 
-	async save(data: Record<string, any>): Promise<void> {
-		try {
-		const flattenData = Flatten.flatten(data, { delimiter: '.', safe: true });
-		console.log(Object.keys(flattenData).join('\n'));
-		
-		const response = await fetch(this.apiUrl, {
-			method: 'POST',
-			headers: {
-			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${this.apiKey}`,
-			'X-Sheetson-Spreadsheet-Id': this.spreadsheetId
-			},
-			body: JSON.stringify(flattenData, (_, value) => {
-			if (!Array.isArray(value)) {
-				return value
-			}
-
-			return JSON.stringify(value)
-			})
-		});
-
-		if (!response.ok) {
-			throw new Error(`Failed to save data: ${response.statusText}`);
-		}
-
-		} catch (error) {
-		if (error instanceof Error) {
-			throw new Error(`Error saving data: ${error.message}`);
-		} else {
-			throw new Error('An unknown error occurred while saving data.');
-		}
-		}
-	}
-	}
-	\end{lstlisting}
+  async save(data: Record<string, any>): Promise<void> {
+    try {
+      const jsonContent = JSON.stringify(data, null, 2);
+      if(jsonContent != null)
+      {
+        await fs.writeFile(this.filePath, jsonContent, 'utf-8');
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Error saving data: ${error.message}`);
+      } else {
+        throw new Error('An unknown error occurred while saving data.');
+      }
+    }
+  }
+}
+\end{lstlisting}
+\end{minipage}
 
 
 	\subsection{Módulo da Interface de Uso Simplificada (EasyELC)}
@@ -1012,51 +993,51 @@ export default class DeltaTimeMetric implements IMetric {
 	Uma chamada de startProfiling cria um nó na árvore, se uma nova chamada for feita antes do finish da anterior, então, o novo nó será um filho do nó anterior.
 	Por fim, a persistência das métricas coletadas é realizada quando todos os nós da árvore tiverem seu método finish executado e depois a árvore é descartada.
 
-	\begin{lstlisting}[label={lst:easyelc_startprofiling}, caption={Implementação do método startProfiling da classe EasyElc.}, language=TypeScript, breaklines=true]
-	startProfiling(uniqueName: string, metrics: IMetric[]): Record<string, any> {
-		const newProfiling = new Profiling(uniqueName, metrics);
+\begin{lstlisting}[label={lst:easyelc_startprofiling}, caption={Implementação do método startProfiling da classe EasyElc.}, language=TypeScript, breaklines=true]
+startProfiling(uniqueName: string, metrics: IMetric[]): Record<string, any> {
+  const newProfiling = new Profiling(uniqueName, metrics);
 
-		if (this._profilingsTree === null) {
-			this._profilingsTree = newProfiling;
-		}
-		else {
-			const parentNode = this._getNewestActiveProfiling() ?? this._profilingsTree;
+  if (this._profilingsTree === null) {
+    this._profilingsTree = newProfiling;
+  }
+  else {
+    const parentNode = this._getNewestActiveProfiling() ?? this._profilingsTree;
 
-			if (uniqueName in parentNode.childs) {
-				const numberOfAppearences = Object.keys(parentNode.childs).filter(k => k.match(new RegExp(`^${uniqueName}(\$|_[0-9]{1,}\$`))).length
-				parentNode.childs[`${uniqueName}_${numberOfAppearences}`] = newProfiling;
-			}
-			else {
-				parentNode.childs[uniqueName] = newProfiling;
-			}
-		}
-		
-		this._activeProfilingsStack.push(newProfiling);
-		metrics.forEach(x => x.start());
-		return { finish: (metadata: Record<string, any> | null = null) => {
-			newProfiling.metadata = metadata;
-			this._terminateProfiling(newProfiling);
-		} };
-	}
-	\end{lstlisting}
+    if (uniqueName in parentNode.childs) {
+      const numberOfAppearences = Object.keys(parentNode.childs).filter(k => k.match(new RegExp(`^${uniqueName}(\$|_[0-9]{1,}\$`))).length
+      parentNode.childs[`${uniqueName}_${numberOfAppearences}`] = newProfiling;
+    }
+    else {
+      parentNode.childs[uniqueName] = newProfiling;
+    }
+  }
+  
+  this._activeProfilingsStack.push(newProfiling);
+  metrics.forEach(x => x.start());
+  return { finish: (metadata: Record<string, any> | null = null) => {
+    newProfiling.metadata = metadata;
+    this._terminateProfiling(newProfiling);
+  } };
+}
+\end{lstlisting}
 
-	\begin{lstlisting}[label={lst:easyelc_profiling_class}, caption={Implementação do nó da árvore de análises usado no EasyElc.}, language=TypeScript, breaklines=true]
-	export default class Profiling {
-		uniqueName: string;
-		runningMetrics: IMetric[];
-		metricsResults: Record<string, any>[];
-		metadata: Record<string, any> | null;
-		childs: Record<string, Profiling>;
+\begin{lstlisting}[label={lst:easyelc_profiling_class}, caption={Implementação do nó da árvore de análises usado no EasyElc.}, language=TypeScript, breaklines=true]
+export default class Profiling {
+  uniqueName: string;
+  runningMetrics: IMetric[];
+  metricsResults: Record<string, any>[];
+  metadata: Record<string, any> | null;
+  childs: Record<string, Profiling>;
 
-		constructor(uniqueName: string, metrics: IMetric[]) {
-			this.uniqueName = uniqueName;
-			this.runningMetrics = metrics;
-			this.metricsResults = [];
-			this.metadata = null;
-			this.childs = {};
-		}
-	}
-	\end{lstlisting}
+  constructor(uniqueName: string, metrics: IMetric[]) {
+    this.uniqueName = uniqueName;
+    this.runningMetrics = metrics;
+    this.metricsResults = [];
+    this.metadata = null;
+    this.childs = {};
+  }
+}
+\end{lstlisting}
 
 		
 	\section{Diagrama de Classes}
