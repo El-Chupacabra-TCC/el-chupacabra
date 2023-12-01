@@ -655,7 +655,7 @@ const calculatePrimes = () => {
 	Dessa forma, extensões simples de seus requisitos não devem causar de mudanças massivas no código.
 
 	O \acr{ELC} é subdividido em seis módulos e todos relacionamentos intermodulares são realizados por meio de interfaces, como ilustrado na figura \ref{fig:diagrama-arquitetura}.
-	Existem dois módulos principais, os quais coordenam a execução dos outros módulos, sendo ele o módulo de Projeto (do inglês, \emph{Project}) e o módulo \acr{ELC} simplificado (do inglês, \emph{EasyElc}).
+	Existem dois módulos principais, os quais coordenam a execução dos outros módulos, sendo eles o módulo de Projeto (do inglês, \emph{Project}) e o módulo \acr{ELC} simplificado (do inglês, \emph{EasyElc}).
 	Cada um deles foi projetado para atender um fluxo de uso da ferramenta, respectivamente sendo o fluxo de clone do repositório e o fluxo como biblioteca.
 
 	\begin{figure}[!ht]
@@ -671,130 +671,109 @@ const calculatePrimes = () => {
 	\subsection{Módulo de Projeto (Project)}
 	\label{subsection:modulo-project}
 
-	O módulo de projeto é o módulo principal da ferramenta, onde o fluxo da coleta é iniciado. Ele é composto somente pela classe Project. O bloco de código \ref{lst:project_class} contém a classe criada para representar um projeto.
+	O módulo de projeto é responsável por coordenar a execução dos módulos internos do \acr{ELC}.
+	Ele é composto por apenas uma classe Project a qual está na listagem \ref{lst:project_class}.
+	A classe é simples, suas variáveis de instância são simples referências para as configurações recebidas como parâmetros de seu construtor, como podemos observar entre as linhas 2 e 11.
+	Enquanto, seu único método \emph{executeTask} é encarregado de executar o módulo de perfil de execução \ref{subsection:modulo-execution-profile}, executar a árvore de tarefas e agregar seus retornos e invocar o módulo de persistência \ref{subsection:modulo-persister}.
 
-	\begin{lstlisting}[label={lst:project_class}, caption={Implementação da classe responsável por representar um projeto.}, language=TypeScript, breaklines=true]
-	export default class Project {
-	protected ExecutionProfile: IExecutionProfile;
-	protected Persister: IPersister;
-	protected Task: ITask;
-
-
-	constructor(profile: IExecutionProfile, task: ITask, persister: IPersister) {
-		this.ExecutionProfile = profile;
-		this.Persister = persister;
-		this.Task = task;
-	}
-
-	async executeTask(): Promise<void> {
-		try {
-			const profileData = await this.ExecutionProfile.collect();
-
-			const result = await this.Task.run();
-
-			await this.Persister.save({
-				profile: profileData,
-				taskResult: result,
-			});
-		} catch (error) {
-			console.error("An error occurred during task execution:", error);
-		}
-	}
-	}
-	\end{lstlisting}
-
-	Essa classe possui como atributos uma instância da classe ExecutionProfile, que contém as informações de quem está executando aquele projeto, uma instância da classe Persister, que é a classe responsável pela persistência de dados, e uma instância da classe Task, que é a tarefa mãe a ser executada.
-
-	Possui também um único método, o método executeTask(), que coleta as informações da máquina através do ExecutionProfile, dá início a execução das tarefas associadas àquele projeto e persiste os resultados.
+\begin{lstlisting}[label={lst:project_class}, caption={Amostra da implementação da classe \emph{Project}.}, language=TypeScript, breaklines=true]
+export default class Project {
+  protected ExecutionProfile: IExecutionProfile;
+  protected Persister: IPersister;
+  protected Task: ITask;
 
 
-	\subsection{Módulo de Perfil de Execução (ExecutionProfile)}
+  constructor(profile, task, persister) {
+    this.ExecutionProfile = profile;
+    this.Persister = persister;
+    this.Task = task;
+  }
+
+  async executeTask(): Promise<void> {
+    try {
+      const profileData = await this.ExecutionProfile.collect();
+      const result = await this.Task.run();
+  
+      await this.Persister.save({
+        profile: profileData,
+        taskResult: result,
+      });
+    } catch (error) {
+      console.error("An error occurred during task execution:", error);
+    }
+  }
+}
+\end{lstlisting}
+
+
+	\subsection{Módulo do Perfil de Execução (ExecutionProfile)}
 	\label{subsection:modulo-execution-profile}
 
-	A função principal desse módulo é permitir que o usuário consiga coletar informações a respeito do ambiente no qual estão sendo executadas as tarefas. Dessa forma, é possível não só diferenciar os voluntários após a coleta, mas também analisar os ambientes nos quais as tarefas foram executadas. Esse módulo consiste basicamente de uma interface, a IExecutionProfile, e de suas implementações concretas, que representam os tipos de ambientes nos quais as tarefas podem ser executadas. O bloco de código \ref{lst:execution_profile_abstract_class} a seguir contém a classe abstrata IExecutionProfile.
+	
+	A responsabilidade dos membros do módulo de perfil de execução é adquirir informações sobre o hardware e software que estão sendo utilizados pela aplicação.
+	No âmbito de análises empíricas, o ambiente de execução possui um papel fundamental no desempenho apresentado.
+	Portanto, dados como a quantidade de memória disponível, o número de núcleos do processador, a versão do motor de JavaScript, entre outros, podem ser cruciais para compreender os fatores que impactaram positiva ou negativamente durante uma análise.
+	Ademais, com informações suficiente é possível criar um identificador único para cada ambiente executando o \acr{ELC}, do mesmo modo que um programa de fingerprinting.
+	
+	Todos os módulos do núcleo do \acr{ELC} possuem interfaces as quais são o único elemento que pode ser refenciado por outros módulos.
+	Este padrão de referênciar apenas as interfaces do módulo é guiado pelo princípio da inversão de dependência \citep{MartinCleanArchtecture2017}.
+	Deste modo, os módulos estão protegidos contra modificações de outros módulos desde que as interfaces se mantenham estáveis.
+	Além disso, outra vantagem deste padrão é facilitar a paralelização da implementação, pois uma vez definida as interfaces, os módulos podem ser implementados independentemente.
+	Logo, o módulo de perfil de execução possui sua interface denominada \emph{IExecutionProfile} a qual possui a definição de um único método chamado \emph{collect} como pode ser visto na listagem \ref{lst:execution_profile_abstract_class}.
 
-	\begin{lstlisting}[label={lst:execution_profile_abstract_class}, caption={Implementação da classe responsável por representar um perfil de execução.}, language=TypeScript, breaklines=true]
-	export default interface IExecutionProfile {
-		/**
-		* Collects execution profile data.
-		* @returns {Promise<Record<string, any>>} An object containing every execution profile data the
-		* implementation was able to collect.
-		*/
-		collect(): Promise<Record<string, any>>;
-	}
-	\end{lstlisting}
+\begin{lstlisting}[label={lst:execution_profile_abstract_class}, caption={Implementação da classe responsável por representar um perfil de execução.}, language=TypeScript, breaklines=true]
+export default interface IExecutionProfile {
+  /**
+  * Collects execution profile data.
+  * @returns {Promise<Record<string, any>>} An object containing every execution profile data the
+  * implementation was able to collect.
+  */
+  collect(): Promise<Record<string, any>>;
+}
+\end{lstlisting}
 
-	Essa interface contém os métodos collect(), que é o método que efetivamente coleta as informações do ambiente, e o método getVisitorId(), que provê um identificador único ao voluntário na execução para posterior análise. Ambos podem ser sobrescritos na implementação concreta de cada perfil, de acordo com a necessidade de cada ambiente.
+	Como o objetivo dos membros do módulo é obter informações sobre o ambiente de execução, suas implementação necessitam utilizar \acr{API}s específicas do ambiente, para obter a maior quantidade possível de informações.
+	Logo, há a necessidade de haver uma implementação concreta para cada tipo de ambiente.
+	A princípio há duas implementações de \emph{IExecutionProfile}, uma para navegadores e outra para a \emph{runtime} Node.js.
 
-	Supondo uma execução de tarefas em um navegador, deve ser implementada uma classe chamada BrowserExecutionProfile, que conteria as implementações concretas dos métodos para realizar a coleta dos dados do ambiente do navegador. O bloco de código \ref{lst:browser_execution_profile_abstract_class} a seguir contém a classe BrowserExecutionProfile.
+	A listagem \ref{lst:browser_execution_profile_abstract_class} contém uma amostra do código do perfil de execução para navegadores \emph{BrowserExecutionProfile}.
+	Onde entre a linha 6 e 16 são demonstradas informações sobre o navegador que são principalmente obtidas pela \acr{API} \emph{window}.
+	Enquanto, as informações obtidas entre as linhas 17 e 25 são focadas no hardware.
 
-	\begin{lstlisting}[label={lst:browser_execution_profile_abstract_class}, caption={Implementação da classe responsável por representar um perfil de execução.}, language=TypeScript, breaklines=true]
-	export default class BrowserExecutionProfile implements IExecutionProfile {
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[label={lst:browser_execution_profile_abstract_class}, caption={Fragmento de código da classe \emph{BrowserExecutionProfile} responsável por gerar um perfis de execução em navegadores.}, language=TypeScript, breaklines=true]
+export default class BrowserExecutionProfile implements IExecutionProfile {
 
-	async collect(): Promise<Record<string, any>> {
-		const date = new Date()
-		const executionProfile: Record<string, any> = {
-		software: {
-			type: "Browser",
-			userAgent: navigator.userAgent,
-			language: navigator.language,
-			windowInnerWidth: window.innerWidth,
-			windowInnerHeight: window.innerHeight,
-			devicePixelRatio: window.devicePixelRatio,
-			appCodeName: window.navigator.appCodeName,
-			appName: window.navigator.appName,
-			appVersion: window.navigator.appVersion,
-			product: window.navigator.product,
-			productSub: window.navigator.productSub,
-			vendor: window.navigator.vendor,
-			vendorSub: window.navigator.vendorSub,
-			doNotTrack: window.navigator.doNotTrack,
-			isWebdriver: typeof window.navigator.webdriver !== 'undefined' ? window.navigator.webdriver.toString() : 'unknown'
-		},
-		os: {
-			timeZoneOffset: date.getTimezoneOffset()
-		},
-		hardware: {
-			screen: {
-			width: screen.width,
-			height: screen.height,
-			colorDepth: screen.colorDepth,
-			pixelDepth: screen.pixelDepth,
-			},
-			hardwareConcurrency: window.navigator.hardwareConcurrency
-		},
-		volatile: {
-			localeDatetime: {
-			date: date.toLocaleDateString(),
-			time: date.toLocaleTimeString()
-			},
-			totalJSHeapSize: (window.performance as any).memory?.totalJSHeapSize || -1
-		}
-		}
+  async collect(): Promise<Record<string, any>> {
+    const date = new Date()
+    const executionProfile: Record<string, any> = {
+      software: {
+          type: "Browser",
+          userAgent: navigator.userAgent,
+          language: navigator.language,
+          windowInnerWidth: window.innerWidth,
+          windowInnerHeight: window.innerHeight,
+          devicePixelRatio: window.devicePixelRatio,
+          appName: window.navigator.appName,
+          appVersion: window.navigator.appVersion,
+          // ...
+      },
+      hardware: {
+          screen: {
+            width: screen.width,
+            height: screen.height,
+            colorDepth: screen.colorDepth,
+            pixelDepth: screen.pixelDepth,
+          },
+          hardwareConcurrency: window.navigator.hardwareConcurrency
+      },
+      // ...
+    }
+  }
+}
+\end{lstlisting}
+\end{minipage}
 
-		const fingerprintString = JSON.stringify(
-		{
-			software: executionProfile.software,
-			os: executionProfile.os,
-			hardware: executionProfile.hardware
-		})
-		executionProfile.visitorId = await this.getVisitorId(fingerprintString)
-
-		return executionProfile
-	}
-
-	private async getVisitorId(input: string): Promise<string> {
-		const encoder = new TextEncoder();
-		const data = encoder.encode(input);
-		const buffer = await crypto.subtle.digest('SHA-256', data);
-		const hashArray = new Uint8Array(buffer);
-		const hashHex = Array.from(hashArray)
-		.map(byte => byte.toString(16).padStart(2, '0'))
-		.join('');
-		return hashHex;
-	}
-	}
-	\end{lstlisting}
 
 	\subsection{Módulo de Tarefas (Tasks)}
 	\label{subsection:modulo-tasks}
