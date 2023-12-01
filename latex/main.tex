@@ -873,106 +873,54 @@ export default class CompositeTask extends BaseTask {
 	\subsection{Módulo de Métricas (Metrics)}
 	\label{subsection:modulo-metrics}
 
-	O módulo de métricas (Metrics) tem como objetivo representar as métricas que serão coletadas pela ferramenta. Essas métricas estão contidas nas tarefas (Tasks), e são elas as responsáveis de efetivamente coletar o dado desejado do ambiente no qual está sendo executada a tarefa. Esse módulo, assim como os anteriores, consiste de uma interface genérica (nesse caso a interface IMetric) e de suas implementações concretas. O bloco de código \ref{lst:imetric_abstract_class} a seguir contém a classe abstrata IMetric.
+	O módulo de métricas é responsável por encapsular as medidas quantitativas as quais o \acr{ELC} é capaz de coletar.
+	Ele foi projetado para ser usado ser usado pelo módulo de tarefas,
+	onde cada uma tem sua própria coleção de métricas e as invocam para realizar a análise.
+	Para tal, a interface do módulo de métricas \emph{IMetric}, possui dois métodos: O método \emph{start} o qual avisa a métrica para iniciar suas medidas e o \emph{collect} que finaliza as medidas e retorna o resultado.
+	A definição de ambos os métodos está ilustrada na listagem \ref{lst:imetric_abstract_class}.
 
-	\begin{lstlisting}[label={lst:imetric_abstract_class}, caption={Implementação da classe responsável por representar uma métrica.}, language=TypeScript, breaklines=true]
-	/**
-	* Represents a contract for collecting an execution metric.
-	* @interface
-	*/
-	export default interface IMetric {
-		/**
-		* Marks the start of the profiling for the metric.
-		*/
-		start(): void;
+\begin{lstlisting}[label={lst:imetric_abstract_class}, caption={Implementação da classe responsável por representar uma métrica.}, language=TypeScript, breaklines=true]
+/**
+* Represents a contract for collecting an execution metric.
+* @interface
+*/
+export default interface IMetric {
+  /**
+  * Marks the start of the profiling for the metric.
+  */
+  start(): void;
 
-		/**
-		* Collects data related to the execution metric.
-		* @returns {Promise<Record<string, any>>} A record containing the collected metric data.
-		*/
-		collect(): Promise<Record<string, any>>;
-	}
-	\end{lstlisting}
+  /**
+  * Collects data related to the execution metric.
+  * @returns {Promise<Record<string, any>>} A record containing the collected metric data.
+  */
+  collect(): Promise<Record<string, any>>;
+}
+\end{lstlisting}
 
-	A interface principal contém somente um método chamado collect(), que é responsável por executar a coleta efetiva do dado desejado. Estendendo essa interface, a implementação concreta sobrescreve esse método inserindo nele os processamentos necessários para a coleta. Esse método é chamado posteriormente para cada uma das métricas associadas na execução de uma tarefa. O bloco de código \ref{lst:memorymetric_class} a seguir contém um exemplo de implementação de métrica, a classe MemoryMetric.
+	Ademais, a implementação de cada métrica é intríssicamente dependente da medida a ser realizada.
+	Por exemplo, a listagem \ref{lst:deltatime_metric_class} contém uma demonstração de como a métrica de tempo despendido é implementada.
+	O método \emph{start} armazena a marca de tempo inicial em uma variável de instância.
+	Enquanto, o método \emph{collect} na linha 10 utiliza essa mesma variável para calcular intervalo de tempo decorrido entre as chamadas dos métodos.
 
-	\begin{lstlisting}[label={lst:memorymetric_class}, caption={Implementação da classe responsável por representar uma métrica de memória.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:deltatime_metric_class}, caption={Fragmento de código da métrica \emph{DeltaTimeMetric} a qual mede o tempo despendido em milisegundos.}, language=TypeScript, breaklines=true]
+export default class DeltaTimeMetric implements IMetric {
+  private startTime: number = Date.now()
 
-	export default class MemoryMetric implements IMetric {
-	start(): void {
-		return
-	}
+  start(): void {
+    this.startTime = Date.now()
+  }
 
-	async collect(): Promise<Record<string, any>> {
-		const memoryConsumption = { usedApis: [] as string[], measurements: {} }
-		const measurements = [
-		await this.getNewBrowserApiMemoryData(),
-		this.getOldBrowserApiMemoryData(),
-		this.getNodeMemoryData()
-		]
-
-		for (let m of measurements) {
-		if (Object.keys(m).length === 0) {
-			continue
-		}
-
-		memoryConsumption.usedApis.push(Object.keys(m)[0])
-		memoryConsumption.measurements = { ...memoryConsumption.measurements, ...m }
-		}
-
-		return memoryConsumption
-	}
-
-	private async getNewBrowserApiMemoryData(): Promise<Record<string, any>> {
-		try {
-		if (!self.crossOriginIsolated) {
-			Promise.resolve({})
-		}
-
-		return {
-			["measureUserAgentSpecificMemory"]: {
-			memory: await (performance as any).measureUserAgentSpecificMemory()
-			}
-		}
-		}
-		catch {
-		return Promise.resolve({})
-		}
-	}
-
-	private getOldBrowserApiMemoryData(): Record<string, any> {
-		try {
-		const memoryInfo = (performance as any).memory;
-		return {
-			["performance.memory"]: {
-			usedJSHeapSize: memoryInfo.usedJSHeapSize,
-			totalJSHeapSize: memoryInfo.totalJSHeapSize,
-			jsHeapSizeLimit: memoryInfo.jsHeapSizeLimit
-			}
-		}
-		}
-		catch {
-		return {}
-		}
-	}
-
-	private getNodeMemoryData(): Record<string, any> {
-		try {
-		const memoryUsage = process.memoryUsage()
-		return {
-			["process.memoryUsage"]: {
-			rss: memoryUsage.rss,
-			heapTotal: memoryUsage.heapTotal,
-			heapUsed: memoryUsage.heapUsed
-			}
-		}
-		}
-		catch {
-		return {}
-		}
-	}
-	}
-	\end{lstlisting}
+  async collect(): Promise<Record<string, any>> {
+    const currentTime = Date.now()
+    const deltaTime = currentTime - this.startTime
+  
+    const timeMeasurement = { deltaTime }
+  
+    return Promise.resolve(timeMeasurement)
+  }
+}
+\end{lstlisting}
 
 
 	\subsection{Módulo de Persistência (Persister)}
