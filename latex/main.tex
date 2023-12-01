@@ -778,113 +778,96 @@ export default class BrowserExecutionProfile implements IExecutionProfile {
 	\subsection{Módulo de Tarefas (Tasks)}
 	\label{subsection:modulo-tasks}
 
-	Esse módulo permite ao usuário implementar tarefas customizadas, sejam elas tarefas simples ou compostas (utilizando o padrão \hyperref[subsection:composite]{Composite}), e também permite a realização de processamentos pré e pós tarefa. Essas tarefas posteriormente são executadas pelo módulo principal de Project.
-	Assim como o anterior, consiste de uma interface genérica (nesse caso a ITask) e suas implementações concretas. A classe exemplo para a criação de outras classes é a BaseTask, que traz a estrutura básica de uma tarefa, implementando a interface ITask. O bloco de código \ref{lst:basetask_class} a seguir contém a classe BaseTask.
+	A responsabilidade do módulo de tarefas é encapsular o código sob teste e estruturar a execução de análises complexas.
+	Todo código sob análise, no fluxo de clone do repositório, deve estar em um objeto tarefa, pois a mesma é a unidade miníma para realizar uma análise.
+	Ademais, a estrutura criada no módulo é dada pelo padrão de projeto Composite \ref{subsection:composite}, ou seja, um grupo de instâncias de tarefas são tratados do mesmo modo que uma única instância do tipo.
+	Logo, além da interface do módulo \emph{ITask} \ref{lst:itask}, outra classe importante do módulo é a \emph{CompositeTask}, para a implementação do padrão.
 
-	\begin{lstlisting}[label={lst:basetask_class}, caption={Implementação da classe responsável por representar uma tarefa básica.}, language=TypeScript, breaklines=true]
-	export default abstract class BaseTask implements ITask {
-	protected metrics: IMetric[]
+\begin{lstlisting}[label={lst:itask}, caption={Interface do módulo de tarefas.}, language=TypeScript, breaklines=true]
+/**
+* Represents a contract for executing a task.
+* @interface
+*/
+export default interface ITask {
+  /**
+  * Executes the task.
+  * @returns {Promise<Record<string, any>>} A nested report with metrics and metadata about the
+  * task execution.
+  */
+  run(): Promise<Record<string, any>>;
+}   
+\end{lstlisting}
 
-	/**
-		* Base constructor for all Tasks.
-		* @param {IMetric[]} metrics - Metrics to be collected from this task.
-		*/
-	constructor(metrics: IMetric[]) {
-		this.metrics = metrics
-	}
+	A interface \emph{ITask} \ref{lst:itask} também é simples, definindo apenas o método de execução das tarefas \emph{run}, pois, isto é tudo que outros módulos precisam saber sobre as tarefas.
+	A definição de como construir uma tarefa concreta é dada pela classe abstrata \emph{BaseTask}.
+	Nela há a implementação do método \emph{run}, listagem \ref{lst:basetask_class}, onde o fluxo de execução das tarefas é definido.
 
-	/**
-		* @inheritdoc
-		*/
-	async run(): Promise<Record<string, any>> {
-		await this.preTaskJob()
-		this.metrics.forEach(x => x.start())
-		const result = await this.execute()
+	No método \emph{run} a contagem das métricas é iniciada, seguido pela chamada do método \emph{execute} e por fim o método \emph{collect} de cada métrica é invocado para compor o resultado, sendo estas chamadas realizadas respectivamente nas linhas 8, 9 e 13.
+	A listagem \ref{lst:basetask_class} também contém a definição do método abstrato \emph{execute} na linha 20, sendo ele quem deve ser sobrescrito com o código sob análise nas subclasses.
+	Além disso, há as chamadas do métodos \emph{preTaskJob} e \emph{postTaskJob} nas linhas 7 e 15, os quais também podem ser sobrescritos para procedimentos pré e pós tarefa, mas que a principio não possuem efeito algum.
 
-		result.metrics = {}
-		this.metrics.forEach(async x => {
-		result.metrics[x.constructor.name] = await x.collect()
-		})
-		await this.postTaskJob()
+\begin{lstlisting}[label={lst:basetask_class}, caption={Fragmento de código da classe abstrata \emph{BaseTask}, implementação do método \emph{run} definido na interface \emph{ITask} \ref{lst:itask}.}, language=TypeScript, breaklines=true]
+export default abstract class BaseTask implements ITask {
+  protected metrics: IMetric[]
 
-		return { [this.constructor.name]: result }
-	}
+  // ...
 
-	/**
-		* Executes the task with metric collection.
-		* @abstract
-		* @returns {Promise<Record<string, any>>} A promise that resolves with a report containing
-		* metrics and data about the task execution.
-		*/
-	protected abstract execute(): Promise<Record<string, any>>
+  async run(): Promise<Record<string, any>> {
+    await this.preTaskJob()
+    this.metrics.forEach(x => x.start())
+    const result = await this.execute()
 
-	/**
-		* Override this method to perform pre-task jobs.
-		* @protected
-		*/
-	protected async preTaskJob(): Promise<void> {
-		return Promise.resolve()
-	}
+    result.metrics = {}
+    this.metrics.forEach(async x => {
+      result.metrics[x.constructor.name] = await x.collect()
+    })
+    await this.postTaskJob()
 
-	/**
-		* Override this method to perform post-task jobs.
-		* @protected
-		*/
-	protected async postTaskJob(): Promise<void> {
-		return Promise.resolve()
-	}
-	}
-	\end{lstlisting}
+    return { [this.constructor.name]: result }
+  }
 
-	A interface ITask contém três métodos principais, que permitem ao usuário criar sua tarefa customizada. O primeiro é o método principal run(), no qual é inserido a chamada para a execução dos jobs e das métricas. Após isso, também são declarados os métodos preTaskJob e postTaskJob, os quais respectivamente representam as execuções que devem rodar antes e depois da tarefa.
+  protected abstract execute(): Promise<Record<string, any>>
 
-	A tarefa aqui pode ser desde a transferência de um arquivo, até a execução de uma consulta em um banco de dados. Respeitando a interface principal, podem ser inseridos n tipos de tarefas diferentes, de acordo com a necessidade do usuário. Cada tarefa contém um conjunto de métricas, que são as representações dos tipos de dados que serão coletados na execução daquela tarefa.
+  // ...
+}
+\end{lstlisting}
 
-	Quando houver a demanda de uma tarefa composta por mais de uma tarefa, a implementação se dá utilizando o padrão Composite (citar fundamentação teórica), e a tarefa passa a conter uma lista de tarefas associadas. Assim, quando o método run() é chamado na tarefa mãe, é feita uma iteração nas tarefas associadas para a execução em cadeia de todas as tarefas. O bloco de código \ref{lst:compositetask_class} a seguir contém a classe CompositeTask, que estende a BaseTask e representa uma tarefa composta.
+	Agora recobrando o padrão Composite, para a implementação do mesmo há a necessidade de haver alguma implementação de \emph{ITask} que seja composto por outras instâncias.
+	Por isso, existe a classe \emph{CompositeTask}, a qual além das métricas recebe uma lista de \emph{ITask} em seu construtor.
+	E, implementa o método \emph{execute}, com apenas um único objetivo, executar as tarefas que recebeu, como pode ser observado no laço iniciado na linha 14 da listagem \ref{lst:compositetask_class}.
 
-	\begin{lstlisting}[label={lst:compositetask_class}, caption={Implementação da classe responsável por representar uma tarefa composta.}, language=TypeScript, breaklines=true]
+	Então, ao compor as tarefas para uma análise, a classe \emph{CompositeTask} atua como um meio de agrupar tarefas.
+	Sendo que as métricas dela também são geradas considerando o grupo de tarefas, permitindo que o resultado de uma análise possa ter métricas de procedimentos específicos e de agrupamentos simultaneamente.
+	Ademais, a composição de tarefas utilizando recursivamente \emph{CompositeTask} é o que permite estruturar uma árvore de tarefas, de modo que todo nó não folha das árvores será um \emph{CompositeTask}.
+	Um exemplo de construção de uma árvore de tarefas simples foi visto na listagem \ref{lst:elc_index_ts_example} linha 10.
 
-	export default class CompositeTask extends BaseTask {
-		private tasks: ITask[]
-		private childTaskNamesMap: Record<string, Array<string>>
+\begin{lstlisting}[label={lst:compositetask_class}, caption={Fragmento de código da classe \emph{CompositeTask}, fundamental na implementação do padrão de projeto composite \ref{subsection:composite}.}, language=TypeScript, breaklines=true]
+export default class CompositeTask extends BaseTask {
+  private tasks: ITask[]
+  private childTaskNamesMap: Record<string, Array<string>>
 
-		constructor(metrics: IMetric[], tasks: ITask[]) {
-			super(metrics)
-			this.tasks = tasks
-			this.childTaskNamesMap = this.generateChildTaskNamesMap(tasks)
-		}
+  constructor(metrics: IMetric[], tasks: ITask[]) {
+    super(metrics)
+    this.tasks = tasks
+    this.childTaskNamesMap = this.generateChildTaskNamesMap(tasks)
+  }
 
-		protected async execute(): Promise<Record<string, any>> {
-			const results: Record<string, any> = {}
+  protected async execute(): Promise<Record<string, any>> {
+    const results: Record<string, any> = {}
 
-			for (const task of this.tasks) {
-				let taskResult = await task.run()
-				let key = this.childTaskNamesMap[task.constructor.name].shift() || task.constructor.name
-				results[key] = taskResult[task.constructor.name]
-			}
+    for (const task of this.tasks) {
+      let taskResult = await task.run()
+      let key = this.childTaskNamesMap[task.constructor.name].shift() || task.constructor.name
+      results[key] = taskResult[task.constructor.name]
+    }
 
-			return results
-		}
+    return results
+  }
 
-		private generateChildTaskNamesMap(tasks: ITask[]): Record<string, Array<string>> {
-			const namesMap: Record<string, Array<string>>  = {}
+  // ...
+}
 
-			tasks.map(x => {
-				const taskName = x.constructor.name
-
-				if (!(taskName in namesMap)) {
-					namesMap[taskName] = [`${taskName}_0`]
-				}
-				else {
-					namesMap[taskName].push(`${taskName}_${namesMap[taskName].length}`)
-				}
-			})
-			
-			return namesMap
-		}
-	}
-
-	\end{lstlisting}
+\end{lstlisting}
 
 
 	\subsection{Módulo de Métricas (Metrics)}
