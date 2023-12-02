@@ -1063,10 +1063,7 @@ export default class Profiling {
 	\label{cap:diagrama_de_classe}
 
 
-	O diagrama conceitual detalhado define a arquitetura e estrutura dos módulos do framework.
-	Nele há a definição dos principais aspectos práticos para a implementação, por exemplo, são definidas as árvores de herança e principais métodos que precisam ser implementados por usuários.
-	Além disso, ele também define a camada de persistência para resolver o problema da coleta de métricas de execuções realizadas por voluntários de forma remota.
-	Abaixo, está uma descrição de cada elemento do diagrama.
+	O Diagrama de Classes é um elemento importantíssimo na construção de uma ferramenta. Nele há a descrição das classes, dos elementos que as compõem e dos seus relacionamentos, carregando assim a definição dos principais aspectos práticos para a implementação do sistema. Por exemplo, são definidas as árvores de herança e principais métodos que precisam ser implementados pelo usuário. Dessa forma, o Diagrama de Classes do \acr{ELC} se encontra na figura \ref{fig:diag-classes}, e após o diagrama estão as descrições de cada um dos seus elementos.
 
 	\begin{figure}[!ht]
 		\centering
@@ -1074,7 +1071,6 @@ export default class Profiling {
 		\caption{Diagrama conceitual detalhado do framework.}
 		\label{fig:diag-classes}
 	\end{figure}
-
 
 	\begin{description}
 		\item[Project:] Responsável por coordenar a execução das análises e encaminhar suas métricas para a camada de persistência.
@@ -1087,6 +1083,7 @@ export default class Profiling {
 		\item[DeltaTimeMetric:] Implementação de uma métrica para medir tempo gasto em uma tarefa.
 		\item[IPersister:] Responsável por definir a interface pública da camada de persistência.
 		\item[SheetsonPersister:] Implementação da camada de persistência a qual utiliza o Google Sheets\footnote{https://www.google.com/sheets/about}.
+		\label{desc:descricao-diagrama-classes}
 	\end{description}
 
 
