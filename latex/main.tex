@@ -647,6 +647,35 @@ const calculatePrimes = () => {
 	A arquitetura da ferramenta e organização de seus módulos fornecem uma visão clara de seus pontos de extensão e de como suas engrenagens trabalham em conjunto.
 	Por outro lado, a implementação dos módulos fornecem uma visão do que é possível realizar usando o \acr{ELC}.
 
+
+	\section{Diagrama de Classes}
+	\label{cap:diagrama_de_classe}
+
+
+	O Diagrama de Classes é um elemento importantíssimo na construção de uma ferramenta. Nele há a descrição das classes, dos elementos que as compõem e dos seus relacionamentos, carregando assim a definição dos principais aspectos práticos para a implementação do sistema. Por exemplo, são definidas as árvores de herança e principais métodos que precisam ser implementados pelo usuário. Dessa forma, o Diagrama de Classes do \acr{ELC} se encontra na figura \ref{fig:diag-classes}, e após o diagrama estão as descrições de cada um dos seus elementos.
+
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=0.9\textwidth]{figures/diagrama-classes.pdf}
+		\caption{Diagrama conceitual detalhado do framework.}
+		\label{fig:diag-classes}
+	\end{figure}
+
+	\begin{description}
+		\item[Project:] Responsável por coordenar a execução das análises e encaminhar suas métricas para a camada de persistência.
+		\item[ExecutionProfile:] Responsável pela coleta de dados sobre o ambiente de execução.
+		\item[Task:] Responsável por definir a rotina de execução das tarefas e seus métodos públicos.
+		\item[SimpleTask:] Classe base para implementação de uma tarefa.
+		\item[CompositeTask:] Classe base para implementação de tarefas compostas.
+		\item[Metric:] Responsável por definir a rotina para coleta de uma métrica e seus métodos públicos.
+		\item[ProcessMemoryMetric:] Implementação de uma métrica para medir o consumo de memória.
+		\item[DeltaTimeMetric:] Implementação de uma métrica para medir tempo gasto em uma tarefa.
+		\item[IPersister:] Responsável por definir a interface pública da camada de persistência.
+		\item[SheetsonPersister:] Implementação da camada de persistência a qual utiliza o Google Sheets\footnote{https://www.google.com/sheets/about}.
+		\label{desc:descricao-diagrama-classes}
+	\end{description}
+
+
 	\section{Arquitetura}
 	\label{sec:arquitetura}
 
@@ -1058,39 +1087,12 @@ export default class Profiling {
 }
 	\end{lstlisting}
 
-		
-	\section{Diagrama de Classes}
-	\label{cap:diagrama_de_classe}
-
-
-	O Diagrama de Classes é um elemento importantíssimo na construção de uma ferramenta. Nele há a descrição das classes, dos elementos que as compõem e dos seus relacionamentos, carregando assim a definição dos principais aspectos práticos para a implementação do sistema. Por exemplo, são definidas as árvores de herança e principais métodos que precisam ser implementados pelo usuário. Dessa forma, o Diagrama de Classes do \acr{ELC} se encontra na figura \ref{fig:diag-classes}, e após o diagrama estão as descrições de cada um dos seus elementos.
-
-	\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=0.9\textwidth]{figures/diagrama-classes.pdf}
-		\caption{Diagrama conceitual detalhado do framework.}
-		\label{fig:diag-classes}
-	\end{figure}
-
-	\begin{description}
-		\item[Project:] Responsável por coordenar a execução das análises e encaminhar suas métricas para a camada de persistência.
-		\item[ExecutionProfile:] Responsável pela coleta de dados sobre o ambiente de execução.
-		\item[Task:] Responsável por definir a rotina de execução das tarefas e seus métodos públicos.
-		\item[SimpleTask:] Classe base para implementação de uma tarefa.
-		\item[CompositeTask:] Classe base para implementação de tarefas compostas.
-		\item[Metric:] Responsável por definir a rotina para coleta de uma métrica e seus métodos públicos.
-		\item[ProcessMemoryMetric:] Implementação de uma métrica para medir o consumo de memória.
-		\item[DeltaTimeMetric:] Implementação de uma métrica para medir tempo gasto em uma tarefa.
-		\item[IPersister:] Responsável por definir a interface pública da camada de persistência.
-		\item[SheetsonPersister:] Implementação da camada de persistência a qual utiliza o Google Sheets\footnote{https://www.google.com/sheets/about}.
-		\label{desc:descricao-diagrama-classes}
-	\end{description}
-
+	O módulo EasyELC constitui o último módulo que constitui a ferramenta. Após o desenvolvimento do \acr{ELC}, é necessária a realização de um experimento para avaliar como se daria o seu uso, validando aspectos da sua usabilidade e aplicabilidade em um cenário real.
 
 \chapter{Experimentos}
 	\label{cap:experimentos}
 
-	Após o desenvolvimento do \acr{ELC}, é necessária a realização de um experimento para avaliar como se daria o seu uso em um cenário real. Neste capítulo estão contidas as descrições do experimento utilizado para avaliar o \acr{ELC} por voluntários externos, bem como sua preparação e execução. Além disso, estão contidos também os resultados do experimento.
+	Neste capítulo estão contidas as descrições do experimento utilizado para avaliar o \acr{ELC} por voluntários externos, bem como sua preparação e execução. Além disso, estão contidos também os resultados do experimento.
 
 	\section{Preparação do experimento}
 	\label{section:preparacao-experimento}
