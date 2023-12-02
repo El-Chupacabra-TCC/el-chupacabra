@@ -31,8 +31,8 @@
     sensitive=true,
     comment=[l]{//},
     morecomment=[s]{/*}{*/},
-    commentstyle=\color{green}\ttfamily,
-    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{black}\ttfamily,
+    stringstyle=\color{black}\ttfamily,
     morestring=[b]',
     morestring=[b]",
 	lineskip=-1pt
@@ -929,17 +929,17 @@ export default class DeltaTimeMetric implements IMetric {
 	O módulo de persistência (Persister) tem como finalidade encapsular a persistência de dados após a coleta das métricas, a fim de facilitar o uso de diferentes formas de persistência de dados no contexto do framework. Dessa forma, é possível adaptar facilmente a implementação da persistência sem interferir na estrutura das tarefas. Esse módulo é composto pela interface genérica IPersister e suas implementações concretas, assim como os anteriores. O bloco de código \ref{lst:ipersister_abstract_class} a seguir contém a classe abstrata IPersister.
 
 	\begin{lstlisting}[label={lst:ipersister_abstract_class}, caption={Implementação da classe responsável pela persistência dos dados.}, language=TypeScript, breaklines=true]
-	/**
-	* Represents a contract for persisting data.
-	* @interface
-	*/
-	export default interface IPersister {
-		/**
-		* Saves data to a persistent storage.
-		* @param {Record<string, any>} data - The data to be saved.
-		* @returns {Promise<void>} A promise that resolves when the data is saved.
-		*/
-		save(data: Record<string, any>): Promise<void>;
+/**
+* Represents a contract for persisting data.
+* @interface
+*/
+export default interface IPersister {
+  /**
+  * Saves data to a persistent storage.
+  * @param {Record<string, any>} data - The data to be saved.
+  * @returns {Promise<void>} A promise that resolves when the data is saved.
+  */
+  save(data: Record<string, any>): Promise<void>;
 	}
 	\end{lstlisting}
 
@@ -947,51 +947,51 @@ export default class DeltaTimeMetric implements IMetric {
 
 	\begin{lstlisting}[label={lst:sheetson_class}, caption={Implementação da classe responsável pela persistência dos dados usando o Sheetson.}, language=TypeScript, breaklines=true]
 
-	export default class SheetsonPersister implements IPersister {
-	private apiUrl: string;
-	private apiKey: string;
-	private spreadsheetId: string;
+export default class SheetsonPersister implements IPersister {
+private apiUrl: string;
+private apiKey: string;
+private spreadsheetId: string;
 
-	constructor(apiUrl: string, apiKey: string, spreadsheetId: string) {
-		this.apiUrl = "https://api.sheetson.com/v2/sheets/" + apiUrl;
-		this.apiKey = apiKey;
-		this.spreadsheetId = spreadsheetId;
-	}
+constructor(apiUrl: string, apiKey: string, spreadsheetId: string) {
+  this.apiUrl = "https://api.sheetson.com/v2/sheets/" + apiUrl;
+  this.apiKey = apiKey;
+  this.spreadsheetId = spreadsheetId;
+}
 
-	async save(data: Record<string, any>): Promise<void> {
-		try {
-		const flattenData = Flatten.flatten(data, { delimiter: '.', safe: true });
-		console.log(Object.keys(flattenData).join('\n'));
-		
-		const response = await fetch(this.apiUrl, {
-			method: 'POST',
-			headers: {
-			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${this.apiKey}`,
-			'X-Sheetson-Spreadsheet-Id': this.spreadsheetId
-			},
-			body: JSON.stringify(flattenData, (_, value) => {
-			if (!Array.isArray(value)) {
-				return value
-			}
+async save(data: Record<string, any>): Promise<void> {
+  try {
+  const flattenData = Flatten.flatten(data, { delimiter: '.', safe: true });
+  console.log(Object.keys(flattenData).join('\n'));
+  
+  const response = await fetch(this.apiUrl, {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${this.apiKey}`,
+    'X-Sheetson-Spreadsheet-Id': this.spreadsheetId
+    },
+    body: JSON.stringify(flattenData, (_, value) => {
+    if (!Array.isArray(value)) {
+      return value
+    }
 
-			return JSON.stringify(value)
-			})
-		});
+    return JSON.stringify(value)
+    })
+  });
 
-		if (!response.ok) {
-			throw new Error(`Failed to save data: ${response.statusText}`);
-		}
+  if (!response.ok) {
+    throw new Error(`Failed to save data: ${response.statusText}`);
+  }
 
-		} catch (error) {
-		if (error instanceof Error) {
-			throw new Error(`Error saving data: ${error.message}`);
-		} else {
-			throw new Error('An unknown error occurred while saving data.');
-		}
-		}
-	}
-	}
+  } catch (error) {
+  if (error instanceof Error) {
+    throw new Error(`Error saving data: ${error.message}`);
+  } else {
+    throw new Error('An unknown error occurred while saving data.');
+  }
+  }
+}
+}
 	\end{lstlisting}
 
 
@@ -1013,49 +1013,49 @@ export default class DeltaTimeMetric implements IMetric {
 	Por fim, a persistência das métricas coletadas é realizada quando todos os nós da árvore tiverem seu método finish executado e depois a árvore é descartada.
 
 	\begin{lstlisting}[label={lst:easyelc_startprofiling}, caption={Implementação do método startProfiling da classe EasyElc.}, language=TypeScript, breaklines=true]
-	startProfiling(uniqueName: string, metrics: IMetric[]): Record<string, any> {
-		const newProfiling = new Profiling(uniqueName, metrics);
+startProfiling(uniqueName: string, metrics: IMetric[]): Record<string, any> {
+  const newProfiling = new Profiling(uniqueName, metrics);
 
-		if (this._profilingsTree === null) {
-			this._profilingsTree = newProfiling;
-		}
-		else {
-			const parentNode = this._getNewestActiveProfiling() ?? this._profilingsTree;
+  if (this._profilingsTree === null) {
+    this._profilingsTree = newProfiling;
+  }
+  else {
+    const parentNode = this._getNewestActiveProfiling() ?? this._profilingsTree;
 
-			if (uniqueName in parentNode.childs) {
-				const numberOfAppearences = Object.keys(parentNode.childs).filter(k => k.match(new RegExp(`^${uniqueName}(\$|_[0-9]{1,}\$`))).length
-				parentNode.childs[`${uniqueName}_${numberOfAppearences}`] = newProfiling;
-			}
-			else {
-				parentNode.childs[uniqueName] = newProfiling;
-			}
-		}
-		
-		this._activeProfilingsStack.push(newProfiling);
-		metrics.forEach(x => x.start());
-		return { finish: (metadata: Record<string, any> | null = null) => {
-			newProfiling.metadata = metadata;
-			this._terminateProfiling(newProfiling);
-		} };
-	}
+    if (uniqueName in parentNode.childs) {
+      const numberOfAppearences = Object.keys(parentNode.childs).filter(k => k.match(new RegExp(`^${uniqueName}(\$|_[0-9]{1,}\$`))).length
+      parentNode.childs[`${uniqueName}_${numberOfAppearences}`] = newProfiling;
+    }
+    else {
+      parentNode.childs[uniqueName] = newProfiling;
+    }
+  }
+  
+  this._activeProfilingsStack.push(newProfiling);
+  metrics.forEach(x => x.start());
+  return { finish: (metadata: Record<string, any> | null = null) => {
+    newProfiling.metadata = metadata;
+    this._terminateProfiling(newProfiling);
+  } };
+}
 	\end{lstlisting}
 
 	\begin{lstlisting}[label={lst:easyelc_profiling_class}, caption={Implementação do nó da árvore de análises usado no EasyElc.}, language=TypeScript, breaklines=true]
-	export default class Profiling {
-		uniqueName: string;
-		runningMetrics: IMetric[];
-		metricsResults: Record<string, any>[];
-		metadata: Record<string, any> | null;
-		childs: Record<string, Profiling>;
+export default class Profiling {
+  uniqueName: string;
+  runningMetrics: IMetric[];
+  metricsResults: Record<string, any>[];
+  metadata: Record<string, any> | null;
+  childs: Record<string, Profiling>;
 
-		constructor(uniqueName: string, metrics: IMetric[]) {
-			this.uniqueName = uniqueName;
-			this.runningMetrics = metrics;
-			this.metricsResults = [];
-			this.metadata = null;
-			this.childs = {};
-		}
-	}
+  constructor(uniqueName: string, metrics: IMetric[]) {
+    this.uniqueName = uniqueName;
+    this.runningMetrics = metrics;
+    this.metricsResults = [];
+    this.metadata = null;
+    this.childs = {};
+  }
+}
 	\end{lstlisting}
 
 		
@@ -1344,20 +1344,20 @@ O bloco de código \ref{lst:mock_memoria} contém a classe criada para simular o
 
 \begin{lstlisting}[label={lst:mock_memoria}, caption={Implementação da classe responsável por simular recursos de memória para a prova de conceito do framework.}, language=TypeScript]
 class Resource {
-	private static _total: number = 500;
+  private static _total: number = 500;
 
-	static alloc(size: number): any {
-		this._total -= size;
-		return {size};
-	}
+  static alloc(size: number): any {
+    this._total -= size;
+    return {size};
+  }
 
-	static free(block: any): void {
-		this._total += block.size;
-	}
+  static free(block: any): void {
+    this._total += block.size;
+  }
 
-	static get total(): number {
-		return this._total;
-	}
+  static get total(): number {
+    return this._total;
+  }
 }
 \end{lstlisting}
 
@@ -1374,56 +1374,56 @@ Portanto, com o framework em sua completude, as derradeiras classes as quais com
 
 \begin{lstlisting}[label={lst:abstract_task}, caption={Classe abstrata responsável por definir o que todos os membros da árvore de tarefas precisam implementar.}, language=TypeScript]
 abstract class Task {
-	public name: string;
-	public metrics: Set<Metric<any>>;
+  public name: string;
+  public metrics: Set<Metric<any>>;
 
-	constructor(name: string, metrics: Metric<any>[])
-	{
-		this.metrics = new Set(metrics);
-		this.name = name;
-	}
+  constructor(name: string, metrics: Metric<any>[])
+  {
+    this.metrics = new Set(metrics);
+    this.name = name;
+  }
 
-	async run(): Promise<any> {
-		this.preTaskJob();
-		let data = await this.execute();
-		let metrics = {};
-		this.metrics.forEach(element => {
-		metrics[element.name] = element.metric;
-		});
-		this.postTaskJob();
-		return {metrics, data};
-	}
+  async run(): Promise<any> {
+    this.preTaskJob();
+    let data = await this.execute();
+    let metrics = {};
+    this.metrics.forEach(element => {
+    metrics[element.name] = element.metric;
+    });
+    this.postTaskJob();
+    return {metrics, data};
+  }
 
-	preTaskJob(): void {};
-	abstract execute(): Promise<any>;
-	postTaskJob(): void {};
+  preTaskJob(): void {};
+  abstract execute(): Promise<any>;
+  postTaskJob(): void {};
 }
 \end{lstlisting}
 
 \begin{lstlisting}[label={lst:composite_task}, caption={Tarefa composta, define o comportamento de todos os nós não folha da árvore de tarefas.}, language=TypeScript]
 export class CompositeTask extends Task {
-	private tasks: Task[];
+  private tasks: Task[];
 
-	constructor() {
-		super("Composite Task", []);
-		this.tasks = [];
-	}
+  constructor() {
+    super("Composite Task", []);
+    this.tasks = [];
+  }
 
-	addTask(task: Task): void {
-		this.tasks.push(task);
-		task.metrics.forEach(element => {
-			this.metrics.add(element);
-		});
-	}
+  addTask(task: Task): void {
+    this.tasks.push(task);
+    task.metrics.forEach(element => {
+      this.metrics.add(element);
+    });
+  }
 
-	async execute(): Promise<any> {
-		console.log("Executing composite task...");
-		let tasks = {};
-		for (const task of this.tasks) {
-			tasks[task.name] = await task.run();
-		}
-		return tasks;
-	}
+  async execute(): Promise<any> {
+    console.log("Executing composite task...");
+    let tasks = {};
+    for (const task of this.tasks) {
+      tasks[task.name] = await task.run();
+    }
+    return tasks;
+  }
 }
 \end{lstlisting}
 
@@ -1437,19 +1437,19 @@ Por fim, também é instanciado um objeto \emph{Project} o qual recebe como par�
 
 \begin{lstlisting}[label={lst:index_ts}, caption={Exemplo de roteiro principal para executar a prova de conceito.}, language=TypeScript]
 class Index {
-	public static async main() {
-		console.log("Hello world!");
-		const task = new CompositeTask();
-		const task2 = new CompositeTask();
-		task.addTask(new MockTask("Task 1"));
-		task.addTask(new MockTask("Task 2"));
-		task2.addTask(new MockTask("Task 3"));
-		task.addTask(task2);
-		const project = new Project(
-			new BasicPersister(),
-			task);
-		project.executeTask();
-	}
+  public static async main() {
+    console.log("Hello world!");
+    const task = new CompositeTask();
+    const task2 = new CompositeTask();
+    task.addTask(new MockTask("Task 1"));
+    task.addTask(new MockTask("Task 2"));
+    task2.addTask(new MockTask("Task 3"));
+    task.addTask(task2);
+    const project = new Project(
+      new BasicPersister(),
+      task);
+    project.executeTask();
+  }
 }
 \end{lstlisting}
 
