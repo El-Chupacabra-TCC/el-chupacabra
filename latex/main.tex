@@ -202,25 +202,25 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 
 		\section{Princípio do Aberto/Fechado}
 		\label{sec:solid-ocp}
-		\citet{MartinCleanArchtecture2017} popularizou os princípios de design de software SOLID.
+		O livro Arquitetura Limpa de \citet{MartinCleanArchtecture2017} popularizou os princípios de design de software SOLID.
 		Os quais atuam como guias na organização de funções e estruturas de dados em classes e como essas classes devem ser interconectadas.
 		Outro ponto importante, é que esses princípios são pensados para serem aplicados por programadores que trabalham no nível do módulo.
 		Ou seja, sua aplicação ocorre um nível de abstração acima do código e visa definir os tipos de estruturas usadas dentro de módulos e componentes.
 		O principal objetivo dos princípios SOLID é a criação de estruturas de software que tolerem mudanças, sejam fáceis de entender e sejam a base de componentes reutilizáveis em diferentes sistemas de software.
 
-		O princípio do aberto/fechado (do inglês, \emph{open/closed principle} ou OCP) pode ser definido como um artefato de software deve ser aberto para extensão, mas fechado para modificação. \citep{Meyer1997ObjectOrientedSoftwareConstruction}
+		O \acr{OCP} pode ser definido como um artefato de software deve ser aberto para extensão, mas fechado para modificação. \citep{Meyer1997ObjectOrientedSoftwareConstruction}
 		Em outras palavras, podemos afirmar que o princípio não foi respeitado quando uma extensão simples de um requisito resulta em uma cascata de mudanças em módulos dependentes.
 		O \acr{OCP} provoca justamente neste ponto, onde idealmente os módulos nunca são alterados.
 		Deste modo, quando houver a extensão de algum requisito, a extensão no software é feita adicionando código novo, ao invés de, alterar o código existente que funciona. \citep{Martin2000TheOP}
 
-		O \acr{OCP} é reconhecido como o coração do design de classes e módulos por estudantes de design de software. \citep{MartinCleanArchtecture2017}
+		O \acr{OCP} é reconhecido como o coração do design de classes e módulos por estudantes de design de software \citep{MartinCleanArchtecture2017}.
 		Pois, permite que mudanças aconteçam sem que haja um grande impacto no software.
 		E, atinge este objetivo por meio do particionamento do sistema em componentes, organizando eles em uma hierarquia de dependência a qual protege os componentes de nível mais alto das mudanças no componentes de nível mais baixo. \citep{MartinCleanArchtecture2017}
 
-		A arquitetura do framework ELC utiliza como principal guia o \acr{OCP}.
-		Pois, organizamos os módulos do framework como entidades completamente independentes, assegurando que qualquer referência intermodular deveria ser feita para a interface do módulo.
-		Desta forma, o risco de alguma mudança em um módulo resultar em alterações em outro módulo é minimizado e permite que múltiplos módulos sejam desenvolvidos em paralelo sem haver retrabalho.
-		Ademais, definimos os módulos do \acr{ELC} como os pontos de extensão do framework.
+		A arquitetura do \acr{ELC} utiliza como principal guia o \acr{OCP}.
+		Pois, organizamos os módulos da ferramenta como entidades completamente independentes, assegurando que qualquer referência intermodular deveria ser feita apenas para interfaces.
+		Dessa forma, o risco de alguma mudança em um módulo resultar em alterações em outro módulo é minimizado e permite que múltiplos módulos sejam desenvolvidos em paralelo sem haver retrabalho.
+		Ademais, definimos cada módulos do \acr{ELC} como os pontos de extensão.
 		Ou seja, cada módulo é projetado para caso alguma mudança de comportamento seja necessária, a alteração é incluída criando uma nova classe a qual estende a interface do módulo.
 
 		\section{Coesão e Acoplamento}
@@ -328,7 +328,7 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.6\textwidth]{figures/fluxo-decisao-leitura.pdf}
+		\includegraphics[width=0.8\textwidth]{figures/fluxo-decisao-leitura.pdf}
 		\caption{Fluxo dos critérios utilizados para seleção dos trabalhos relacionados para leitura.}
 		\label{fig:fluxo-leitura}
 	\end{figure}
@@ -649,15 +649,17 @@ const calculatePrimes = () => {
 
 
 	\section{Diagrama de Classes}
-	\label{cap:diagrama_de_classe}
+	\label{sec:diagrama_de_classe}
 
 
-	O Diagrama de Classes é um elemento importantíssimo na construção de uma ferramenta. Nele há a descrição das classes, dos elementos que as compõem e dos seus relacionamentos, carregando assim a definição dos principais aspectos práticos para a implementação do sistema. Por exemplo, são definidas as árvores de herança e principais métodos que precisam ser implementados pelo usuário. Dessa forma, o Diagrama de Classes do \acr{ELC} se encontra na figura \ref{fig:diag-classes}, e após o diagrama estão as descrições de cada um dos seus elementos.
+	O diagrama de classes (Figura \ref{fig:diag-classes}) é um elemento importantíssimo na construção de uma ferramenta.
+	Nele há a descrição das classes, dos elementos que as compõem e dos seus relacionamentos, carregando assim a definição dos principais aspectos práticos para a implementação do sistema.
+	Por exemplo, são definidas as árvores de herança e principais métodos que precisam ser implementados pelo usuário.
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.9\textwidth]{figures/diagrama-classes.pdf}
-		\caption{Diagrama conceitual detalhado do framework.}
+		\includegraphics[width=\textwidth]{figures/diagrama-classes.pdf}
+		\caption{Diagrama de classes do \acr{ELC}.}
 		\label{fig:diag-classes}
 	\end{figure}
 
@@ -1445,7 +1447,6 @@ class Index {
 \end{lstlisting}
 
 
-\appendix
 \chapter{Código-fonte da Prova de Conceito}
 \label{apx:mock_source}
 
