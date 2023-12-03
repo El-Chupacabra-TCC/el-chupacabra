@@ -693,7 +693,8 @@ const calculatePrimes = () => {
 	A classe é simples, suas variáveis de instância são simples referências para as configurações recebidas como parâmetros de seu construtor, como podemos observar entre as linhas 2 e 11.
 	Enquanto, seu único método \emph{executeTask} é encarregado de executar o módulo de perfil de execução \ref{subsection:modulo-execution-profile}, executar a árvore de tarefas e agregar seus retornos e invocar o módulo de persistência \ref{subsection:modulo-persister}.
 
-\begin{lstlisting}[label={lst:project_class}, caption={Amostra da implementação da classe \emph{Project}.}, language=TypeScript, breaklines=true]
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[label={lst:project_class}, caption={Fragmento de códido da classe \emph{Project}.}, language=TypeScript, breaklines=true]
 export default class Project {
   protected ExecutionProfile: IExecutionProfile;
   protected Persister: IPersister;
@@ -721,6 +722,7 @@ export default class Project {
   }
 }
 \end{lstlisting}
+\end{minipage}
 
 
 	\subsection{Módulo do Perfil de Execução (ExecutionProfile)}
@@ -1492,28 +1494,28 @@ class Index {
 \section{Tarefa Simples}
 \lstinputlisting[language=TypeScript]{./mock/Tasks/SimpleTask.ts}
 
-\section{Exemplo de implementação de tarefa}
+\section{Exemplo de Implementação de Tarefa}
 \lstinputlisting[language=TypeScript]{./mock/Tasks/MockTask.ts}
 
-\section{Interface de persistencia}
+\section{Interface de Persistência}
 \lstinputlisting[language=TypeScript]{./mock/Persister/IPersister.ts}
 
-\section{Exemplo de persistencia}
+\section{Exemplo de Persistência}
 \lstinputlisting[language=TypeScript]{./mock/Persister/BasicPersister.ts}
 
-\section{Mock de tempo}
+\section{Mock de Tempo}
 \lstinputlisting[language=TypeScript]{./mock/Helpers/MockTime.ts}
 
-\section{Mock de Memoria}
+\section{Mock de Memória}
 \lstinputlisting[language=TypeScript]{./mock/Helpers/MockResource.ts}
 
-\section{Metrica abstrata}
+\section{Métrica Abstrata}
 \lstinputlisting[language=TypeScript]{./mock/Metrics/Metric.ts}
 
-\section{Metrica de tempo}
+\section{Métrica de Tempo}
 \lstinputlisting[language=TypeScript]{./mock/Metrics/GetDeltaTime.ts}
 
-\section{Metrica de memoria}
+\section{Métrica de Memória}
 \lstinputlisting[language=TypeScript]{./mock/Metrics/GetResourceUsage.ts}
 
 \end{document}
