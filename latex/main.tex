@@ -99,14 +99,14 @@
 Desde a popularização dos smartphones, a quantidade de dados gerados cresce sem precedentes, de modo que até torna a definição de grande volume de dados difícil, devido a sua rápida obsolescência.
 Dentro deste contexto, aplicações Web cliente-servidor sofrem muitas vezes com limitações de recursos computacionais no lado do cliente, e tem seus desempenhos prejudicados por conta desse fator.
 Além disso, seus desenvolvedores encontram desafios ao avaliar o consumo dos recursos, pois há uma grande dificuldade em cobrir a ampla gama de configurações que existem no lado do cliente, e também é possível observar uma carência por ferramentas que permitam esse tipo de avaliação.
-A fim de solucionar este problema, está sendo proposto neste trabalho o El-Chupacabra, um framework extensível e customizavel para o ecossistema JavaScript, capaz de ser utilizado em pesquisas onde o que se busca é comparar soluções para problemas de desempenho no lado do cliente em aplicações Web. Assim, contando com a ajuda de voluntários e de forma remota, é possível gerar dados que, após analisados, servirão para auxiliar no processo de decisão de qual solução possui o melhor desempenho.
+A fim de solucionar este problema, está sendo proposto neste trabalho o El Chupacabra, uma ferramenta extensível e customizável para o ecossistema JavaScript, capaz de ser utilizado em pesquisas onde o que se busca é comparar soluções para problemas de desempenho no lado do cliente em aplicações Web. Assim, contando com a ajuda de voluntários e de forma remota, é possível gerar dados que, após analisados, servirão para auxiliar no processo de decisão de qual solução possui o melhor desempenho.
 }{Web; aplicações cliente-servidor; avaliação de desempenho no lado do cliente; consumo de recursos; framework}
 
 \dabstract{
 Since the popularization of smartphones, the amount of generated data has grown unprecedentedly, to the extent that it even makes the definition of big data challenging due to its rapid obsolescence. Within this context, client-server web applications often suffer from limitations in client-side computational resources, and their performances are compromised due to this factor.
 Furthermore, developers face challenges in assessing resource consumption, as there is a significant difficulty in covering the wide range of configurations that exist on the client side. Additionally, there is a lack of tools that allow for this type of evaluation.
-To address this problem, this paper proposes El-Chupacabra, an extensible and customizable framework for the JavaScript ecosystem. It is capable of being used in research where the goal is to compare solutions for client-side performance issues in web applications. Thus, with the help of volunteers and remotely, it is possible to generate data that, once analyzed, will serve to assist in the decision-making process regarding which solution has the best performance.
-}{Web; aplicações cliente-servidor; avaliação de desempenho no lado do cliente; consumo de recursos; framework}
+To address this problem, this paper proposes El Chupacabra, an extensible and customizable framework for the JavaScript ecosystem. It is capable of being used in research where the goal is to compare solutions for client-side performance issues in web applications. Thus, with the help of volunteers and remotely, it is possible to generate data that, once analyzed, will serve to assist in the decision-making process regarding which solution has the best performance.
+}{Web; client/server model; client-side performance evaluation; framework}
 
 \dtables
 	
@@ -129,16 +129,16 @@ To address this problem, this paper proposes El-Chupacabra, an extensible and cu
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.9\textwidth]{figures/exemplo-tipo-de-dado.png}
-		\caption{Exemplo de como seria o cenário da pesquisa sobre o tráfego de dados usando o \acr{ELC}.}
+		\includegraphics[width=\textwidth]{figures/exemplo-tipo-de-dado.png}
+		\caption{Exemplo de uma avaliação sobre o tráfego de dados usando o \acr{ELC}. Onde um grupo de pesquisadores avalia o consumo de recursos computacionais de uma mesma abordagem, variando o tipo de arquivo usado, e o teste é realizado em diferentes ambientes por voluntários. Para tal, o \acr{ELC} auxilia com a criação do artefato executável, obtenção de métricas e consolidação de resultados.}
 		\label{fig:exemplo-tipo-de-dado}
 	\end{figure}
 
 	A contribuição principal do \acr{ELC} é oferecer uma abordagem prática para realizar a execução de tarefas customizáveis no lado do cliente, e também o registro dos resultados dessas execuções em uma base de dados, também customizável, para análise. Dessa forma, seria possível resolver o problema da equipe sem muitas complicações. 
 
-	Ademais, o \emph{framework} por padrão possui algumas métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada e a identificação do ambiente de execução, e os dados são armazenados em uma planilha online para fácil obtenção e análise. Deste modo, o desenvolvedor tem uma base pronta para estender, e pode focar nas provas de conceito e na obtenção de ambientes e voluntários para seus testes, ao invés do desenvolvimento de infraestrutura para realização e registro das medições.
+	Ademais, o \acr{ELC} por padrão possui algumas métricas básicas implementadas, como tempo gasto na tarefa, memória utilizada e a identificação do ambiente de execução, e os dados podem ser armazenados em uma planilha online para fácil obtenção e análise. Deste modo, o desenvolvedor tem uma base pronta para estender, e pode focar nas provas de conceito e na obtenção de ambientes e voluntários para seus testes, ao invés do desenvolvimento de infraestrutura para realização e registro das medições.
 
-	Porém, existem algumas limitações com relação a ferramenta que precisam ser levadas em consideração antes do seu uso. Atualmente, somente métricas e dados em execução conseguem ser coletados pela ferramenta, ou seja, ainda não é possível realizar testes de caixa branca \footnote{Sobre testes de caixa branca: \citep[Capítulo 21]{Sommerville2015Software}}. Além disso, não são contempladas por padrão métricas de renderização, como o tempo de carregamento de páginas, já que existem outras ferramentas que abordam esse tipo de medição, como a WePR, mencionada na seção \ref{WePR}.
+	Porém, existem algumas limitações com relação a ferramenta que precisam ser levadas em consideração antes do seu uso. Atualmente, somente métricas e dados em execução conseguem ser coletados pela ferramenta, ou seja, ainda não é possível realizar testes de caixa branca \footnote{Sobre testes de caixa branca: \citep[Capítulo 21]{Sommerville2015Software}}. Além disso, não são contempladas por padrão métricas de renderização, como o tempo de carregamento de páginas, já que existem outras ferramentas que abordam esse tipo de medição, como o WePR, mencionado na seção \ref{WePR}.
 
 	O trabalho está organizado da seguinte forma: O capítulo \ref{cap:fundamentacao_teorica} corresponde à fundamentação teórica do projeto. O capítulo \ref{cap:metodologiatrabsrelacionados} corresponde à metodologia utilizada na pesquisa dos trabalhos relacionados e contém também os principais trabalhos relacionados encontrados. O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da ferramenta. O capítulo \ref{cap:experimentos} apresenta os experimentos realizados utilizando a ferramenta e seus resultados, e por fim o capítulo \ref{cap:conclusão} traz a conclusão do projeto.
 
@@ -1258,30 +1258,41 @@ export default class Profiling {
 	Coesão e Acoplamento & \cmark & \cmark & \cmark & \cmark  & \cmark  \\ 
 	Extensibilidade & \xmark & \xmark & \xmark & \xmark  & \cmark \\
 	Portabilidade & \cmark & \xmark & \xmark & \xmark  & \cmark \\
-	Armazenamento em núvem & \xmark & \cmark & \cmark & \cmark & \cmark  \\
+	Armazenamento em nuvem & \xmark & \cmark & \cmark & \cmark & \cmark  \\
 	\bottomrule %inserts single line
 	\end{tabular}
 	\label{table:classificacao-com-elc} % is used to refer this table in the text
 	\end{table}
 
-	Voltando ao exemplo do grupo de pesquisadores desenvolvendo uma aplicação web, que foi trazido no começo deste trabalho, o \acr{ELC} não exige que o código fonte das provas de conceito sejam alterados para a sua utilização. Através da modelagem das tarefas e métricas, é possível realizar um experimento utilizando o código das provas de conceito como foram implementados inicialmente, apenas inserindo chamadas dentro das tarefas do \acr{ELC}. Assim, podem ser executadas diversas tarefas diferentes, mas na mesma estrutura e portanto com seus resultados registrados na mesma base de dados para análise. Isso significa que a aplicação da ferramenta no exemplo gera código com um nível bom de coesão e baixo de acoplamento, atendendo ao critério estabelecido de Coesão e Acoplamento. 
+	Voltando ao exemplo do grupo de pesquisadores avaliando abordagens utilizando diferentes tipos de arquivos (Figura \ref{fig:exemplo-tipo-de-dado}), o \acr{ELC} não exige que o código fonte das provas de conceito sejam alterados para a sua utilização.
+	Por meio da modelagem das tarefas (ver Subseção \ref{subsection:modulo-tasks}), é possível realizar um experimento utilizando o código-fonte das provas de conceito apenas encapsulando-o.
+	Além disso, múltiplas tarefas podem coexistir na mesma análise, em uma estrutura de árvore, com seus resultados também agregados.
+	Ou seja, o \acr{ELC} apresenta um baixo nível de acoplamento (ver Seção \ref{section:coesao-e-acoplamento}) com código em avaliação. 
 
-	Além disso, o \acr{ELC} tem uma arquitetura extensível, tanto na parte de métricas e tarefas já citadas, quanto nas partes de perfis de execução e persistência. É possível utilizar diversos tipos de bases de dados, seja o Sheetson, como foi exemplificado, ou um banco de dados. Basta estender a interface do Persister e implementar suas particularidades. Dessa forma, a ferramenta atende ao critério de Extensibilidade.
+	Além disso, o \acr{ELC} tem uma arquitetura extensível, tanto na parte de métricas e tarefas, quanto nas partes de perfis de execução e persistência.
+	Sendo possível utilizar diversos tipos de armazenamento para os resultados, bastando estender a interface de persistência (ver Subseção \ref{subsection:modulo-persister}).
+	Ou, adaptar o \acr{ELC} para ser executado em ambientes além de navegadores ou Node.js, estendendo a interface de perfil de execução (ver Subseção \ref{subsection:modulo-execution-profile}).
+	Dessa forma, a ferramenta atende ao critério de Extensibilidade.
 
-	Como o \acr{ELC} é executado no navegador, é possível executar medições em diversos dispositivos diferentes, sem problemas de compatibilidade, já que a execução é no próprio navegador. Além da métrica escolhida pelo pesquisador, é possível registrar também juntamente qual foi o aparelho que a executou e suas informações básicas, atendendo à experimentos multiplataforma que precisam dessas informações. Portanto, é possível dizer que a ferramenta atende ao critério de Portabilidade.
+	Como no exemplo o \acr{ELC} é executado em navegadores, é possível executar medições em diversos tipos de dispositivos, sem problemas de compatibilidade.
+	Além disso, juntamente com as métricas, é possível registrar informações sobre o dispositivo e software que executaram a avaliação, atendendo à experimentos multiplataforma que precisam destas informações. Portanto, é possível dizer que a ferramenta atende ao critério de Portabilidade.
 
-	No armazenamento das informações, o \acr{ELC} também atende aos requisitos por ser bastante extensível. Como dito anteriormente, no trabalho foi utilizado o Sheetson, uma ferramenta para habilitar a escrita de dados em planilhas do Google via \acr{API}, mas podem ser utilizados diversos tipos de bases de dados, como bancos de dados Postgresql e MongoDB. Assim, conclui-se que a ferramenta também atende ao critério de Armazenamento em Núvem.
+	No armazenamento dos resultados, o \acr{ELC} também atende aos requisitos extensibilidade.
+	Como dito anteriormente, é possível utilizar o Sheetson (ver Subseção \ref{subsection:modulo-persister}), uma ferramenta para habilitar a escrita de dados em planilhas do Google via \acr{API}, mas podem ser utilizados diversos tipos de bases de dados, como bancos de dados Postgresql e MongoDB.
+	Assim, conclui-se que a ferramenta também atende ao critério de Armazenamento em Nuvem.
 
 
 	\section{Limitações do ELC}
 	\label{section:limitacoes-elc}
 
-	Como dito anteriormente, existem algumas limitações com relação ao uso do \acr{ELC}. A primeira delas é que só podem ser realizados hoje testes de caixa preta, ou seja, testes que utilizem dados obtidos durante a execução do programa. Isso limita um pouco o uso da ferramenta para alguns cenários, principalmente para testes de caixa branca \footnote{Sobre testes de caixa branca: \citep[Capítulo 21]{Sommerville2015Software}}, já que não pode ser utilizada para testes estáticos, como por exemplo para testar uma implementação de uma classe.
+	Conforme o que foi dito na introdução (ver Capítulo \ref{cap:intro}), existem algumas limitações com relação ao uso do \acr{ELC}.
+	Como realização de testes de caixa branca, pois a modelagem da ferramenta tem como fundamento o desconhecimento do funcionamento interno das tarefas.
+	Logo, o mesmo ponto que permite o baixo acoplamento com o objeto da análise também limita algumas possibilidades de avaliação.
 
 	\section{Trabalhos Futuros}
 	\label{section:trabalhos-futuros}
 
-	Como possibilidades de trabalhos futuros, é possível trazer o conceito de testes de caixa branca para a ferramenta. Dessa forma, o \acr{ELC} ficaria ainda mais robusto, abrangendo mais cenários de teste e contextos onde pode ser utilizado. Além disso, pode ser realizado mais um experimento, dessa vez contemplando o uso mais completo do \acr{ELC}, clonando diretamente do repositório. Esse experimento exige um rigor maior em sua estrutura, construção, e também necessita de voluntários mais experientes, além de precisar de mais tempo para ser realizado.
+	Como possibilidades de trabalhos futuros, é possível trazer o conceito de testes de caixa branca para a ferramenta. Dessa forma, o \acr{ELC} ficaria ainda mais robusto, abrangendo mais cenários de teste e contextos onde pode ser utilizado. Além disso, pode ser realizado mais um experimento, dessa vez contemplando o uso mais completo do \acr{ELC}, clonando diretamente do repositório. Este experimento exige um rigor maior em sua estrutura, construção, e também necessita de voluntários mais experientes, além de precisar de mais tempo para ser realizado.
 
 
 	\label{bibpage}
