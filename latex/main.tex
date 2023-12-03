@@ -220,7 +220,7 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 		A arquitetura do \acr{ELC} utiliza como principal guia o \acr{OCP}.
 		Pois, organizamos os módulos da ferramenta como entidades completamente independentes, assegurando que qualquer referência intermodular deveria ser feita apenas para interfaces.
 		Dessa forma, o risco de alguma mudança em um módulo resultar em alterações em outro módulo é minimizado e permite que múltiplos módulos sejam desenvolvidos em paralelo sem haver retrabalho.
-		Ademais, definimos cada módulos do \acr{ELC} como os pontos de extensão.
+		Ademais, definimos cada módulo do \acr{ELC} como os pontos de extensão.
 		Ou seja, cada módulo é projetado para caso alguma mudança de comportamento seja necessária, a alteração é incluída criando uma nova classe a qual estende a interface do módulo.
 
 		\section{Coesão e Acoplamento}
@@ -354,7 +354,7 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 		\label{tab:criterio-avaliacao-ferramentas}
 	\end{table}
 
-	Além disso, critério de Coesão e Acoplamento é importante na avaliação das ferramentas pois facilita na utilização, diminuindo a dificuldade e complexidade na implementação da ferramenta. No exemplo dos pesquisadores, explicado no capítulo \ref{cap:intro}, é desejado que não seja necessário alterar, por exemplo, o código das provas de conceito a serem executadas no experimento. 
+	Além disso, o critério de Coesão e Acoplamento é importante na avaliação das ferramentas pois facilita na utilização, diminuindo a dificuldade e complexidade na implementação da ferramenta. No exemplo dos pesquisadores, explicado no capítulo \ref{cap:intro}, é desejado que não seja necessário alterar, por exemplo, o código das provas de conceito a serem executadas no experimento. 
 	
 	O segundo critério citado, Extensibilidade, é importante pois, dado o universo de métricas e tarefas possíveis dentro de um experimento, habilita ao pesquisador representar seu problema da maneira mais fiel, inclusive com cenários customizados. Assim, uma boa extensibilidade permite que existam tarefas simples e complexas, configurando diferentes cenários de testes.
 	
@@ -462,7 +462,7 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 	Após isso, para cada algoritmo que se deseja avaliar, é necessário implementar uma classe herdeira de \emph{BaseTask}, onde o método \emph{execute} encapsula o algoritmo.
 
 	A listagem \ref{lst:elc_firstnprimes_task} contém um exemplo de classe base para as funções de calcular números primos.
-	O tamanho da lista é definida via construtor e armazenado na variável de instância \emph{howMany}.
+	O tamanho da lista é definido via construtor e armazenado na variável de instância \emph{howMany}.
 	Enquando, o método \emph{execute} contém um laço na linha 13 que preenche a lista com números primos detectados pelo método \emph{isPrime}.
 	Este que, por sua vez, pode ser sobrescrito nas subclasses para conter a implementação de cada função que o experimento avalie.
 
@@ -508,7 +508,7 @@ export default class FirstNPrimesTask extends BaseTask {
 
 		\item Persistência das métricas: Define onde os dados coletados pelo \acr{ELC} são armazenados.
 		Na listagem \ref{lst:elc_index_ts_example}, consideramos que as métricas coletadas devem ser enviadas para uma planilha no Google Sheets.
-		Deste modo, mesmo executando a avaliação em múltiplos ambientes, os dados coletados são armazenado em um único lugar.
+		Deste modo, mesmo executando a avaliação em múltiplos ambientes, os dados coletados são armazenados em um único lugar.
 		Para tal, na linha 4 instanciamos o \emph{SheetsonPersister} com configurações de qual planilha usar e um token de autenticação.
 
 		\item Árvore de tarefas: Tarefa é o nome dado às classes que são a carga sob avaliação do \acr{ELC} e entre as linhas 10 e 16 da listagem \ref{lst:elc_index_ts_example} há a construção de uma árvore de tarefas.
@@ -609,7 +609,7 @@ const easyElc = new EasyElc(
 	Ele possui dois parâmetros: Um nome para o que está sendo avaliado e uma lista de métricas, conforme demonstrado nas linhas 3 e 4 da listagem \ref{lst:easyelc_usage_firstnprimes}.
 	Como a implementação do site faz uso do padrão de projeto \hyperref[subsection:strategy]{Strategy}, somente é necessário inserir a chamada do método \emph{getFirstNPrimeNumbers} entre as chamadas dos métodos de começar e finalizar a análise.
 	Por sua vez, a chamada do método \emph{finish} na linha 6, marca o fim da análise e tem como único parâmetro um objeto por onde metadados são agregados ao resultado.
-	Por último, quando todas as análise são finalizadas, o \acr{ELC} realiza a persistência dos dados.
+	Por último, quando todas as análises são finalizadas, o \acr{ELC} realiza a persistência dos dados.
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[label={lst:easyelc_usage_firstnprimes}, caption={Coleta de métricas usando o EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
@@ -625,7 +625,7 @@ const calculatePrimes = () => {
 
 	Após a implantação da versão com o \acr{ELC}, o desenvolvedor é capaz de visualizar o tempo gasto nas execuções dos algoritmos como na tabela \ref{table:resultado-easyelc}.
 	Além disso, o \acr{ELC} também coleta informações sobre o ambiente de execução, como informações de hardware e software usados, que também são agregados nos resultados de cada análise.
-	Logo, em uma visão completa dos dados somos capazes de observar a influência que diferentes ambientes de execução tem nos algoritmos.
+	Logo, em uma visão completa dos dados, somos capazes de observar a influência que diferentes ambientes de execução tem nos algoritmos.
 
 	\begin{table}[!h]
 		\centering
@@ -645,7 +645,7 @@ const calculatePrimes = () => {
 
 	Com esta visão geral do funcionamento da ferramenta, estamos preparados para nos aprofundar nos detalhes de implementação do \acr{ELC}.
 	A arquitetura da ferramenta e organização de seus módulos fornecem uma visão clara de seus pontos de extensão e de como suas engrenagens trabalham em conjunto.
-	Por outro lado, a implementação dos módulos fornecem uma visão do que é possível realizar usando o \acr{ELC}.
+	Por outro lado, a implementação dos módulos fornece uma visão do que é possível realizar usando o \acr{ELC}.
 
 
 	\section{Diagrama de Classes}
@@ -669,7 +669,7 @@ const calculatePrimes = () => {
 
 	A arquitetura do \acr{ELC} tem como guia fundamental o princípio aberto/fechado (\acr{OCP}), o qual é detalhado na seção \ref{sec:solid-ocp}.
 	Desde a concepção da ideia do \acr{ELC}, uma de suas principais características é a capacidade de customização da ferramenta para os objetivos específicos do usuário.
-	Dessa forma, extensões simples de seus requisitos não devem causar de mudanças massivas no código.
+	Dessa forma, extensões simples de seus requisitos não devem causar mudanças massivas no código.
 
 	O \acr{ELC} é subdividido em seis módulos e todos relacionamentos intermodulares são realizados por meio de interfaces, como ilustrado na figura \ref{fig:diagrama-arquitetura}.
 	Existem dois módulos principais, os quais coordenam a execução dos outros módulos, sendo eles o módulo de Projeto (do inglês, \emph{Project}) e o módulo \acr{ELC} simplificado (do inglês, \emph{EasyElc}).
@@ -682,7 +682,7 @@ const calculatePrimes = () => {
 		\label{fig:diagrama-arquitetura}
 	\end{figure}
 	
-	Por outro lado, os outros módulos compõem o núclo do \acr{ELC}, sendo eles: O módulo de perfil de execução (do inglês, \emph{ExecutionProfile}) para obteção de dados sobre o ambiente o qual está sendo executado, o módulo de persistência (do inglês, \emph{Persister}) para encapsular o meios de armazenar os resultados das análises, o módulo de métricas (do inglês, \emph{Metrics}) que corresponde as medições o qual o \acr{ELC} é capaz de realizar e o módulo de tarefas (do inglês, \emph{Tasks}) encapsula os procedimentos em análise pela ferramenta.
+	Por outro lado, os outros módulos compõem o núclo do \acr{ELC}, sendo eles: O módulo de perfil de execução (do inglês, \emph{ExecutionProfile}) para obtenção de dados sobre o ambiente o qual está sendo executado, o módulo de persistência (do inglês, \emph{Persister}) para encapsular o meios de armazenar os resultados das análises, o módulo de métricas (do inglês, \emph{Metrics}) que corresponde às medições o qual o \acr{ELC} é capaz de realizar e o módulo de tarefas (do inglês, \emph{Tasks}) encapsula os procedimentos em análise pela ferramenta.
 
 
 	\subsection{Módulo de Projeto (Project)}
@@ -730,12 +730,12 @@ export default class Project {
 	A responsabilidade dos membros do módulo de perfil de execução é adquirir informações sobre o hardware e software que estão sendo utilizados pela aplicação.
 	No âmbito de análises empíricas, o ambiente de execução possui um papel fundamental no desempenho apresentado.
 	Portanto, dados como a quantidade de memória disponível, o número de núcleos do processador, a versão do motor de JavaScript, entre outros, podem ser cruciais para compreender os fatores que impactaram positiva ou negativamente durante uma análise.
-	Ademais, com informações suficiente é possível criar um identificador único para cada ambiente executando o \acr{ELC}, do mesmo modo que um programa de fingerprinting.
+	Ademais, com informações suficientes é possível criar um identificador único para cada ambiente executando o \acr{ELC}, do mesmo modo que um programa de fingerprinting.
 	
-	Todos os módulos do núcleo do \acr{ELC} possuem interfaces as quais são o único elemento que pode ser refenciado por outros módulos.
-	Este padrão de referênciar apenas as interfaces do módulo é guiado pelo princípio da inversão de dependência \citep{MartinCleanArchtecture2017}.
+	Todos os módulos do núcleo do \acr{ELC} possuem interfaces as quais são o único elemento que pode ser referenciado por outros módulos.
+	Este padrão de referenciar apenas as interfaces do módulo é guiado pelo princípio da inversão de dependência \citep{MartinCleanArchtecture2017}.
 	Deste modo, os módulos estão protegidos contra modificações de outros módulos desde que as interfaces se mantenham estáveis.
-	Além disso, outra vantagem deste padrão é facilitar a paralelização da implementação, pois uma vez definida as interfaces, os módulos podem ser implementados independentemente.
+	Além disso, outra vantagem deste padrão é facilitar a paralelização da implementação, pois uma vez definidas as interfaces, os módulos podem ser implementados independentemente.
 	Logo, o módulo de perfil de execução possui sua interface denominada \emph{IExecutionProfile} a qual possui a definição de um único método chamado \emph{collect} como pode ser visto na listagem \ref{lst:execution_profile_abstract_class}.
 
 \begin{lstlisting}[label={lst:execution_profile_abstract_class}, caption={Implementação da classe responsável por representar um perfil de execução.}, language=TypeScript, breaklines=true]
@@ -758,7 +758,7 @@ export default interface IExecutionProfile {
 	Enquanto, as informações obtidas entre as linhas 17 e 25 são focadas no hardware.
 
 \begin{minipage}{\linewidth}
-\begin{lstlisting}[label={lst:browser_execution_profile_abstract_class}, caption={Fragmento de código da classe \emph{BrowserExecutionProfile} responsável por gerar um perfis de execução em navegadores.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:browser_execution_profile_abstract_class}, caption={Fragmento de código da classe \emph{BrowserExecutionProfile} responsável por gerar um perfil de execução em navegadores.}, language=TypeScript, breaklines=true]
 export default class BrowserExecutionProfile implements IExecutionProfile {
 
   async collect(): Promise<Record<string, any>> {
@@ -796,7 +796,7 @@ export default class BrowserExecutionProfile implements IExecutionProfile {
 	\label{subsection:modulo-tasks}
 
 	A responsabilidade do módulo de tarefas é encapsular o código sob teste e estruturar a execução de análises complexas.
-	Todo código sob análise, no fluxo de clone do repositório, deve estar em um objeto tarefa, pois a mesma é a unidade miníma para realizar uma análise.
+	Todo código sob análise, no fluxo de clone do repositório, deve estar em um objeto tarefa, pois a mesma é a unidade mínima para realizar uma análise.
 	Ademais, a estrutura criada no módulo é dada pelo padrão de projeto Composite \ref{subsection:composite}, ou seja, um grupo de instâncias de tarefas são tratados do mesmo modo que uma única instância do tipo.
 	Logo, além da interface do módulo \emph{ITask} \ref{lst:itask}, outra classe importante do módulo é a \emph{CompositeTask}, para a implementação do padrão.
 
@@ -821,7 +821,7 @@ export default interface ITask {
 
 	No método \emph{run} a contagem das métricas é iniciada, seguido pela chamada do método \emph{execute} e por fim o método \emph{collect} de cada métrica é invocado para compor o resultado, sendo estas chamadas realizadas respectivamente nas linhas 8, 9 e 13.
 	A listagem \ref{lst:basetask_class} também contém a definição do método abstrato \emph{execute} na linha 20, sendo ele quem deve ser sobrescrito com o código sob análise nas subclasses.
-	Além disso, há as chamadas do métodos \emph{preTaskJob} e \emph{postTaskJob} nas linhas 7 e 15, os quais também podem ser sobrescritos para procedimentos pré e pós tarefa, mas que a principio não possuem efeito algum.
+	Além disso, há as chamadas dos métodos \emph{preTaskJob} e \emph{postTaskJob} nas linhas 7 e 15, os quais também podem ser sobrescritos para procedimentos pré e pós tarefa, mas que a princípio não possuem efeito algum.
 
 \begin{lstlisting}[label={lst:basetask_class}, caption={Fragmento de código da classe abstrata \emph{BaseTask}, implementação do método \emph{run} definido na interface \emph{ITask} \ref{lst:itask}.}, language=TypeScript, breaklines=true]
 export default abstract class BaseTask implements ITask {
@@ -959,7 +959,7 @@ export default interface IPersister {
 \end{lstlisting}
 
 	Devido as suas vantagens, a principal implementação de \emph{IPersister} incluída no \acr{ELC} é o \emph{SheetsonPersister}.
-	Ele utiliza uma \acr{API} gratuita denominada Sheetson para persistir os dado em uma planilha do Google Sheets e sua configuração de uso é simples, como pode ser visto na listagem \ref{lst:elc_index_ts_example}.
+	Ele utiliza uma \acr{API} gratuita denominada Sheetson para persistir os dados em uma planilha do Google Sheets e sua configuração de uso é simples, como pode ser visto na listagem \ref{lst:elc_index_ts_example}.
 	Porém, a listagem \ref{lst:json_persister_class} contém o código do \emph{JsonFilePersister} por ilustrar de modo mais simples como é uma implementação de \emph{IPersister}.
 	Seu construtor recebe como parâmetro a localização onde o arquivo \acr{JSON} e o método \emph{save} apenas serializa os dados, linha 10, e escreve no arquivo, linha 13.
 
@@ -1304,9 +1304,9 @@ async function heapSortEvaluation(airports) {
 	Dessa forma, a ferramenta atende ao critério de Extensibilidade.
 
 	Como no exemplo o \acr{ELC} é executado em navegadores, é possível executar medições em diversos tipos de dispositivos, sem problemas de compatibilidade.
-	Além disso, juntamente com as métricas, é possível registrar informações sobre o dispositivo e software que executaram a avaliação, atendendo à experimentos multiplataforma que precisam destas informações. Portanto, é possível dizer que a ferramenta atende ao critério de Portabilidade.
+	Além disso, juntamente com as métricas, é possível registrar informações sobre o dispositivo e software que executaram a avaliação, atendendo a experimentos multiplataforma que precisam dessas informações. Portanto, é possível dizer que a ferramenta atende ao critério de Portabilidade.
 
-	No armazenamento dos resultados, o \acr{ELC} também atende aos requisitos extensibilidade.
+	No armazenamento dos resultados, o \acr{ELC} também atende aos requisitos de extensibilidade.
 	Como dito anteriormente, é possível utilizar o Sheetson (ver Subseção \ref{subsection:modulo-persister}), uma ferramenta para habilitar a escrita de dados em planilhas do Google via \acr{API}, mas podem ser utilizados diversos tipos de bases de dados, como bancos de dados Postgresql e MongoDB.
 	Assim, conclui-se que a ferramenta também atende ao critério de Armazenamento em Nuvem.
 
