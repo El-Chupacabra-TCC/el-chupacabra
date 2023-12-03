@@ -1082,7 +1082,7 @@ export default class Profiling {
 
 	O experimento consiste em duas etapas principais. A primeira é a utilização do \acr{ELC} em um projeto exemplo, e a segunda é o preenchimento de um formulário no Google Forms baseado no \acr{SUS}, buscando coletar a opinião do voluntário de como foi a experiência de uso.
 
-	Para o grupo de controle, estão sendo considerados XX voluntários, em sua maioria alunos e/ou pertencentes à comunidade do CEFET e já com alguma experiência em programação. 
+	Para o grupo de controle, estão sendo considerados 16 voluntários, em sua maioria alunos e/ou pertencentes à comunidade do CEFET e já com alguma experiência em programação, que prontamente se engajaram para testar a ferramenta. 
 
 	% TO-DO: Substituir número de voluntários
 
@@ -1095,41 +1095,78 @@ export default class Profiling {
 
 	A primeira parte do experimento consiste basicamente do uso do \acr{ELC}, mais especificamente do módulo EasyELC, pelos voluntários através da plataforma \emph{ObservableHQ}\footnote{Link para o experimento na plataforma ObservableHQ: https://observablehq.com/@moura/framework-el-chupacabra-experimento}. Um projeto padrão foi criado e disponibilizado para os voluntários, e consiste em comparar o desempenho de dois algoritmos de ordenação já conhecidos sobre um conjunto de dados. Os algoritmos são o Bubble Sort e o Heap Sort, e o conjunto de dados está inicialmente desordenado e representado no formato \acr{JSON}. Dessa forma, o fluxo do experimento a ser realizado é: realizar a ordenação duas vezes, uma utilizando cada algoritmo, para comparar qual tem o melhor desempenho.
 
-	Foi adicionado uma seção chamada Implementação de Métrica Customizada, como mostra a figura \ref{fig:metrica-observable}. Essa parte do código é uma das partes que o voluntário preenche, com o auxílio de comentários deixados mostrando o passo a passo da criação da métrica. O exemplo trata de uma métrica cujo comportamento é retornar um número aleatório. Dessa forma, ele consegue ter a experiência de criar uma métrica utilizando a ferramenta.
-
-	\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=1\textwidth]{figures/experimento-metrica.jpeg}
-		\caption{Seção para criação de métrica customizada pelo usuário no experimento.}
-		\label{fig:metrica-observable}
-	\end{figure}
+	Foi adicionado uma seção chamada Implementação de Métrica Customizada, como mostra o trecho de código \ref{lst:metrica-observable}. Essa parte do código é uma das partes que o voluntário preenche, com o auxílio de comentários deixados mostrando o passo a passo da criação da métrica. O exemplo trata de uma métrica cujo comportamento é retornar um número aleatório. Dessa forma, ele consegue ter a experiência de criar uma métrica utilizando a ferramenta.
 
 
-	Após a ordenação realizada pelo algoritmo, o \acr{ELC} é chamado para registrar quanto tempo durou a ordenação de todo o arquivo. O fluxo para o Bubble Sort está descrito na figura \ref{fig:experimento-bubble}, e para o Heap Sort na figura \ref{fig:experimento-heap}.
+	\begin{lstlisting}[label={lst:metrica-observable}, caption={Seção para criação de métrica customizada pelo usuário no experimento.}, language=TypeScript, breaklines=true]
+		class myCustomRngMetric {
+			// Você não precisa alterar este método
+			start() {
+			}
 
-	\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=1\textwidth]{figures/experimento-bubble.jpeg}
-		\caption{Fluxo de código referente a execução da ordenação com o Bubble Sort.}
-		\label{fig:experimento-bubble}
-	\end{figure}
+			collect() {
+				return __awaiter(this, void 0, void 0, function* () {
 
-	\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=1\textwidth]{figures/experimento-heap.jpeg}
-		\caption{Fluxo de código referente a execução da ordenação com o Heap Sort.}
-		\label{fig:experimento-heap}
-	\end{figure}
+				// Substitua o "0" abaixo por "Math.random()"
+				const randomNumber = 0;
+
+				return Promise.resolve({ randomNumber });
+				});
+			}
+		}
+	\end{lstlisting}
+
+
+	Após a ordenação realizada pelo algoritmo, o \acr{ELC} é chamado para registrar quanto tempo durou a ordenação de todo o arquivo. O fluxo para o Bubble Sort está descrito no trecho de código \ref{lst:experimento-bubble}, e para o Heap Sort no trecho de código \ref{lst:experimento-heap}.
+
+
+	\begin{lstlisting}[label={lst:experimento-bubble}, caption={Fluxo de código referente a execução da ordenação com o Bubble Sort.}, language=TypeScript, breaklines=true]
+		async function bubbleSortEvaluation(airports) {
+
+			const bubbleProfiling = ezElc.startProfiling(
+				"Bubable Sort",
+				[
+				new elChupacabra.Metrics.DeltaTimeMetric(),
+				// new myCustomRngMetric()
+				]
+			);
+
+			const bubbleSortedData = SortingAlgorithms.bubbleSort(
+				airports,
+				"code"
+			);
+
+			await bubbleProfiling.finish();
+			
+			return bubbleSortedData;
+		}
+	\end{lstlisting}
+
+
+	\begin{lstlisting}[label={lst:experimento-heap}, caption={Fluxo de código referente a execução da ordenação com o Heap Sort.}, language=TypeScript, breaklines=true]
+		async function heapSortEvaluation(airports) {
+
+			const heapProfiling = ezElc.startProfiling(
+				"Heap Sort",
+				// Adicione no array abaixo a sua métrica customizada
+				[
+				new elChupacabra.Metrics.DeltaTimeMetric()
+				]
+			);
+
+			const heapSortedData = SortingAlgorithms.heapSort(
+				airports,
+				"code"
+			);
+
+			await heapProfiling.finish()
+			
+			return heapSortedData;
+		}
+	\end{lstlisting}
 
 
 	Os resultados da execução do experimento são inseridos em uma tabela no Google Sheets, como mostra a figura \ref{fig:experimento-tabela-resultado}, e disponibilizados para os voluntários verem como a inserção das métricas acontece. Assim, a primeira parte do experimento cobre todo o fluxo principal de execução do \acr{ELC}.
-
-	\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=1\textwidth]{figures/experimento-heap.jpeg}
-		\caption{Seção para criação de métrica customizada pelo usuário no experimento.}
-		\label{fig:experimento-tabela-resultado}
-	\end{figure}
 
 
 	\section{Formulário}
@@ -1158,7 +1195,9 @@ export default class Profiling {
 
 	Na primeira parte do experimento, foi observada uma grande adesão por parte dos voluntários, e nenhum dos voluntários necessitou de ajuda para realizar a tarefa. Isso demonstra sucesso na utilização da ferramenta, e é um indício de que o \acr{ELC} não é uma ferramenta complicada de se utilizar no dia a dia.
 
-	Na segunda parte do experimento, após a submissão dos formulários, é possível gerar um gráfico para cada pergunta contendo quais foram as respostas mais selecionadas pelos voluntários. Os resultados do formulário mostram que o \acr{ELC} conseguiu atingir um nível adequado de usabilidade em sua primeira versão, obtendo uma nota média de XX.
+	Na segunda parte do experimento, após a submissão dos formulários, é possível gerar um gráfico para cada pergunta contendo quais foram as respostas mais selecionadas pelos voluntários. Assim como os gráficos, exibidos nessa seção, é possível gerar uma nota utilizando o \acr{SUS}.
+
+	Cada pergunta possui uma contribuição de 0 a 4 na nota final, baseada na resposta da pergunta (0 - Discordo totalmente, 4 - Concordo totalmente). Para os itens 1,3,5,7 e 9, a contribuição na nota é a da posição menos 1. Para os itens 2,4,6,8 e 10, a contribuição é de 5 menos a posição na escala. Após calcular esse somatório, basta multiplicar por 2.5 para obter a nota média do \acr{SUS} \citep{brooke1995sus}. No caso do formulário do experimento, foi obtida uma nota média de 75, o que evidencia que o \acr{ELC} conseguiu atingir um nível bom de usabilidade em sua primeira versão.
 
 
 	% TO-DO: Substituir gráficos com resultados do google forms
@@ -1166,7 +1205,7 @@ export default class Profiling {
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-1.jpeg}
+		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-1.png}
 		\caption{Respostas obtidas na pergunta 1}
 		\label{fig:respostas-pergunta-1}
 	\end{figure}
@@ -1175,42 +1214,43 @@ export default class Profiling {
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-2.jpeg}
+		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-2.png}
 		\caption{Respostas obtidas na pergunta 2}
 		\label{fig:respostas-pergunta-2}
 	\end{figure}
 
+	
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-3.jpeg}
+		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-3.png}
 		\caption{Respostas obtidas na pergunta 3}
 		\label{fig:respostas-pergunta-3}
 	\end{figure}
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-4.jpeg}
+		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-4.png}
 		\caption{Respostas obtidas na pergunta 4}
 		\label{fig:respostas-pergunta-4}
 	\end{figure}
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-5.jpeg}
+		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-5.png}
 		\caption{Respostas obtidas na pergunta 5}
 		\label{fig:respostas-pergunta-5}
 	\end{figure}
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-6.jpeg}
+		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-6.png}
 		\caption{Respostas obtidas na pergunta 6}
 		\label{fig:respostas-pergunta-6}
 	\end{figure}
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-7.jpeg}
+		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-7.png}
 		\caption{Respostas obtidas na pergunta 7}
 		\label{fig:respostas-pergunta-7}
 	\end{figure}
@@ -1218,21 +1258,21 @@ export default class Profiling {
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-8.jpeg}
+		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-8.png}
 		\caption{Respostas obtidas na pergunta 8}
 		\label{fig:respostas-pergunta-8}
 	\end{figure}
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-9.jpeg}
+		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-9.png}
 		\caption{Respostas obtidas na pergunta 9}
 		\label{fig:respostas-pergunta-9}
 	\end{figure}
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-10.jpeg}
+		\includegraphics[width=0.8\textwidth]{figures/respostas-pergunta-10.png}
 		\caption{Respostas obtidas na pergunta 10}
 		\label{fig:respostas-pergunta-10}
 	\end{figure}
