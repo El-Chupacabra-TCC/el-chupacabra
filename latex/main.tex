@@ -654,7 +654,7 @@ const calculatePrimes = () => {
 
 	O diagrama de classes (Figura \ref{fig:diag-classes}) é um elemento importantíssimo na construção de uma ferramenta.
 	Nele há a descrição das classes, dos elementos que as compõem e dos seus relacionamentos, carregando assim a definição dos principais aspectos práticos para a implementação do sistema.
-	Por exemplo, são definidas as árvores de herança e principais métodos que precisam ser implementados pelo usuário.
+	Por exemplo, são definidas as árvores de herança e referências entre as classes.
 
 	\begin{figure}[!ht]
 		\centering
@@ -662,20 +662,6 @@ const calculatePrimes = () => {
 		\caption{Diagrama de classes do \acr{ELC}.}
 		\label{fig:diag-classes}
 	\end{figure}
-
-	\begin{description}
-		\item[Project:] Responsável por coordenar a execução das análises e encaminhar suas métricas para a camada de persistência.
-		\item[ExecutionProfile:] Responsável pela coleta de dados sobre o ambiente de execução.
-		\item[Task:] Responsável por definir a rotina de execução das tarefas e seus métodos públicos.
-		\item[SimpleTask:] Classe base para implementação de uma tarefa.
-		\item[CompositeTask:] Classe base para implementação de tarefas compostas.
-		\item[Metric:] Responsável por definir a rotina para coleta de uma métrica e seus métodos públicos.
-		\item[ProcessMemoryMetric:] Implementação de uma métrica para medir o consumo de memória.
-		\item[DeltaTimeMetric:] Implementação de uma métrica para medir tempo gasto em uma tarefa.
-		\item[IPersister:] Responsável por definir a interface pública da camada de persistência.
-		\item[SheetsonPersister:] Implementação da camada de persistência a qual utiliza o Google Sheets\footnote{https://www.google.com/sheets/about}.
-		\label{desc:descricao-diagrama-classes}
-	\end{description}
 
 
 	\section{Arquitetura}
@@ -1166,7 +1152,8 @@ async function heapSortEvaluation(airports) {
 \end{minipage}
 
 
-	Os resultados da execução do experimento são inseridos em uma tabela no Google Sheets, como mostra a figura \ref{fig:experimento-tabela-resultado}, e disponibilizados para os voluntários verem como a inserção das métricas acontece. Assim, a primeira parte do experimento cobre todo o fluxo principal de execução do \acr{ELC}.
+	Os resultados da execução do experimento são exibidos em um gráfico para o voluntário e inseridos em uma tabela no Google Sheets
+	Assim, a primeira parte do experimento cobre todo o fluxo principal de execução do \acr{ELC}.
 
 
 	\section{Formulário}
