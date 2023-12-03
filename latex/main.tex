@@ -1098,72 +1098,72 @@ export default class Profiling {
 	Foi adicionado uma seção chamada Implementação de Métrica Customizada, como mostra o trecho de código \ref{lst:metrica-observable}. Essa parte do código é uma das partes que o voluntário preenche, com o auxílio de comentários deixados mostrando o passo a passo da criação da métrica. O exemplo trata de uma métrica cujo comportamento é retornar um número aleatório. Dessa forma, ele consegue ter a experiência de criar uma métrica utilizando a ferramenta.
 
 
-	\begin{lstlisting}[label={lst:metrica-observable}, caption={Seção para criação de métrica customizada pelo usuário no experimento.}, language=TypeScript, breaklines=true]
-		class myCustomRngMetric {
-			// Você não precisa alterar este método
-			start() {
-			}
+\begin{lstlisting}[label={lst:metrica-observable}, caption={Seção para criação de métrica customizada pelo usuário no experimento.}, language=TypeScript, breaklines=true]
+class myCustomRngMetric {
+  start() {
+  }
 
-			collect() {
-				return __awaiter(this, void 0, void 0, function* () {
+  collect() {
+    return __awaiter(this, void 0, void 0, function* () {
 
-				// Substitua o "0" abaixo por "Math.random()"
-				const randomNumber = 0;
+    // Substitua o "0" abaixo por "Math.random()"
+    const randomNumber = 0;
 
-				return Promise.resolve({ randomNumber });
-				});
-			}
-		}
-	\end{lstlisting}
+    return Promise.resolve({ randomNumber });
+    });
+  }
+}
+\end{lstlisting}
 
 
 	Após a ordenação realizada pelo algoritmo, o \acr{ELC} é chamado para registrar quanto tempo durou a ordenação de todo o arquivo. O fluxo para o Bubble Sort está descrito no trecho de código \ref{lst:experimento-bubble}, e para o Heap Sort no trecho de código \ref{lst:experimento-heap}.
 
 
-	\begin{lstlisting}[label={lst:experimento-bubble}, caption={Fluxo de código referente a execução da ordenação com o Bubble Sort.}, language=TypeScript, breaklines=true]
-		async function bubbleSortEvaluation(airports) {
+\begin{lstlisting}[label={lst:experimento-bubble}, caption={Fluxo de código referente a execução da ordenação com o Bubble Sort.}, language=TypeScript, breaklines=true]
+async function bubbleSortEvaluation(airports) {
 
-			const bubbleProfiling = ezElc.startProfiling(
-				"Bubable Sort",
-				[
-				new elChupacabra.Metrics.DeltaTimeMetric(),
-				// new myCustomRngMetric()
-				]
-			);
+  const bubbleProfiling = ezElc.startProfiling(
+    "Bubble Sort",
+    [
+    new elChupacabra.Metrics.DeltaTimeMetric(),
+    // new myCustomRngMetric()
+    ]
+  );
 
-			const bubbleSortedData = SortingAlgorithms.bubbleSort(
-				airports,
-				"code"
-			);
+  const bubbleSortedData = SortingAlgorithms.bubbleSort(
+    airports,
+    "code"
+  );
 
-			await bubbleProfiling.finish();
-			
-			return bubbleSortedData;
-		}
-	\end{lstlisting}
+  await bubbleProfiling.finish();
+    
+  return bubbleSortedData;
+}
+\end{lstlisting}
 
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[label={lst:experimento-heap}, caption={Fluxo de código referente a execução da ordenação com o Heap Sort.}, language=TypeScript, breaklines=true]
+async function heapSortEvaluation(airports) {
 
-	\begin{lstlisting}[label={lst:experimento-heap}, caption={Fluxo de código referente a execução da ordenação com o Heap Sort.}, language=TypeScript, breaklines=true]
-		async function heapSortEvaluation(airports) {
+  const heapProfiling = ezElc.startProfiling(
+    "Heap Sort",
+    // Adicione no array abaixo a sua metrica customizada
+    [
+      new elChupacabra.Metrics.DeltaTimeMetric()
+    ]
+  );
 
-			const heapProfiling = ezElc.startProfiling(
-				"Heap Sort",
-				// Adicione no array abaixo a sua métrica customizada
-				[
-				new elChupacabra.Metrics.DeltaTimeMetric()
-				]
-			);
+  const heapSortedData = SortingAlgorithms.heapSort(
+    airports,
+    "code"
+  );
 
-			const heapSortedData = SortingAlgorithms.heapSort(
-				airports,
-				"code"
-			);
-
-			await heapProfiling.finish()
-			
-			return heapSortedData;
-		}
-	\end{lstlisting}
+  await heapProfiling.finish()
+    
+  return heapSortedData;
+}
+\end{lstlisting}
+\end{minipage}
 
 
 	Os resultados da execução do experimento são inseridos em uma tabela no Google Sheets, como mostra a figura \ref{fig:experimento-tabela-resultado}, e disponibilizados para os voluntários verem como a inserção das métricas acontece. Assim, a primeira parte do experimento cobre todo o fluxo principal de execução do \acr{ELC}.
