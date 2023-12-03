@@ -31,8 +31,8 @@
     sensitive=true,
     comment=[l]{//},
     morecomment=[s]{/*}{*/},
-    commentstyle=\color{green}\ttfamily,
-    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{black}\ttfamily,
+    stringstyle=\color{black}\ttfamily,
     morestring=[b]',
     morestring=[b]",
 	lineskip=-1pt
@@ -336,7 +336,7 @@ To address this problem, this paper proposes El-Chupacabra, an extensible and cu
 	\section{Ferramentas Para Medição no Lado do Cliente}
 	\label{sec:ferramentas-medicao-clientside}
 
-	Após a leitura dos principais trabalhos, conseguimos obter uma visão abrangente das ferramentas e soluções existentes e propostas no âmbito acadêmico. Com isso, foi efetuada uma categorização dessas ferramentas com base em uma série de parâmetros, explicitados na tabela \ref{tab:criterio-avaliacao-ferramentas}, e com o objetivo de avaliar o quão complementar é o \acr{ELC} em relação ao estado da arte.
+	Após a leitura dos principais trabalhos, conseguimos obter uma visão abrangente das ferramentas e soluções existentes e propostas no âmbito acadêmico. Com isso, foi efetuada uma categorização dessas ferramentas com base em uma série de parâmetros, explicitados na tabela \ref{tab:criterio-avaliacao-ferramentas}, e com o objetivo de avaliar o quão complementar é o \acr{ELC} em relação ao estado da arte. Cada um desses critérios foram escolhidos tendo em vista que, se encontrados em uma ferramenta, podem gerar uma economia de recursos significativa, principalmente de tempo, em contextos de avaliação.
 
 	\begin{table}[H]
 		\centering
@@ -354,7 +354,7 @@ To address this problem, this paper proposes El-Chupacabra, an extensible and cu
 		\label{tab:criterio-avaliacao-ferramentas}
 	\end{table}
 
-	O critério de Coesão e Acoplamento é importante na avaliação das ferramentas pois facilita na utilização, diminuindo a dificuldade e complexidade na implementação da ferramenta. No exemplo dos pesquisadores, explicado no capítulo \ref{cap:intro}, é desejado que não seja necessário alterar, por exemplo, o código das provas de conceito a serem executadas no experimento. 
+	Além disso, critério de Coesão e Acoplamento é importante na avaliação das ferramentas pois facilita na utilização, diminuindo a dificuldade e complexidade na implementação da ferramenta. No exemplo dos pesquisadores, explicado no capítulo \ref{cap:intro}, é desejado que não seja necessário alterar, por exemplo, o código das provas de conceito a serem executadas no experimento. 
 	
 	O segundo critério citado, Extensibilidade, é importante pois, dado o universo de métricas e tarefas possíveis dentro de um experimento, habilita ao pesquisador representar seu problema da maneira mais fiel, inclusive com cenários customizados. Assim, uma boa extensibilidade permite que existam tarefas simples e complexas, configurando diferentes cenários de testes.
 	
@@ -646,6 +646,35 @@ const calculatePrimes = () => {
 	Com esta visão geral do funcionamento da ferramenta, estamos preparados para nos aprofundar nos detalhes de implementação do \acr{ELC}.
 	A arquitetura da ferramenta e organização de seus módulos fornecem uma visão clara de seus pontos de extensão e de como suas engrenagens trabalham em conjunto.
 	Por outro lado, a implementação dos módulos fornecem uma visão do que é possível realizar usando o \acr{ELC}.
+
+
+	\section{Diagrama de Classes}
+	\label{cap:diagrama_de_classe}
+
+
+	O Diagrama de Classes é um elemento importantíssimo na construção de uma ferramenta. Nele há a descrição das classes, dos elementos que as compõem e dos seus relacionamentos, carregando assim a definição dos principais aspectos práticos para a implementação do sistema. Por exemplo, são definidas as árvores de herança e principais métodos que precisam ser implementados pelo usuário. Dessa forma, o Diagrama de Classes do \acr{ELC} se encontra na figura \ref{fig:diag-classes}, e após o diagrama estão as descrições de cada um dos seus elementos.
+
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=0.9\textwidth]{figures/diagrama-classes.pdf}
+		\caption{Diagrama conceitual detalhado do framework.}
+		\label{fig:diag-classes}
+	\end{figure}
+
+	\begin{description}
+		\item[Project:] Responsável por coordenar a execução das análises e encaminhar suas métricas para a camada de persistência.
+		\item[ExecutionProfile:] Responsável pela coleta de dados sobre o ambiente de execução.
+		\item[Task:] Responsável por definir a rotina de execução das tarefas e seus métodos públicos.
+		\item[SimpleTask:] Classe base para implementação de uma tarefa.
+		\item[CompositeTask:] Classe base para implementação de tarefas compostas.
+		\item[Metric:] Responsável por definir a rotina para coleta de uma métrica e seus métodos públicos.
+		\item[ProcessMemoryMetric:] Implementação de uma métrica para medir o consumo de memória.
+		\item[DeltaTimeMetric:] Implementação de uma métrica para medir tempo gasto em uma tarefa.
+		\item[IPersister:] Responsável por definir a interface pública da camada de persistência.
+		\item[SheetsonPersister:] Implementação da camada de persistência a qual utiliza o Google Sheets\footnote{https://www.google.com/sheets/about}.
+		\label{desc:descricao-diagrama-classes}
+	\end{description}
+
 
 	\section{Arquitetura}
 	\label{sec:arquitetura}
@@ -1039,42 +1068,12 @@ export default class Profiling {
 }
 \end{lstlisting}
 
-		
-	\section{Diagrama de Classes}
-	\label{cap:diagrama_de_classe}
-
-
-	O diagrama conceitual detalhado define a arquitetura e estrutura dos módulos do framework.
-	Nele há a definição dos principais aspectos práticos para a implementação, por exemplo, são definidas as árvores de herança e principais métodos que precisam ser implementados por usuários.
-	Além disso, ele também define a camada de persistência para resolver o problema da coleta de métricas de execuções realizadas por voluntários de forma remota.
-	Abaixo, está uma descrição de cada elemento do diagrama.
-
-	\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=0.9\textwidth]{figures/diagrama-classes.pdf}
-		\caption{Diagrama conceitual detalhado do framework.}
-		\label{fig:diag-classes}
-	\end{figure}
-
-
-	\begin{description}
-		\item[Project:] Responsável por coordenar a execução das análises e encaminhar suas métricas para a camada de persistência.
-		\item[ExecutionProfile:] Responsável pela coleta de dados sobre o ambiente de execução.
-		\item[Task:] Responsável por definir a rotina de execução das tarefas e seus métodos públicos.
-		\item[SimpleTask:] Classe base para implementação de uma tarefa.
-		\item[CompositeTask:] Classe base para implementação de tarefas compostas.
-		\item[Metric:] Responsável por definir a rotina para coleta de uma métrica e seus métodos públicos.
-		\item[ProcessMemoryMetric:] Implementação de uma métrica para medir o consumo de memória.
-		\item[DeltaTimeMetric:] Implementação de uma métrica para medir tempo gasto em uma tarefa.
-		\item[IPersister:] Responsável por definir a interface pública da camada de persistência.
-		\item[SheetsonPersister:] Implementação da camada de persistência a qual utiliza o Google Sheets\footnote{https://www.google.com/sheets/about}.
-	\end{description}
-
+	O módulo EasyELC constitui o último módulo que constitui a ferramenta. Após o desenvolvimento do \acr{ELC}, é necessária a realização de um experimento para avaliar como se daria o seu uso, validando aspectos da sua usabilidade e aplicabilidade em um cenário real.
 
 \chapter{Experimentos}
 	\label{cap:experimentos}
 
-	Após o desenvolvimento do \acr{ELC}, é necessária a realização de um experimento para avaliar como se daria o seu uso em um cenário real. Neste capítulo estão contidas as descrições do experimento utilizado para avaliar o \acr{ELC} por voluntários externos, bem como sua preparação e execução. Além disso, estão contidos também os resultados do experimento.
+	Neste capítulo estão contidas as descrições do experimento utilizado para avaliar o \acr{ELC} por voluntários externos, bem como sua preparação e execução. Além disso, estão contidos também os resultados do experimento.
 
 	\section{Preparação do experimento}
 	\label{section:preparacao-experimento}
@@ -1325,20 +1324,20 @@ O bloco de código \ref{lst:mock_memoria} contém a classe criada para simular o
 
 \begin{lstlisting}[label={lst:mock_memoria}, caption={Implementação da classe responsável por simular recursos de memória para a prova de conceito do framework.}, language=TypeScript]
 class Resource {
-	private static _total: number = 500;
+  private static _total: number = 500;
 
-	static alloc(size: number): any {
-		this._total -= size;
-		return {size};
-	}
+  static alloc(size: number): any {
+    this._total -= size;
+    return {size};
+  }
 
-	static free(block: any): void {
-		this._total += block.size;
-	}
+  static free(block: any): void {
+    this._total += block.size;
+  }
 
-	static get total(): number {
-		return this._total;
-	}
+  static get total(): number {
+    return this._total;
+  }
 }
 \end{lstlisting}
 
@@ -1355,56 +1354,56 @@ Portanto, com o framework em sua completude, as derradeiras classes as quais com
 
 \begin{lstlisting}[label={lst:abstract_task}, caption={Classe abstrata responsável por definir o que todos os membros da árvore de tarefas precisam implementar.}, language=TypeScript]
 abstract class Task {
-	public name: string;
-	public metrics: Set<Metric<any>>;
+  public name: string;
+  public metrics: Set<Metric<any>>;
 
-	constructor(name: string, metrics: Metric<any>[])
-	{
-		this.metrics = new Set(metrics);
-		this.name = name;
-	}
+  constructor(name: string, metrics: Metric<any>[])
+  {
+    this.metrics = new Set(metrics);
+    this.name = name;
+  }
 
-	async run(): Promise<any> {
-		this.preTaskJob();
-		let data = await this.execute();
-		let metrics = {};
-		this.metrics.forEach(element => {
-		metrics[element.name] = element.metric;
-		});
-		this.postTaskJob();
-		return {metrics, data};
-	}
+  async run(): Promise<any> {
+    this.preTaskJob();
+    let data = await this.execute();
+    let metrics = {};
+    this.metrics.forEach(element => {
+    metrics[element.name] = element.metric;
+    });
+    this.postTaskJob();
+    return {metrics, data};
+  }
 
-	preTaskJob(): void {};
-	abstract execute(): Promise<any>;
-	postTaskJob(): void {};
+  preTaskJob(): void {};
+  abstract execute(): Promise<any>;
+  postTaskJob(): void {};
 }
 \end{lstlisting}
 
 \begin{lstlisting}[label={lst:composite_task}, caption={Tarefa composta, define o comportamento de todos os nós não folha da árvore de tarefas.}, language=TypeScript]
 export class CompositeTask extends Task {
-	private tasks: Task[];
+  private tasks: Task[];
 
-	constructor() {
-		super("Composite Task", []);
-		this.tasks = [];
-	}
+  constructor() {
+    super("Composite Task", []);
+    this.tasks = [];
+  }
 
-	addTask(task: Task): void {
-		this.tasks.push(task);
-		task.metrics.forEach(element => {
-			this.metrics.add(element);
-		});
-	}
+  addTask(task: Task): void {
+    this.tasks.push(task);
+    task.metrics.forEach(element => {
+      this.metrics.add(element);
+    });
+  }
 
-	async execute(): Promise<any> {
-		console.log("Executing composite task...");
-		let tasks = {};
-		for (const task of this.tasks) {
-			tasks[task.name] = await task.run();
-		}
-		return tasks;
-	}
+  async execute(): Promise<any> {
+    console.log("Executing composite task...");
+    let tasks = {};
+    for (const task of this.tasks) {
+      tasks[task.name] = await task.run();
+    }
+    return tasks;
+  }
 }
 \end{lstlisting}
 
@@ -1418,19 +1417,19 @@ Por fim, também é instanciado um objeto \emph{Project} o qual recebe como par�
 
 \begin{lstlisting}[label={lst:index_ts}, caption={Exemplo de roteiro principal para executar a prova de conceito.}, language=TypeScript]
 class Index {
-	public static async main() {
-		console.log("Hello world!");
-		const task = new CompositeTask();
-		const task2 = new CompositeTask();
-		task.addTask(new MockTask("Task 1"));
-		task.addTask(new MockTask("Task 2"));
-		task2.addTask(new MockTask("Task 3"));
-		task.addTask(task2);
-		const project = new Project(
-			new BasicPersister(),
-			task);
-		project.executeTask();
-	}
+  public static async main() {
+    console.log("Hello world!");
+    const task = new CompositeTask();
+    const task2 = new CompositeTask();
+    task.addTask(new MockTask("Task 1"));
+    task.addTask(new MockTask("Task 2"));
+    task2.addTask(new MockTask("Task 3"));
+    task.addTask(task2);
+    const project = new Project(
+      new BasicPersister(),
+      task);
+    project.executeTask();
+  }
 }
 \end{lstlisting}
 
