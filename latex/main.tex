@@ -1274,7 +1274,7 @@ async function heapSortEvaluation(airports) {
 \chapter{Conclusão}
 	\label{cap:conclusão}
 
-	Neste capítulo estão contidas as conclusões obtidas após o projeto, implementação e experimentação da ferramenta. Assim, na seção \ref{section:analise-do-elc}, o \acr{ELC} foi comparado com as outras ferramentas encontradas, e classificado de acordo com os critérios estabelecidos anteriormente. Além disso, na seção \ref{section:trabalhos-futuros}, foram apontadas as limitações principais da ferramenta. Por fim, na seção \ref{section:trabalhos-futuros}, foram trazidas possibilidades para trabalhos futuros envolvendo o framework, a fim de aprimorá-lo.
+	Neste capítulo estão contidas as conclusões obtidas após o projeto, implementação e experimentação da ferramenta. Assim, na seção \ref{section:analise-do-elc}, o \acr{ELC} foi comparado com as outras ferramentas encontradas, e classificado de acordo com os critérios estabelecidos anteriormente. Além disso, na seção \ref{section:limitacoes-elc}, foram apontadas as limitações principais da ferramenta. Por fim, na seção \ref{section:trabalhos-futuros}, foram trazidas possibilidades para trabalhos futuros envolvendo o framework, a fim de aprimorá-lo.
 
 	\section{Análise do ELC}
 	\label{section:analise-do-elc}
@@ -1314,7 +1314,7 @@ async function heapSortEvaluation(airports) {
 	Além disso, juntamente com as métricas, é possível registrar informações sobre o dispositivo e software que executaram a avaliação, atendendo a experimentos multiplataforma que precisam dessas informações. Portanto, é possível dizer que a ferramenta atende ao critério de Portabilidade.
 
 	No armazenamento dos resultados, o \acr{ELC} também atende aos requisitos de extensibilidade.
-	Como dito anteriormente, é possível utilizar o Sheetson (ver Subseção \ref{subsection:modulo-persister}), uma ferramenta para habilitar a escrita de dados em planilhas do Google via \acr{API}, mas podem ser utilizados diversos tipos de bases de dados, como bancos de dados Postgresql e MongoDB.
+	Como dito anteriormente, é possível utilizar o \emph{SheetsonPersister} (ver Subseção \ref{subsection:modulo-persister}), o qual envia os resultados para planilhas do Google via \acr{API}, mas podem ser utilizados diversos tipos de bases de dados, como bancos de dados Postgresql e MongoDB.
 	Assim, conclui-se que a ferramenta também atende ao critério de Armazenamento em Nuvem.
 
 
@@ -1322,8 +1322,10 @@ async function heapSortEvaluation(airports) {
 	\label{section:limitacoes-elc}
 
 	Conforme o que foi dito na introdução (ver Capítulo \ref{cap:intro}), existem algumas limitações com relação ao uso do \acr{ELC}.
-	Como realização de testes de caixa branca, pois a modelagem da ferramenta tem como fundamento o desconhecimento do funcionamento interno das tarefas.
-	Logo, o mesmo ponto que permite o baixo acoplamento com o objeto da análise também limita algumas possibilidades de avaliação.
+	Sendo a principal delas a realização de testes de caixa branca, pois a modelagem da ferramenta tem como fundamento o desconhecimento do funcionamento interno das tarefas.
+	Por exemplo, houve o planejamento de incluir uma métrica para medir a complexidade do trecho de código encapsulado por uma tarefa.
+	Entretanto, como a forma atual de executar as métricas não permite acesso direto ao código sob análise, a implementação dessa métrica não foi possível.
+	Porque, o mesmo ponto que permite o baixo acoplamento com o objeto da análise também está limitando algumas possibilidades de avaliação.
 
 	\section{Trabalhos Futuros}
 	\label{section:trabalhos-futuros}
