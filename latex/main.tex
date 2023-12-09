@@ -59,15 +59,15 @@
 
 % Definição de acrônimos
 \newacro{TCC}{Trabalho de Conclusão de Curso}
-\newacro{QoS}{qualidade de serviço}
-\newacro{API}{\emph{Application Programming Interface}}
+\newacro{QoS}{Quality of service}
+\newacro{API}{Application Programming Interface}
 \newacro{ELC}{El Chupacabra Framework}
 \newacro{CSV}{Comma-Separated Values}
 \newacro{JSON}{JavaScript Object Notation}
-\newacro{IoT}{Internet das coisas (do inglês, \emph{Internet of Things})}
-\newacro{OCP}{Princípio Aberto/Fechado (do inglês, \emph{Open-Closed Principle})}
+\newacro{IoT}{Internet of Things}
+\newacro{OCP}{Open-Closed Principle}
 \newacro{SUS}{System Usability Scale}
-\newacro{DOM}{Modelo de documento por objetos (do inglês, \emph{Document Object Model})}
+\newacro{DOM}{Document Object Model}
 \newacro{HTTP}{Hypertext Transfer Protocol}
 \newacro{NPM}{Node Package Manager}
 
@@ -145,13 +145,14 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 	Além disso, o site Calculadora dos Primeiros n Números Primos (do inglês, \emph{First n Primes Calculator})\footnote{\url{https://el-chupacabra-tcc.github.io/FirstNPrimes}} que atua como exemplo de uso da ferramenta tem seu código-fonte disponível no GitHub\footnote{\url{https://github.com/El-Chupacabra-TCC/FirstNPrimes}}.
 	Por fim, o experimento realizado com o \acr{ELC} pode ser encontrado na plataforma ObservableHQ\footnote{\url{https://observablehq.com/@moura/framework-el-chupacabra-experimento}}.
 
-	O trabalho está organizado da seguinte forma: O capítulo \ref{cap:fundamentacao_teorica} corresponde à fundamentação teórica do projeto. O capítulo \ref{cap:metodologiatrabsrelacionados} corresponde à metodologia utilizada na pesquisa dos trabalhos relacionados e contém também os principais trabalhos relacionados encontrados. O capítulo \ref{cap:implementação} apresenta a proposta de desenvolvimento da ferramenta. O capítulo \ref{cap:experimentos} apresenta os experimentos realizados utilizando a ferramenta e seus resultados, e por fim o capítulo \ref{cap:conclusão} traz a conclusão do projeto.
+	O trabalho está organizado da seguinte forma: O capítulo \ref{cap:fundamentacao_teorica} corresponde à fundamentação teórica do projeto. O capítulo \ref{cap:metodologiatrabsrelacionados} corresponde à metodologia utilizada na pesquisa dos trabalhos relacionados e contém também os principais trabalhos relacionados encontrados. O capítulo \ref{cap:implementação} apresenta os detalhes de implementação e de uso da ferramenta. O capítulo \ref{cap:experimentos} apresenta os experimentos realizados utilizando a ferramenta e seus resultados, e por fim o capítulo \ref{cap:conclusão} traz a conclusão do projeto.
 
 
 \chapter{Fundamentação teórica}
 	\label{cap:fundamentacao_teorica}
 
-		Neste capítulo será apresentada a fundamentação teórica do trabalho, ou seja, os principais conceitos teóricos a serem utilizados no entendimento da construção e do uso do \acr{ELC}. Dessa forma, a primeira seção trata de Testes de Software, a segunda sobre Abordagem Empírica em Engenharia de Software, a terceira sobre Padrões de Projeto (os utilizados no projeto foram o Strategy e o Composite), a quarta do princípio do Aberto-Fechado e a última sobre Coesão e Acoplamento.
+		Neste capítulo será apresentada a fundamentação teórica do trabalho, ou seja, os principais conceitos teóricos a serem utilizados no entendimento da construção e do uso do \acr{ELC}.
+		Dessa forma, a primeira seção trata de testes de software, a segunda sobre a abordagem empírica em engenharia de software, a terceira sobre padrões de projeto (os utilizados no projeto foram o Strategy e o Composite), a quarta cobre o princípio do aberto/fechado e a última detalha os conceitos de coesão e acoplamento.
 
 		\section{Testes de Software}
 		\label{cap:software-testing}
@@ -213,7 +214,7 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 		Ou seja, sua aplicação ocorre um nível de abstração acima do código e visa definir os tipos de estruturas usadas dentro de módulos e componentes.
 		O principal objetivo dos princípios SOLID é a criação de estruturas de software que tolerem mudanças, sejam fáceis de entender e sejam a base de componentes reutilizáveis em diferentes sistemas de software.
 
-		O \acr{OCP} pode ser definido como um artefato de software deve ser aberto para extensão, mas fechado para modificação. \citep{Meyer1997ObjectOrientedSoftwareConstruction}
+		O princípio do aberto/fechado (do inglês, \acr{OCP}) pode ser definido como um artefato de software deve ser aberto para extensão, mas fechado para modificação. \citep{Meyer1997ObjectOrientedSoftwareConstruction}
 		Em outras palavras, podemos afirmar que o princípio não foi respeitado quando uma extensão simples de um requisito resulta em uma cascata de mudanças em módulos dependentes.
 		O \acr{OCP} provoca justamente neste ponto, onde idealmente os módulos nunca são alterados.
 		Deste modo, quando houver a extensão de algum requisito, a extensão no software é feita adicionando código novo, ao invés de, alterar o código existente que funciona. \citep{Martin2000TheOP}
@@ -672,7 +673,7 @@ const calculatePrimes = () => {
 	\section{Arquitetura}
 	\label{sec:arquitetura}
 
-	A arquitetura do \acr{ELC} tem como guia fundamental o princípio aberto/fechado (\acr{OCP}), o qual é detalhado na seção \ref{sec:solid-ocp}.
+	A arquitetura do \acr{ELC} tem como guia fundamental o princípio do aberto/fechado (\acr{OCP}), o qual é detalhado na seção \ref{sec:solid-ocp}.
 	Desde a concepção da ideia do \acr{ELC}, uma de suas principais características é a capacidade de customização da ferramenta para os objetivos específicos do usuário.
 	Dessa forma, extensões simples de seus requisitos não devem causar mudanças massivas no código.
 
