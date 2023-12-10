@@ -371,23 +371,43 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 	\subsection{MemInsight}
 	\label{subsection:meminsight}
 
-	No contexto de medição de memória, temos o MemInsight \citep{Jensen2015MemInsight}. Essa ferramenta roda de forma independente sobre um motor Javascript, não sendo necessário um navegador para executá-la, e faz a análise do consumo de memória por meio de um conjunto de medições que visam remontar o ciclo de vida dos objetos em memória, e que permitem a análise de desperdício de recursos durante a execução do programa. 
+	No contexto de medição de memória, temos o MemInsight \citep{Jensen2015MemInsight}. Essa ferramenta roda de forma independente sobre um motor Javascript, não sendo necessário um navegador para executá-la, e faz a análise do consumo de memória por meio de um conjunto de medições que visam remontar o ciclo de vida dos objetos em memória, e que permitem a análise de desperdício de recursos durante a execução do programa. Na figura \ref{fig:meminsight}, está exemplificado o fluxo de execução da ferramenta.
+
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=0.8\textwidth]{figures/meminsight.jpeg}
+		\caption{Figura 2 do trabalho \citep{Jensen2015MemInsight}, que demonstra o fluxo de execução da ferramenta. }
+		\label{fig:meminsight}
+	\end{figure}
 
 	Para a implementação da ferramenta, não são necessárias alterações no código fonte, visto que ela opera sobre os nós do \acr{DOM}, atendendo dessa forma ao critério de Coesão e Acoplamento. É possível executar a ferramenta sob qualquer motor Javascript, seja um navegador de \emph{Desktop} ou em celulares, até em servidores utilizando NodeJS. Portanto, atende ao critério de Portabilidade.
-
 
 	É observável que a ferramenta só trabalha com medição de métricas de memória, não permitindo generalizar consultas de outros tipos, por isso não atende ao critério de Extensibilidade. Além disso, por ser uma ferramenta com foco em depurar aplicações, não realiza nativamente a persistência e organização desses dados, não atendendo ao critério de Armazenamento em Nuvem.		
 
 	\subsection{WePR}
 	\label{WePR}
-	\par \citet{Asrese2019MeasuringWL} também propôs uma ferramenta para medição no lado do cliente, porém com o foco em métricas de \acr{QoS}, nomeada WePR. A ferramenta é distribuída, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador de carga (do inglês, \emph{load balancer}), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor as URLs dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o balanceador de carga, e por fim algum dos servidores de renderização envia os dados para persistência. 
+	\par \citet{Asrese2019MeasuringWL} também propôs uma ferramenta para medição no lado do cliente, porém com o foco em métricas de \acr{QoS}, nomeada WePR. A ferramenta é distribuída, e consiste basicamente de um coletor, um servidor que fornece os elementos das páginas para medição, múltiplos servidores de renderização gerenciados por um balanceador de carga (do inglês, \emph{load balancer}), e um servidor que cuida da persistência dos dados. Dessa forma, o coletor inicialmente pede ao servidor as URLs dos elementos a serem medidos, e após obter essa resposta, faz o download desses elementos e captura métricas. Posteriormente, envia esses dados medidos e os elementos baixados para o balanceador de carga, e por fim algum dos servidores de renderização envia os dados para persistência. Um exemplo dessa arquitetura está exemplificado na figura \ref{fig:wepr}.
+
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=0.8\textwidth]{figures/wepr.jpeg}
+		\caption{Figura 2 do trabalho \citep{Asrese2019MeasuringWL}, que demonstra a arquitetura da ferramenta. }
+		\label{fig:wepr}
+	\end{figure}
 
 	A ferramenta é orientada à medição de websites e páginas na web, e interage com essas páginas via requisições do tipo \acr{HTTP}. Dessa forma, atende ao critério de Coesão e Acoplamento, pois não exige que o código fonte seja modificado para o seu uso, mas não atende ao critério de Portabilidade, pois é utilizada somente para o contexto de websites.
 
 	Como a ferramenta realiza a persistência de dados de forma remota, atende ao critério de Armazenamento em Nuvem. Em contrapartida, a ferramenta é capaz de lidar somente com métricas de \acr{QoS}, não sendo possível customizar métricas, e por isso não atende ao critério de Extensibilidade.
 
 	\subsection{Gember}
-	\par \citet{Gember2012Obtaining} também traz um estudo sobre medição no lado do cliente, porém dessa vez em clientes móveis, buscando medir o desempenho de rede desses aparelhos em um período de tempo. Foi desenvolvido no trabalho um protótipo para Android de um medidor de performance para analisar somente quando o dispositivo está ativo. A arquitetura da ferramenta consiste basicamente de um controlador central (servidor), e múltiplos clientes (aparelhos) com o medidor instalado e rodando em seus celulares. Dessa forma, o pesquisador faz uma requisição para esse controlador, e ele coordena a coleta do que foi solicitado nos aparelhos, salvando os resultados no servidor.
+	\par \citet{Gember2012Obtaining} também traz um estudo sobre medição no lado do cliente, porém dessa vez em clientes móveis, buscando medir o desempenho de rede desses aparelhos em um período de tempo. Foi desenvolvido no trabalho um protótipo para Android de um medidor de performance para analisar somente quando o dispositivo está ativo. A arquitetura da ferramenta consiste basicamente de um controlador central (servidor), e múltiplos clientes (aparelhos) com o medidor instalado e rodando em seus celulares. Dessa forma, o pesquisador faz uma requisição para esse controlador, e ele coordena a coleta do que foi solicitado nos aparelhos, salvando os resultados no servidor. Essa arquitetura está descrita na figura \ref{fig:gember}.
+
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=0.8\textwidth]{figures/gember.jpeg}
+		\caption{Figura 13 do trabalho \citep{Gember2012Obtaining}, que demonstra a arquitetura da ferramenta. }
+		\label{fig:gember}
+	\end{figure}
 
 	O serviço inicialmente coleta latência, taxa de transferência (do inglês, \emph{throughput}) e o tempo de carregamento de páginas Web, e é extensível para outras métricas de rede, porém limitado a elas. Isso torna a ferramenta insuficiente no critério de Extensibilidade, pois não é possível coletar métricas customizadas. 
 
@@ -404,6 +424,13 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 		\item Um servidor na nuvem, que fica responsável por coletar, analisar aplicando regras e publicar os dados coletados dos dispositivos. Essa arquitetura centralizada simplifica o compartilhamento de dados entre essas etapas, podendo integrar outras ferramentas de análise de dados com a base das coletas.
 
 	\end{enumerate}
+
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=0.8\textwidth]{figures/mobilyzer.jpeg}
+		\caption{Figura 1 do trabalho \citep{Nikravesh2015Mobilyzer}, que demonstra a arquitetura da ferramenta. }
+		\label{fig:mobilyzer}
+	\end{figure}
 
 	A utilização da biblioteca Android nos aplicativos não exige muitas alterações no código fonte das aplicações, bastando apenas instalar a biblioteca e adicionar as chamadas a \acr{API} do gerenciador de memória rodando no aparelho. Isso torna a ferramenta apta no critério Coesão e Acoplamento, já que são poucas alterações no código fonte. Com relação a persistência, o servidor na nuvem mantém uma base de dados anonimizada com os resultados das medições para consulta, tornando a ferramenta apta no critério de Armazenamento em Nuvem.
 
