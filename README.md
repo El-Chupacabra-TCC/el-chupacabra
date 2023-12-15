@@ -1,5 +1,7 @@
-# El Chupacabra :goat:
-Um framework para testes com voluntários de provas de conceito voltado para aplicações web do lado cliente.
+# El Chupacabra Framework :goat:
+![El Chupacabra logo](./repo-images/el-chupacabra-logo-cartoon-squared-small.png)
+
+Framework para testes remotos de provas de conceito voltado para aplicações web do lado cliente.
 
 ## :owl: Índice
 1. Demo TL;DR
