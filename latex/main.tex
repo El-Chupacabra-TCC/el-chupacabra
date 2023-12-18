@@ -529,7 +529,7 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 	Enquanto, o método \emph{execute} contém um laço na linha 13 que preenche a lista com números primos detectados pelo método \emph{isPrime}.
 	Este que, por sua vez, pode ser sobrescrito nas subclasses para conter a implementação de cada função que o experimento avalie.
 
-\begin{lstlisting}[label={lst:elc_firstnprimes_task}, caption={Exemplo de classe encapsulando um algoritmo de cálculo de números primos.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:elc_firstnprimes_task}, caption={[Exemplo de implementação de algoritmo que calcula números primos]Exemplo de classe encapsulando um algoritmo de cálculo de números primos.}, language=TypeScript, breaklines=true]
 export default class FirstNPrimesTask extends BaseTask {
   protected howMany: number
 
@@ -584,7 +584,7 @@ export default class FirstNPrimesTask extends BaseTask {
 	\end{itemize}
 
 \begin{minipage}{\linewidth}
-\begin{lstlisting}[label={lst:elc_index_ts_example}, caption={Exemplo de script principal avaliando uma comparação de tempo de execução entre duas execuções de uma tarefa FirstNPrimesTask. Onde a avaliação é executada em navegadores e as métricas coletadas são armazenadas em uma planilha online.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:elc_index_ts_example}, caption={[Exemplo de script comparando duas execuções de uma tarefa.]Exemplo de script principal avaliando uma comparação de tempo de execução entre duas execuções de uma tarefa FirstNPrimesTask. Onde a avaliação é executada em navegadores e as métricas coletadas são armazenadas em uma planilha online.}, language=TypeScript, breaklines=true]
 export function Execute()
 {
   const executionProfile = new BrowserExecutionProfile();
@@ -653,7 +653,7 @@ export function Execute()
 	\begin{minipage}{\linewidth}
 
 
-	\begin{lstlisting}[label={lst:easyelc_setup}, caption={Instância do módulo EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
+	\begin{lstlisting}[label={lst:easyelc_setup}, caption={[Instância do módulo EasyELC no exemplo dos números primos.]Instância do módulo EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
 import { EasyElc, ExecutionProfiles, Persisters, Metrics } from "el-chupacabra"
 
 const easyElc = new EasyElc(
@@ -675,7 +675,7 @@ const easyElc = new EasyElc(
 	Por último, quando todas as análises são finalizadas, o \acr{ELC} realiza a persistência dos dados.
 
 \begin{minipage}{\linewidth}
-\begin{lstlisting}[label={lst:easyelc_usage_firstnprimes}, caption={Coleta de métricas usando o EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:easyelc_usage_firstnprimes}, caption={[Coleta de métricas no exemplo dos números primos]Coleta de métricas usando o EasyElc no site Calculadora dos Primeiros n Números Primos.}, language=TypeScript, breaklines=true]
 const calculatePrimes = () => {
   let strategy = primalityTestStrategies[selectedStrategy];
   const profilerController = easyElc.startProfiling(
@@ -803,7 +803,7 @@ export default class Project {
 	Além disso, outra vantagem deste padrão é facilitar a paralelização da implementação, pois uma vez definidas as interfaces, os módulos podem ser implementados independentemente.
 	Logo, o módulo de perfil de execução possui sua interface denominada \emph{IExecutionProfile} a qual possui a definição de um único método chamado \emph{collect} como pode ser visto na listagem \ref{lst:execution_profile_abstract_class}.
 
-\begin{lstlisting}[label={lst:execution_profile_abstract_class}, caption={Implementação da classe responsável por representar um perfil de execução.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:execution_profile_abstract_class}, caption={[Implementação de um perfil de execução.]Implementação da classe responsável por representar um perfil de execução.}, language=TypeScript, breaklines=true]
 export default interface IExecutionProfile {
   /**
   * Collects execution profile data.
@@ -823,7 +823,7 @@ export default interface IExecutionProfile {
 	Enquanto, as informações obtidas entre as linhas 17 e 25 são focadas no hardware.
 
 \begin{minipage}{\linewidth}
-\begin{lstlisting}[label={lst:browser_execution_profile_abstract_class}, caption={Fragmento de código da classe \emph{BrowserExecutionProfile} responsável por gerar um perfil de execução em navegadores.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:browser_execution_profile_abstract_class}, caption={[Exemplo de um perfil de execução em navegadores]Fragmento de código da classe \emph{BrowserExecutionProfile} responsável por gerar um perfil de execução em navegadores.}, language=TypeScript, breaklines=true]
 export default class BrowserExecutionProfile implements IExecutionProfile {
 
   async collect(): Promise<Record<string, any>> {
@@ -888,7 +888,7 @@ export default interface ITask {
 	A listagem \ref{lst:basetask_class} também contém a definição do método abstrato \emph{execute} na linha 20, sendo ele quem deve ser sobrescrito com o código sob análise nas subclasses.
 	Além disso, há as chamadas dos métodos \emph{preTaskJob} e \emph{postTaskJob} nas linhas 7 e 15, os quais também podem ser sobrescritos para procedimentos pré e pós tarefa, mas que a princípio não possuem efeito algum.
 
-\begin{lstlisting}[label={lst:basetask_class}, caption={Fragmento de código da classe abstrata \emph{BaseTask}, implementação do método \emph{run} definido na interface \emph{ITask} \ref{lst:itask}.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:basetask_class}, caption={[Fragmento de código da classe \emph{BaseTask}.]Fragmento de código da classe abstrata \emph{BaseTask}, implementação do método \emph{run} definido na interface \emph{ITask} \ref{lst:itask}.}, language=TypeScript, breaklines=true]
 export default abstract class BaseTask implements ITask {
   protected metrics: IMetric[]
 
@@ -923,7 +923,7 @@ export default abstract class BaseTask implements ITask {
 	Ademais, a composição de tarefas utilizando recursivamente \emph{CompositeTask} é o que permite estruturar uma árvore de tarefas, de modo que todo nó não folha das árvores será um \emph{CompositeTask}.
 	Um exemplo de construção de uma árvore de tarefas simples foi visto na listagem \ref{lst:elc_index_ts_example} linha 10.
 
-\begin{lstlisting}[label={lst:compositetask_class}, caption={Fragmento de código da classe \emph{CompositeTask}, fundamental na implementação do padrão de projeto composite \ref{subsection:composite}.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:compositetask_class}, caption={[Fragmento de código da classe \emph{CompositeTask}.]Fragmento de código da classe \emph{CompositeTask}, fundamental na implementação do padrão de projeto composite \ref{subsection:composite}.}, language=TypeScript, breaklines=true]
 export default class CompositeTask extends BaseTask {
   private tasks: ITask[]
   private childTaskNamesMap: Record<string, Array<string>>
@@ -961,7 +961,7 @@ export default class CompositeTask extends BaseTask {
 	Para tal, a interface do módulo de métricas \emph{IMetric}, possui dois métodos: O método \emph{start} o qual avisa a métrica para iniciar suas medidas e o \emph{collect} que finaliza as medidas e retorna o resultado.
 	A definição de ambos os métodos está ilustrada na listagem \ref{lst:imetric_abstract_class}.
 
-\begin{lstlisting}[label={lst:imetric_abstract_class}, caption={Implementação da classe responsável por representar uma métrica.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:imetric_abstract_class}, caption={[Implementação de uma métrica.]Implementação da classe responsável por representar uma métrica.}, language=TypeScript, breaklines=true]
 /**
 * Represents a contract for collecting an execution metric.
 * @interface
@@ -985,7 +985,7 @@ export default interface IMetric {
 	O método \emph{start} armazena a marca de tempo inicial em uma variável de instância.
 	Enquanto, o método \emph{collect} na linha 10 utiliza essa mesma variável para calcular intervalo de tempo decorrido entre as chamadas dos métodos.
 
-\begin{lstlisting}[label={lst:deltatime_metric_class}, caption={Fragmento de código da métrica \emph{DeltaTimeMetric} a qual mede o tempo despendido em milisegundos.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:deltatime_metric_class}, caption={[Fragmento de código da métrica \emph{DeltaTimeMetric}.]Fragmento de código da métrica \emph{DeltaTimeMetric} a qual mede o tempo despendido em milisegundos.}, language=TypeScript, breaklines=true]
 export default class DeltaTimeMetric implements IMetric {
   private startTime: number = Date.now()
 
@@ -1030,7 +1030,7 @@ export default interface IPersister {
 
 
 \begin{minipage}{\linewidth}
-\begin{lstlisting}[label={lst:json_persister_class}, caption={Fragmento de código da classe \emph{JsonFilePersister} o qual implementa a camada de persistência para armazenar os resultado em um arquivo \acr{JSON}.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:json_persister_class}, caption={[Fragmento de código da classe \emph{JsonFilePersister}.]Fragmento de código da classe \emph{JsonFilePersister} o qual implementa a camada de persistência para armazenar os resultado em um arquivo \acr{JSON}.}, language=TypeScript, breaklines=true]
 export default class JsonFilePersister implements IPersister {
   private filePath: string;
 
@@ -1428,7 +1428,7 @@ As quais possuem a finalidade de isolar a prova de conceito de complexidades ine
 Logo, o desenvolvimento da prova de conceito pode ser concentrado em explorar o ponto central da modelagem, a árvore de \emph{Tarefas}.
 O bloco de código \ref{lst:mock_memoria} contém a classe criada para simular o consumo de memória.
 
-\begin{lstlisting}[label={lst:mock_memoria}, caption={Implementação da classe responsável por simular recursos de memória para a prova de conceito do framework.}, language=TypeScript]
+\begin{lstlisting}[label={lst:mock_memoria}, caption={[Implementação de uma classe que representa recursos de memória usada na prova de conceito.]Implementação da classe responsável por simular recursos de memória para a prova de conceito do framework.}, language=TypeScript]
 class Resource {
   private static _total: number = 500;
 
