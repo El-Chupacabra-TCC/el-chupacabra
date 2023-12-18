@@ -292,8 +292,15 @@
 
 \addto\captionsbrazil{\renewcommand*\contentsname{\fontsize{16pt}{\baselineskip}\selectfont\textbf{SUMÁRIO}}}
 \addto\captionsbrazil{\renewcommand*\listtablename{\fontsize{16pt}{\baselineskip}\selectfont \textbf{LISTA DE TABELAS}}}
-\addto\captionsbrazil{\renewcommand*\listfigurename{\fontsize{16pt}{\baselineskip}\selectfont \textbf{LISTA DE FIGURAS}}}	
 	
+\addto\captionsbrazil{\renewcommand*\lstlistingname{\fontsize{16pt}{\baselineskip}\selectfont \textbf{Lista de Códigos}}}
+
+
+\addto\captionsbrazil{\renewcommand*\thelstlisting{\fontsize{16pt}{\baselineskip}\selectfont \textbf{LISTAGEM {lstlisting}}}}
+
+
+
+
 \renewcommand{\cftdot}{}
 \tableofcontents
 \pagebreak

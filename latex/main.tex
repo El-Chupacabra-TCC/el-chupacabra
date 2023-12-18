@@ -109,7 +109,23 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 }{Web; client/server model; client-side performance evaluation; framework}
 
 \dtables
-	
+
+\makeatletter
+\renewcommand\lstlistoflistings{%
+    \begin{center}
+      \MakeUppercase{\lstlistlistingname} \\[1.5ex]
+     % CHAPTER \hfill{} PAGE
+    \end{center}
+    \vspace{-1em}
+    \@starttoc{lol}%
+    \if@restonecol\twocolumn\fi
+    }
+\makeatother
+
+\renewcommand*\lstlistlistingname{\fontsize{16pt}{\baselineskip}\selectfont \textbf{LISTA DE CÓDIGOS}}
+
+
+\lstlistoflistings
 
 \pagenumbering{arabic}
 \justifying
@@ -152,7 +168,7 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 	\label{cap:fundamentacao_teorica}
 
 		Neste capítulo será apresentada a fundamentação teórica do trabalho, ou seja, os principais conceitos teóricos a serem utilizados no entendimento da construção e do uso do \acr{ELC}.
-		Dessa forma, a primeira seção trata de testes de software, a segunda sobre a abordagem empírica em engenharia de software, a terceira sobre padrões de projeto (os utilizados no projeto foram o Strategy e o Composite), a quarta cobre o princípio do aberto/fechado e a última detalha os conceitos de coesão e acoplamento.
+		Dessa forma, a primeira seção trata de testes de software, a segunda sobre a abordagem experimental em engenharia de software, a terceira sobre padrões de projeto (os utilizados no projeto foram o Strategy e o Composite), a quarta cobre o princípio do aberto/fechado e a última detalha os conceitos de coesão e acoplamento.
 
 		\section{Testes de Software}
 		\label{cap:software-testing}
@@ -175,8 +191,8 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 		No entanto, é importante destacar que, devido à capacidade do ELC de permitir análises compostas, por meio da árvore de tarefas \ref{task-tree}, ele também pode oferecer algum nível de visibilidade das estruturas internas do objeto de teste.
 
 
-		\section{Abordagem Empírica em Engenharia de Software}
-		\label{cap:engenharia-de-software-empirica}
+		\section{Abordagem Experimental em Engenharia de Software}
+		\label{cap:engenharia-de-software-experimental}
 
 		A engenharia de software é um campo multidisciplinar. Abrange desde tópicos técnicos, como bancos de dados e sistemas operacionais, até questões relacionadas a linguagens de programação, como sintaxe e semântica, e até temas sociais e  psicologia. O desenvolvimento de software é humano; esse que é até hoje incapacitado de criar um código completamente do zero. É uma disciplina baseada em criatividade, e na ingenuidade das pessoas trabalhando na área. \citep{wohlin2012experimentation}.
 
@@ -496,10 +512,10 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 
 	A listagem \ref{lst:elc_firstnprimes_task} contém um exemplo de classe base para as funções de calcular números primos.
 	O tamanho da lista é definido via construtor e armazenado na variável de instância \emph{howMany}.
-	Enquando, o método \emph{execute} contém um laço na linha 13 que preenche a lista com números primos detectados pelo método \emph{isPrime}.
+	Enquanto, o método \emph{execute} contém um laço na linha 13 que preenche a lista com números primos detectados pelo método \emph{isPrime}.
 	Este que, por sua vez, pode ser sobrescrito nas subclasses para conter a implementação de cada função que o experimento avalie.
 
-\begin{lstlisting}[label={lst:elc_firstnprimes_task}, caption={Exemplo de classe encapulando um algoritmo de cálculo de números primos.}, language=TypeScript, breaklines=true]
+\begin{lstlisting}[label={lst:elc_firstnprimes_task}, caption={Exemplo de classe encapsulando um algoritmo de cálculo de números primos.}, language=TypeScript, breaklines=true]
 export default class FirstNPrimesTask extends BaseTask {
   protected howMany: number
 
@@ -579,7 +595,7 @@ export function Execute()
 \end{minipage}
 
 	Após isso, somos capazes de criar uma instância de \emph{Project} utilizando as configurações como argumentos de seu construtor.
-	E, a avaliação será executada quando o método \emph{executeTask} da instância de \emph{Project} for invocado.
+	A avaliação será executada quando o método \emph{executeTask} da instância de \emph{Project} for invocado.
 	Como último passo, utilizamos o compilador do TypeScript para gerar os arquivos JavaScript os quais podem ser hospedados em algum servidor Web.
 	Se o artefato for gerado com o código padrão do repositório, ele será um site estático com um botão para executar a avaliação como ilustra a figura \ref{fig:elc_clone_artifact}.
 	Entretanto, caso o desejado seja avaliar as funcionalidades de uma aplicação complexa, esta abordagem realizando clone do repositório pode ser consideravelmente difícil de aplicar.
@@ -691,7 +707,7 @@ const calculatePrimes = () => {
 
 	\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=\textwidth]{figures/diagrama-classes.pdf}
+		\includegraphics[width=\textwidth]{figures/diagrama-classes.png}
 		\caption[Diagrama de Classes]{Diagrama de classes do \acr{ELC}.}
 		\label{fig:diag-classes}
 	\end{figure}
@@ -1103,7 +1119,7 @@ export default class Profiling {
 
 	O experimento consiste em duas etapas principais. A primeira é a utilização do \acr{ELC} em um projeto exemplo, e a segunda é o preenchimento de um formulário no Google Forms baseado no \acr{SUS}, buscando coletar a opinião do voluntário de como foi a experiência de uso.
 
-	Para o grupo de controle, estão sendo considerados 16 voluntários, em sua maioria alunos e/ou pertencentes à comunidade do CEFET e já com alguma experiência em programação, que prontamente se engajaram para testar a ferramenta. 
+	No experimento, estão sendo considerados 16 voluntários, em sua maioria alunos e/ou pertencentes à comunidade do CEFET e já com alguma experiência em programação, que prontamente se engajaram para testar a ferramenta. 
 
 	% TO-DO: Substituir número de voluntários
 
@@ -1116,7 +1132,7 @@ export default class Profiling {
 
 	A primeira parte do experimento consiste basicamente do uso do \acr{ELC}, mais especificamente do módulo EasyELC, pelos voluntários através da plataforma \emph{ObservableHQ}\footnote{\url{https://observablehq.com/@moura/framework-el-chupacabra-experimento}}. Um projeto padrão foi criado e disponibilizado para os voluntários, e consiste em comparar o desempenho de dois algoritmos de ordenação já conhecidos sobre um conjunto de dados. Os algoritmos são o Bubble Sort e o Heap Sort, e o conjunto de dados está inicialmente desordenado e representado no formato \acr{JSON}. Dessa forma, o fluxo do experimento a ser realizado é: realizar a ordenação duas vezes, uma utilizando cada algoritmo, para comparar qual tem o melhor desempenho.
 
-	Foi adicionado uma seção chamada Implementação de Métrica Customizada, como mostra o trecho de código \ref{lst:metrica-observable}. Essa parte do código é uma das partes que o voluntário preenche, com o auxílio de comentários deixados mostrando o passo a passo da criação da métrica. O exemplo trata de uma métrica cujo comportamento é retornar um número aleatório. Dessa forma, ele consegue ter a experiência de criar uma métrica utilizando a ferramenta.
+	Foi adicionada uma seção chamada Implementação de Métrica Customizada, como mostra o trecho de código \ref{lst:metrica-observable}. Essa parte do código é uma das partes que o voluntário preenche, com o auxílio de comentários deixados mostrando o passo a passo da criação da métrica. O exemplo trata de uma métrica cujo comportamento é retornar um número aleatório. Dessa forma, ele consegue ter a experiência de criar uma métrica utilizando a ferramenta.
 
 
 \begin{lstlisting}[label={lst:metrica-observable}, caption={Seção para criação de métrica customizada pelo usuário no experimento.}, language=TypeScript, breaklines=true]
