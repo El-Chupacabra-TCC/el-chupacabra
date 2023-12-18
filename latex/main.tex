@@ -125,6 +125,7 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 \renewcommand*\lstlistlistingname{\fontsize{16pt}{\baselineskip}\selectfont \textbf{LISTA DE CÓDIGOS}}
 
 
+
 \lstlistoflistings
 
 \pagenumbering{arabic}
@@ -214,6 +215,13 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 		
 		Além disso, o uso do padrão torna fácil a adição de novos tipos de componentes, basta implementar a classe que o cliente entende. Dessa forma, os clientes não precisam ser alterados caso os objetos sejam modificados. Uma desvantagem desse padrão é que torna a validação dos componentes mais complicada, pois não se pode contar plenamente com a tipagem para garantir os requisitos dos dados. São necessárias validações em tempo de execução \citep[Capítulo 4]{gamma1994design}. Esse padrão foi utilizado na construção das tarefas, processo descrito na seção \ref{subsection:modulo-tasks}.
 
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{figures/composite.jpeg}
+			\caption[Estrutura do padrão de software Composite]{Estrutura do padrão de software Composite, utilizado nas tarefas.}
+			\label{fig:composite}
+		\end{figure}
+
 		\subsection{Strategy}
 		\label{subsection:strategy}
 
@@ -221,6 +229,12 @@ To address this problem, this paper proposes El Chupacabra, an extensible and cu
 
 		Essa abordagem faz com que diminua o uso de condições que gerenciam o comportamento do algoritmo na classe principal, abstraindo essa lógica para dentro do Strategy. Assim, esse tipo de lógica mais específica do comportamento da classe fica oculta da classe principal, tornando mais simples de ser entendida  \citep{gamma1994design}. O padrão Strategy foi utilizado na construção do site utilizado no exemplo descrito na seção \ref{subsection:study-case-easyelc}, na implementação dos diferentes algoritmos para o cálculo de números primos.
 
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{figures/strategy.jpeg}
+			\caption[Estrutura do padrão de software Strategy]{Estrutura do padrão de software Strategy, utilizado no site dos números primos para representar as diversas abordagens possíveis de cálculo.}
+			\label{fig:strategy}
+		\end{figure}
 
 		\section{Princípio do Aberto/Fechado}
 		\label{sec:solid-ocp}
